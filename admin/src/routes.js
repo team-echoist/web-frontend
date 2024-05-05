@@ -44,6 +44,8 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import Essay from "layouts/essay";
+import Alarm from "layouts/alarm";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -59,35 +61,27 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tables",
-    key: "tables",
+    name: "UserTables",
+    key: "UserTables",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
+    route: "/userTables",
     component: <Tables />,
   },
   {
     type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
+    name: "Essay",
+    key: "Essay",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/essay",
+    component: <Essay />,
   },
   {
     type: "collapse",
-    name: "RTL",
-    key: "rtl",
-    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-    route: "/rtl",
-    component: <RTL />,
-  },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
+    name: "Send Alarm",
+    key: "Send Alarm",
+    icon: <Icon fontSize="small">Send Alarm</Icon>,
+    route: "/sendAlarm",
+    component: <Alarm />,
   },
   {
     type: "collapse",
