@@ -31,12 +31,18 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import TodayIcon from "@mui/icons-material/Today";
+import DrawIcon from "@mui/icons-material/Draw";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import GroupIcon from "@mui/icons-material/Group";
+import AddCardIcon from "@mui/icons-material/AddCard";
+import ReportIcon from "@mui/icons-material/Report";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const detailUrl = (id) => {
+    return `/dashboard/${id}`;
+  };
 
   return (
     <DashboardLayout>
@@ -47,7 +53,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
-                icon="weekend"
+                icon={<TodayIcon />}
                 title="Today Essay"
                 count={281}
                 percentage={{
@@ -55,6 +61,7 @@ function Dashboard() {
                   amount: "+55%",
                   label: "than lask week",
                 }}
+                url={detailUrl("today-essay")}
               />
             </MDBox>
           </Grid>
@@ -62,7 +69,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
-                icon="weekend"
+                icon={<DrawIcon />}
                 title="Total Essay"
                 count={501}
                 percentage={{
@@ -70,35 +77,22 @@ function Dashboard() {
                   amount: "+55%",
                   label: "than lask week",
                 }}
+                url={detailUrl("total-essay")}
               />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
+                icon={<GroupAddIcon />}
                 title="Today's Users"
                 count="2,300"
                 percentage={{
-                  color: "success",
+                  color: "info",
                   amount: "+3%",
                   label: "than last month",
                 }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Subscribe Users"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
+                url={detailUrl("today-users")}
               />
             </MDBox>
           </Grid>
@@ -106,7 +100,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="primary"
-                icon="person_add"
+                icon={<GroupIcon />}
                 title="All Users"
                 count="+91"
                 percentage={{
@@ -114,14 +108,32 @@ function Dashboard() {
                   amount: "",
                   label: "Just updated",
                 }}
+                url={detailUrl("all-users")}
               />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
+                color="success"
+                icon={<AddCardIcon />}
+                title="Subscribe Users"
+                count="34k"
+                percentage={{
+                  color: "success",
+                  amount: "+1%",
+                  label: "than yesterday",
+                }}
+                url={detailUrl("subscribe-users")}
+              />
+            </MDBox>
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <ComplexStatisticsCard
                 color="primary"
-                icon="person_add"
+                icon={<ReportIcon />}
                 title="reported Essay"
                 count="+91"
                 percentage={{
@@ -129,6 +141,7 @@ function Dashboard() {
                   amount: "",
                   label: "Just updated",
                 }}
+                url={detailUrl("reported-users")}
               />
             </MDBox>
           </Grid>
@@ -174,16 +187,6 @@ function Dashboard() {
             </Grid>
           </Grid>
         </MDBox>
-        {/* <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
-            </Grid>
-          </Grid>
-        </MDBox> */}
       </MDBox>
       <Footer />
     </DashboardLayout>

@@ -48,6 +48,7 @@ import Essay from "layouts/essay";
 import Alarm from "layouts/alarm";
 import Login from "layouts/login";
 import Signup from "layouts/signup";
+import DashBoardDetail from "layouts/dashboard/detail";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -124,6 +125,12 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+  },
+  {
+    name: "dashboardDetails",
+    key: "dashboard-details",
+    route: "/dashboard/:id",
+    component: <DashBoardDetail />,
   },
 ];
 
