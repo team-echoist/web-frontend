@@ -46,11 +46,29 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Essay from "layouts/essay";
 import Alarm from "layouts/alarm";
+import Login from "layouts/login";
+import Signup from "layouts/signup";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 
 const routes = [
+  {
+    type: "collapse",
+    name: "Login",
+    key: "login",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/login",
+    component: <Login />,
+  },
+  {
+    type: "collapse",
+    name: "SignUp",
+    key: "signup",
+    icon: <Icon fontSize="small">signup</Icon>,
+    route: "/signup",
+    component: <SignUp />,
+  },
   {
     type: "collapse",
     name: "Dashboard",
