@@ -38,12 +38,11 @@ import GroupIcon from "@mui/icons-material/Group";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import ReportIcon from "@mui/icons-material/Report";
 
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
-
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const detailUrl = (id) => {
+    return `/dashboard/${id}`;
+  };
 
   return (
     <DashboardLayout>
@@ -62,6 +61,7 @@ function Dashboard() {
                   amount: "+55%",
                   label: "than lask week",
                 }}
+                url={detailUrl("today-essay")}
               />
             </MDBox>
           </Grid>
@@ -77,6 +77,7 @@ function Dashboard() {
                   amount: "+55%",
                   label: "than lask week",
                 }}
+                url={detailUrl("total-essay")}
               />
             </MDBox>
           </Grid>
@@ -91,6 +92,7 @@ function Dashboard() {
                   amount: "+3%",
                   label: "than last month",
                 }}
+                url={detailUrl("today-users")}
               />
             </MDBox>
           </Grid>
@@ -106,6 +108,7 @@ function Dashboard() {
                   amount: "",
                   label: "Just updated",
                 }}
+                url={detailUrl("all-users")}
               />
             </MDBox>
           </Grid>
@@ -121,6 +124,7 @@ function Dashboard() {
                   amount: "+1%",
                   label: "than yesterday",
                 }}
+                url={detailUrl("subscribe-users")}
               />
             </MDBox>
           </Grid>
@@ -137,6 +141,7 @@ function Dashboard() {
                   amount: "",
                   label: "Just updated",
                 }}
+                url={detailUrl("reported-users")}
               />
             </MDBox>
           </Grid>
@@ -182,16 +187,6 @@ function Dashboard() {
             </Grid>
           </Grid>
         </MDBox>
-        {/* <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
-            </Grid>
-          </Grid>
-        </MDBox> */}
       </MDBox>
       <Footer />
     </DashboardLayout>
