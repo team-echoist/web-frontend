@@ -31,6 +31,13 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
+import TodayIcon from "@mui/icons-material/Today";
+import DrawIcon from "@mui/icons-material/Draw";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import GroupIcon from "@mui/icons-material/Group";
+import AddCardIcon from "@mui/icons-material/AddCard";
+import ReportIcon from "@mui/icons-material/Report";
+
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
@@ -47,7 +54,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
-                icon="weekend"
+                icon={<TodayIcon />}
                 title="Today Essay"
                 count={281}
                 percentage={{
@@ -62,7 +69,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
-                icon="weekend"
+                icon={<DrawIcon />}
                 title="Total Essay"
                 count={501}
                 percentage={{
@@ -76,7 +83,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
+                icon={<GroupAddIcon />}
                 title="Today's Users"
                 count="2,300"
                 percentage={{
@@ -90,23 +97,8 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Subscribe Users"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
                 color="primary"
-                icon="person_add"
+                icon={<GroupIcon />}
                 title="All Users"
                 count="+91"
                 percentage={{
@@ -120,8 +112,24 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
+                color="success"
+                icon={<AddCardIcon />}
+                title="Subscribe Users"
+                count="34k"
+                percentage={{
+                  color: "success",
+                  amount: "+1%",
+                  label: "than yesterday",
+                }}
+              />
+            </MDBox>
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <ComplexStatisticsCard
                 color="primary"
-                icon="person_add"
+                icon={<ReportIcon />}
                 title="reported Essay"
                 count="+91"
                 percentage={{
