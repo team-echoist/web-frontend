@@ -88,7 +88,7 @@ function Dashboard() {
                 title="Today's Users"
                 count="2,300"
                 percentage={{
-                  color: "success",
+                  color: "info",
                   amount: "+3%",
                   label: "than last month",
                 }}
