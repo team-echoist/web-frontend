@@ -46,6 +46,8 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Essay from "layouts/essay";
 import Alarm from "layouts/alarm";
+import Login from "layouts/login";
+import Signup from "layouts/signup";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
