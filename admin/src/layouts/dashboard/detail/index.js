@@ -13,10 +13,14 @@ import MDTypography from "components/MDTypography";
 import { useLocation } from "react-router-dom";
 import ComboBox from "examples/ComboBox";
 import { label, data } from "../data/comboBoxData";
+import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
+import { generateChartTitle, settingChartData } from "../data/detailChartData";
 
 function index() {
   const [select, setSelect] = useState("");
   const route = useLocation().pathname.split("/").slice(1);
+  const chartTitle = generateChartTitle(route[1]);
+  let chartData = settingChartData(route[1], select);
 
   const handleChange = (event) => {
     setSelect(event.target.value);
@@ -51,17 +55,36 @@ function index() {
           </Card>
         </Grid>
       </MDBox>
-      <MDBox sx={{ paddingRight: "20px" }}>
-        <Grid container justifyContent="flex-end">
-          <ComboBox
-            label={label}
-            data={data}
-            select={select}
-            handleChange={handleChange}
-            width="10rem"
+      {route[1] !== "total-essay" ||
+        (route[1] !== "all-users" && (
+          <MDBox sx={{ paddingRight: "20px" }}>
+            <Grid container justifyContent="flex-end">
+              <ComboBox
+                label={label}
+                data={data}
+                select={select}
+                handleChange={handleChange}
+                width="10rem"
+              />
+            </Grid>
+          </MDBox>
+        ))}
+
+      <Grid item xs={12} md={6} lg={4}>
+        <MDBox mt={8} mb={3}>
+          <ReportsLineChart
+            color="success"
+            title={chartTitle}
+            description={
+              <>
+                <strong>{chartTitle}</strong>
+              </>
+            }
+            date="updated 4 min ago"
+            chart={chartData}
           />
-        </Grid>
-      </MDBox>
+        </MDBox>
+      </Grid>
 
       <Footer />
     </DashboardLayout>
