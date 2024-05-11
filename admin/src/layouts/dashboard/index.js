@@ -84,13 +84,14 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
+                color="primary"
                 icon={<GroupAddIcon />}
                 title="Today's Users"
-                count="2,300"
+                count={501}
                 percentage={{
-                  color: "info",
-                  amount: "+3%",
-                  label: "than last month",
+                  color: "success",
+                  amount: "+55%",
+                  label: "than lask week",
                 }}
                 url={detailUrl("today-users")}
               />
