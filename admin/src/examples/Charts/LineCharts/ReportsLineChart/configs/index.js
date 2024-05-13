@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 function configs(labels, datasets) {
+  console.log("labels", labels, datasets);
   return {
     data: {
       labels,
