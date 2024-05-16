@@ -37,6 +37,7 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import GroupIcon from "@mui/icons-material/Group";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import ReportIcon from "@mui/icons-material/Report";
+import axios from "axios";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
