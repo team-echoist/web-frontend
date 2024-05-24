@@ -11,7 +11,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MDTypography from "components/MDTypography";
 import { useLocation } from "react-router-dom";
-import ComboBox from "examples/ComboBox";
+import ComboBox from "components/ComboBox";
 import { label, data } from "../data/comboBoxData";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import { generateChartTitle, settingChartData } from "../data/detailChartData";
