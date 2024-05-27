@@ -1,3 +1,7 @@
+// 에세이 페이지]
+// TODO : 에세이 제목, 작성자, 신고 여부, 관리 버튼(-> 상세 페이지)
+
+// @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
@@ -12,11 +16,11 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import essayTableData from "layouts/essay/data/essayTableData";
 
-// 에세이 관리 페이지
-function index() {
+function Essay() {
+  const { columns, rows } = essayTableData();
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -35,8 +39,17 @@ function index() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Essay
+                  Essay List
                 </MDTypography>
+              </MDBox>
+              <MDBox pt={3}>
+                <DataTable
+                  table={{ columns, rows }}
+                  isSorted={false}
+                  entriesPerPage={false}
+                  showTotalEntries={false}
+                  noEndBorder
+                />
               </MDBox>
             </Card>
           </Grid>
@@ -47,4 +60,4 @@ function index() {
   );
 }
 
-export default index;
+export default Essay;
