@@ -15,6 +15,7 @@ import DataTable from "examples/Tables/DataTable";
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 
+// 에세이 관리 페이지
 function index() {
   return (
     <DashboardLayout>
