@@ -46,14 +46,39 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Essay from "layouts/essay";
 import Alarm from "layouts/alarm";
-import Login from "layouts/login";
-import Signup from "layouts/signup";
 import DashBoardDetail from "layouts/dashboard/detail";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Users from "layouts/users";
+import Reviews from "layouts/reviews";
+import Reports from "layouts/reports";
 
 const routes = [
+  {
+    type: "collapse",
+    name: "Reports",
+    key: "reports",
+    icon: <Icon fontSize="small">Reports</Icon>,
+    route: "/reports",
+    component: <Reports />,
+  },
+  {
+    type: "collapse",
+    name: "Reviews",
+    key: "reviews",
+    icon: <Icon fontSize="small">Reviews</Icon>,
+    route: "/reviews",
+    component: <Reviews />,
+  },
+  {
+    type: "collapse",
+    name: "Users",
+    key: "users",
+    icon: <Icon fontSize="small">Users</Icon>,
+    route: "/users",
+    component: <Users />,
+  },
   {
     type: "collapse",
     name: "Login",

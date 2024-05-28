@@ -1,5 +1,7 @@
-// 에세이 페이지]
-// TODO : 에세이 제목, 작성자, 신고 여부, 관리 버튼(-> 상세 페이지)
+// 유저 관리 페이지
+// TODO
+// 콤보박스 : 공통 컴포넌트 -> 전체 목록/블랙 유저/구독 유저
+// (페이지마다 모두 사용되지만, *뜨는 목록은 다름*)
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -16,10 +18,10 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import essayTableData from "layouts/essay/data/essayTableData";
+import usersTableData from "layouts/users/data/usersTableData";
 
-function Essay() {
-  const { columns, rows } = essayTableData();
+function Users() {
+  const { columns, rows } = usersTableData();
 
   return (
     <DashboardLayout>
@@ -39,7 +41,7 @@ function Essay() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Essay List
+                  Users List
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -60,4 +62,4 @@ function Essay() {
   );
 }
 
-export default Essay;
+export default Users;

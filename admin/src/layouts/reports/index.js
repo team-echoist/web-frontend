@@ -1,5 +1,4 @@
-// 에세이 페이지]
-// TODO : 에세이 제목, 작성자, 신고 여부, 관리 버튼(-> 상세 페이지)
+// 신고내역 관리 페이지
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -16,10 +15,10 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import essayTableData from "layouts/essay/data/essayTableData";
+import reportTableData from "layouts/reports/data/reportTableData";
 
-function Essay() {
-  const { columns, rows } = essayTableData();
+function Reports() {
+  const { columns, rows } = reportTableData();
 
   return (
     <DashboardLayout>
@@ -39,7 +38,7 @@ function Essay() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Essay List
+                  신고 리스트
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -60,4 +59,4 @@ function Essay() {
   );
 }
 
-export default Essay;
+export default Reports;
