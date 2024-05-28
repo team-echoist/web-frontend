@@ -1,20 +1,24 @@
 // 앱 리뷰 관리 페이지
 
-import { Card, Grid } from "@mui/material";
+// @mui material components
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+
+// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import Footer from "examples/Footer";
+
+// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import reviewTableData from "layouts/reviews/data/reviewTableData";
 
 function Reviews() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+  const { columns, rows } = reviewTableData();
 
   return (
     <DashboardLayout>
@@ -34,7 +38,7 @@ function Reviews() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Users Table
+                  Review List
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -55,4 +59,4 @@ function Reviews() {
   );
 }
 
-export default Reviews();
+export default Reviews;
