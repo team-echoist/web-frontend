@@ -57,9 +57,6 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth />
-            </MDBox>
-            <MDBox mb={2}>
               <MDInput type="email" label="Email" variant="standard" fullWidth />
             </MDBox>
             <MDBox mb={2}>
@@ -88,7 +85,7 @@ function Cover() {
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth>
-                sign in
+                sign up
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
