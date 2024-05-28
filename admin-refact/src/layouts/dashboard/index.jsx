@@ -142,7 +142,7 @@ function Dashboard() {
                   amount: "",
                   label: "Just updated",
                 }}
-                url={detailUrl("reported-users")}
+                url="/reports"
               />
             </MDBox>
           </Grid>
