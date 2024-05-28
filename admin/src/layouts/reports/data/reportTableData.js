@@ -53,6 +53,7 @@ export default function data() {
       // TODO: 유저 이름/신고유저 이름/신고 사유/신고 게시글 상세보기(모달)
       { Header: "유저", accessor: "title", width: "45%", align: "left" },
       { Header: "신고유저", accessor: "name", width: "45%", align: "left" },
+      { Header: "신고 사유", accessor: "status", align: "center" },
       { Header: "신고 날짜", accessor: "registrationDate", align: "center" },
       { Header: "게시글 상세", accessor: "action", align: "center" },
     ],
@@ -63,7 +64,7 @@ export default function data() {
         name: <Author image={team2} name="Michael" email="john@creative-tim.com" />,
         status: (
           <MDBox ml={-1}>
-            <MDBadge badgeContent="Subscribe" color="success" variant="gradient" size="sm" />
+            <MDBadge badgeContent="배고파서" color="success" variant="gradient" size="sm" />
           </MDBox>
         ),
         registrationDate: (
@@ -82,7 +83,7 @@ export default function data() {
         name: <Author image={team3} name="Liras" email="alexa@creative-tim.com" />,
         status: (
           <MDBox ml={-1}>
-            <MDBadge badgeContent="Normal user" color="dark" variant="gradient" size="sm" />
+            <MDBadge badgeContent="그냥 맘에 안듦" color="blue" variant="gradient" size="sm" />
           </MDBox>
         ),
         registrationDate: (
