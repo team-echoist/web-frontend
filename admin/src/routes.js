@@ -50,8 +50,51 @@ import DashBoardDetail from "layouts/dashboard/detail";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Users from "layouts/users";
+import Reviews from "layouts/reviews";
+import Reports from "layouts/reports";
 
 const routes = [
+  {
+    type: "collapse",
+    name: "Reports",
+    key: "reports",
+    icon: <Icon fontSize="small">Reports</Icon>,
+    route: "/reports",
+    component: <Reports />,
+  },
+  {
+    type: "collapse",
+    name: "Reviews",
+    key: "reviews",
+    icon: <Icon fontSize="small">Reviews</Icon>,
+    route: "/reviews",
+    component: <Reviews />,
+  },
+  {
+    type: "collapse",
+    name: "Users",
+    key: "users",
+    icon: <Icon fontSize="small">Users</Icon>,
+    route: "/users",
+    component: <Users />,
+  },
+  {
+    type: "collapse",
+    name: "Login",
+    key: "login",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/login",
+    component: <Login />,
+  },
+  {
+    type: "collapse",
+    name: "SignUp",
+    key: "signup",
+    icon: <Icon fontSize="small">signup</Icon>,
+    route: "/signup",
+    component: <SignUp />,
+  },
   {
     type: "collapse",
     name: "Dashboard",
