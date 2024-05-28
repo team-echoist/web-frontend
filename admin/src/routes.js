@@ -81,14 +81,6 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Login",
-    key: "login",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/login",
-    component: <Login />,
-  },
-  {
-    type: "collapse",
     name: "SignUp",
     key: "signup",
     icon: <Icon fontSize="small">signup</Icon>,
