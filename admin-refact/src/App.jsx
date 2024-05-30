@@ -60,6 +60,7 @@ function App() {
     setRtlCache(cacheRtl);
   }, []);
 
+
     // Open sidenav when mouse enter on mini sidenav
     const handleOnMouseEnter = () => {
       if (miniSidenav && !onMouseEnter) {
