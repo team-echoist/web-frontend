@@ -33,7 +33,7 @@ import {
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import routes from "./routes";
-
+import axios from "axios";
 
 function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -60,6 +60,18 @@ function App() {
     setRtlCache(cacheRtl);
   }, []);
 
+  const fetchTest = async() =>{
+    const response =await axios.get("/api2/api/admin",{
+      headers:{
+        Authorization :  `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbjFAbGlua2Vkb3V0YXBwLmNvbSIsImlhdCI6MTcxNzAzNDM4MCwiZXhwIjoxNzE3MTIwNzgwfQ.zla6iVuiPx5QFG8mIuO0vQi4Lxv9TpXLnY9V9pG9JlM`
+      }
+    })
+    console.log("response: " + response);
+  }
+  useEffect(()=>{
+    fetchTest()
+  },[])
+  fetchTest()
     // Open sidenav when mouse enter on mini sidenav
     const handleOnMouseEnter = () => {
       if (miniSidenav && !onMouseEnter) {
