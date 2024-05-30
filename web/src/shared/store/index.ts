@@ -1,8 +1,15 @@
-import { create } from "zustand"; // create로 zustand를 불러옵니다.
+import { create } from "zustand";
 
-const useStore = create((set) => ({
+interface State {
+  bears: number;
+  increasePopulation: () => void;
+  removeAllBears: () => void;
+}
+
+// 상태 스토어 생성
+const useStore = create<State>((set) => ({
   bears: 0,
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+  increasePopulation: () => set((state: State) => ({ bears: state.bears + 1 })),
   removeAllBears: () => set({ bears: 0 }),
 }));
 
