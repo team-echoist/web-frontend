@@ -18,10 +18,14 @@ export default defineConfig({
   },
   server: {
     proxy: {
+<<<<<<< HEAD
       "/api2": {
+=======
+      "/api1": {
+>>>>>>> 6c27c416e18c3af23ca6089b99dc981eb6c45f37
         target: "https://www.linkedoutapp.com",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api2/, ""),
+        rewrite: (path) => path.replace(/^\/api1/, ""),
       },
     },
   },
