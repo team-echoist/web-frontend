@@ -1,4 +1,3 @@
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -23,13 +22,30 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import GroupIcon from "@mui/icons-material/Group";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import ReportIcon from "@mui/icons-material/Report";
+import AxiosInstance from "../../api/AxiosInstance";
+import { useEffect, useState } from "react";
 
 function Dashboard() {
+  const [data, setData] = useState({});
   const { sales, tasks } = reportsLineChartData;
   const detailUrl = (id) => {
     return `/dashboard/${id}`;
   };
+  useEffect(() => {
+    async function fetchAdminCount() {
+      try {
+        const response = await AxiosInstance.get("/api/admin");
+        const data = response.data.data;
+        setData((prev)=>({...prev,countData: data}));
+        console.log("data",data)
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchAdminCount();
+  }, []);
 
+  console.log("data",data)
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -41,7 +57,7 @@ function Dashboard() {
                 color="dark"
                 icon={<TodayIcon />}
                 title="Today Essay"
-                count={281}
+                count={data?.countData?.todayEssays}
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -57,7 +73,7 @@ function Dashboard() {
                 color="dark"
                 icon={<DrawIcon />}
                 title="Total Essay"
-                count={501}
+                count={data?.countData?.totalEssays}
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -73,7 +89,7 @@ function Dashboard() {
                 color="primary"
                 icon={<GroupAddIcon />}
                 title="Today's Users"
-                count={501}
+                count={data?.countData?.currentSubscriber}
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -89,7 +105,7 @@ function Dashboard() {
                 color="primary"
                 icon={<GroupIcon />}
                 title="All Users"
-                count="+91"
+                count={data?.countData?.totalUser}
                 percentage={{
                   color: "success",
                   amount: "",
@@ -105,7 +121,7 @@ function Dashboard() {
                 color="success"
                 icon={<AddCardIcon />}
                 title="Subscribe Users"
-                count="34k"
+                count={data?.countData?.currentSubscriber}
                 percentage={{
                   color: "success",
                   amount: "+1%",
@@ -122,7 +138,7 @@ function Dashboard() {
                 color="primary"
                 icon={<ReportIcon />}
                 title="reported Essay"
-                count="+91"
+                count={data?.countData?.unprocessedReports}
                 percentage={{
                   color: "success",
                   amount: "",
