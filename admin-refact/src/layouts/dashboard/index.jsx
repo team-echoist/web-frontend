@@ -15,7 +15,7 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-import {timeSince} from "./util/TimeSInce"
+import { timeSince } from "./util/TimeSInce";
 
 import TodayIcon from "@mui/icons-material/Today";
 import DrawIcon from "@mui/icons-material/Draw";
@@ -27,28 +27,48 @@ import AxiosInstance from "../../api/AxiosInstance";
 import { useEffect, useState } from "react";
 
 function Dashboard() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    countData: {},
+    timeStamp: "",
+    monthlyUser: { labels: [], datasets: [] },
+  });
   const { sales, tasks } = reportsLineChartData;
   const detailUrl = (id) => {
     return `/dashboard/${id}`;
   };
   useEffect(() => {
-    async function fetchAdminCount() {
+    async function fetchAdmin() {
       try {
-        const response = await AxiosInstance.get("/api/admin");
-        const data = response.data.data;
-        const timeStamp = response.data.timestamp;
-        console.log(timeStamp);
-        setData((prev) => ({ ...prev, countData: data, timeStamp: timeSince(timeStamp) }));
-        console.log("data", data);
+        const currentYear = new Date().getFullYear();
+        const countResponse = await AxiosInstance.get("/api/admin");
+        const monthlyUserresponse = await AxiosInstance.get(
+          "/api/admin/statistics/users/monthly",
+          {
+            params: {
+              year: currentYear,
+            },
+          }
+        );
+
+        const data = countResponse.data.data;
+        const timeStamp = countResponse.data.timestamp;
+        const monthlyUser = Object.values(monthlyUserresponse.data.data);
+        setData((prev) => ({
+          ...prev,
+          countData: data,
+          timeStamp: timeSince(timeStamp),
+          monthlyUser: {
+            labels:reportsBarChartData.labels,
+            datasets: { label: "Sales", data: monthlyUser },
+          },
+        }));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
-    fetchAdminCount();
+    fetchAdmin();
   }, []);
 
-  console.log("data", data);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -161,7 +181,7 @@ function Dashboard() {
                   title="Monthly subscribers"
                   description="LMonthly Subscriber Trends"
                   date="Data as of 2 days ago"
-                  chart={reportsBarChartData}
+                  chart={data?.monthlyUser && data?.monthlyUser}
                 />
               </MDBox>
             </Grid>
