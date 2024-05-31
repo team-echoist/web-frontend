@@ -15,6 +15,7 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+import {timeSince} from "./util/TimeSInce"
 
 import TodayIcon from "@mui/icons-material/Today";
 import DrawIcon from "@mui/icons-material/Draw";
@@ -36,8 +37,10 @@ function Dashboard() {
       try {
         const response = await AxiosInstance.get("/api/admin");
         const data = response.data.data;
-        setData((prev)=>({...prev,countData: data}));
-        console.log("data",data)
+        const timeStamp = response.data.timestamp;
+        console.log(timeStamp);
+        setData((prev) => ({ ...prev, countData: data, timeStamp: timeSince(timeStamp) }));
+        console.log("data", data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -45,7 +48,7 @@ function Dashboard() {
     fetchAdminCount();
   }, []);
 
-  console.log("data",data)
+  console.log("data", data);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -59,9 +62,9 @@ function Dashboard() {
                 title="Today Essay"
                 count={data?.countData?.todayEssays}
                 percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  color: "",
+                  amount: "",
+                  label: data.timeStamp,
                 }}
                 url={detailUrl("today-essay")}
               />
@@ -75,9 +78,9 @@ function Dashboard() {
                 title="Total Essay"
                 count={data?.countData?.totalEssays}
                 percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  color: "",
+                  amount: "",
+                  label: data.timeStamp,
                 }}
                 url={detailUrl("total-essay")}
               />
@@ -91,9 +94,9 @@ function Dashboard() {
                 title="Today's Users"
                 count={data?.countData?.currentSubscriber}
                 percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  color: "",
+                  amount: "",
+                  label: data.timeStamp,
                 }}
                 url={detailUrl("today-users")}
               />
@@ -107,9 +110,9 @@ function Dashboard() {
                 title="All Users"
                 count={data?.countData?.totalUser}
                 percentage={{
-                  color: "success",
+                  color: "",
                   amount: "",
-                  label: "Just updated",
+                  label: data.timeStamp,
                 }}
                 url={detailUrl("all-users")}
               />
@@ -123,9 +126,9 @@ function Dashboard() {
                 title="Subscribe Users"
                 count={data?.countData?.currentSubscriber}
                 percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
+                  color: "",
+                  amount: "",
+                  label: data.timeStamp,
                 }}
                 url={detailUrl("subscribe-users")}
               />
@@ -140,9 +143,9 @@ function Dashboard() {
                 title="reported Essay"
                 count={data?.countData?.unprocessedReports}
                 percentage={{
-                  color: "success",
+                  color: "",
                   amount: "",
-                  label: "Just updated",
+                  label: data.timeStamp,
                 }}
                 url="/reports"
               />
