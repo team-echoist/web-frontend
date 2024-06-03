@@ -31,6 +31,8 @@ function Dashboard() {
     countData: {},
     timeStamp: "",
     monthlyUser: { labels: [], datasets: [] },
+    dailySales: { labels: [], datasets: [] },
+    monthlyEssay: { labels: [], datasets: [] },
   });
   const { sales, tasks } = reportsLineChartData;
   const detailUrl = (id) => {
@@ -40,9 +42,10 @@ function Dashboard() {
     async function fetchAdmin() {
       try {
         const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth() + 1;
         const countResponse = await AxiosInstance.get("/api/admin/dashboard");
-        console.log("countResponse",countResponse)
-        const monthlyUserresponse = await AxiosInstance.get(
+        console.log("countResponse", countResponse);
+        const monthlyUserResponse = await AxiosInstance.get(
           "/api/admin/statistics/users/monthly",
           {
             params: {
@@ -50,17 +53,49 @@ function Dashboard() {
             },
           }
         );
+        const dailyPaymentResponse = await AxiosInstance.get(
+          "/api/admin/statistics/payments/daily",
+          {
+            params: {
+              year: currentYear,
+              month: currentMonth,
+            },
+          }
+        );
+        const monthlyEssayResponse = await AxiosInstance.get(
+          "/api/admin/statistics/essays/monthly",
+          {
+            params: {
+              year: currentYear,
+            },
+          }
+        );
+        console.log("monthlyEssayResponse", monthlyEssayResponse);
 
         const data = countResponse.data.data;
         const timeStamp = countResponse.data.timestamp;
-        const monthlyUser = Object.values(monthlyUserresponse.data.data);
+        const monthlyUser = Object.values(monthlyUserResponse.data.data);
+        const dailyPaymensts = Object.values(dailyPaymentResponse.data.data);
+        const monthlyEssays = Object.values(monthlyEssayResponse.data.data);
+        const daysArr = Array.from(
+          { length: dailyPaymensts.length },
+          (_, index) => index + 1
+        );
         setData((prev) => ({
           ...prev,
           countData: data,
           timeStamp: timeSince(timeStamp),
           monthlyUser: {
-            labels:reportsBarChartData.labels,
-            datasets: { label: "Sales", data: monthlyUser },
+            labels: reportsBarChartData.labels,
+            datasets: { label: "users", data: monthlyUser },
+          },
+          dailySales: {
+            labels: daysArr,
+            datasets: { label: "sales", data: dailyPaymensts },
+          },
+          monthlyEssay: {
+            labels: reportsBarChartData.labels,
+            datasets: { label: "essays", data: monthlyEssays },
           },
         }));
       } catch (error) {
@@ -180,8 +215,8 @@ function Dashboard() {
                 <ReportsBarChart
                   color="info"
                   title="Monthly subscribers"
-                  description="LMonthly Subscriber Trends"
-                  date="Data as of 2 days ago"
+                  description="Monthly Subscriber Trends"
+                  date={data?.timeStamp}
                   chart={data?.monthlyUser && data?.monthlyUser}
                 />
               </MDBox>
@@ -191,13 +226,9 @@ function Dashboard() {
                 <ReportsLineChart
                   color="success"
                   title="daily sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
+                  description="increase daily Sales "
+                  date={data?.timeStamp}
+                  chart={data?.dailySales && data?.dailySales}
                 />
               </MDBox>
             </Grid>
@@ -207,8 +238,8 @@ function Dashboard() {
                   color="dark"
                   title="Essay Progress Overview"
                   description="Recent Changes in Essay Completion"
-                  date="just updated"
-                  chart={tasks}
+                  date={data?.timeStamp}
+                  chart={data?.monthlyEssay && data?.monthlyEssay}
                 />
               </MDBox>
             </Grid>
