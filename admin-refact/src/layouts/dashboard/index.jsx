@@ -40,7 +40,8 @@ function Dashboard() {
     async function fetchAdmin() {
       try {
         const currentYear = new Date().getFullYear();
-        const countResponse = await AxiosInstance.get("/api/admin");
+        const countResponse = await AxiosInstance.get("/api/admin/dashboard");
+        console.log("countResponse",countResponse)
         const monthlyUserresponse = await AxiosInstance.get(
           "/api/admin/statistics/users/monthly",
           {
