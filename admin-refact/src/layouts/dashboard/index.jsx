@@ -14,7 +14,6 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import { timeSince } from "./util/TimeSInce";
 
 import TodayIcon from "@mui/icons-material/Today";
@@ -34,7 +33,7 @@ function Dashboard() {
     dailySales: { labels: [], datasets: [] },
     monthlyEssay: { labels: [], datasets: [] },
   });
-  const { sales, tasks } = reportsLineChartData;
+
   const detailUrl = (id) => {
     return `/dashboard/${id}`;
   };
@@ -70,7 +69,6 @@ function Dashboard() {
             },
           }
         );
-        console.log("monthlyEssayResponse", monthlyEssayResponse);
 
         const data = countResponse.data.data;
         const timeStamp = countResponse.data.timestamp;
