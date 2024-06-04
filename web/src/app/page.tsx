@@ -10,6 +10,7 @@ const Container = styled.div`
   width: 500px;
   height: 500px;
   padding: 20px;
+
   font-family: Arial, sans-serif;
 `;
 

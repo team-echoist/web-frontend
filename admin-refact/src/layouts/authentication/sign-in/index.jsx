@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import AxiosInstance from "../../../api/AxiosInstance";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -22,43 +23,22 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 function Basic() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [protectedData, setProtectedData] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log("로그인 버튼 클릭");
 
     try {
-      const response = await axios.post(
-        "https://www.linkedoutapp.com/api/admin/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await AxiosInstance.post("/admin/login", {
+        email,
+        password,
+      });
       console.log("응답", response.data);
 
       localStorage.setItem("토큰", response.data.token);
-      fetchProtectedData(response.data.token);
+      console.log("로그인 토큰:", response.data.token);
     } catch (error) {
       console.log("로그인 에러", error.message);
-    }
-  };
-
-  const fetchProtectedData = async (token) => {
-    try {
-      const response = await axios.get(
-        "https://www.linkedoutapp.com/api/admin/login",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("보호된 데이터:", response.data);
-      setProtectedData(response.data);
-    } catch (error) {
-      console.log("보호된 데이터 접근 에러", error.message);
     }
   };
 
