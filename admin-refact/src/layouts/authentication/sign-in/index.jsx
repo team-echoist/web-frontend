@@ -22,6 +22,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 function Basic() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [protectedData, setProtectedData] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -36,8 +37,28 @@ function Basic() {
         }
       );
       console.log("응답", response.data);
+
+      localStorage.setItem("토큰", response.data.token);
+      fetchProtectedData(response.data.token);
     } catch (error) {
       console.log("로그인 에러", error.message);
+    }
+  };
+
+  const fetchProtectedData = async (token) => {
+    try {
+      const response = await axios.get(
+        "https://www.linkedoutapp.com/api/admin/login",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("보호된 데이터:", response.data);
+      setProtectedData(response.data);
+    } catch (error) {
+      console.log("보호된 데이터 접근 에러", error.message);
     }
   };
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const AxiosInstance = axios.create({
-  baseURL: "/api2"
+  baseURL: "/api1"
 });
 
 AxiosInstance.interceptors.request.use((config) => {
