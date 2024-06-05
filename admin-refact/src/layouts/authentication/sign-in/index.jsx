@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import AxiosInstance from "../../../api/AxiosInstance";
 
 // react-router-dom components
