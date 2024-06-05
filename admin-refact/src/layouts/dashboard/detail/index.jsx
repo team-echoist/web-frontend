@@ -15,7 +15,7 @@ import { useLocation } from "react-router-dom";
 import ComboBox from "components/ComboBox";
 import { label, data } from "../data/comboBoxData";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import { generateChartTitle } from "../data/detailChartData";
+// import { generateChartTitle } from "../data/detailChartData";
 import { generateUrl } from "../util/generateUrl";
 import { fetchDetailData } from "../api/fetchDetailData";
 import { generateLables } from "../util/generateLabels";
