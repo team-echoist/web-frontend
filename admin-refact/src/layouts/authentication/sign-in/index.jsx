@@ -33,9 +33,6 @@ function Basic() {
         password,
       });
       console.log("응답", response.data);
-
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
     } catch (error) {
       console.log("로그인 에러", error.message);
     }
