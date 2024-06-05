@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
@@ -15,23 +15,56 @@ import { useLocation } from "react-router-dom";
 import ComboBox from "components/ComboBox";
 import { label, data } from "../data/comboBoxData";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import { generateChartTitle, settingChartData } from "../data/detailChartData";
+// import { generateChartTitle } from "../data/detailChartData";
+import { generateUrl } from "../util/generateUrl";
+import { fetchDetailData } from "../api/fetchDetailData";
+import { generateLables } from "../util/generateLabels";
 
 function index() {
-  const [select, setSelect] = useState("");
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: { label: "apps", data: [] },
+  });
+  const [select, setSelect] = useState({ selected: "", number: 1 });
   const route = useLocation().pathname.split("/").slice(1);
   const chartTitle = generateChartTitle(route[1]);
-  let chartData = settingChartData(route[1], select);
 
   const handleChange = (event) => {
-    setSelect(event.target.value);
+    const value = event.target.value;
+    setSelect((prev) => ({
+      ...prev,
+      selected: value,
+      number: data.indexOf(value) + 1,
+    }));
   };
 
   useEffect(() => {
     const currentDate = new Date();
     const monthName = currentDate.toLocaleString("en-US", { month: "long" });
-    setSelect(`${monthName}`);
+    const currentMonth = data.indexOf(monthName) + 1;
+    const pageInfoObj = generateUrl(route[1]);
+
+    setSelect((prev) => ({
+      ...prev,
+      selected: `${monthName}`,
+      number: currentMonth,
+    }));
+    setChartData((prev) => ({
+      ...prev,
+      labels: generateLables(route[1], currentMonth),
+    }));
+    fetchDetailData(pageInfoObj, setChartData);
   }, []);
+
+  useEffect(() => {
+    const newPageInfoObj = generateUrl(route[1], select.number);
+    const currentMonth = data.indexOf(select.number) + 1;
+    setChartData((prev) => ({
+      ...prev,
+      labels: generateLables(route[1], currentMonth),
+    }));
+    fetchDetailData(newPageInfoObj, setChartData);
+  }, [select]);
 
   return (
     <DashboardLayout>
@@ -56,20 +89,19 @@ function index() {
           </Card>
         </Grid>
       </MDBox>
-      {route[1] !== "total-essay" ||
-        (route[1] !== "all-users" && (
-          <MDBox sx={{ paddingRight: "20px" }}>
-            <Grid container justifyContent="flex-end">
-              <ComboBox
-                label={label}
-                data={data}
-                select={select}
-                handleChange={handleChange}
-                width="10rem"
-              />
-            </Grid>
-          </MDBox>
-        ))}
+      {route[1] !== "total-essay" && route[1] !== "all-users" ? (
+        <MDBox sx={{ paddingRight: "20px" }}>
+          <Grid container justifyContent="flex-end">
+            <ComboBox
+              label={label}
+              data={data}
+              select={select.selected}
+              handleChange={handleChange}
+              width="10rem"
+            />
+          </Grid>
+        </MDBox>
+      ) : null}
 
       <Grid item xs={12} md={6} lg={4}>
         <MDBox mt={8} mb={3}>

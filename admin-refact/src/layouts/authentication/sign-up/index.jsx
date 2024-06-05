@@ -1,17 +1,4 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+import { useState } from "react";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -31,8 +18,31 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+// import axios from "axios";
+import AxiosInstance from "../../../api/AxiosInstance";
 
 function Cover() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+
+  const handleSignup = async () => {
+    try {
+      const response = await AxiosInstance.post("/admin/register", {
+        email,
+        password,
+        name,
+      });
+      alert("회원가입 요청 완료. 관리자의 승인을 기다려주세요.");
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        alert("이미 가입된 이메일입니다.");
+      } else {
+        alert("가입 중 에러 발생", error.message);
+      }
+    }
+  };
+
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -57,12 +67,36 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                variant="standard"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
+              <MDInput
+                type="name"
+                label="Name"
+                variant="standard"
+                fullWidth
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
+            <MDBox mb={2}>
+              <MDInput
+                type="password"
+                label="Password"
+                variant="standard"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </MDBox>
+            {/* <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
               <MDTypography
                 variant="button"
@@ -82,9 +116,14 @@ function Cover() {
               >
                 Terms and Conditions
               </MDTypography>
-            </MDBox>
+            </MDBox> */}
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton
+                variant="gradient"
+                color="info"
+                fullWidth
+                onClick={handleSignup}
+              >
                 sign up
               </MDButton>
             </MDBox>
