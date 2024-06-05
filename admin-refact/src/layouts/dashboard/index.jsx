@@ -1,4 +1,3 @@
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -15,7 +14,7 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+import { timeSince } from "./util/TimeSInce";
 
 import TodayIcon from "@mui/icons-material/Today";
 import DrawIcon from "@mui/icons-material/Draw";
@@ -23,12 +22,86 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import GroupIcon from "@mui/icons-material/Group";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import ReportIcon from "@mui/icons-material/Report";
+import AxiosInstance from "../../api/AxiosInstance";
+import { useEffect, useState } from "react";
 
 function Dashboard() {
-  const { sales, tasks } = reportsLineChartData;
+  const [data, setData] = useState({
+    countData: {},
+    timeStamp: "",
+    monthlyUser: { labels: [], datasets: [] },
+    dailySales: { labels: [], datasets: [] },
+    monthlyEssay: { labels: [], datasets: [] },
+  });
+
   const detailUrl = (id) => {
     return `/dashboard/${id}`;
   };
+  useEffect(() => {
+    async function fetchAdmin() {
+      try {
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth() + 1;
+        const countResponse = await AxiosInstance.get("/api/admin/dashboard");
+        console.log("countResponse", countResponse);
+        const monthlyUserResponse = await AxiosInstance.get(
+          "/api/admin/statistics/users/monthly",
+          {
+            params: {
+              year: currentYear,
+            },
+          }
+        );
+        const dailyPaymentResponse = await AxiosInstance.get(
+          "/api/admin/statistics/payments/daily",
+          {
+            params: {
+              year: currentYear,
+              month: currentMonth,
+            },
+          }
+        );
+        const monthlyEssayResponse = await AxiosInstance.get(
+          "/api/admin/statistics/essays/monthly",
+          {
+            params: {
+              year: currentYear,
+            },
+          }
+        );
+
+        const data = countResponse.data.data;
+        const timeStamp = countResponse.data.timestamp;
+        const monthlyUser = Object.values(monthlyUserResponse.data.data);
+        const dailyPaymensts = Object.values(dailyPaymentResponse.data.data);
+        const monthlyEssays = Object.values(monthlyEssayResponse.data.data);
+        const daysArr = Array.from(
+          { length: dailyPaymensts.length },
+          (_, index) => index + 1
+        );
+        setData((prev) => ({
+          ...prev,
+          countData: data,
+          timeStamp: timeSince(timeStamp),
+          monthlyUser: {
+            labels: reportsBarChartData.labels,
+            datasets: { label: "users", data: monthlyUser },
+          },
+          dailySales: {
+            labels: daysArr,
+            datasets: { label: "sales", data: dailyPaymensts },
+          },
+          monthlyEssay: {
+            labels: reportsBarChartData.labels,
+            datasets: { label: "essays", data: monthlyEssays },
+          },
+        }));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchAdmin();
+  }, []);
 
   return (
     <DashboardLayout>
@@ -41,11 +114,11 @@ function Dashboard() {
                 color="dark"
                 icon={<TodayIcon />}
                 title="Today Essay"
-                count={281}
+                count={data?.countData?.todayEssays}
                 percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  color: "",
+                  amount: "",
+                  label: data.timeStamp,
                 }}
                 url={detailUrl("today-essay")}
               />
@@ -57,11 +130,11 @@ function Dashboard() {
                 color="dark"
                 icon={<DrawIcon />}
                 title="Total Essay"
-                count={501}
+                count={data?.countData?.totalEssays}
                 percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  color: "",
+                  amount: "",
+                  label: data.timeStamp,
                 }}
                 url={detailUrl("total-essay")}
               />
@@ -73,11 +146,11 @@ function Dashboard() {
                 color="primary"
                 icon={<GroupAddIcon />}
                 title="Today's Users"
-                count={501}
+                count={data?.countData?.currentSubscriber}
                 percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  color: "",
+                  amount: "",
+                  label: data.timeStamp,
                 }}
                 url={detailUrl("today-users")}
               />
@@ -89,11 +162,11 @@ function Dashboard() {
                 color="primary"
                 icon={<GroupIcon />}
                 title="All Users"
-                count="+91"
+                count={data?.countData?.totalUser}
                 percentage={{
-                  color: "success",
+                  color: "",
                   amount: "",
-                  label: "Just updated",
+                  label: data.timeStamp,
                 }}
                 url={detailUrl("all-users")}
               />
@@ -105,11 +178,11 @@ function Dashboard() {
                 color="success"
                 icon={<AddCardIcon />}
                 title="Subscribe Users"
-                count="34k"
+                count={data?.countData?.currentSubscriber}
                 percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
+                  color: "",
+                  amount: "",
+                  label: data.timeStamp,
                 }}
                 url={detailUrl("subscribe-users")}
               />
@@ -122,11 +195,11 @@ function Dashboard() {
                 color="primary"
                 icon={<ReportIcon />}
                 title="reported Essay"
-                count="+91"
+                count={data?.countData?.unprocessedReports}
                 percentage={{
-                  color: "success",
+                  color: "",
                   amount: "",
-                  label: "Just updated",
+                  label: data.timeStamp,
                 }}
                 url="/reports"
               />
@@ -140,9 +213,9 @@ function Dashboard() {
                 <ReportsBarChart
                   color="info"
                   title="Monthly subscribers"
-                  description="LMonthly Subscriber Trends"
-                  date="Data as of 2 days ago"
-                  chart={reportsBarChartData}
+                  description="Monthly Subscriber Trends"
+                  date={data?.timeStamp}
+                  chart={data?.monthlyUser && data?.monthlyUser}
                 />
               </MDBox>
             </Grid>
@@ -151,13 +224,9 @@ function Dashboard() {
                 <ReportsLineChart
                   color="success"
                   title="daily sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
+                  description="increase daily Sales "
+                  date={data?.timeStamp}
+                  chart={data?.dailySales && data?.dailySales}
                 />
               </MDBox>
             </Grid>
@@ -167,8 +236,8 @@ function Dashboard() {
                   color="dark"
                   title="Essay Progress Overview"
                   description="Recent Changes in Essay Completion"
-                  date="just updated"
-                  chart={tasks}
+                  date={data?.timeStamp}
+                  chart={data?.monthlyEssay && data?.monthlyEssay}
                 />
               </MDBox>
             </Grid>
