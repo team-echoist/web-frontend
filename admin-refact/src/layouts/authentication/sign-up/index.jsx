@@ -18,7 +18,8 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
-import axios from "axios";
+// import axios from "axios";
+import AxiosInstance from "../../../api/AxiosInstance";
 
 function Cover() {
   const [email, setEmail] = useState("");
@@ -27,15 +28,12 @@ function Cover() {
 
   const handleSignup = async () => {
     try {
-      const response = await axios.post(
-        "https://www.linkedoutapp.com/api/admin/register",
-        {
-          email,
-          password,
-          name,
-        }
-      );
-      alert("회원가입 요청 완료. 관리자의 승인을 기다려주세용⭐");
+      const response = await AxiosInstance.post("/admin/register", {
+        email,
+        password,
+        name,
+      });
+      alert("회원가입 요청 완료. 관리자의 승인을 기다려주세요.");
     } catch (error) {
       if (error.response && error.response.status === 409) {
         alert("이미 가입된 이메일입니다.");
