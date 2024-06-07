@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import AxiosInstance from "../../../api/AxiosInstance";
 
 // react-router-dom components
@@ -34,9 +33,6 @@ function Basic() {
         password,
       });
       console.log("응답", response.data);
-
-      localStorage.setItem("토큰", response.data.token);
-      console.log("로그인 토큰:", response.data.token);
     } catch (error) {
       console.log("로그인 에러", error.message);
     }
