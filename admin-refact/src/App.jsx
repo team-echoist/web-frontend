@@ -89,12 +89,13 @@ function App() {
 
   useEffect(() => {
     const token = Cookies.get("token");
-    console.log(
-      "token: " + token,
-      !token && pathname !== "/authentication/sign-in"
-    );
-    if (!token &&  (pathname !== "/authentication/sign-in" || pathname !== "/authentication/sign-up")) {
-      navigate("/authentication/sign-in");
+    if (!token) {
+      if (
+        pathname.includes("sign-in") &&
+        pathname.includes("signup")
+      ) {
+        navigate("/authentication/sign-in");
+      }
     }
   }, [pathname]);
 
@@ -199,7 +200,7 @@ function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+        {/* <Route path="*" element={<Navigate to="/authentication/sign-in" />} /> */}
       </Routes>
     </ThemeProvider>
   );
