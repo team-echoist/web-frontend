@@ -19,7 +19,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 function Basic() {
@@ -36,18 +36,17 @@ function Basic() {
         email,
         password,
       });
-      if(response.data.statusCode ===201){
-        const token = response.headers['authorization'];
+      if (response.data.statusCode === 201) {
+        const token = response.headers["authorization"];
         if (token) {
-          Cookies.set('token', token, { secure: true, sameSite: 'Strict' }); 
+          Cookies.set("token", token, { secure: true, sameSite: "Strict" });
           // secure 옵션은 https에서만 쿠키를 전송할수 있도록함 (인증된 사이트에서만 이용가능)
           // sameSite 옵션은 쿠키를 전송할 사이트를 지정함
           // Strict 옵션은 쿠키를 전송할 사이트를 지정함
           route("/dashboard");
         } else {
-          console.error('Token not found in response headers');
+          console.error("Token not found in response headers");
         }
-      
       }
       console.log("응답", response.data);
     } catch (error) {
