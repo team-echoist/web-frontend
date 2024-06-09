@@ -29,7 +29,6 @@ function Basic() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("로그인 버튼 클릭");
 
     try {
       const response = await AxiosInstance.post("/admin/login", {
@@ -48,7 +47,7 @@ function Basic() {
           console.error("Token not found in response headers");
         }
       }
-      console.log("응답", response.data);
+
     } catch (error) {
       console.log("로그인 에러", error.message);
     }
