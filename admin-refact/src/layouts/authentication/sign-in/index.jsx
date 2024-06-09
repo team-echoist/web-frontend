@@ -39,6 +39,7 @@ function Basic() {
         const token = response.headers["authorization"];
         if (token) {
           Cookies.set("token", token, { secure: true, sameSite: "Strict" });
+          Cookies.set("email", email, { secure: true, sameSite: "Strict" });
           // secure 옵션은 https에서만 쿠키를 전송할수 있도록함 (인증된 사이트에서만 이용가능)
           // sameSite 옵션은 쿠키를 전송할 사이트를 지정함
           // Strict 옵션은 쿠키를 전송할 사이트를 지정함
