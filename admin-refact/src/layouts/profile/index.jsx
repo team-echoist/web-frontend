@@ -26,8 +26,15 @@ import PlatformSettings from "layouts/profile/components/PlatformSettings";
 
 // Data
 import profilesListData from "layouts/profile/data/profilesListData";
+import { useEffect } from "react";
+
 
 function Overview() {
+
+  useEffect(()=>{
+
+  },[])
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
