@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const AxiosInstance = axios.create({
-  baseURL: "https://www.linkedoutapp.com/api",
+  baseURL: import.meta.env.VITE_ROOT_API_URL,
 });
 
 AxiosInstance.interceptors.request.use((config) => {

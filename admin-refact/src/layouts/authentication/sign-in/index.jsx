@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AxiosInstance from "../../../api/AxiosInstance";
+import axios from "axios";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -31,7 +31,7 @@ function Basic() {
     e.preventDefault();
 
     try {
-      const response = await AxiosInstance.post("/admin/login", {
+      const response = await axios.post(`${import.meta.env.VITE_ROOT_API_URL}/admin/login`, {
         email,
         password,
       });
