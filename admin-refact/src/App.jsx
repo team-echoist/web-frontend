@@ -90,14 +90,11 @@ function App() {
   useEffect(() => {
     const token = Cookies.get("token");
     if (!token) {
-      if (
-        pathname.includes("sign-in") &&
-        pathname.includes("signup")
-      ) {
+      if (!pathname.includes("sign-in") && !pathname.includes("signup")) {
         navigate("/authentication/sign-in");
       }
     }
-  }, [pathname]);
+  }, [pathname, navigate]);
 
   const handleConfiguratorOpen = () =>
     setOpenConfigurator(dispatch, !openConfigurator);
