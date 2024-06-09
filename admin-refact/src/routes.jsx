@@ -6,16 +6,16 @@ import Users from "layouts/users";
 import Essay from "layouts/essay";
 import DashBoardDetail from "layouts/dashboard/detail";
 import Profile from "layouts/profile";
+import { handleLogout } from "./utils/handleLogout";
 
 // @mui icons
-import LoginIcon from '@mui/icons-material/Login';
-import ReportIcon from '@mui/icons-material/Report';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import GroupIcon from '@mui/icons-material/Group';
-import BorderColorIcon from '@mui/icons-material/BorderColor';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-
-
+import LoginIcon from "@mui/icons-material/Login";
+import ReportIcon from "@mui/icons-material/Report";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import GroupIcon from "@mui/icons-material/Group";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const routes = [
   {
@@ -59,15 +59,13 @@ const routes = [
     component: <Profile />,
   },
   {
-    type: "collapse",
     name: "Sign In",
     key: "sign-in",
-    icon: <LoginIcon/>,
+    icon: <LoginIcon />,
     route: "/authentication/sign-in",
     component: <SignIn />,
   },
   {
-    type: "collapse",
     name: "SignUp",
     key: "signup",
     icon: <></>,
@@ -80,6 +78,14 @@ const routes = [
     route: "/dashboard/:id",
     component: <DashBoardDetail />,
   },
+  {
+    type: "collapse",
+    name: "logout",
+    key: "logout",
+    icon: <LogoutIcon/>,
+    onClick: handleLogout,
+  },
 ];
+
 
 export default routes;
