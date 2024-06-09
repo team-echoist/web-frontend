@@ -28,11 +28,11 @@ AxiosInstance.interceptors.response.use(
   }
 );
 
-// 토큰을 인위적으로 만료시키는 함수(테스트용)
-const expireToken = () => {
-  Cookies.remove("token");
-};
+// // 토큰을 인위적으로 만료시키는 함수(테스트용)
+// const expireToken = () => {
+//   Cookies.remove("token");
+// };
 
-setTimeout(expireToken, 10000);
+// setTimeout(expireToken, 10000);
 
 export default AxiosInstance;
