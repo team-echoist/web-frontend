@@ -19,7 +19,7 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 // import axios from "axios";
-import AxiosInstance from "../../../api/AxiosInstance";
+import axios from "axios";
 
 function Cover() {
   const [email, setEmail] = useState("");
@@ -28,7 +28,7 @@ function Cover() {
 
   const handleSignup = async () => {
     try {
-      const response = await AxiosInstance.post("/admin/register", {
+      const response = await axios.post(`${import.meta.env.VITE_ROOT_API_URL}/admin/register`, {
         email,
         password,
         name,

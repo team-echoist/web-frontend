@@ -1,13 +1,14 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const AxiosInstance = axios.create({
-  baseURL: "https://www.linkedoutapp.com/api",
+  baseURL: import.meta.env.VITE_ROOT_API_URL,
 });
 
 AxiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `${token}`;
   }
   return config;
 });
@@ -18,7 +19,7 @@ AxiosInstance.interceptors.response.use(
     const newToken = response.headers["Authorization"];
     if (newToken) {
       const tokenValue = newToken.split(" ")[1];
-      localStorage.setItem("token", tokenValue);
+      Cookies.set("token", tokenValue, { secure: true,  sameSite: "Strict" });
     }
     return response;
   },
@@ -27,11 +28,11 @@ AxiosInstance.interceptors.response.use(
   }
 );
 
-// 토큰을 인위적으로 만료시키는 함수(테스트용)
-const expireToken = () => {
-  localStorage.removeItem("token");
-};
+// // 토큰을 인위적으로 만료시키는 함수(테스트용)
+// const expireToken = () => {
+//   Cookies.remove("token");
+// };
 
-setTimeout(expireToken, 10000);
+// setTimeout(expireToken, 10000);
 
 export default AxiosInstance;

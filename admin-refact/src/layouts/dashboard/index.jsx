@@ -42,10 +42,10 @@ function Dashboard() {
       try {
         const currentYear = new Date().getFullYear();
         const currentMonth = new Date().getMonth() + 1;
-        const countResponse = await AxiosInstance.get("/api/admin/dashboard");
+        const countResponse = await AxiosInstance.get("/admin/dashboard");
         console.log("countResponse", countResponse);
         const monthlyUserResponse = await AxiosInstance.get(
-          "/api/admin/statistics/users/monthly",
+          "/admin/statistics/users/monthly",
           {
             params: {
               year: currentYear,
@@ -53,7 +53,7 @@ function Dashboard() {
           }
         );
         const dailyPaymentResponse = await AxiosInstance.get(
-          "/api/admin/statistics/payments/daily",
+          "/admin/statistics/payments/daily",
           {
             params: {
               year: currentYear,
@@ -62,7 +62,7 @@ function Dashboard() {
           }
         );
         const monthlyEssayResponse = await AxiosInstance.get(
-          "/api/admin/statistics/essays/monthly",
+          "/admin/statistics/essays/monthly",
           {
             params: {
               year: currentYear,

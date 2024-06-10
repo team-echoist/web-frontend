@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AxiosInstance from "../../../api/AxiosInstance";
+import axios from "axios";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -19,20 +19,36 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+
 function Basic() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const route = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("로그인 버튼 클릭");
 
     try {
-      const response = await AxiosInstance.post("/admin/login", {
+      const response = await axios.post(`${import.meta.env.VITE_ROOT_API_URL}/admin/login`, {
         email,
         password,
       });
-      console.log("응답", response.data);
+      if (response.data.statusCode === 201) {
+        const token = response.headers["authorization"];
+        if (token) {
+          Cookies.set("token", token, { secure: true, sameSite: "Strict" });
+          Cookies.set("email", email, { secure: true, sameSite: "Strict" });
+          // secure 옵션은 https에서만 쿠키를 전송할수 있도록함 (인증된 사이트에서만 이용가능)
+          // sameSite 옵션은 쿠키를 전송할 사이트를 지정함
+          // Strict 옵션은 쿠키를 전송할 사이트를 지정함
+          route("/dashboard");
+        } else {
+          console.error("Token not found in response headers");
+        }
+      }
+
     } catch (error) {
       console.log("로그인 에러", error.message);
     }
@@ -86,7 +102,7 @@ function Basic() {
                 Don&apos;t have an account?{" "}
                 <MDTypography
                   component={Link}
-                  to="/authentication/sign-up"
+                  to="/signup"
                   variant="button"
                   color="info"
                   fontWeight="medium"
