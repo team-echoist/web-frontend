@@ -1,19 +1,4 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -24,7 +9,6 @@ import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -37,32 +21,56 @@ import breakpoints from "assets/theme/base/breakpoints";
 // Images
 import burceMars from "assets/images/default_profile.jpg";
 import backgroundImage from "assets/images/profile-background.png";
+import Person4Icon from "@mui/icons-material/Person4";
+import AxiosInstance from "../../../../api/AxiosInstance";
+import { showToast } from "../../../../utils/toast";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+  const [profileImage, setProfileImage] = useState(burceMars);
 
   useEffect(() => {
-    // A function that sets the orientation state of the tabs.
     function handleTabsOrientation() {
       return window.innerWidth < breakpoints.values.sm
         ? setTabsOrientation("vertical")
         : setTabsOrientation("horizontal");
     }
 
-    /** 
-     The event listener that's calling the handleTabsOrientation function when resizing the window.
-    */
     window.addEventListener("resize", handleTabsOrientation);
-
-    // Call the handleTabsOrientation function to set the state with the initial value.
     handleTabsOrientation();
 
-    // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
+
+  const handleImageChange = useCallback(async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => setProfileImage(e.target.result);
+      reader.readAsDataURL(file);
+
+      // 파일을 multipart/form-data 형식으로 서버에 전송
+      const formData = new FormData();
+      formData.append("image", file);
+
+      try {
+        const response = await AxiosInstance.post("/admin/images", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        if (response.data.statusCode === 201) {
+          showToast.success("image uploaded successfully");
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+  }, []);
 
   return (
     <MDBox position="relative" mb={5}>
@@ -73,7 +81,10 @@ function Header({ children }) {
         minHeight="18.75rem"
         borderRadius="xl"
         sx={{
-          backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
+          backgroundImage: ({
+            functions: { rgba, linearGradient },
+            palette: { gradients },
+          }) =>
             `${linearGradient(
               rgba(gradients.info.main, 0.1),
               rgba(gradients.info.state, 0.1)
@@ -94,29 +105,52 @@ function Header({ children }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+            <input
+              accept="image/*"
+              style={{ display: "none" }}
+              id="profile-image-upload"
+              type="file"
+              onChange={handleImageChange}
+            />
+            <label
+              htmlFor="profile-image-upload"
+              style={{ position: "relative", display: "inline-block" }}
+            >
+              <MDAvatar
+                src={profileImage}
+                alt="profile-image"
+                size="xl"
+                shadow="sm"
+                sx={{ cursor: "pointer" }}
+              />
+              <DeleteIcon
+                sx={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  transform: "translate(50%, 50%)",
+                  background: "white",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+              />
+            </label>
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
                 Echoist Admin
               </MDTypography>
-              <MDTypography variant="button" color="text" fontWeight="regular">
-                CEO / Co-Founder
-              </MDTypography>
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
             <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-                <Tab
-                  label="Admin Request"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      email
-                    </Icon>
-                  }
-                />
+              <Tabs
+                orientation={tabsOrientation}
+                value={tabValue}
+                onChange={handleSetTabValue}
+              >
+                <Tab label="Admin Request" icon={<Person4Icon />} />
               </Tabs>
             </AppBar>
           </Grid>

@@ -40,6 +40,8 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import routes from "./routes";
 import Cookies from "js-cookie";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -199,6 +201,7 @@ function App() {
         {getRoutes(routes)}
         {/* <Route path="*" element={<Navigate to="/authentication/sign-in" />} /> */}
       </Routes>
+      <ToastContainer />
     </ThemeProvider>
   );
 }

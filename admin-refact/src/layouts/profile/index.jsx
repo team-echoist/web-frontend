@@ -1,4 +1,3 @@
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
@@ -27,7 +26,35 @@ import PlatformSettings from "layouts/profile/components/PlatformSettings";
 // Data
 import profilesListData from "layouts/profile/data/profilesListData";
 
+import { findAdmin } from "./util/findAdmin";
+import { fetchData } from "./api";
+import { useEffect, useState } from "react";
+
 function Overview() {
+  const [data, setData] = useState({});
+
+  const returnUserProfile = async () => {
+    const adminList = await fetchData("/admin");
+    const admin = await findAdmin(adminList.admins);
+    const adminProfile = await fetchData(`/admin/${admin.id}`);
+    console.log("adminProfile", adminProfile);
+    setData((prev) => ({
+      ...prev,
+      adminProfile: adminProfile,
+      adminList: adminList,
+    }));
+  };
+
+  const requestAdminList = async () => {
+    const disabledAdmin = await fetchData("/admin");
+    console.log("disabledAdmin", disabledAdmin);
+  };
+
+  console.log("data", data);
+  useEffect(() => {
+    returnUserProfile();
+    requestAdminList();
+  }, []);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -44,8 +71,8 @@ function Overview() {
                 title="profile information"
                 description="echoist 최고 권력자 어드민 계정입니다."
                 info={{
-                  fullName: "ehoist",
-                  email: "admin1@linkedoutapp.com",
+                  fullName: data?.adminProfile?.name || "에코이스트",
+                  email: data?.adminProfile?.email,
                   location: "KOREA",
                 }}
                 social={[
@@ -68,7 +95,11 @@ function Overview() {
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
             <Grid item xs={12} xl={4}>
-              <ProfilesList title="어드민 요청 리스트" profiles={profilesListData} shadow={false} />
+              <ProfilesList
+                title="어드민 요청 리스트"
+                profiles={profilesListData}
+                shadow={false}
+              />
             </Grid>
           </Grid>
         </MDBox>
