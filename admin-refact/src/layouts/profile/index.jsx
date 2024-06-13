@@ -25,41 +25,92 @@ import PlatformSettings from "layouts/profile/components/PlatformSettings";
 
 // Data
 import profilesListData from "layouts/profile/data/profilesListData";
+import { showToast } from "../../utils/toast";
 
 import { findAdmin } from "./util/findAdmin";
 import { fetchData } from "./api";
 import { useEffect, useState } from "react";
 
+import EditModal from "./components/EditModal";
+
 function Overview() {
   const [data, setData] = useState({});
+  const [editModalOpen, setEditModalOpen] = useState(false);
 
   const returnUserProfile = async () => {
-    const adminList = await fetchData("/admin");
-    const admin = await findAdmin(adminList.admins);
-    const adminProfile = await fetchData(`/admin/${admin.id}`);
-    console.log("adminProfile", adminProfile);
-    setData((prev) => ({
-      ...prev,
-      adminProfile: adminProfile,
-      adminList: adminList,
-    }));
+    try {
+      const adminList = await fetchData("/admin", "get");
+      const admin = await findAdmin(adminList.data.admins);
+      const adminProfile = await fetchData(`/admin/${admin.id}`, "get");
+      setData((prev) => ({
+        ...prev,
+        adminProfile: adminProfile?.data,
+      }));
+    } catch (error) {
+      console.log("err", error);
+    }
   };
 
   const requestAdminList = async () => {
-    const disabledAdmin = await fetchData("/admin");
-    console.log("disabledAdmin", disabledAdmin);
+    const disabledAdmin = await fetchData("/admin/inactive", "get");
+    if (disabledAdmin.status === 200) {
+      setData((prev) => ({
+        ...prev,
+        disabledAdmin: disabledAdmin.data,
+      }));
+    }
   };
 
-  console.log("data", data);
   useEffect(() => {
     returnUserProfile();
     requestAdminList();
   }, []);
+
+  const editProfile = async () => {
+    const body = Object.keys(data.editedProfile).reduce((acc, key) => {
+      acc[key] = data.editedProfile[key];
+      return acc;
+    }, {});
+    try {
+      const editProfile = await fetchData("/admin", "put", body);
+      if (editProfile.status === 200) {
+        showToast.success("Profile edited successfully");
+        setData((prev) => ({
+          ...prev,
+          adminProfile: editProfile.data,
+        }));
+        setEditModalOpen(false);
+      }
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      editedProfile: {
+        ...prev.editedProfile,
+        [name]: value,
+      },
+    }));
+  };
+
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mb={2} />
-      <Header>
+      <Header defaultProfileUrl={data?.adminProfile?.imageUrl} >
+        <EditModal
+          open={editModalOpen}
+          setOpen={setEditModalOpen}
+          data={data.adminProfile}
+          setData={setData}
+          onChange={handleChange}
+          editProfile={editProfile}
+        />
         <MDBox mt={5} mb={3}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6} xl={4}>
@@ -73,7 +124,10 @@ function Overview() {
                 info={{
                   fullName: data?.adminProfile?.name || "에코이스트",
                   email: data?.adminProfile?.email,
-                  location: "KOREA",
+                  information: data?.adminProfile?.info || "아직 정보가 없습니다.",
+                }}
+                onClick={() => {
+                  setEditModalOpen(true);
                 }}
                 social={[
                   {

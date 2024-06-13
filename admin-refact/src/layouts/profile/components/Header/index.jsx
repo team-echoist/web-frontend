@@ -25,11 +25,14 @@ import Person4Icon from "@mui/icons-material/Person4";
 import AxiosInstance from "../../../../api/AxiosInstance";
 import { showToast } from "../../../../utils/toast";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { fetchData } from "../../api";
 
-function Header({ children }) {
+function Header({ children, defaultProfileUrl }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-  const [profileImage, setProfileImage] = useState(burceMars);
+  const [profileImage, setProfileImage] = useState(
+    burceMars || defaultProfileUrl
+  );
 
   useEffect(() => {
     function handleTabsOrientation() {
@@ -53,18 +56,27 @@ function Header({ children }) {
       reader.onload = (e) => setProfileImage(e.target.result);
       reader.readAsDataURL(file);
 
-      // 파일을 multipart/form-data 형식으로 서버에 전송
       const formData = new FormData();
       formData.append("image", file);
 
       try {
-        const response = await AxiosInstance.post("/admin/images", formData, {
+        const response = await fetchData("/admin/images", "post", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        if (response.data.statusCode === 201) {
-          showToast.success("image uploaded successfully");
+
+        if (response.status === 201) {
+          const body = {
+            profileImage: response.data.imageUrl,
+          };
+
+          const editProfileImage = await fetchData("/admin", "put", body);
+          if (editProfileImage.status === 200) {
+            showToast.success("image uploaded successfully");
+          } else {
+            showToast.error("image uploaded failed");
+          }
         }
       } catch (error) {
         console.error("Error uploading image:", error);
