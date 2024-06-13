@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-// react-routers components
-import { Link } from "react-router-dom";
+
 
 // prop-types is library for typechecking of props
 import PropTypes from "prop-types";
