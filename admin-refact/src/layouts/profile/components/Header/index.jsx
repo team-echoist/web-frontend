@@ -21,7 +21,7 @@ import breakpoints from "assets/theme/base/breakpoints";
 // Images
 import burceMars from "assets/images/default_profile.jpg";
 import backgroundImage from "assets/images/profile-background.png";
-import Person4Icon from "@mui/icons-material/Person4";
+import AlarmOnIcon from '@mui/icons-material/AlarmOn';
 import AxiosInstance from "../../../../api/AxiosInstance";
 import { showToast } from "../../../../utils/toast";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -162,7 +162,7 @@ function Header({ children, defaultProfileUrl }) {
                 value={tabValue}
                 onChange={handleSetTabValue}
               >
-                <Tab label="Admin Request" icon={<Person4Icon />} />
+                <Tab label="Admin Request" icon={<AlarmOnIcon />} />
               </Tabs>
             </AppBar>
           </Grid>

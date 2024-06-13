@@ -32,6 +32,7 @@ import { fetchData } from "./api";
 import { useEffect, useState } from "react";
 
 import EditModal from "./components/EditModal";
+import AxiosInstance from "../../api/AxiosInstance";
 
 function Overview() {
   const [data, setData] = useState({});
@@ -56,7 +57,7 @@ function Overview() {
     if (disabledAdmin.status === 200) {
       setData((prev) => ({
         ...prev,
-        disabledAdmin: disabledAdmin.data,
+        disabledAdmin: disabledAdmin.data?.admins,
       }));
     }
   };
@@ -97,12 +98,23 @@ function Overview() {
     }));
   };
 
+  const makeActive = async (id) => {
+    const makeAdminActive = await fetchData(`/admin/${id}`,"put", null, {
+      params: {
+        active: "true",
+      },
+    });
+    if(makeAdminActive.status === 200){
+      showToast.success("Admin activated successfully.");
+      requestAdminList();
+    }
+  };
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mb={2} />
-      <Header defaultProfileUrl={data?.adminProfile?.imageUrl} >
+      <Header defaultProfileUrl={data?.adminProfile?.imageUrl}>
         <EditModal
           open={editModalOpen}
           setOpen={setEditModalOpen}
@@ -124,7 +136,8 @@ function Overview() {
                 info={{
                   fullName: data?.adminProfile?.name || "에코이스트",
                   email: data?.adminProfile?.email,
-                  information: data?.adminProfile?.info || "아직 정보가 없습니다.",
+                  information:
+                    data?.adminProfile?.info || "아직 정보가 없습니다.",
                 }}
                 onClick={() => {
                   setEditModalOpen(true);
@@ -151,8 +164,9 @@ function Overview() {
             <Grid item xs={12} xl={4}>
               <ProfilesList
                 title="어드민 요청 리스트"
-                profiles={profilesListData}
+                profiles={data?.disabledAdmin || []}
                 shadow={false}
+                makeActive={makeActive}
               />
             </Grid>
           </Grid>
