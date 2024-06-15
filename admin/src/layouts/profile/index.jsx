@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 9fe0442ce9f60ebae90524e6eba4de5d1e166c4b
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
@@ -13,10 +9,6 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-<<<<<<< HEAD
-import MDTypography from "components/MDTypography";
-=======
->>>>>>> 9fe0442ce9f60ebae90524e6eba4de5d1e166c4b
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -24,27 +16,11 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import ProfilesList from "examples/Lists/ProfilesList";
-<<<<<<< HEAD
-import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
-=======
->>>>>>> 9fe0442ce9f60ebae90524e6eba4de5d1e166c4b
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
 
-<<<<<<< HEAD
-// Data
-import profilesListData from "layouts/profile/data/profilesListData";
-import { useEffect } from "react";
-
-
-function Overview() {
-
-  useEffect(()=>{
-
-  },[])
-=======
 import { showToast } from "../../utils/toast";
 
 import { findAdmin } from "./util/findAdmin";
@@ -182,15 +158,11 @@ function Overview() {
       showToast.error("image deleted failed");
     }
   };
->>>>>>> 9fe0442ce9f60ebae90524e6eba4de5d1e166c4b
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mb={2} />
-<<<<<<< HEAD
-      <Header>
-=======
       <Header
         profileImage={data?.adminProfile?.profileImage || burceMars}
         handleImageChange={handleImageChange}
@@ -204,7 +176,6 @@ function Overview() {
           onChange={handleChange}
           editProfile={editProfile}
         />
->>>>>>> 9fe0442ce9f60ebae90524e6eba4de5d1e166c4b
         <MDBox mt={5} mb={3}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6} xl={4}>
@@ -216,11 +187,6 @@ function Overview() {
                 title="profile information"
                 description="echoist 최고 권력자 어드민 계정입니다."
                 info={{
-<<<<<<< HEAD
-                  fullName: "ehoist",
-                  email: "admin1@linkedoutapp.com",
-                  location: "KOREA",
-=======
                   fullName: data?.adminProfile?.name || "에코이스트",
                   email: data?.adminProfile?.email,
                   information:
@@ -228,7 +194,6 @@ function Overview() {
                 }}
                 onClick={() => {
                   setEditModalOpen(true);
->>>>>>> 9fe0442ce9f60ebae90524e6eba4de5d1e166c4b
                 }}
                 social={[
                   {
@@ -250,16 +215,12 @@ function Overview() {
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
             <Grid item xs={12} xl={4}>
-<<<<<<< HEAD
-              <ProfilesList title="어드민 요청 리스트" profiles={profilesListData} shadow={false} />
-=======
               <ProfilesList
                 title="어드민 요청 리스트"
                 profiles={data?.disabledAdmin || []}
                 shadow={false}
                 makeActive={makeActive}
               />
->>>>>>> 9fe0442ce9f60ebae90524e6eba4de5d1e166c4b
             </Grid>
           </Grid>
         </MDBox>

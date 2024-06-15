@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-import AxiosInstance from "../../../api/AxiosInstance"
-
-export const fetchProfileData = (id) =>{
-    const response = AxiosInstance.get("/api/v1/users/profile");
-}
-
-export const fetchAdminList = async() =>{
-    const response =await AxiosInstance.get("/admin",{
-        params:{
-            active:true
-        }
-    })
-
-    
-}
-=======
 import AxiosInstance from "../../../api/AxiosInstance";
 
 export const fetchData = async (url, method, body, options = {}) => {
@@ -35,4 +18,3 @@ export const fetchData = async (url, method, body, options = {}) => {
 
   return { data: data, status: status };
 };
->>>>>>> 9fe0442ce9f60ebae90524e6eba4de5d1e166c4b
