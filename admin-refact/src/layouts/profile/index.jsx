@@ -10,7 +10,6 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
-
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -18,20 +17,19 @@ import Footer from "examples/Footer";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import ProfilesList from "examples/Lists/ProfilesList";
 
-
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
-
 
 import { showToast } from "../../utils/toast";
 
 import { findAdmin } from "./util/findAdmin";
 import { fetchData } from "./api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import EditModal from "./components/EditModal";
 
+import burceMars from "assets/images/default_profile.jpg";
 
 function Overview() {
   const [data, setData] = useState({});
@@ -96,24 +94,67 @@ function Overview() {
       },
     }));
   };
-
   const makeActive = async (id) => {
-    const makeAdminActive = await fetchData(`/admin/${id}`,"put", null, {
+    const makeAdminActive = await fetchData(`/admin/${id}`, "put", null, {
       params: {
         active: "true",
       },
     });
-    if(makeAdminActive.status === 200){
+    if (makeAdminActive.status === 200) {
       showToast.success("Admin activated successfully.");
       requestAdminList();
     }
   };
 
+  const handleImageChange = useCallback(async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) =>
+        setData((prev) => ({
+          ...prev,
+          adminProfile: {
+            profileImage: e.target.result,
+          },
+        }));
+      reader.readAsDataURL(file);
+
+      const formData = new FormData();
+      formData.append("image", file);
+
+      try {
+        const response = await fetchData("/admin/images", "post", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        if (response.status === 201) {
+          const body = {
+            profileImage: response.data.imageUrl,
+          };
+
+          const editProfileImage = await fetchData("/admin", "put", body);
+          if (editProfileImage.status === 200) {
+            showToast.success("image uploaded successfully");
+          } else {
+            showToast.error("image uploaded failed");
+          }
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+  }, []);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mb={2} />
-      <Header defaultProfileUrl={data?.adminProfile?.imageUrl}>
+      <Header
+        profileImage={data?.adminProfile?.profileImage || burceMars}
+        handleImageChange={handleImageChange}
+      >
         <EditModal
           open={editModalOpen}
           setOpen={setEditModalOpen}

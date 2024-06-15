@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect, useCallback } from "react";
 
 // prop-types is a library for typechecking of props.
@@ -19,21 +20,16 @@ import MDAvatar from "components/MDAvatar";
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
-import burceMars from "assets/images/default_profile.jpg";
 import backgroundImage from "assets/images/profile-background.png";
 import AlarmOnIcon from '@mui/icons-material/AlarmOn';
-import AxiosInstance from "../../../../api/AxiosInstance";
-import { showToast } from "../../../../utils/toast";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { fetchData } from "../../api";
 
-function Header({ children, defaultProfileUrl }) {
+function Header({ children, profileImage,handleImageChange }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-  const [profileImage, setProfileImage] = useState(
-    burceMars || defaultProfileUrl
-  );
 
+
+  
   useEffect(() => {
     function handleTabsOrientation() {
       return window.innerWidth < breakpoints.values.sm
@@ -49,40 +45,6 @@ function Header({ children, defaultProfileUrl }) {
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
-  const handleImageChange = useCallback(async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => setProfileImage(e.target.result);
-      reader.readAsDataURL(file);
-
-      const formData = new FormData();
-      formData.append("image", file);
-
-      try {
-        const response = await fetchData("/admin/images", "post", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-
-        if (response.status === 201) {
-          const body = {
-            profileImage: response.data.imageUrl,
-          };
-
-          const editProfileImage = await fetchData("/admin", "put", body);
-          if (editProfileImage.status === 200) {
-            showToast.success("image uploaded successfully");
-          } else {
-            showToast.error("image uploaded failed");
-          }
-        }
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      }
-    }
-  }, []);
 
   return (
     <MDBox position="relative" mb={5}>
@@ -129,7 +91,7 @@ function Header({ children, defaultProfileUrl }) {
               style={{ position: "relative", display: "inline-block" }}
             >
               <MDAvatar
-                src={profileImage}
+                src={profileImage }
                 alt="profile-image"
                 size="xl"
                 shadow="sm"
