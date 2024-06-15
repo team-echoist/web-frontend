@@ -21,15 +21,18 @@ import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
 import backgroundImage from "assets/images/profile-background.png";
-import AlarmOnIcon from '@mui/icons-material/AlarmOn';
+import AlarmOnIcon from "@mui/icons-material/AlarmOn";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function Header({ children, profileImage,handleImageChange }) {
+function Header({
+  children,
+  profileImage,
+  handleImageChange,
+  deleteProfileImage,
+}) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
-
-  
   useEffect(() => {
     function handleTabsOrientation() {
       return window.innerWidth < breakpoints.values.sm
@@ -44,7 +47,6 @@ function Header({ children, profileImage,handleImageChange }) {
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
-
 
   return (
     <MDBox position="relative" mb={5}>
@@ -78,7 +80,7 @@ function Header({ children, profileImage,handleImageChange }) {
         }}
       >
         <Grid container spacing={3} alignItems="center">
-          <Grid item>
+          <Grid item style={{ position: "relative", display: "inline-block" }}>
             <input
               accept="image/*"
               style={{ display: "none" }}
@@ -88,27 +90,28 @@ function Header({ children, profileImage,handleImageChange }) {
             />
             <label
               htmlFor="profile-image-upload"
-              style={{ position: "relative", display: "inline-block" }}
+              style={{ display: "inline-block" }}
             >
               <MDAvatar
-                src={profileImage }
+                src={profileImage}
                 alt="profile-image"
                 size="xl"
                 shadow="sm"
                 sx={{ cursor: "pointer" }}
               />
-              <DeleteIcon
-                sx={{
-                  position: "absolute",
-                  bottom: 0,
-                  right: 0,
-                  transform: "translate(50%, 50%)",
-                  background: "white",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                }}
-              />
             </label>
+            <DeleteIcon
+              onClick={deleteProfileImage}
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+                transform: "translate(50%, 50%)",
+                background: "white",
+                borderRadius: "50%",
+                cursor: "pointer",
+              }}
+            />
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>

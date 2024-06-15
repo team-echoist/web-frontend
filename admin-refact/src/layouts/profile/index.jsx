@@ -147,6 +147,18 @@ function Overview() {
     }
   }, []);
 
+  const deleteProfileImage = async () => {
+    try {
+      const response = await fetchData("/admin/images", "delete");
+      if (response.status === 200) {
+        showToast.success("image deleted successfully");
+        returnUserProfile();
+      }
+    } catch (err) {
+      showToast.error("image deleted failed");
+    }
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -154,6 +166,7 @@ function Overview() {
       <Header
         profileImage={data?.adminProfile?.profileImage || burceMars}
         handleImageChange={handleImageChange}
+        deleteProfileImage={deleteProfileImage}
       >
         <EditModal
           open={editModalOpen}
