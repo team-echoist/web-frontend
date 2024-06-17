@@ -8,7 +8,7 @@ import AxiosInstance from "../../../api/AxiosInstance";
 // Images
 import team2 from "assets/images/team-2.jpg";
 
-function ReviewTableData() {
+export default function ReviewTableData() {
   const [reviews, setReviews] = useState([]);
   const [page] = useState(1);
   const [limit] = useState(10);
@@ -111,5 +111,3 @@ function ReviewTableData() {
 
   return { columns, rows };
 }
-
-export default ReviewTableData;

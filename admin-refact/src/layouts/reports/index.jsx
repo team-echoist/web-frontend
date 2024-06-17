@@ -15,13 +15,12 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import reportTableData from "layouts/reports/data/reportTableData";
+import ReportTableData from "layouts/reports/data/reportTableData";
 
 function Reports() {
-  const { columns, rows } = reportTableData();
+  const { columns, rows } = ReportTableData();
 
   return (
- 
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
