@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 // react-router-dom components
@@ -26,6 +26,13 @@ function Basic() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const route = useNavigate();
+
+  useEffect(()=>{
+    const token = Cookies.get("token");
+    if (token) {
+        route("/dashboard");
+    }
+  },[route])
 
   const handleLogin = async (e) => {
     e.preventDefault();
