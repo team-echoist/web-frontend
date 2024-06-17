@@ -31,7 +31,7 @@ function Basic() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_ROOT_API_URL}/admin/login`, {
+      const response = await axios.post(`/api1/admin/login`, {
         email,
         password,
       });
