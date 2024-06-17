@@ -12,13 +12,11 @@ import {
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 React components
-import MDBox from "components/MDBox";
+
+
 
 import Sidenav from "examples/Sidenav";
-import Configurator from "examples/Configurator";
 
 import theme from "assets/theme";
 import themeRTL from "assets/theme/theme-rtl";
@@ -33,7 +31,6 @@ import createCache from "@emotion/cache";
 import {
   useMaterialUIController,
   setMiniSidenav,
-  setOpenConfigurator,
 } from "context";
 
 import brandWhite from "assets/images/logo-ct.png";
@@ -49,7 +46,6 @@ function App() {
     miniSidenav,
     direction,
     layout,
-    openConfigurator,
     sidenavColor,
     transparentSidenav,
     whiteSidenav,
@@ -98,35 +94,11 @@ function App() {
     }
   }, [pathname, navigate]);
 
-  const handleConfiguratorOpen = () =>
-    setOpenConfigurator(dispatch, !openConfigurator);
 
   useEffect(() => {
     document.body.setAttribute("dir", direction);
   }, [direction]);
-  const configsButton = (
-    <MDBox
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="3.25rem"
-      height="3.25rem"
-      bgColor="white"
-      shadow="sm"
-      borderRadius="50%"
-      position="fixed"
-      right="2rem"
-      bottom="2rem"
-      zIndex={99}
-      color="dark"
-      sx={{ cursor: "pointer" }}
-      onClick={handleConfiguratorOpen}
-    >
-      <Icon fontSize="small" color="inherit">
-        settings
-      </Icon>
-    </MDBox>
-  );
+
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
       if (route.collapse) {
@@ -150,25 +122,6 @@ function App() {
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
         <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={
-                (transparentSidenav && !darkMode) || whiteSidenav
-                  ? brandDark
-                  : brandWhite
-              }
-              brandName="Material Dashboard 2"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Configurator />
-            {configsButton}
-          </>
-        )}
-        {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
           <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
@@ -192,11 +145,8 @@ function App() {
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
-          <Configurator />
-          {configsButton}
         </>
       )}
-      {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/dashboard" />} />
