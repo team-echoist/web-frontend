@@ -6,6 +6,7 @@ import Users from "layouts/users";
 import Essay from "layouts/essay";
 import DashBoardDetail from "layouts/dashboard/detail";
 import Profile from "layouts/profile";
+import Review from "./layouts/review";
 import { handleLogout } from "./utils/handleLogout";
 
 // @mui icons
@@ -15,9 +16,18 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
+import ReviewIcon from "@mui/icons-material/Reviews";
 
 const routes = [
+  {
+    type: "collapse",
+    name: "Review",
+    key: "review",
+    icon: <ReviewIcon />,
+    route: "/review",
+    component: <Review />,
+  },
   {
     type: "collapse",
     name: "Dashboard",
@@ -82,10 +92,9 @@ const routes = [
     type: "collapse",
     name: "logout",
     key: "logout",
-    icon: <LogoutIcon/>,
+    icon: <LogoutIcon />,
     onClick: handleLogout,
   },
 ];
-
 
 export default routes;

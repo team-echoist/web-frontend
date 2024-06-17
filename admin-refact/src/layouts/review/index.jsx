@@ -1,0 +1,63 @@
+// 앱 리뷰 확인 페이지
+// TODO : 내용/유저 이름/관리자 댓글여부/기능버튼(댓글달기, 수정, 삭제)
+
+// @mui material components
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+
+// Material Dashboard 2 React components
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+
+// Material Dashboard 2 React example components
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Footer from "examples/Footer";
+import DataTable from "examples/Tables/DataTable";
+
+// Data
+import reviewTableData from "layouts/review/data/reviewTableData";
+
+function Review() {
+  const { columns, rows } = reviewTableData();
+
+  return (
+    <DashboardLayout>
+      <DashboardNavbar />
+      <MDBox pt={6} pb={3}>
+        <Grid container spacing={6}>
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Review List
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={3}>
+                <DataTable
+                  table={{ columns, rows }}
+                  isSorted={false}
+                  entriesPerPage={false}
+                  showTotalEntries={false}
+                  noEndBorder
+                />
+              </MDBox>
+            </Card>
+          </Grid>
+        </Grid>
+      </MDBox>
+      <Footer />
+    </DashboardLayout>
+  );
+}
+
+export default Review;
