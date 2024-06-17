@@ -1,3 +1,4 @@
+// review/index.jsx
 // 앱 리뷰 확인 페이지
 // TODO : 내용/유저 이름/관리자 댓글여부/기능버튼(댓글달기, 수정, 삭제)
 
@@ -16,10 +17,10 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import reviewTableData from "layouts/review/data/reviewTableData";
+import ReviewTableData from "./data/reviewTableData";
 
 function Review() {
-  const { columns, rows } = reviewTableData();
+  const { columns, rows } = ReviewTableData();
 
   return (
     <DashboardLayout>
