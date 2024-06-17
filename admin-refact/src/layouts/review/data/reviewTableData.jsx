@@ -1,21 +1,6 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/function-component-definition */
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
+// 앱 리뷰 확인 페이지
+// TODO : 내용/유저 이름/관리자 댓글여부/기능버튼(댓글달기, 수정, 삭제)
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
@@ -23,22 +8,68 @@ import MDBadge from "components/MDBadge";
 
 // Images
 import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function data() {
-  const Author = ({ image, name, email }) => (
+  const [review, setReviews] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
+  useEffect(() => {
+    fetchReviews(page, limit);
+  }, [page, limit]);
+
+  const fetchReviews = async (page, limit) => {
+    try {
+      const response = await axios.get(
+        `${
+          import.meta.env.VITE_ROOT_API_URL
+        }/admin/reviews?page=${page}&limit=${limit}`
+      );
+      setReviews(response.data.reviews);
+    } catch (error) {
+      console.log("error 발생", error);
+    }
+  };
+
+  // 응답예시
+  // {
+  //   "reviews": [
+  //     {
+  //       "id": 0,
+  //       "type": "string",
+  //       "processed": true,
+  //       "createDate": "2024-06-17T05:50:11.822Z",
+  //       "processedDate": "2024-06-17T05:50:11.822Z",
+  //       "userId": 0,
+  //       "essayId": 0,
+  //       "essayTitle": "string"
+  //     }
+  //   ],
+  //   "totalPage": 0,
+  //   "page": 0,
+  //   "total": 0
+  // }
+
+  // TODO : 이미지 추가 요청 후 추가
+  // image, userId
+
+  // 리뷰 작성자
+  const Author = ({ image, userId }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
+      <MDAvatar src={image} name={userId} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
-          {name}
+          {userId}
         </MDTypography>
-        <MDTypography variant="caption">{email}</MDTypography>
+        {/* <MDTypography variant="caption">{email}</MDTypography> */}
       </MDBox>
     </MDBox>
   );
 
-  const Job = ({ title, description }) => (
+  // 리뷰 제목
+  const Title = ({ title }) => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography
         display="block"
@@ -48,101 +79,63 @@ export default function data() {
       >
         {title}
       </MDTypography>
-      <MDTypography variant="caption">{description}</MDTypography>
     </MDBox>
   );
 
-  return {
-    columns: [
-      { Header: "이름", accessor: "name", width: "45%", align: "left" },
-      { Header: "구독여부", accessor: "status", align: "center" },
-      { Header: "가입일", accessor: "registrationDate", align: "center" },
-      { Header: "기능", accessor: "action", align: "center" },
-    ],
+  const columns = [
+    {
+      Header: "리뷰 제목",
+      accessor: "essayTitle",
+      width: "30%",
+      align: "left",
+    },
+    { Header: "작성자", accessor: "author", width: "30%", align: "left" },
+    { Header: "처리 상황", accessor: "status", width: "15%", align: "center" },
+    {
+      Header: "리뷰 작성 일자",
+      accessor: "registrationDate",
+      width: "10%",
+      align: "center",
+    },
+    { Header: "상세 보기", accessor: "action", width: "5%", align: "center" },
+  ];
 
-    rows: [
-      {
-        name: (
-          <Author
-            image={team2}
-            name="John Michael"
-            email="john@creative-tim.com"
-          />
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge
-              badgeContent="Subscribe"
-              color="success"
-              variant="gradient"
-              size="sm"
-            />
-          </MDBox>
-        ),
-        registrationDate: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            23/04/18
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        name: (
-          <Author
-            image={team3}
-            name="Alexa Liras"
-            email="alexa@creative-tim.com"
-          />
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge
-              badgeContent="Normal user"
-              color="dark"
-              variant="gradient"
-              size="sm"
-            />
-          </MDBox>
-        ),
-        registrationDate: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            11/01/19
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Edit
-          </MDTypography>
-        ),
-      },
-    ],
-  };
+  const rows = reviews.map((review) => ({
+    essayTitle: <Title title={review.essayTitle} />,
+    author: <Author image={team2} userId={review.userId} />,
+    status: (
+      <MDBox ml={-1}>
+        <MDBadge
+          badgeContent={review.processed ? "확인 완료" : "미확인"}
+          color={review.processed ? "success" : "warning"}
+          variant="gradient"
+          size="sm"
+        />
+      </MDBox>
+    ),
+    registrationDate: (
+      <MDTypography
+        component="a"
+        href="#"
+        variant="caption"
+        color="text"
+        fontWeight="medium"
+      >
+        {new Date(review.createDate).toLocaleDateString()}
+      </MDTypography>
+    ),
+    action: (
+      <MDTypography
+        component="a"
+        href="#"
+        variant="caption"
+        color="text"
+        fontWeight="medium"
+      >
+        Edit
+      </MDTypography>
+    ),
+  }));
+
+  return { columns, rows };
 }

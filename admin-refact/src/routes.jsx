@@ -22,14 +22,6 @@ import ReviewIcon from "@mui/icons-material/Reviews";
 const routes = [
   {
     type: "collapse",
-    name: "Review",
-    key: "review",
-    icon: <ReviewIcon />,
-    route: "/review",
-    component: <Review />,
-  },
-  {
-    type: "collapse",
     name: "Dashboard",
     key: "dashboard",
     icon: <DashboardIcon></DashboardIcon>,
@@ -59,6 +51,14 @@ const routes = [
     icon: <BorderColorIcon></BorderColorIcon>,
     route: "/essay",
     component: <Essay />,
+  },
+  {
+    type: "collapse",
+    name: "Review",
+    key: "review",
+    icon: <ReviewIcon />,
+    route: "/review",
+    component: <Review />,
   },
   {
     type: "collapse",
