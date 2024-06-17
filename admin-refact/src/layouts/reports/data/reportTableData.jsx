@@ -60,11 +60,16 @@ export default function ReportTableData() {
     {
       Header: "리포트 제목",
       accessor: "essayTitle",
-      width: "45%",
+      width: "35%",
       align: "left",
     },
-    { Header: "리포트 ID", accessor: "essayId", width: "45%", align: "left" },
-    { Header: "등록 날짜", accessor: "registrationDate", align: "center" },
+    { Header: "리포트 ID", accessor: "essayId", width: "30%", align: "center" },
+    {
+      Header: "등록 날짜",
+      accessor: "registrationDate",
+      width: "20%",
+      align: "center",
+    },
     { Header: "액션", accessor: "action", align: "center" },
   ];
 
@@ -72,14 +77,8 @@ export default function ReportTableData() {
     essayId: <EssayId essayId={report.essayId} />,
     essayTitle: <Title essayTitle={report.essayTitle} />,
     registrationDate: (
-      <MDTypography
-        component="a"
-        href="#"
-        variant="caption"
-        color="text"
-        fontWeight="medium"
-      >
-        {new Date(report.createDate).toLocaleDateString()}
+      <MDTypography variant="caption" color="text" fontWeight="medium">
+        {new Date(report.oldestReportDate).toLocaleDateString()}
       </MDTypography>
     ),
     action: (
