@@ -19,7 +19,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api1": {
-        target: "https://www.linkedoutapp.com",
+        target: "https://www.linkedoutapp.com/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api1/, ""),
       },
