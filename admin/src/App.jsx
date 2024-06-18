@@ -12,11 +12,13 @@ import {
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import Icon from "@mui/material/Icon";
 
-
-
+// Material Dashboard 2 React components
+import MDBox from "components/MDBox";
 
 import Sidenav from "examples/Sidenav";
+import Configurator from "examples/Configurator";
 
 import theme from "assets/theme";
 import themeRTL from "assets/theme/theme-rtl";
@@ -31,14 +33,17 @@ import createCache from "@emotion/cache";
 import {
   useMaterialUIController,
   setMiniSidenav,
+  setOpenConfigurator,
 } from "context";
 
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import routes from "./routes";
 import Cookies from "js-cookie";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import MenuIcon from "@mui/icons-material/Menu";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -46,6 +51,7 @@ function App() {
     miniSidenav,
     direction,
     layout,
+    openConfigurator,
     sidenavColor,
     transparentSidenav,
     whiteSidenav,
@@ -55,6 +61,7 @@ function App() {
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const isTabletOrBelow = useMediaQuery("(max-width: 764px)");
 
   useMemo(() => {
     const cacheRtl = createCache({
@@ -94,11 +101,33 @@ function App() {
     }
   }, [pathname, navigate]);
 
+  const handleConfiguratorOpen = () =>
+    setOpenConfigurator(dispatch, !openConfigurator);
 
   useEffect(() => {
     document.body.setAttribute("dir", direction);
   }, [direction]);
-
+  const configsButton = (
+    <MDBox
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="3.25rem"
+      height="3.25rem"
+      bgColor="white"
+      shadow="sm"
+      borderRadius="50%"
+      position="fixed"
+      right="2rem"
+      bottom="2rem"
+      zIndex={99}
+      color="dark"
+      sx={{ cursor: "pointer" }}
+      onClick={handleConfiguratorOpen}
+    >
+      <MenuIcon />
+    </MDBox>
+  );
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
       if (route.collapse) {
@@ -145,6 +174,12 @@ function App() {
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
+          {isTabletOrBelow && (
+            <>
+              <Configurator routes={routes} />
+              {configsButton}
+            </>
+          )}
         </>
       )}
       <Routes>
