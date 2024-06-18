@@ -12,30 +12,16 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
-import ComboBox from "components/ComboBox";
-import { label, data } from "../dashboard/data/comboBoxData";
 
 // Data
 import ReportTableData from "layouts/reports/data/reportTableData";
-import { useState } from "react";
 
 function Reports() {
-  const [select, setSelect] = useState({ selected: "", number: 1 });
   const { columns, rows } = ReportTableData();
-
-  const handleChange = (event) => {
-    const value = event.target.value;
-    setSelect((prev) => ({
-      ...prev,
-      selected: value,
-      number: data.indexOf(value) + 1,
-    }));
-  };
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
@@ -67,19 +53,6 @@ function Reports() {
           </Grid>
         </Grid>
       </MDBox>
-
-      <MDBox sx={{ paddingRight: "20px" }}>
-        <Grid container justifyContent="flex-end">
-          <ComboBox
-            label={label}
-            data={data}
-            select={select.selected}
-            handleChange={handleChange}
-            width="10rem"
-          />
-        </Grid>
-      </MDBox>
-
       <Footer />
     </DashboardLayout>
   );

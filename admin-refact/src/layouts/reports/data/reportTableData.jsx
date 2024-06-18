@@ -24,7 +24,6 @@ export default function ReportTableData() {
         }/admin/reports?sort=${sort}&page=${page}&limit=${limit}`
       );
       setReports(response.data.data.reports);
-      console.log(response.data);
     } catch (error) {
       console.log("리포트 에러 발생", error);
     }
