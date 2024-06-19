@@ -26,7 +26,6 @@ const dailyData = (month) => {
 };
 
 export const generateLables = (params, month) => {
-  console.log("params",params,month)
   const mapper = {
     "today-essay": dailyData(month),
     "total-essay": monthlyData(),

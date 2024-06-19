@@ -1,17 +1,4 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+/* eslint-disable react-refresh/only-export-components */
 
 // @mui material components
 import Drawer from "@mui/material/Drawer";
@@ -21,7 +8,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
   const { boxShadows, functions, transitions } = theme;
   const { openConfigurator } = ownerState;
 
-  const configuratorWidth = 360;
+  const configuratorWidth = 320;
   const { lg } = boxShadows;
   const { pxToRem } = functions;
 
@@ -54,6 +41,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
       borderRadius: 0,
       boxShadow: lg,
       overflowY: "auto",
+      background: "linear-gradient(195deg, #42424a, #191919)", 
       ...(openConfigurator ? drawerOpenStyles() : drawerCloseStyles()),
     },
   };
