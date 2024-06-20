@@ -25,7 +25,10 @@ function index() {
     labels: [],
     datasets: { label: "apps", data: [] },
   });
-  const [select, setSelect] = useState({ selected: "", number: 1 });
+  const currentDate = new Date();
+  const monthName = currentDate.toLocaleString("en-US", { month: "long" });
+  const currentMonth = data.indexOf(monthName) + 1;
+  const [select, setSelect] = useState({ selected: monthName, number: currentMonth,isActiveSelect:false});
   const route = useLocation().pathname.split("/").slice(1);
   const chartTitle = generateChartTitle(route[1]);
 
@@ -39,32 +42,30 @@ function index() {
   };
 
   useEffect(() => {
-    const currentDate = new Date();
-    const monthName = currentDate.toLocaleString("en-US", { month: "long" });
-    const currentMonth = data.indexOf(monthName) + 1;
     const pageInfoObj = generateUrl(route[1]);
-
+    setChartData((prev) => ({
+      ...prev,
+      labels: generateLables(route[1], currentMonth),
+    }));
     setSelect((prev) => ({
       ...prev,
-      selected: `${monthName}`,
-      number: currentMonth,
-    }));
-    setChartData((prev) => ({
-      ...prev,
-      labels: generateLables(route[1], currentMonth),
+      isActiveSelect:true
     }));
     fetchDetailData(pageInfoObj, setChartData);
-  }, []);
+  }, [currentMonth]);
 
   useEffect(() => {
-    const newPageInfoObj = generateUrl(route[1], select.number);
-    const currentMonth = data.indexOf(select.number) + 1;
-    setChartData((prev) => ({
-      ...prev,
-      labels: generateLables(route[1], currentMonth),
-    }));
-    fetchDetailData(newPageInfoObj, setChartData);
-  }, [select]);
+    if(select.isActiveSelect){
+      const newPageInfoObj = generateUrl(route[1], select.number);
+      const currentMonth = data.indexOf(select.number) + 1;
+      setChartData((prev) => ({
+        ...prev,
+        labels: generateLables(route[1], currentMonth),
+      }));
+      fetchDetailData(newPageInfoObj, setChartData);
+    }
+
+  }, [select.selected, select.number]);
 
   return (
     <DashboardLayout>
