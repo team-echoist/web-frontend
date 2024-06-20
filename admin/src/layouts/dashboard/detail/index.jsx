@@ -38,6 +38,7 @@ function index() {
       ...prev,
       selected: value,
       number: data.indexOf(value) + 1,
+      isActiveSelect:true
     }));
   };
 
@@ -46,10 +47,6 @@ function index() {
     setChartData((prev) => ({
       ...prev,
       labels: generateLables(route[1], currentMonth),
-    }));
-    setSelect((prev) => ({
-      ...prev,
-      isActiveSelect:true
     }));
     fetchDetailData(pageInfoObj, setChartData);
   }, [currentMonth]);
