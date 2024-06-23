@@ -16,10 +16,10 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import essayTableData from "layouts/essay/data/essayTableData";
+import EssayTableData from "layouts/essay/data/essayTableData";
 
 function Essay() {
-  const { columns, rows } = essayTableData();
+  const { columns, rows } = EssayTableData();
 
   return (
     <DashboardLayout>
