@@ -1,17 +1,12 @@
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 
 // Images
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
 import { useEffect, useState } from "react";
 import AxiosInstance from "../../../api/AxiosInstance";
 
-// TODO : 들어갈 요소
-// (제목(title), 작성자(없음), 신고 여부(status), 작성일(createdDate), 관리(모달))
 export default function EssayTableData() {
   const [page] = useState(1);
   const [limit] = useState(10);
@@ -49,16 +44,33 @@ export default function EssayTableData() {
   );
 
   // 에세이 상태
-  const Status = ({ status }) => (
-    <MDBox ml={-1}>
-      <MDBadge
-        badgeContent={status}
-        color={status === "public" ? "success" : "dark"}
-        variant="gradient"
-        size="sm"
-      />
-    </MDBox>
-  );
+  const Status = ({ status }) => {
+    let color;
+    switch (status) {
+      case "linkedout":
+        color = "success";
+        break;
+      case "public":
+        color = "warning";
+        break;
+      case "private":
+        color = "light";
+        break;
+      default:
+        color = "dark";
+    }
+
+    return (
+      <MDBox ml={-1}>
+        <MDBadge
+          badgeContent={status}
+          color={color}
+          variant="gradient"
+          size="sm"
+        />
+      </MDBox>
+    );
+  };
 
   // 테이블 컬럼 설정
   const columns = [
