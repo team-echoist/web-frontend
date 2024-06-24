@@ -5,6 +5,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import MDEditor from "@uiw/react-md-editor";
 import { useParams } from "react-router-dom";
 
@@ -45,11 +46,16 @@ function index() {
                 value={value}
                 onChange={setValue}
                 height={800}
-                preview={parameter === "edit" ? "edit" : "live"} 
+                preview={parameter === "edit" ? "edit" : "live"}
               />
             </Box>
           </Grid>
         </Grid>
+      </Box>
+      <Box display="flex" justifyContent="flex-end" p={2}>
+        <Button variant="contained" color="dark">
+          Update
+        </Button>
       </Box>
       <Footer />
     </DashboardLayout>
