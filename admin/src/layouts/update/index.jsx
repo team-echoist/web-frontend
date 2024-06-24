@@ -6,9 +6,11 @@ import Footer from "examples/Footer";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import MDEditor from "@uiw/react-md-editor";
+import { useParams } from "react-router-dom";
 
 function index() {
   const [value, setValue] = useState("**Hello world!!!**");
+  const { parameter } = useParams();
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -29,7 +31,7 @@ function index() {
                 paddingLeft: "20px",
               }}
             >
-              미리보기 자리
+              미리보기 자리 | 문의글 보기
             </Box>
           </Grid>
           <Grid item xs={6}>
@@ -43,7 +45,7 @@ function index() {
                 value={value}
                 onChange={setValue}
                 height={800}
-                preview="edit"
+                preview={parameter === "edit" ? "edit" : "live"} 
               />
             </Box>
           </Grid>
