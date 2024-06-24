@@ -8,6 +8,7 @@ import DashBoardDetail from "layouts/dashboard/detail";
 import Profile from "layouts/profile";
 import { handleLogout } from "./utils/handleLogout";
 import Notice from "layouts/notice";
+import NoticeDetail from "layouts/notice/detail";
 
 // @mui icons
 import LoginIcon from "@mui/icons-material/Login";
@@ -87,6 +88,12 @@ const routes = [
     key: "dashboard-details",
     route: "/dashboard/:id",
     component: <DashBoardDetail />,
+  },
+  {
+    name: "noticeDetails",
+    key: "notice-details",
+    route: "/notice/:id",
+    component: <NoticeDetail />,
   },
 
   {
