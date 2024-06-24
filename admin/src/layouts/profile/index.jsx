@@ -80,7 +80,7 @@ function Overview() {
         setEditModalOpen(false);
       }
     } catch (err) {
-      console.log("err", err);
+      showToast.error("Profile edited Failed.")
     }
   };
 
@@ -95,14 +95,18 @@ function Overview() {
     }));
   };
   const makeActive = async (id) => {
-    const makeAdminActive = await fetchData(`/admin/${id}`, "put", null, {
-      params: {
-        activated: "true",
-      },
-    });
-    if (makeAdminActive.status === 200) {
-      showToast.success("Admin activated successfully.");
-      requestAdminList();
+    try{
+      const makeAdminActive = await fetchData(`/admin/${id}`, "put", null, {
+        params: {
+          activatd: "true",
+        },
+      });
+      if (makeAdminActive.status === 200) {
+        showToast.success("Admin activated successfully.");
+        requestAdminList();
+      }
+    }catch(err){
+      showToast.error("Admin activated Failed.")
     }
   };
 
