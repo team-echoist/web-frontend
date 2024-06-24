@@ -24,7 +24,7 @@ import PlatformSettings from "layouts/profile/components/PlatformSettings";
 import { showToast } from "../../utils/toast";
 
 import { findAdmin } from "./util/findAdmin";
-import { fetchData } from "./api";
+import { fetchData } from "../../api";
 import { useEffect, useState, useCallback } from "react";
 
 import EditModal from "./components/EditModal";
@@ -97,7 +97,7 @@ function Overview() {
   const makeActive = async (id) => {
     const makeAdminActive = await fetchData(`/admin/${id}`, "put", null, {
       params: {
-        active: "true",
+        activated: "true",
       },
     });
     if (makeAdminActive.status === 200) {
