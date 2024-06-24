@@ -8,10 +8,17 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MDEditor from "@uiw/react-md-editor";
 import { useParams } from "react-router-dom";
+import TextField from "@mui/material/TextField";
 
 function index() {
   const [value, setValue] = useState("**Hello world!!!**");
+  const [title, setTitle] = useState("");
   const { parameter } = useParams();
+
+  const renderPreview = () => {
+    const convertHtml = ``;
+    return { __html: convertHtml };
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -25,14 +32,35 @@ function index() {
       >
         <Grid container spacing={2}>
           <Grid item xs={6}>
+            <TextField
+              label="제목"
+              placeholder="제목을 입력하세요..."
+              variant="outlined"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              style={{
+                width: "100%",
+                marginBottom: "10px",
+                backgroundColor: "white",
+              }}
+              InputLabelProps={{ shrink: true }}
+            />
             <Box
               sx={{
                 width: "100%",
-                height: "100%",
+                height: "93%",
                 paddingLeft: "20px",
+                backgroundColor: "#ffffff",
+                border: "1px solid #ccc",
+                padding: "20px",
+                boxShadow: 1,
               }}
             >
-              미리보기 자리 | 문의글 보기
+              {/* 미리보기 자리 | 문의글 보기 */}
+              <MDEditor.Markdown
+                source={value}
+                style={{ whiteSpace: "pre-wrap" }}
+              />
             </Box>
           </Grid>
           <Grid item xs={6}>
