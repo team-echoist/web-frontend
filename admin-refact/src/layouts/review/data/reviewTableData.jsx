@@ -4,6 +4,8 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 import AxiosInstance from "../../../api/AxiosInstance";
+import ReviewDetailModal from "../ReviewDetailModal/ReviewDetailModal";
+import Review from "../index";
 
 // Images
 import team2 from "assets/images/team-2.jpg";
@@ -12,10 +14,18 @@ export default function ReviewTableData() {
   const [reviews, setReviews] = useState([]);
   const [page] = useState(1);
   const [limit] = useState(10);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedReviewId, setSelectedReviewId] = useState(null);
 
   useEffect(() => {
     fetchReviews(page, limit);
   }, [page, limit]);
+
+  const handleReviewClick = (reviewId) => {
+    console.log("선택한 리뷰아이디", reviewId);
+    setSelectedReviewId(reviewId);
+    setModalOpen(true);
+  };
 
   const fetchReviews = async (page, limit) => {
     try {
@@ -26,8 +36,13 @@ export default function ReviewTableData() {
       );
       setReviews(response.data.data.reviews);
     } catch (error) {
-      console.log("error 발생", error);
+      console.error("error 발생", error);
     }
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+    setSelectedReviewId(null);
   };
 
   const Author = ({ image, userId }) => (
@@ -96,18 +111,19 @@ export default function ReviewTableData() {
         {new Date(review.createDate).toLocaleDateString()}
       </MDTypography>
     ),
-    action: (
-      <MDTypography
-        component="a"
-        href="#"
-        variant="caption"
-        color="text"
-        fontWeight="medium"
-      >
-        Edit
-      </MDTypography>
-    ),
+    action: <button onClick={() => handleReviewClick(review.id)}>Edit</button>,
   }));
 
-  return { columns, rows };
+  return (
+    <>
+      <ReviewDetailModal
+        open={modalOpen}
+        handleClose={handleClose}
+        reviewId={selectedReviewId}
+      />
+      {/* 실제로 테이블을 렌더링하는 부분이 필요합니다. */}
+      {/* 예시로 DataTable 컴포넌트를 사용해보겠습니다. */}
+      <Review columns={columns} rows={rows} />
+    </>
+  );
 }
