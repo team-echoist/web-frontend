@@ -1,5 +1,4 @@
-
-
+/* eslint-disable react/prop-types */
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -16,9 +15,8 @@ import DataTable from "examples/Tables/DataTable";
 
 // Data
 import authorsTableData from "components/Tables/data/authorsTableData";
-import projectsTableData from "components/Tables/data/projectsTableData";
 
-function Tables({title}) {
+function Tables({ title }) {
   const { columns, rows } = authorsTableData();
 
   return (
@@ -53,33 +51,6 @@ function Tables({title}) {
               </MDBox>
             </Card>
           </Grid>
-          {/* <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Projects Table
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid> */}
         </Grid>
       </MDBox>
       <Footer />
