@@ -9,6 +9,7 @@ import Profile from "layouts/profile";
 import { handleLogout } from "./utils/handleLogout";
 import Notice from "layouts/notice";
 import NoticeDetail from "layouts/notice/detail";
+import Update from "layouts/update"
 
 // @mui icons
 import LoginIcon from "@mui/icons-material/Login";
@@ -94,6 +95,12 @@ const routes = [
     key: "notice-details",
     route: "/notice/:id",
     component: <NoticeDetail />,
+  },
+  {
+    name: "update",
+    key: "update",
+    route: "/update/:id",
+    component: <Update />,
   },
 
   {
