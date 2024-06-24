@@ -42,6 +42,20 @@ export default function data() {
     </MDBox>
   );
 
+  const Edit = ({ date }) => (
+    <MDBox lineHeight={1} textAlign="left">
+      <MDTypography
+        display="block"
+        variant="caption"
+        color="text"
+        fontWeight="medium"
+      >
+        {date}
+      </MDTypography>
+    </MDBox>
+  );
+
+
   return {
     columns: [
       { Header: "title", accessor: "title", width: "45%", align: "left" },

@@ -13,12 +13,8 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
-// Data
-import authorsTableData from "components/Tables/data/authorsTableData";
 
-function Tables({ title }) {
-  const { columns, rows } = authorsTableData();
-
+function Tables({ title,columns, rows }) {
   return (
     <DashboardLayout>
       <DashboardNavbar />
