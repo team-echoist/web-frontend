@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "5.11.16",
     "@mui/material": "^5.15.18",
+    "@uiw/react-md-editor": "^4.0.4",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "chroma-js": "^2.4.2",
