@@ -15,10 +15,6 @@ function index() {
   const [title, setTitle] = useState("");
   const { parameter } = useParams();
 
-  const renderPreview = () => {
-    const convertHtml = ``;
-    return { __html: convertHtml };
-  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -74,7 +70,8 @@ function index() {
                 value={value}
                 onChange={setValue}
                 height={800}
-                preview={parameter === "edit" ? "edit" : "live"}
+                preview="edit"
+                // preview={parameter === "edit" ? "edit" : "live"}
               />
             </Box>
           </Grid>
