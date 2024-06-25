@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
-import TwoContent from "components/BackgroundCard/content/TwoContent";
+
 
 function index() {
   return (

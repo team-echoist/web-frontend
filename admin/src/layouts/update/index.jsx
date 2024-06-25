@@ -9,6 +9,9 @@ import Button from "@mui/material/Button";
 import MDEditor from "@uiw/react-md-editor";
 import { useParams } from "react-router-dom";
 import TextField from "@mui/material/TextField";
+import Card from "@mui/material/Card";
+import MDTypography from "components/MDTypography";
+import MDBox from "components/MDBox";
 
 function index() {
   const [value, setValue] = useState("**Hello world!!!**");
@@ -18,11 +21,31 @@ function index() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <MDBox pt={6} pb={3}>
+        <Grid item xs={12}>
+          <Card>
+            <MDBox
+              mx={2}
+              mt={-3}
+              py={3}
+              px={2}
+              variant="gradient"
+              bgColor="info"
+              borderRadius="lg"
+              coloredShadow="info"
+            >
+              <MDTypography variant="h6" color="white">
+               update
+              </MDTypography>
+            </MDBox>
+          </Card>
+        </Grid>
+      </MDBox>
       <Box
         sx={{
           flexGrow: 1,
           width: "100%",
-          minHeight: "50rem",
+          minHeight: "40rem",
           marginTop: "20px",
         }}
       >
@@ -70,7 +93,7 @@ function index() {
               <MDEditor
                 value={value}
                 onChange={setValue}
-                height={800}
+                height={600}
                 preview="edit"
                 // preview={parameter === "edit" ? "edit" : "live"}
               />
