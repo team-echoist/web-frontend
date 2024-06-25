@@ -9,14 +9,11 @@ import MDTypography from "components/MDTypography";
 
 import DataTable from "examples/Tables/DataTable";
 
-import { Link } from "react-router-dom";
-
-function Tables({ title, columns, rows, link }) {
+function Tables({ title, columns, rows }) {
   return (
     <MDBox pt={6} pb={3} sx={{ minHeight: "43rem" }}>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Link to={link}>
             <Card>
               <MDBox
                 mx={2}
@@ -42,7 +39,6 @@ function Tables({ title, columns, rows, link }) {
                 />
               </MDBox>
             </Card>
-          </Link>
         </Grid>
       </Grid>
     </MDBox>

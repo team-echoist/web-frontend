@@ -13,8 +13,7 @@ function index() {
   const [tableData, setTableData] = useState({ columns: [], rows: [] });
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
-  const encodedInfo = encodeURIComponent(tableData);
-  // 나중에 데이터 확실해지면 고치기
+
 
   const navigate = useNavigate();
 
@@ -61,7 +60,6 @@ function index() {
         title="Notice"
         columns={tableData.columns}
         rows={tableData.rows}
-        link={`/notice-detail?data=${encodedInfo}`}
       />
       <Box display="flex" justifyContent="center" p={2}>
         <Pagination
