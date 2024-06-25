@@ -99,7 +99,7 @@ const routes = [
   {
     name: "update",
     key: "update",
-    route: "/update/:id",
+    route: "/update",
     component: <Update />,
   },
 
