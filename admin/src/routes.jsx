@@ -93,7 +93,7 @@ const routes = [
   {
     name: "noticeDetails",
     key: "notice-details",
-    route: "/notice/:id",
+    route: "/notice-detail",
     component: <NoticeDetail />,
   },
   {

@@ -18,13 +18,13 @@ import { showToast } from "../../utils/toast";
 function index() {
   const [value, setValue] = useState({ title: "", content: "" });
   const route = useLocation();
-  const updateData = () => {
+  const updateData = async() => {
     try {
       const body = {
         title: value.title,
         content: value.content,
       };
-      const { status } = fetchData("/admin/notices", "post", body);
+      const { status } = await fetchData("/admin/notices", "post", body);
 
       if (status === 201) {
         showToast.success("notice updated successful");

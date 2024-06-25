@@ -11,12 +11,12 @@ import DataTable from "examples/Tables/DataTable";
 
 import { Link } from "react-router-dom";
 
-function Tables({ title, columns, rows, id }) {
+function Tables({ title, columns, rows, link }) {
   return (
     <MDBox pt={6} pb={3} sx={{ minHeight: "43rem" }}>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Link to={`/notice/${id}`}>
+          <Link to={link}>
             <Card>
               <MDBox
                 mx={2}

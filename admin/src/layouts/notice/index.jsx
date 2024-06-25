@@ -7,11 +7,14 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import { Button, Box, Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { fetchData } from "../../api";
 
 function index() {
-  const { columns, rows } = authorsTableData();
+  const [tableData, setTableData] = useState({ columns: [], rows: [] });
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
+  const encodedInfo = encodeURIComponent(tableData);
+  // 나중에 데이터 확실해지면 고치기
 
   const navigate = useNavigate();
 
@@ -20,19 +23,49 @@ function index() {
   };
   useEffect(() => {
     // 데이터 페칭함수 세팅자리
+    const getNotice = async () => {
+      try {
+        const options = {
+          params: {
+            page: currentPage,
+            limit: rowsPerPage,
+          },
+        };
+        const { data } = await fetchData(
+          "/admin/notices",
+          "get",
+          null,
+          options
+        );
+        console.log("data", data);
+
+        const { columns, rows } = authorsTableData(data);
+        setTableData({ columns, rows, totalPages: data.totalPage + 1 });
+      } catch (err) {
+        console.log("err", err);
+      }
+    };
+
+    getNotice();
   }, [currentPage]);
 
   const handlePageChange = (_, value) => {
     setCurrentPage(value);
   };
 
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Tables title="Notice" columns={columns} rows={rows} id="1" />
+      <Tables
+        title="Notice"
+        columns={tableData.columns}
+        rows={tableData.rows}
+        link={`/notice-detail?data=${encodedInfo}`}
+      />
       <Box display="flex" justifyContent="center" p={2}>
         <Pagination
-          count={Math.ceil(rows.length / rowsPerPage)}
+          count={tableData.totalPages}
           page={currentPage}
           onChange={handlePageChange}
           color="secondary"
@@ -44,7 +77,6 @@ function index() {
           Update
         </Button>
       </Box>
-
       <Footer />
     </DashboardLayout>
   );
