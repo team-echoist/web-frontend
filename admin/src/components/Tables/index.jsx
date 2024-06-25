@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 function Tables({ title, columns, rows, id }) {
   return (
-    <MDBox pt={6} pb={3} sx={{ minHeight: "40rem" }}>
+    <MDBox pt={6} pb={3} sx={{ minHeight: "43rem" }}>
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Link to={`/notice/${id}`}>
