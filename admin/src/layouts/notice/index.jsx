@@ -8,8 +8,6 @@ import Footer from "examples/Footer";
 import { Button, Box, Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-
-
 function index() {
   const { columns, rows } = authorsTableData();
   const [currentPage, setCurrentPage] = useState(1);
