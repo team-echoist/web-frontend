@@ -39,7 +39,7 @@ function index() {
         );
         console.log("data", data);
 
-        const { columns, rows } = authorsTableData(data);
+        const { columns, rows } = authorsTableData(data?.Notices);
         setTableData({ columns, rows, totalPages: data.totalPage + 1 });
       } catch (err) {
         console.log("err", err);
