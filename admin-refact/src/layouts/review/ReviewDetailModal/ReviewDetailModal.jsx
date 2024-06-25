@@ -1,175 +1,94 @@
-import { Modal, Box, Typography } from "@mui/material";
+import PropTypes from "prop-types";
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
+import Modal from "@mui/material/Modal";
 
-const ReviewDetailModal = ({ open, handleClose, reviewId }) => {
+function ReviewDetailModal({
+  open,
+  handleClose,
+  reviewId,
+  reviewDetail,
+  onProcess,
+  handleOpen,
+}) {
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleProcess = () => {
+    const processBody = { processed: true }; // Example process body
+    onProcess(reviewId, processBody);
+  };
+
   return (
-    <Modal open={open} onClose={handleClose}>
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 400,
-          bgcolor: "background.paper",
-          border: "2px solid #000",
-          boxShadow: 24,
-          p: 4,
-        }}
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <MDBox
+        position="absolute"
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+        width="400px"
+        bgcolor="white"
+        p={4}
+        boxShadow={24}
       >
-        <Typography variant="h6" component="h2">
-          Review Details
-        </Typography>
-        <Typography sx={{ mt: 2 }}>Review ID: {reviewId}</Typography>
-      </Box>
+        <MDBox display="flex" justifyContent="space-between" mb={2}>
+          <MDTypography variant="h6" component="h2">
+            Review Details
+          </MDTypography>
+          <MDButton onClick={handleClose}>Close</MDButton>
+        </MDBox>
+        <MDBox mb={2}>
+          <MDTypography variant="body1">
+            <strong>User ID:</strong> {reviewDetail.userId}
+          </MDTypography>
+        </MDBox>
+        <MDBox mb={2}>
+          <MDTypography variant="body1">
+            <strong>Title:</strong> {reviewDetail.title}
+          </MDTypography>
+        </MDBox>
+        <MDBox mb={2}>
+          <MDTypography variant="body1">
+            <strong>Status:</strong>{" "}
+            {reviewDetail.processed ? "Processed" : "Unprocessed"}
+          </MDTypography>
+        </MDBox>
+        <MDBox mb={2}>
+          <MDTypography variant="body1">
+            <strong>Created Date:</strong>{" "}
+            {new Date(reviewDetail.createdDate).toLocaleDateString()}
+          </MDTypography>
+        </MDBox>
+        <MDBox mb={2}>
+          <MDTypography variant="body1">
+            <strong>Review ID:</strong> {reviewId}
+          </MDTypography>
+        </MDBox>
+        <MDButton onClick={handleProcess} variant="contained" color="primary">
+          Mark as Processed
+        </MDButton>
+      </MDBox>
     </Modal>
   );
+}
+
+ReviewDetailModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  reviewId: PropTypes.number,
+  reviewDetail: PropTypes.shape({
+    userId: PropTypes.string,
+    title: PropTypes.string,
+    processed: PropTypes.bool,
+    createdDate: PropTypes.string,
+  }),
+  onProcess: PropTypes.func.isRequired,
 };
 
 export default ReviewDetailModal;
-
-// /* eslint-disable no-unused-vars */
-// /* eslint-disable react/prop-types */
-// import React, { useState, useEffect } from "react";
-// import Box from "@mui/material/Box";
-// import Button from "@mui/material/Button";
-// import Typography from "@mui/material/Typography";
-// import Modal from "@mui/material/Modal";
-// import TextField from "@mui/material/TextField";
-// import AxiosInstance from "../../../api/AxiosInstance";
-
-// const style = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 400,
-//   bgcolor: "background.paper",
-//   border: "2px solid #000",
-//   boxShadow: 24,
-//   p: 4,
-// };
-
-// function Index({ reviewId, onClose }) {
-//   const [data, setData] = useState(null);
-
-//   useEffect(() => {
-//     const fetchReview = async () => {
-//       try {
-//         const response = await AxiosInstance.get(
-//           `${import.meta.env.VITE_ROOT_API_URL}/admin/reviews/${reviewId}`
-//         );
-//         setData(response.data);
-//       } catch (error) {
-//         console.error("Error fetching review details:", error);
-//       }
-//     };
-
-//     fetchReview();
-//   }, [reviewId]);
-
-//   const handleChange = (event) => {
-//     const { name, value } = event.target;
-//     setData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSave = () => {
-//     // Logic to save the changes
-//     onClose();
-//   };
-
-//   if (!data) {
-//     return null; // or a loading spinner
-//   }
-
-//   return (
-//     <Modal
-//       open
-//       onClose={onClose}
-//       aria-labelledby="modal-modal-title"
-//       aria-describedby="modal-modal-description"
-//     >
-//       <Box sx={style}>
-//         <Typography id="modal-modal-title" variant="h6" component="h2">
-//           Edit Review
-//         </Typography>
-//         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-//           Modify the review details below.
-//         </Typography>
-//         <Box component="form" sx={{ mt: 2 }}>
-//           <TextField
-//             fullWidth
-//             name="essayTitle"
-//             label="Title"
-//             value={data.essayTitle || ""}
-//             onChange={handleChange}
-//             variant="outlined"
-//             margin="normal"
-//           />
-//           <TextField
-//             fullWidth
-//             name="content"
-//             label="Content"
-//             value={data.content || ""}
-//             onChange={handleChange}
-//             variant="outlined"
-//             margin="normal"
-//           />
-//           <TextField
-//             fullWidth
-//             name="nickname"
-//             label="Nickname"
-//             value={data.user.nickname || ""}
-//             variant="outlined"
-//             margin="normal"
-//             InputProps={{
-//               readOnly: true,
-//             }}
-//           />
-//           <TextField
-//             fullWidth
-//             name="email"
-//             label="Email"
-//             value={data.user.email || ""}
-//             variant="outlined"
-//             margin="normal"
-//             InputProps={{
-//               readOnly: true,
-//             }}
-//           />
-//           <TextField
-//             fullWidth
-//             name="createdDate"
-//             label="Created Date"
-//             value={new Date(data.createdDate).toLocaleString() || ""}
-//             variant="outlined"
-//             margin="normal"
-//             InputProps={{
-//               readOnly: true,
-//             }}
-//           />
-//           <Button
-//             variant="contained"
-//             color="primary"
-//             sx={{
-//               mt: 2,
-//               bgcolor: "primary.main",
-//               color: "primary.contrastText",
-//               "&:hover": {
-//                 bgcolor: "primary.main",
-//                 color: "primary.contrastText",
-//               },
-//             }}
-//             onClick={handleSave}
-//           >
-//             Save Changes
-//           </Button>
-//         </Box>
-//       </Box>
-//     </Modal>
-//   );
-// }
-
-// export default Index;

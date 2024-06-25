@@ -1,8 +1,10 @@
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
+
 import AxiosInstance from "../../../api/AxiosInstance";
 import ReviewDetailModal from "../ReviewDetailModal/ReviewDetailModal";
 import Review from "../index";
@@ -12,42 +14,65 @@ import team2 from "assets/images/team-2.jpg";
 
 export default function ReviewTableData() {
   const [reviews, setReviews] = useState([]);
-  const [page] = useState(1);
-  const [limit] = useState(10);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState(null);
+  const [selectedReviewDetail, setSelectedReviewDetail] = useState(null);
 
   useEffect(() => {
-    fetchReviews(page, limit);
-  }, [page, limit]);
+    fetchReviews();
+  }, []);
+
+  const fetchReviews = async () => {
+    try {
+      const response = await AxiosInstance.get(`/api/admin/reviews`);
+      setReviews(response.data.reviews);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
+  };
+
+  const fetchReviewDetail = async (reviewId) => {
+    try {
+      const response = await AxiosInstance.get(
+        `/api/admin/reviews/${reviewId}`
+      );
+      setSelectedReviewDetail(response.data);
+    } catch (error) {
+      console.error("Error fetching review detail:", error);
+    }
+  };
 
   const handleReviewClick = (reviewId) => {
-    console.log("선택한 리뷰아이디", reviewId);
     setSelectedReviewId(reviewId);
+    fetchReviewDetail(reviewId);
     setModalOpen(true);
   };
 
-  const fetchReviews = async (page, limit) => {
+  const handleReviewProcess = async (reviewId, processBody) => {
     try {
-      const response = await AxiosInstance.get(
-        `${
-          import.meta.env.VITE_ROOT_API_URL
-        }/admin/reviews?page=${page}&limit=${limit}`
+      const response = await AxiosInstance.post(
+        `/api/admin/reviews/${reviewId}`,
+        processBody
       );
-      setReviews(response.data.data.reviews);
+      if (response.status === 200) {
+        console.log("Review processed successfully");
+        fetchReviews(page, limit);
+        setModalOpen(false);
+      }
     } catch (error) {
-      console.error("error 발생", error);
+      console.error("Error processing review:", error);
     }
   };
 
   const handleClose = () => {
     setModalOpen(false);
     setSelectedReviewId(null);
+    setSelectedReviewDetail(null);
   };
 
-  const Author = ({ image, userId }) => (
+  const Author = ({ userId }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={userId} size="sm" />
+      <MDAvatar name={userId} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {userId}
@@ -118,12 +143,18 @@ export default function ReviewTableData() {
     <>
       <ReviewDetailModal
         open={modalOpen}
+        setOpen={setModalOpen}
         handleClose={handleClose}
         reviewId={selectedReviewId}
+        reviewDetail={selectedReviewDetail}
+        onProcess={handleReviewProcess}
       />
-      {/* 실제로 테이블을 렌더링하는 부분이 필요합니다. */}
-      {/* 예시로 DataTable 컴포넌트를 사용해보겠습니다. */}
       <Review columns={columns} rows={rows} />
     </>
   );
 }
+
+ReviewTableData.propTypes = {
+  userId: PropTypes.string,
+  title: PropTypes.string,
+};
