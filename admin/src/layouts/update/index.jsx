@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MDEditor from "@uiw/react-md-editor";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
@@ -16,7 +16,8 @@ import MDBox from "components/MDBox";
 function index() {
   const [value, setValue] = useState("**Hello world!!!**");
   const [title, setTitle] = useState("");
-  const { parameter } = useParams();
+  const route = useLocation();
+
 
   return (
     <DashboardLayout>
