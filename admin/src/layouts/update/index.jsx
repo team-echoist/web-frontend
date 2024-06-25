@@ -28,6 +28,26 @@ function index() {
       >
         <Grid container spacing={2}>
           <Grid item xs={6}>
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                paddingLeft: "20px",
+                backgroundColor: "#ffffff",
+                border: "1px solid #ccc",
+                padding: "20px",
+                boxShadow: 1,
+                overflow: "auto",
+              }}
+            >
+              {/* 미리보기 자리 | 문의글 보기 */}
+              <MDEditor.Markdown
+                source={value}
+                style={{ whiteSpace: "pre-wrap" }}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
             <TextField
               label="제목"
               placeholder="제목을 입력하세요..."
@@ -41,25 +61,6 @@ function index() {
               }}
               InputLabelProps={{ shrink: true }}
             />
-            <Box
-              sx={{
-                width: "100%",
-                height: "93%",
-                paddingLeft: "20px",
-                backgroundColor: "#ffffff",
-                border: "1px solid #ccc",
-                padding: "20px",
-                boxShadow: 1,
-              }}
-            >
-              {/* 미리보기 자리 | 문의글 보기 */}
-              <MDEditor.Markdown
-                source={value}
-                style={{ whiteSpace: "pre-wrap" }}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
             <Box
               sx={{
                 width: "100%",
