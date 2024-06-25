@@ -6,7 +6,7 @@ import MDTypography from "components/MDTypography";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export default function data(data,deleteFunc) {
+export default function data(data, deleteFunc) {
   const Title = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDTypography display="block" variant="button">
@@ -28,9 +28,9 @@ export default function data(data,deleteFunc) {
     </MDBox>
   );
 
-  const DetailButton = (item) => {
+  const DetailButton = (id) => {
     return (
-      <Link to={`/notice-detail?id=${encodeURI(item)}`}>
+      <Link to={`/notice-detail?id=${encodeURI(JSON.stringify(id))}`}>
         <Button
           variant="contained"
           color="primary"
@@ -41,22 +41,24 @@ export default function data(data,deleteFunc) {
       </Link>
     );
   };
-  const DeleteButton = ({id}) => {
+  const DeleteButton = ({ id }) => {
     return (
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            backgroundColor: "#ff1744",
-            color: "white !important",
-            "&:hover": {
-              backgroundColor: "#d50000", 
-            },
-          }}
-          onClick={()=>{deleteFunc(id)}}
-        >
-          Delete
-        </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{
+          backgroundColor: "#ff1744",
+          color: "white !important",
+          "&:hover": {
+            backgroundColor: "#d50000",
+          },
+        }}
+        onClick={() => {
+          deleteFunc(id);
+        }}
+      >
+        Delete
+      </Button>
     );
   };
   return {
@@ -70,8 +72,8 @@ export default function data(data,deleteFunc) {
     rows: data?.Notices?.map((item) => ({
       title: <Title name={item.title} />,
       date: <Date date={item.createdDate.substring(0, 10)} />,
-      detail: <DetailButton data={item} />,
-      delete: <DeleteButton id={item.id} />
+      detail: <DetailButton id={item.id} />,
+      delete: <DeleteButton id={item.id} />,
     })),
   };
 }

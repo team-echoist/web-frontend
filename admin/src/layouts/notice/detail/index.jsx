@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -7,9 +8,15 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
+import { useLocation } from "react-router-dom";
 
 
 function index() {
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const detailObj = decodeURI(searchParams.get("id"));
+    const id = JSON.parse(detailObj).id
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
