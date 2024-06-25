@@ -12,13 +12,27 @@ import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
+import { fetchData } from "../../api";
+import { showToast } from "../../utils/toast";
 
 function index() {
-  const [value, setValue] = useState("**Hello world!!!**");
-  const [title, setTitle] = useState("");
+  const [value, setValue] = useState({ title: "", content: "" });
   const route = useLocation();
+  const updateData = () => {
+    try {
+      const body = {
+        title: value.title,
+        content: value.content,
+      };
+      const { status } = fetchData("/admin/notices", "post", body);
 
-
+      if (status === 201) {
+        showToast.success("notice updated successful");
+      }
+    } catch (err) {
+      showToast.error("notice updated Failed.");
+    }
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -36,7 +50,7 @@ function index() {
               coloredShadow="info"
             >
               <MDTypography variant="h6" color="white">
-               update
+                update
               </MDTypography>
             </MDBox>
           </Card>
@@ -66,7 +80,7 @@ function index() {
             >
               {/* 미리보기 자리 | 문의글 보기 */}
               <MDEditor.Markdown
-                source={value}
+                source={value.content}
                 style={{ whiteSpace: "pre-wrap" }}
               />
             </Box>
@@ -76,8 +90,10 @@ function index() {
               label="제목"
               placeholder="제목을 입력하세요..."
               variant="outlined"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={value.title}
+              onChange={(e) =>
+                setValue((prev) => ({ ...prev, title: e.target.value }))
+              }
               style={{
                 width: "100%",
                 marginBottom: "10px",
@@ -91,19 +107,28 @@ function index() {
                 height: "100%",
               }}
             >
-              <MDEditor
-                value={value}
-                onChange={setValue}
-                height={600}
-                preview="edit"
-                // preview={parameter === "edit" ? "edit" : "live"}
-              />
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <MDEditor
+                  value={value.content}
+                  onChange={(newValue) =>
+                    setValue((prev) => ({ ...prev, content: newValue }))
+                  }
+                  height={600}
+                  preview="edit"
+                  // preview={parameter === "edit" ? "edit" : "live"}
+                />
+              </Box>
             </Box>
           </Grid>
         </Grid>
       </Box>
       <Box display="flex" justifyContent="flex-end" p={2}>
-        <Button variant="contained" color="dark">
+        <Button variant="contained" color="dark" onClick={updateData}>
           Update
         </Button>
       </Box>
