@@ -8,12 +8,12 @@ import Footer from "examples/Footer";
 import { Button, Box, Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { fetchData } from "../../api";
+import { showToast } from "../../utils/toast";
 
 function index() {
   const [tableData, setTableData] = useState({ columns: [], rows: [] });
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
-
 
   const navigate = useNavigate();
 
@@ -22,36 +22,47 @@ function index() {
   };
   useEffect(() => {
     // 데이터 페칭함수 세팅자리
-    const getNotice = async () => {
-      try {
-        const options = {
-          params: {
-            page: currentPage,
-            limit: rowsPerPage,
-          },
-        };
-        const { data } = await fetchData(
-          "/admin/notices",
-          "get",
-          null,
-          options
-        );
-        console.log("data111", data);
-
-        const { columns, rows } = authorsTableData(data);
-        setTableData({ columns, rows, totalPages: data.totalPage });
-      } catch (err) {
-        console.log("err", err);
-      }
-    };
 
     getNotice();
   }, [currentPage]);
+  const getNotice = async () => {
+    try {
+      const options = {
+        params: {
+          page: currentPage,
+          limit: rowsPerPage,
+        },
+      };
+      const { data } = await fetchData("/admin/notices", "get", null, options);
+      console.log("data111", data);
+
+      const { columns, rows } = authorsTableData(data, deleteNotice);
+      setTableData({ columns, rows, totalPages: data.totalPage });
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
+  const deleteNotice = async (id) => {
+    try {
+      const params ={
+        params:{
+          noticeId:id
+        }
+      }
+      const { status } = await fetchData(`/admin/notices/${id}`,'delete',null,params);
+      if (status === 200) {
+        showToast.success("notice deleted successfully");
+        getNotice();
+      }
+    } catch (err) {
+      showToast.error("delete Failed");
+    }
+  };
 
   const handlePageChange = (_, value) => {
     setCurrentPage(value);
   };
-
 
   return (
     <DashboardLayout>

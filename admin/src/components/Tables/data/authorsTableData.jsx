@@ -6,7 +6,7 @@ import MDTypography from "components/MDTypography";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export default function data(data) {
+export default function data(data,deleteFunc) {
   const Title = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDTypography display="block" variant="button">
@@ -41,7 +41,7 @@ export default function data(data) {
       </Link>
     );
   };
-  const DeleteButton = (id) => {
+  const DeleteButton = ({id}) => {
     return (
         <Button
           variant="contained"
@@ -53,6 +53,7 @@ export default function data(data) {
               backgroundColor: "#d50000", 
             },
           }}
+          onClick={()=>{deleteFunc(id)}}
         >
           Delete
         </Button>
