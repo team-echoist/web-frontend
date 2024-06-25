@@ -36,10 +36,10 @@ function index() {
           null,
           options
         );
-        console.log("data", data);
+        console.log("data111", data);
 
-        const { columns, rows } = authorsTableData(data?.Notices);
-        setTableData({ columns, rows, totalPages: data.totalPage + 1 });
+        const { columns, rows } = authorsTableData(data);
+        setTableData({ columns, rows, totalPages: data.totalPage });
       } catch (err) {
         console.log("err", err);
       }

@@ -41,22 +41,36 @@ export default function data(data) {
       </Link>
     );
   };
-  data = [
-    { title: "비상비상!!!", createdDate: "2024-06-25", id: 1 },
-    { title: "비상비상!!!", createdDate: "2024-06-25", id: 2 },
-  ];
-  console.log("data", data);
+  const DeleteButton = (id) => {
+    return (
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            backgroundColor: "#ff1744",
+            color: "white !important",
+            "&:hover": {
+              backgroundColor: "#d50000", 
+            },
+          }}
+        >
+          Delete
+        </Button>
+    );
+  };
   return {
     columns: [
       { Header: "title", accessor: "title", width: "45%", align: "left" },
       { Header: "date", accessor: "date", align: "center" },
       { Header: "detail", accessor: "detail", width: "10%", align: "center" },
+      { Header: "delete", accessor: "delete", width: "10%", align: "center" },
     ],
 
-    rows: data?.map((item) => ({
+    rows: data?.Notices?.map((item) => ({
       title: <Title name={item.title} />,
-      date: <Date date={item.createdDate} />,
+      date: <Date date={item.createdDate.substring(0, 10)} />,
       detail: <DetailButton data={item} />,
+      delete: <DeleteButton id={item.id} />
     })),
   };
 }

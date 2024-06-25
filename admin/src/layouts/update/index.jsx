@@ -7,17 +7,17 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MDEditor from "@uiw/react-md-editor";
-import { useLocation } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
 import { fetchData } from "../../api";
 import { showToast } from "../../utils/toast";
+import { useNavigate } from "react-router-dom";
 
 function index() {
   const [value, setValue] = useState({ title: "", content: "" });
-  const route = useLocation();
+  const navigate = useNavigate();
   const updateData = async() => {
     try {
       const body = {
@@ -28,6 +28,7 @@ function index() {
 
       if (status === 201) {
         showToast.success("notice updated successful");
+        navigate(-1);
       }
     } catch (err) {
       showToast.error("notice updated Failed.");
