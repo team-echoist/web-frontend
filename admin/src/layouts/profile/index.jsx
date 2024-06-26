@@ -24,7 +24,7 @@ import PlatformSettings from "layouts/profile/components/PlatformSettings";
 import { showToast } from "../../utils/toast";
 
 import { findAdmin } from "./util/findAdmin";
-import { fetchData } from "./api";
+import { fetchData } from "../../api";
 import { useEffect, useState, useCallback } from "react";
 
 import EditModal from "./components/EditModal";
@@ -80,7 +80,7 @@ function Overview() {
         setEditModalOpen(false);
       }
     } catch (err) {
-      console.log("err", err);
+      showToast.error("Profile edited Failed.")
     }
   };
 
@@ -95,14 +95,18 @@ function Overview() {
     }));
   };
   const makeActive = async (id) => {
-    const makeAdminActive = await fetchData(`/admin/${id}`, "put", null, {
-      params: {
-        active: "true",
-      },
-    });
-    if (makeAdminActive.status === 200) {
-      showToast.success("Admin activated successfully.");
-      requestAdminList();
+    try{
+      const makeAdminActive = await fetchData(`/admin/${id}`, "put", null, {
+        params: {
+          activatd: "true",
+        },
+      });
+      if (makeAdminActive.status === 200) {
+        showToast.success("Admin activated successfully.");
+        requestAdminList();
+      }
+    }catch(err){
+      showToast.error("Admin activated Failed.")
     }
   };
 
