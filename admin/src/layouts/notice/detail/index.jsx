@@ -9,13 +9,31 @@ import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
 import { useLocation } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import { fetchData } from "../../../api";
 
 function index() {
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const detailObj = decodeURI(searchParams.get("id"));
-    const id = JSON.parse(detailObj).id
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const detailObj = decodeURI(searchParams.get("id"));
+  const id = JSON.parse(detailObj).id;
+  const [data,setData] =useState({})
+
+  useEffect(() => {
+    getDetail();
+  }, [id]);
+
+  const getDetail = async () => {
+    try {
+      const { data } = await fetchData(`/admin/notices/${id}`, "get");
+      setData(data)
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
+  console.log("data",data.processor
+  )
 
   return (
     <DashboardLayout>
@@ -41,7 +59,12 @@ function index() {
         </Grid>
       </MDBox>
       <BackgroudCard>
-        <DefaultContent title="비상비상!!!" date="2024-06-25" writer="차은우" content="안농"/>
+        <DefaultContent
+          title={data.title}
+          date={data?.createdDate?.substring(0, 10)}
+          writer={data?.processor?.name}
+          content={data.content}
+        />
       </BackgroudCard>
       <Footer />
     </DashboardLayout>
