@@ -7,6 +7,9 @@ import Essay from "layouts/essay";
 import DashBoardDetail from "layouts/dashboard/detail";
 import Profile from "layouts/profile";
 import { handleLogout } from "./utils/handleLogout";
+import Notice from "layouts/notice";
+import NoticeDetail from "layouts/notice/detail";
+import Update from "layouts/update"
 
 // @mui icons
 import LoginIcon from "@mui/icons-material/Login";
@@ -15,7 +18,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
+import CampaignIcon from "@mui/icons-material/Campaign";
 
 const routes = [
   {
@@ -59,6 +63,14 @@ const routes = [
     component: <Profile />,
   },
   {
+    type: "collapse",
+    name: "Notice",
+    key: "notice",
+    icon: <CampaignIcon></CampaignIcon>,
+    route: "/notice",
+    component: <Notice />,
+  },
+  {
     name: "Sign In",
     key: "sign-in",
     icon: <LoginIcon />,
@@ -79,13 +91,25 @@ const routes = [
     component: <DashBoardDetail />,
   },
   {
+    name: "noticeDetails",
+    key: "notice-details",
+    route: "/notice-detail",
+    component: <NoticeDetail />,
+  },
+  {
+    name: "update",
+    key: "update",
+    route: "/update",
+    component: <Update />,
+  },
+
+  {
     type: "collapse",
     name: "logout",
     key: "logout",
-    icon: <LogoutIcon/>,
+    icon: <LogoutIcon />,
     onClick: handleLogout,
   },
 ];
-
 
 export default routes;
