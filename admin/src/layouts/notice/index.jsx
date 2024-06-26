@@ -34,8 +34,6 @@ function index() {
         },
       };
       const { data } = await fetchData("/admin/notices", "get", null, options);
-      console.log("data111", data);
-
       const { columns, rows } = authorsTableData(data, deleteNotice);
       setTableData({ columns, rows, totalPages: data.totalPage });
     } catch (err) {

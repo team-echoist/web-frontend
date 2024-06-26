@@ -1,6 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-function index({ children }) {
+function index({ children, btnTitle, link }) {
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -16,8 +19,14 @@ function index({ children }) {
         {children}
       </Box>
       <Box display="flex" justifyContent="flex-end" p={2}>
-        <Button variant="contained" color="dark">
-          update
+        <Button
+          variant="contained"
+          color="dark"
+          onClick={() => {
+            navigate(link);
+          }}
+        >
+          {btnTitle}
         </Button>
       </Box>
     </>

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -14,24 +14,61 @@ import MDBox from "components/MDBox";
 import { fetchData } from "../../api";
 import { showToast } from "../../utils/toast";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function index() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const id = searchParams.get("id");
   const [value, setValue] = useState({ title: "", content: "" });
   const navigate = useNavigate();
-  const updateData = async() => {
+
+  useEffect(() => {
+    if (id) {
+      getDetail();
+    }
+  }, [id]);
+
+  const getDetail = async () => {
+    try {
+      const { data, status } = await fetchData(`/admin/notices/${id}`, "get");
+      if (status === 200) {
+        setValue((prev) => ({
+          ...prev,
+          title: data.title,
+          content: data.content,
+        }));
+      }
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
+  const updateData = async () => {
+    
+    const handleResponse = (status, successMessage) => {
+      if (status === 200 || status === 201) {
+        showToast.success(successMessage);
+        navigate(-1);
+      } else {
+        showToast.error("notice update failed.");
+      }
+    };
+  
     try {
       const body = {
         title: value.title,
         content: value.content,
       };
-      const { status } = await fetchData("/admin/notices", "post", body);
-
-      if (status === 201) {
-        showToast.success("notice updated successful");
-        navigate(-1);
-      }
+  
+      const endpoint = id ? `/admin/notices/${id}` : "/admin/notices";
+      const method = id ? "put" : "post";
+      const successMessage = id ? "notice edited successfully" : "notice updated successfully";
+  
+      const { status } = await fetchData(endpoint, method, body);
+      handleResponse(status, successMessage);
     } catch (err) {
-      showToast.error("notice updated Failed.");
+      showToast.error("notice update failed.");
     }
   };
   return (

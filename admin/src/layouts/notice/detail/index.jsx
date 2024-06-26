@@ -17,7 +17,7 @@ function index() {
   const searchParams = new URLSearchParams(location.search);
   const detailObj = decodeURI(searchParams.get("id"));
   const id = JSON.parse(detailObj).id;
-  const [data,setData] =useState({})
+  const [data, setData] = useState({});
 
   useEffect(() => {
     getDetail();
@@ -26,14 +26,12 @@ function index() {
   const getDetail = async () => {
     try {
       const { data } = await fetchData(`/admin/notices/${id}`, "get");
-      setData(data)
+      setData(data);
     } catch (err) {
       console.log("err", err);
     }
   };
 
-  console.log("data",data.processor
-  )
 
   return (
     <DashboardLayout>
@@ -58,7 +56,7 @@ function index() {
           </Card>
         </Grid>
       </MDBox>
-      <BackgroudCard>
+      <BackgroudCard btnTitle="edit" link={`/update?id=${id}`}>
         <DefaultContent
           title={data.title}
           date={data?.createdDate?.substring(0, 10)}
