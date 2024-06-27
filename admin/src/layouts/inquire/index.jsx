@@ -1,26 +1,47 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import inquireTableData from "components/Tables/data/inquireTableData";
 import Tables from "components/Tables";
 import Footer from "examples/Footer";
-import { Pagination,Box } from "@mui/material";
+import { Pagination, Box } from "@mui/material";
+import { fetchData } from "../../api";
 
 function index() {
   const { columns, rows } = inquireTableData();
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
+  useEffect(() => {
+    getInquire("all");
+    getInquire("unprocessed");
+  }, [currentPage]);
+
+  const getInquire = async (status) => {
+    try {
+      const options = {
+        params: {
+          page: currentPage,
+          limit: rowsPerPage,
+          status: status,
+        },
+      };
+      const { data } = await fetchData("/admin/inquires", "get", null, options);
+      console.log("data", data);
+    } catch (err) {
+      console.log("Err", err);
+    }
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <Tables title="Inquire" columns={columns} rows={rows} />
       <Box display="flex" justifyContent="center" p={2}>
-      <Pagination  color="secondary"
-          sx={{ color: "white" }}/>
-             </Box>
+        <Pagination color="secondary" sx={{ color: "white" }} />
+      </Box>
       <Footer />
-      
     </DashboardLayout>
   );
 }

@@ -5,12 +5,18 @@ export const fetchData = async (url, method, body, options = {}) => {
     throw new Error("URL과 메서드가 필요합니다.");
   }
 
+
   const config = {
     ...options, 
     params: options.params || {}, 
   };
 
-  const response = await AxiosInstance[method](url, body, config)
+  const response = await AxiosInstance({
+    method: method,
+    url: url,
+    data: body,
+    ...config,
+  });
 
 
   const data = response.data.data;
