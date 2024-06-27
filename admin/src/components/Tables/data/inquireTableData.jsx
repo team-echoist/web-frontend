@@ -76,7 +76,6 @@ export default function data(data) {
     );
   };
 
-  console.log("data22", data?.inquiries);
 
   return {
     columns: [
@@ -94,7 +93,7 @@ export default function data(data) {
     rows:
       data?.inquiries?.map((item) => ({
         inquiry: <Inquire title={item.title} />,
-        name: "변우석",
+        name: item?.user?.nickname,
         status: <RenderStatus status={item.processed} />,
         answer: <AnswerButton id={item.id} />,
       })) || [],

@@ -28,7 +28,6 @@ function index() {
       };
       const { data } = await fetchData("/admin/inquiries", "get", null, options);
       const { columns, rows } = inquireTableData(data);
-      console.log("asfd",data)
       setData({ columns, rows, totalPages: data.totalPage })
     } catch (err) {
       console.log("Err", err);
