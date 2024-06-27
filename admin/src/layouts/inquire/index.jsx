@@ -9,14 +9,12 @@ import { Pagination, Box } from "@mui/material";
 import { fetchData } from "../../api";
 
 function index() {
-  const { columns, rows } = inquireTableData();
-  const [data,setData] =useState({})
+  const [data,setData] =useState({ columns: [], rows: [] })
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
   useEffect(() => {
     getInquire("all");
-    getInquire("unprocessed");
   }, [currentPage]);
 
   const getInquire = async (status) => {
@@ -29,7 +27,9 @@ function index() {
         },
       };
       const { data } = await fetchData("/admin/inquiries", "get", null, options);
-      console.log("data", data);
+      const { columns, rows } = inquireTableData(data);
+      console.log("asfd",data)
+      setData({ columns, rows, totalPages: data.totalPage })
     } catch (err) {
       console.log("Err", err);
     }
@@ -38,7 +38,7 @@ function index() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Tables title="Inquire" columns={columns} rows={rows} />
+      <Tables title="Inquire" columns={data?.columns&&data?.columns} rows={data?.rows&&data?.rows} />
       <Box display="flex" justifyContent="center" p={2}>
         <Pagination color="secondary" sx={{ color: "white" }} />
       </Box>

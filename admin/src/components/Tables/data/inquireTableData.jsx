@@ -20,30 +20,28 @@ Coded by www.creative-tim.com
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-// Images
-import LogoAsana from "assets/images/small-logos/logo-asana.svg";
+export default function data(data) {
+  const Inquire = ({ title }) => {
+    return (
+      <MDBox display="flex" alignItems="center" lineHeight={1}>
+        <MDTypography
+          display="block"
+          variant="button"
+          fontWeight="medium"
+          ml={1}
+          lineHeight={1}
+        >
+          {title}
+        </MDTypography>
+      </MDBox>
+    );
+  };
 
-export default function data() {
-  const Project = ({  title }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDTypography
-        display="block"
-        variant="button"
-        fontWeight="medium"
-        ml={1}
-        lineHeight={1}
-      >
-        {title}
-      </MDTypography>
-    </MDBox>
-  );
-
-  const AnswerButton = () => (
-    <Link to="">
+  const AnswerButton = ({ id }) => (
+    <Link to={`/update?id=${id}&title=inquire`}>
       <Button
         variant="contained"
         color="primary"
@@ -78,6 +76,8 @@ export default function data() {
     );
   };
 
+  console.log("data22", data?.inquiries);
+
   return {
     columns: [
       {
@@ -91,23 +91,12 @@ export default function data() {
       { Header: "answer", accessor: "answer", align: "center" },
     ],
 
-    rows: [
-      {
-        inquiry: <Project  title="글 작성할때 작성이 두번 됩니다." />,
-        name: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="button"
-            color="text"
-            fontWeight="medium"
-          >
-            변우석
-          </MDTypography>
-        ),
-        status: <RenderStatus></RenderStatus>,
-        answer: <AnswerButton color="info" value={60} />,
-      },
-    ],
+    rows:
+      data?.inquiries?.map((item) => ({
+        inquiry: <Inquire title={item.title} />,
+        name: "변우석",
+        status: <RenderStatus status={item.processed} />,
+        answer: <AnswerButton id={item.id} />,
+      })) || [],
   };
 }
