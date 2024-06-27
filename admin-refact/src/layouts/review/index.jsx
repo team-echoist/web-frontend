@@ -16,12 +16,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
-// Data
-import ReviewTableData from "./data/reviewTableData";
-
-function Review() {
-  const { columns, rows } = ReviewTableData();
-
+function Index({ columns, rows }) {
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -61,4 +56,4 @@ function Review() {
   );
 }
 
-export default Review;
+export default Index;

@@ -6,11 +6,11 @@ import Modal from "@mui/material/Modal";
 
 function ReviewDetailModal({
   open,
-  handleClose,
+
   reviewId,
   reviewDetail,
   onProcess,
-  handleOpen,
+  setOpen,
 }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
