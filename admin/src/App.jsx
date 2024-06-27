@@ -40,6 +40,10 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import routes from "./routes";
 import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import MenuIcon from "@mui/icons-material/Menu";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -57,6 +61,7 @@ function App() {
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const isTabletOrBelow = useMediaQuery("(max-width: 764px)");
 
   useMemo(() => {
     const cacheRtl = createCache({
@@ -120,9 +125,7 @@ function App() {
       sx={{ cursor: "pointer" }}
       onClick={handleConfiguratorOpen}
     >
-      <Icon fontSize="small" color="inherit">
-        settings
-      </Icon>
+      <MenuIcon />
     </MDBox>
   );
   const getRoutes = (allRoutes) =>
@@ -148,25 +151,6 @@ function App() {
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
         <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={
-                (transparentSidenav && !darkMode) || whiteSidenav
-                  ? brandDark
-                  : brandWhite
-              }
-              brandName="Material Dashboard 2"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Configurator />
-            {configsButton}
-          </>
-        )}
-        {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
           <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
@@ -190,15 +174,19 @@ function App() {
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
-          <Configurator />
-          {configsButton}
+          {isTabletOrBelow && (
+            <>
+              <Configurator routes={routes} />
+              {configsButton}
+            </>
+          )}
         </>
       )}
-      {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        {/* <Route path="*" element={<Navigate to="/authentication/sign-in" />} /> */}
+        <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
+      <ToastContainer />
     </ThemeProvider>
   );
 }

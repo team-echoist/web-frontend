@@ -13,19 +13,33 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+<<<<<<< HEAD
 import { useMemo, useEffect, useState } from "react";
+=======
+import { useMemo, useEffect } from "react";
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
 // react-table components
+<<<<<<< HEAD
 import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from "react-table";
+=======
+import {
+  useTable,
+  usePagination,
+  useGlobalFilter,
+  useSortBy,
+} from "react-table";
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
 
 // @mui material components
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
+<<<<<<< HEAD
 import Icon from "@mui/material/Icon";
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -34,6 +48,11 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDPagination from "components/MDPagination";
+=======
+
+// Material Dashboard 2 React components
+import MDBox from "components/MDBox";
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
 
 // Material Dashboard 2 React example components
 import DataTableHeadCell from "examples/Tables/DataTable/DataTableHeadCell";
@@ -41,6 +60,7 @@ import DataTableBodyCell from "examples/Tables/DataTable/DataTableBodyCell";
 
 function DataTable({
   entriesPerPage,
+<<<<<<< HEAD
   canSearch,
   showTotalEntries,
   table,
@@ -55,6 +75,17 @@ function DataTable({
   const columns = useMemo(() => table.columns, [table]);
   const data = useMemo(() => table.rows, [table]);
 
+=======
+  table,
+  isSorted,
+  noEndBorder,
+}) {
+  const defaultValue = entriesPerPage.defaultValue
+    ? entriesPerPage.defaultValue
+    : 10;
+  const columns = useMemo(() => table.columns, [table]);
+  const data = useMemo(() => table.rows, [table]);
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
   const tableInstance = useTable(
     { columns, data, initialState: { pageIndex: 0 } },
     useGlobalFilter,
@@ -69,6 +100,7 @@ function DataTable({
     prepareRow,
     rows,
     page,
+<<<<<<< HEAD
     pageOptions,
     canPreviousPage,
     canNextPage,
@@ -78,11 +110,15 @@ function DataTable({
     setPageSize,
     setGlobalFilter,
     state: { pageIndex, pageSize, globalFilter },
+=======
+    setPageSize,
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
   } = tableInstance;
 
   // Set the default value for the entries per page when component mounts
   useEffect(() => setPageSize(defaultValue || 10), [defaultValue]);
 
+<<<<<<< HEAD
   // Set the entries per page value based on the select value
   const setEntriesPerPage = (value) => setPageSize(value);
 
@@ -116,6 +152,8 @@ function DataTable({
     setGlobalFilter(value || undefined);
   }, 100);
 
+=======
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
   // A function that sets the sorted value for the table
   const setSortedValue = (column) => {
     let sortedValue;
@@ -131,6 +169,7 @@ function DataTable({
     return sortedValue;
   };
 
+<<<<<<< HEAD
   // Setting the entries starting point
   const entriesStart = pageIndex === 0 ? pageIndex + 1 : pageIndex * pageSize + 1;
 
@@ -183,6 +222,11 @@ function DataTable({
           )}
         </MDBox>
       ) : null}
+=======
+
+  return (
+    <TableContainer sx={{ boxShadow: "none" }}>
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
       <Table {...getTableProps()}>
         <MDBox component="thead">
           {headerGroups.map((headerGroup, key) => (
@@ -190,7 +234,13 @@ function DataTable({
               {headerGroup.headers.map((column, idx) => (
                 <DataTableHeadCell
                   key={idx}
+<<<<<<< HEAD
                   {...column.getHeaderProps(isSorted && column.getSortByToggleProps())}
+=======
+                  {...column.getHeaderProps(
+                    isSorted && column.getSortByToggleProps()
+                  )}
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
                   width={column.width ? column.width : "auto"}
                   align={column.align ? column.align : "left"}
                   sorted={setSortedValue(column)}
@@ -207,6 +257,7 @@ function DataTable({
             return (
               <TableRow key={key} {...row.getRowProps()}>
                 {row.cells.map((cell, idx) => (
+<<<<<<< HEAD
                   <DataTableBodyCell
                     key={idx}
                     noBorder={noEndBorder && rows.length - 1 === key}
@@ -215,12 +266,23 @@ function DataTable({
                   >
                     {cell.render("Cell")}
                   </DataTableBodyCell>
+=======
+                    <DataTableBodyCell
+                      key={idx}
+                      noBorder={noEndBorder && rows.length - 1 === key}
+                      align={cell.column.align ? cell.column.align : "left"}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render("Cell")}
+                    </DataTableBodyCell>
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
                 ))}
               </TableRow>
             );
           })}
         </TableBody>
       </Table>
+<<<<<<< HEAD
 
       <MDBox
         display="flex"
@@ -265,6 +327,8 @@ function DataTable({
           </MDPagination>
         )}
       </MDBox>
+=======
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
     </TableContainer>
   );
 }

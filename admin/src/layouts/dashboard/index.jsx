@@ -43,7 +43,6 @@ function Dashboard() {
         const currentYear = new Date().getFullYear();
         const currentMonth = new Date().getMonth() + 1;
         const countResponse = await AxiosInstance.get("/admin/dashboard");
-        console.log("countResponse", countResponse);
         const monthlyUserResponse = await AxiosInstance.get(
           "/admin/statistics/users/monthly",
           {

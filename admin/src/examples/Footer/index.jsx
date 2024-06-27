@@ -48,11 +48,11 @@ function Footer({ company, links }) {
         px={1.5}
       >
         &copy; {new Date().getFullYear()}, made with
-        <MDBox fontSize={size.md} color="text" mb={-0.5} mx={0.25}>
+        {/* <MDBox fontSize={size.md} color="text" mb={-0.5} mx={0.25}>
           <Icon color="inherit" fontSize="inherit">
             favorite
           </Icon>
-        </MDBox>
+        </MDBox> */}
         by
         <Link href={href} target="_blank">
           <MDTypography variant="button" fontWeight="medium">

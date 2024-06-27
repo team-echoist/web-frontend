@@ -21,7 +21,7 @@ const MDButton = forwardRef(
       <MDButtonRoot
         {...rest}
         ref={ref}
-        color="primary"
+        color="dark"
         variant={variant === "gradient" ? "contained" : variant}
         size={size}
         ownerState={{ color, variant, size, circular, iconOnly, darkMode }}
@@ -36,7 +36,7 @@ const MDButton = forwardRef(
 MDButton.defaultProps = {
   size: "medium",
   variant: "contained",
-  color: "white",
+  color: "blue",
   circular: false,
   iconOnly: false,
 };

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
 =========================================================
 * Material Dashboard 2 React - v2.2.0
@@ -25,15 +26,26 @@ import Icon from "@mui/material/Icon";
 // @mui icons
 import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
+=======
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
+
+import Divider from "@mui/material/Divider";
+import {NavLink } from "react-router-dom";
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+<<<<<<< HEAD
 import MDButton from "components/MDButton";
+=======
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
 
 // Custom styles for the Configurator
 import ConfiguratorRoot from "examples/Configurator/ConfiguratorRoot";
 
+<<<<<<< HEAD
 // Material Dashboard 2 React context
 import {
   useMaterialUIController,
@@ -123,6 +135,68 @@ function Configurator() {
       color: darkMode ? background.sidenav : white.main,
     },
   });
+=======
+import CloseIcon from "@mui/icons-material/Close";
+import Link from "@mui/material/Link";
+import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
+import List from "@mui/material/List";
+
+// Material Dashboard 2 React context
+import { useMaterialUIController, setOpenConfigurator } from "context";
+
+function Configurator({ routes }) {
+  const [controller, dispatch] = useMaterialUIController();
+  const { openConfigurator, darkMode } = controller;
+  const collapseName = location.pathname.replace("/", "");
+
+
+  const handleCloseConfigurator = () => setOpenConfigurator(dispatch, false);
+
+  const renderRoutes = routes?.map(
+    ({ type, name, icon, noCollapse, key, href, route, onClick }) => {
+      let returnValue;
+      if (type === "collapse") {
+        returnValue = href ? (
+          <Link
+            href={href}
+            key={key}
+            target="_blank"
+            rel="noreferrer"
+            sx={{ textDecoration: "none" }}
+          >
+            <SidenavCollapse
+              name={name}
+              icon={icon}
+              active={key === collapseName}
+              noCollapse={noCollapse}
+            />
+          </Link>
+        ) : name === "logout" ? (
+          <div
+            onClick={() => {
+              onClick();
+            }}
+          >
+            <SidenavCollapse
+              name={name}
+              icon={icon}
+              active={key === collapseName}
+            />
+          </div>
+        ) : (
+          <NavLink key={key} to={route}>
+            <SidenavCollapse
+              name={name}
+              icon={icon}
+              active={key === collapseName}
+            />
+          </NavLink>
+        );
+      }
+      return returnValue;
+    }
+  );
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
 
   return (
     <ConfiguratorRoot variant="permanent" ownerState={{ openConfigurator }}>
@@ -135,6 +209,7 @@ function Configurator() {
         px={3}
       >
         <MDBox>
+<<<<<<< HEAD
           <MDTypography variant="h5">Material UI Configurator</MDTypography>
           <MDTypography variant="body2" color="text">
             See our dashboard options.
@@ -142,6 +217,15 @@ function Configurator() {
         </MDBox>
 
         <Icon
+=======
+          <MDTypography variant="h5" style={{ color: "white" }}>
+            Linkedout Dashboard
+          </MDTypography>
+        </MDBox>
+
+        <CloseIcon
+          style={{ color: "white" }}
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
           sx={({ typography: { size }, palette: { dark, white } }) => ({
             fontSize: `${size.lg} !important`,
             color: darkMode ? white.main : dark.main,
@@ -151,6 +235,7 @@ function Configurator() {
             transform: "translateY(5px)",
           })}
           onClick={handleCloseConfigurator}
+<<<<<<< HEAD
         >
           close
         </Icon>
@@ -327,6 +412,13 @@ function Configurator() {
           </MDBox>
         </MDBox>
       </MDBox>
+=======
+        />
+      </MDBox>
+
+      <Divider />
+      <List>{renderRoutes}</List>
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
     </ConfiguratorRoot>
   );
 }

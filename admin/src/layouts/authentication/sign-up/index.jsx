@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -20,6 +19,7 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 // import axios from "axios";
 import axios from "axios";
+import { showToast } from "../../../utils/toast";
 
 function Cover() {
   const [email, setEmail] = useState("");
@@ -33,12 +33,14 @@ function Cover() {
         password,
         name,
       });
-      alert("회원가입 요청 완료. 관리자의 승인을 기다려주세요.");
+      if(response.status===201){
+        showToast.success("회원가입 요청 완료. 관리자의 승인을 기다려주세요.")
+      }
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        alert("이미 가입된 이메일입니다.");
+        showToast.error("이미 가입된 이메일입니다.");
       } else {
-        alert("가입 중 에러 발생", error.message);
+        showToast.error("가입 중 에러 발생", error.message);
       }
     }
   };

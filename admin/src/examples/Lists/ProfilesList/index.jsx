@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
 =========================================================
 * Material Dashboard 2 React - v2.2.0
@@ -15,6 +16,10 @@ Coded by www.creative-tim.com
 
 // react-routers components
 import { Link } from "react-router-dom";
+=======
+/* eslint-disable react/prop-types */
+
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
 
 // prop-types is library for typechecking of props
 import PropTypes from "prop-types";
@@ -26,6 +31,7 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
+<<<<<<< HEAD
 import MDButton from "components/MDButton";
 
 function ProfilesList({ title, profiles, shadow }) {
@@ -67,6 +73,74 @@ function ProfilesList({ title, profiles, shadow }) {
     <Card sx={{ height: "100%", boxShadow: !shadow && "none" }}>
       <MDBox pt={2} px={2}>
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
+=======
+import defaultProfile from "assets/images/default.jpg";
+import Button from "@mui/material/Button";
+
+import WarningIcon from "@mui/icons-material/Warning";
+
+function ProfilesList({ title, profiles, shadow, makeActive }) {
+  const renderProfiles =
+    profiles.length > 0 ? (
+      profiles.map(({ imageUrl, name, id }) => (
+        <MDBox
+          key={name}
+          component="li"
+          display="flex"
+          alignItems="center"
+          py={1}
+          mb={1}
+        >
+          <MDBox mr={2}>
+            <MDAvatar
+              src={imageUrl || defaultProfile}
+              alt="something here"
+              shadow="md"
+            />
+          </MDBox>
+          <MDBox
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="center"
+          >
+            <MDTypography variant="button" fontWeight="medium">
+              {name}
+            </MDTypography>
+            <MDTypography variant="caption" color="text">
+              활성화 되지 않은 어드민
+            </MDTypography>
+          </MDBox>
+          <MDBox ml="auto">
+            <Button
+              variant="text"
+              color="info"
+              onClick={() => {
+                makeActive(id);
+              }}
+            >
+              Make Active
+            </Button>
+          </MDBox>
+        </MDBox>
+      ))
+    ) : (
+      <MDTypography variant="body1" display="flex" alignItems="center">
+        <WarningIcon sx={{ mr: 1 }} />
+        <MDTypography variant="caption" color="text">
+          Requested admin not found.
+        </MDTypography>
+      </MDTypography>
+    );
+  return (
+    <Card sx={{ height: "100%", boxShadow: !shadow && "none" }}>
+      <MDBox pt={2} px={2}>
+        <MDTypography
+          variant="h6"
+          fontWeight="medium"
+          textTransform="capitalize"
+        >
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
           {title}
         </MDTypography>
       </MDBox>
@@ -91,4 +165,8 @@ ProfilesList.propTypes = {
   shadow: PropTypes.bool,
 };
 
+<<<<<<< HEAD
 export default ProfilesList;
+=======
+export default ProfilesList;
+>>>>>>> 6b998453d8514a9b6157e1381d56f8aaddab7247
