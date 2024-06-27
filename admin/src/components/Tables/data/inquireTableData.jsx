@@ -41,7 +41,7 @@ export default function data(data) {
   };
 
   const AnswerButton = ({ id }) => (
-    <Link to={`/update?id=${id}&title=inquire`}>
+    <Link to={`/update?id=${encodeURI(id)}&title=inquire`}>
       <Button
         variant="contained"
         color="primary"
