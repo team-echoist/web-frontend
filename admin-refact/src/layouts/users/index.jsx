@@ -18,7 +18,7 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import usersTableData from "layouts/users/data/usersTableData";
+import usersTableData from "layouts/users/usersTableData";
 
 function Users() {
   const { columns, rows } = usersTableData();
