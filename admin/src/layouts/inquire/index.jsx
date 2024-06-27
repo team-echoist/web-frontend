@@ -10,6 +10,7 @@ import { fetchData } from "../../api";
 
 function index() {
   const { columns, rows } = inquireTableData();
+  const [data,setData] =useState({})
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
@@ -27,7 +28,7 @@ function index() {
           status: status,
         },
       };
-      const { data } = await fetchData("/admin/inquires", "get", null, options);
+      const { data } = await fetchData("/admin/inquiries", "get", null, options);
       console.log("data", data);
     } catch (err) {
       console.log("Err", err);
