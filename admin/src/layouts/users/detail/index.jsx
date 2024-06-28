@@ -3,7 +3,6 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import BackgroudCard from "components/BackgroundCard";
-import DefaultContent from "components/BackgroundCard/content/DefaultContent";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
@@ -12,11 +11,10 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchData } from "../../../api";
 
-function index() {
+function Index() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const detailObj = decodeURI(searchParams.get("id"));
-  const id = JSON.parse(detailObj).id;
+  const id = searchParams.get("id");
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -25,8 +23,8 @@ function index() {
 
   const getDetail = async () => {
     try {
-      const { data } = await fetchData(`/admin/users/${id}`, "get");
-      setData(data);
+      const response = await fetchData(`/admin/users/${id}`, "get");
+      setData(response.data);
     } catch (err) {
       console.log("err", err);
     }
@@ -55,17 +53,44 @@ function index() {
           </Card>
         </Grid>
       </MDBox>
-      <BackgroudCard btnTitle="edit" link={`/update?id=${id}&title=notice`}>
-        <DefaultContent
-          title={data.title}
-          date={data?.createdDate?.substring(0, 10)}
-          writer={data?.processor?.name}
-          content={data.content}
-        />
+      <BackgroudCard btnTitle="edit" link={`/users-detail/id=${id}`}>
+        <MDBox p={3}>
+          <MDTypography variant="h6">User Details</MDTypography>
+          <MDTypography>ID: {data.id}</MDTypography>
+          <MDTypography>Nickname: {data.nickname}</MDTypography>
+          <MDTypography>Email: {data.email}</MDTypography>
+          <MDTypography>Gender: {data.gender}</MDTypography>
+          <MDTypography>Profile Image: {data.profileImage}</MDTypography>
+          <MDTypography>
+            Birth Date: {new Date(data.birthDate).toLocaleDateString()}
+          </MDTypography>
+          <MDTypography>Role: {data.role}</MDTypography>
+          <MDTypography>Status: {data.status}</MDTypography>
+          <MDTypography>
+            Subscription End:{" "}
+            {new Date(data.subscriptionEnd).toLocaleDateString()}
+          </MDTypography>
+          <MDTypography>
+            Created Date: {new Date(data.createdDate).toLocaleDateString()}
+          </MDTypography>
+          <MDTypography>
+            Updated Date: {new Date(data.updatedDate).toLocaleDateString()}
+          </MDTypography>
+          <MDTypography>
+            Deleted Date:{" "}
+            {data.deletedDate
+              ? new Date(data.deletedDate).toLocaleDateString()
+              : "N/A"}
+          </MDTypography>
+          <MDTypography>Reputation: {data.reputation}</MDTypography>
+          <MDTypography>Report Count: {data.reportCount}</MDTypography>
+          <MDTypography>Review Count: {data.reviewCount}</MDTypography>
+          <MDTypography>Essay Count: {data.essayCount}</MDTypography>
+        </MDBox>
       </BackgroudCard>
       <Footer />
     </DashboardLayout>
   );
 }
 
-export default index;
+export default Index;

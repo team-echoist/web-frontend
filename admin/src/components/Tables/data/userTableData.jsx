@@ -38,7 +38,7 @@ export default function index(data) {
   );
 
   const DetailButton = ({ id }) => (
-    <Link to={`/detail?id=${encodeURI(id)}`}>
+    <Link to={`/user-detail?id=${id}`}>
       <Button
         variant="contained"
         color="primary"
@@ -55,7 +55,7 @@ export default function index(data) {
       { Header: "Nickname", accessor: "nickname", align: "left" },
       { Header: "Status", accessor: "status", align: "center" },
       { Header: "Registration Date", accessor: "createdDate", align: "center" },
-      { Header: "Action", accessor: "action", align: "center" },
+      { Header: "Detail", accessor: "action", align: "center" },
     ],
     rows:
       data?.users?.map((item) => ({

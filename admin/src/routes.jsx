@@ -116,7 +116,7 @@ const routes = [
   },
   {
     name: "userDetails",
-    key: "user-details",
+    key: "user-detail",
     route: "/user-detail",
     component: <UserDetail />,
   },
