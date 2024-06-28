@@ -10,6 +10,7 @@ import MDEditor from "@uiw/react-md-editor";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
+import { Typography } from "@mui/material";
 import MDBox from "components/MDBox";
 import { fetchData } from "../../api";
 import { showToast } from "../../utils/toast";
@@ -20,8 +21,10 @@ function index() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
+  const title = searchParams.get("title");
   const [value, setValue] = useState({ title: "", content: "" });
   const navigate = useNavigate();
+
 
   useEffect(() => {
     if (id) {
@@ -29,14 +32,43 @@ function index() {
     }
   }, [id]);
 
+  const payloads = {
+    notice: {
+      body: {
+        title: value.title,
+        content: value.content,
+      },
+      endpoint: id ? `/admin/notices/${id}` : "/admin/notices",
+      successMessage: id
+        ? "notice edited successfully"
+        : "notice updated successfully",
+      method: id ? "put" : "post",
+    },
+    inquire: {
+      body: {
+        answer: value.answer,
+      },
+      endpoint: id ? `/admin/inquiries/${id}` : "/admin/inquiries",
+      successMessage: id
+        ? "inquire edited successfully"
+        : "inquire updated successfully",
+      method: "post",
+    },
+  };
+
   const getDetail = async () => {
     try {
-      const { data, status } = await fetchData(`/admin/notices/${id}`, "get");
+      const { endpoint } = payloads[title];
+      const { data, status } = await fetchData(endpoint, "get");
       if (status === 200) {
         setValue((prev) => ({
           ...prev,
+          inquire: title === "inquire" ? true : false,
           title: data.title,
           content: data.content,
+          date: data?.createdDate?.slice(0.1),
+          answer: data?.answer || "",
+          user: title === "inquire" ? data.user : {},
         }));
       }
     } catch (err) {
@@ -45,7 +77,6 @@ function index() {
   };
 
   const updateData = async () => {
-    
     const handleResponse = (status, successMessage) => {
       if (status === 200 || status === 201) {
         showToast.success(successMessage);
@@ -54,23 +85,18 @@ function index() {
         showToast.error("notice update failed.");
       }
     };
-  
+
     try {
-      const body = {
-        title: value.title,
-        content: value.content,
-      };
-  
-      const endpoint = id ? `/admin/notices/${id}` : "/admin/notices";
-      const method = id ? "put" : "post";
-      const successMessage = id ? "notice edited successfully" : "notice updated successfully";
-  
+      const { body, endpoint, successMessage, method } =
+        payloads[title] || payloads.notice;
       const { status } = await fetchData(endpoint, method, body);
       handleResponse(status, successMessage);
     } catch (err) {
       showToast.error("notice update failed.");
     }
   };
+
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -117,28 +143,61 @@ function index() {
               }}
             >
               {/* 미리보기 자리 | 문의글 보기 */}
-              <MDEditor.Markdown
-                source={value.content}
-                style={{ whiteSpace: "pre-wrap" }}
-              />
+              {value.inquire ? (
+                <Box sx={{ fontSize: "0.8rem" }}>
+                  <Typography
+                    sx={{ marginBottom: "0.2rem", fontSize: "0.9rem" }}
+                  >
+                    제목: {value?.title}
+                  </Typography>
+                  <hr
+                    style={{
+                      marginTop: "10px",
+                      borderTop: "1px solid lightgray",
+                      width: "100%",
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      marginBottom: "1rem",
+                      fontSize: "0.8rem",
+                      marginTop: "8px",
+                    }}
+                  >
+                    name: {value?.user?.nickname}
+                  </Typography>
+
+                  <Typography sx={{ fontSize: "0.9rem" }}>
+                    {value?.content}
+                  </Typography>
+                </Box>
+              ) : (
+                <MDEditor.Markdown
+                  source={value.content}
+                  style={{ whiteSpace: "pre-wrap" }}
+                />
+              )}
             </Box>
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              label="제목"
-              placeholder="제목을 입력하세요..."
-              variant="outlined"
-              value={value.title}
-              onChange={(e) =>
-                setValue((prev) => ({ ...prev, title: e.target.value }))
-              }
-              style={{
-                width: "100%",
-                marginBottom: "10px",
-                backgroundColor: "white",
-              }}
-              InputLabelProps={{ shrink: true }}
-            />
+            {!value.inquire && (
+              <TextField
+                label="제목"
+                placeholder="제목을 입력하세요..."
+                variant="outlined"
+                value={value.title}
+                onChange={(e) =>
+                  setValue((prev) => ({ ...prev, title: e.target.value }))
+                }
+                style={{
+                  width: "100%",
+                  marginBottom: "10px",
+                  backgroundColor: "white",
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+
             <Box
               sx={{
                 width: "100%",
@@ -152,13 +211,15 @@ function index() {
                 }}
               >
                 <MDEditor
-                  value={value.content}
+                  value={value.inquire ? value?.answer : value.content}
                   onChange={(newValue) =>
-                    setValue((prev) => ({ ...prev, content: newValue }))
+                    setValue((prev) => ({
+                      ...prev,
+                      [value.inquire ? "answer" : "content"]: newValue,
+                    }))
                   }
                   height={600}
-                  preview="edit"
-                  // preview={parameter === "edit" ? "edit" : "live"}
+                  preview={title === "inquire" ? "live" : "edit"}
                 />
               </Box>
             </Box>

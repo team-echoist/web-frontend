@@ -56,7 +56,7 @@ function index() {
           </Card>
         </Grid>
       </MDBox>
-      <BackgroudCard btnTitle="edit" link={`/update?id=${id}`}>
+      <BackgroudCard btnTitle="edit" link={`/update?id=${id}&title=notice`}>
         <DefaultContent
           title={data.title}
           date={data?.createdDate?.substring(0, 10)}

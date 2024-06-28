@@ -74,6 +74,6 @@ export default function data(data, deleteFunc) {
       date: <Date date={item.createdDate.substring(0, 10)} />,
       detail: <DetailButton id={item.id} />,
       delete: <DeleteButton id={item.id} />,
-    })),
+    }))|| [],
   };
 }
