@@ -1,63 +1,60 @@
-// 신고내역 관리 페이지
-
-// @mui material components
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-
-// Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 React example components
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useState, useEffect } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import reportTableData from "components/Tables/data/userTableData";
+import Tables from "components/Tables";
 import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
+import { Pagination, Box } from "@mui/material";
+import { fetchData } from "../../api";
 
-// Data
-import reportTableData from "layouts/reports/data/reportTableData";
+function Index() {
+  const [data, setData] = useState({ columns: [], rows: [] });
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
+  const [filter, setFilter] = useState("all");
 
-function Reports() {
-  const { columns, rows } = reportTableData();
+  useEffect(() => {
+    getReports(filter);
+  }, [currentPage, filter]);
+
+  const getReports = async (filter) => {
+    try {
+      const options = {
+        params: {
+          filter: filter,
+          page: currentPage,
+          limit: rowsPerPage,
+        },
+      };
+      const { data } = await fetchData("/admin/reports", "get", null, options);
+      const { columns, rows } = reportTableData(data);
+      setData({ columns, rows, totalPages: data.totalPages });
+    } catch (err) {
+      console.error("report list error", err);
+    }
+  };
+
+  const handlePageChange = (_, value) => {
+    setCurrentPage(value);
+  };
 
   return (
- 
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
-        <Grid container spacing={6}>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  신고 리스트
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
-        </Grid>
-      </MDBox>
+      <Tables title="Reports List" columns={data.columns} rows={data.rows} />
+      <Box display="flex" justifyContent="center" p={2}>
+        <Pagination
+          count={data.totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+          color="secondary"
+          sx={{ color: "white" }}
+        />
+      </Box>
       <Footer />
     </DashboardLayout>
   );
 }
 
-export default Reports;
+export default Index;
