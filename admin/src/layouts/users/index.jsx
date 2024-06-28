@@ -40,7 +40,7 @@ function Index() {
     }
   };
 
-  const handlePageChange = (event, value) => {
+  const handlePageChange = (_, value) => {
     setCurrentPage(value);
   };
 

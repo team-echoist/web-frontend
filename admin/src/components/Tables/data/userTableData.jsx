@@ -4,7 +4,7 @@ import MDBadge from "components/MDBadge";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export default function userTableData(data) {
+export default function index(data) {
   const Name = ({ name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
