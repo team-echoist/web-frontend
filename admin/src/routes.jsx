@@ -9,8 +9,9 @@ import Profile from "layouts/profile";
 import { handleLogout } from "./utils/handleLogout";
 import Notice from "layouts/notice";
 import NoticeDetail from "layouts/notice/detail";
-import Update from "layouts/update"
-import Inquire from "layouts/inquire"
+import Update from "layouts/update";
+import Inquire from "layouts/inquire";
+import UserDetail from "layouts/users/detail";
 
 // @mui icons
 import LoginIcon from "@mui/icons-material/Login";
@@ -21,7 +22,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 
 const routes = [
   {
@@ -113,7 +114,12 @@ const routes = [
     route: "/update",
     component: <Update />,
   },
-
+  {
+    name: "userDetails",
+    key: "user-details",
+    route: "/user-detail",
+    component: <UserDetail />,
+  },
   {
     type: "collapse",
     name: "logout",

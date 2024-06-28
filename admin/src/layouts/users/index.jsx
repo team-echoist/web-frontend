@@ -17,7 +17,7 @@ function Index() {
   const [data, setData] = useState({ columns: [], rows: [] });
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
-  const [filter, setFilter] = useState("all");
+  const [filter] = useState("all");
 
   useEffect(() => {
     getUsers(filter);
