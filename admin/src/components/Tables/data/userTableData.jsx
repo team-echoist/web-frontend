@@ -49,12 +49,24 @@ export default function index(data) {
     </Link>
   );
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   return {
     columns: [
       { Header: "Name", accessor: "name", align: "left" },
       { Header: "Nickname", accessor: "nickname", align: "left" },
       { Header: "Status", accessor: "status", align: "center" },
-      { Header: "Registration Date", accessor: "createdDate", align: "center" },
+      {
+        Header: "Created Date",
+        accessor: "createdDate",
+        align: "center",
+      },
       { Header: "Detail", accessor: "action", align: "center" },
     ],
     rows:
@@ -62,7 +74,7 @@ export default function index(data) {
         name: <Name name={item.name} email={item.email} />,
         nickname: <Nickname nickname={item.nickname} />,
         status: <RenderStatus status={item.status} />,
-        createdDate: item.createdDate,
+        createdDate: formatDate(item.createdDate),
         action: <DetailButton id={item.id} />,
       })) || [],
   };

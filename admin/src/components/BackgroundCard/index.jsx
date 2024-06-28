@@ -2,7 +2,13 @@
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-function index({ children, btnTitle, link }) {
+function index({
+  children,
+  btnTitle,
+  link,
+  optionalBtnTitle,
+  optionalBtnLink,
+}) {
   const navigate = useNavigate();
   return (
     <>
@@ -28,6 +34,18 @@ function index({ children, btnTitle, link }) {
         >
           {btnTitle}
         </Button>
+        {optionalBtnTitle && optionalBtnLink && (
+          <Button
+            variant="contained"
+            color="dark"
+            onClick={() => {
+              navigate(optionalBtnLink);
+            }}
+            sx={{ ml: 2 }}
+          >
+            {optionalBtnTitle}
+          </Button>
+        )}
       </Box>
     </>
   );

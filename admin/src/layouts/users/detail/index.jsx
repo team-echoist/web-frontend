@@ -25,8 +25,8 @@ function Index() {
     try {
       const response = await fetchData(`/admin/users/${id}`, "get");
       setData(response.data);
-    } catch (err) {
-      console.log("err", err);
+    } catch (error) {
+      console.error("user detail error", error);
     }
   };
 
@@ -53,7 +53,12 @@ function Index() {
           </Card>
         </Grid>
       </MDBox>
-      <BackgroudCard btnTitle="edit" link={`/users-detail/id=${id}`}>
+      <BackgroudCard
+        btnTitle="list"
+        link={`/users`}
+        optionalBtnTitle="edit"
+        optionalBtnLink="/users/${id}"
+      >
         <MDBox p={3}>
           <MDTypography variant="h6">User Details</MDTypography>
           <MDTypography>ID: {data.id}</MDTypography>
