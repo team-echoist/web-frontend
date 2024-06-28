@@ -12,7 +12,7 @@ import NoticeDetail from "layouts/notice/detail";
 import Update from "layouts/update"
 import Inquire from "layouts/inquire"
 import Release from "layouts/release"
-import ReleaseDetail from "layouts/release/detail"
+
 
 // @mui icons
 import LoginIcon from "@mui/icons-material/Login";
@@ -117,12 +117,6 @@ const routes = [
     key: "notice-details",
     route: "/notice-detail",
     component: <NoticeDetail />,
-  },
-  {
-    name: "releasesDetails",
-    key: "release-details",
-    route: "/release-detail",
-    component: <ReleaseDetail />,
   },
   {
     name: "update",

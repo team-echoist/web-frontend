@@ -26,6 +26,9 @@ function index() {
   const navigate = useNavigate();
 
 
+  console.log("value",value)
+
+
   useEffect(() => {
     if (id) {
       getDetail();

@@ -10,11 +10,11 @@ import { fetchData } from "../../api";
 import { useEffect, useState } from "react";
 
 function index() {
-  const { columns, rows } = releaseTableData();
   const navigate = useNavigate();
   const [tableData, setTableData] = useState({ columns: [], rows: [] });
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
+  
   useEffect(() => {
     getRelease();
   }, [currentPage]);
@@ -32,7 +32,8 @@ function index() {
       null,
       options
     );
-    const { colums, rows } = releaseTableData(data);
+    const { columns, rows } = releaseTableData(data);
+    setTableData({ columns, rows, totalPages: data.totalPage });
     console.log("data", data);
   };
   const handlePageChange = (_, value) => {
@@ -42,7 +43,7 @@ function index() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Tables title="Release Notes" columns={columns} rows={rows} />
+      <Tables title="Release Notes" columns={tableData?.columns} rows={tableData?.rows} />
       <Box display="flex" justifyContent="center" p={2}>
         <Pagination
           count={tableData.totalPages}
