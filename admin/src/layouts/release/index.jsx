@@ -9,13 +9,19 @@ import { useNavigate } from "react-router-dom";
 
 function index() {
   const { columns, rows } = releaseTableData();
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <Tables title="Release Notes" columns={columns} rows={rows} />
       <Box display="flex" justifyContent="flex-end" p={2}>
-        <Button variant="contained" color="dark" onClick={()=>{navigate('/update?title=release')}}>
+        <Button
+          variant="contained"
+          color="dark"
+          onClick={() => {
+            navigate("/update?title=release");
+          }}
+        >
           Update
         </Button>
       </Box>

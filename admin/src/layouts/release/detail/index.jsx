@@ -6,6 +6,8 @@ import MDBox from "components/MDBox";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
+import BackgroudCard from "components/BackgroundCard";
+import DefaultContent from "components/BackgroundCard/content/DefaultContent";
 
 function index() {
   return (
@@ -31,6 +33,14 @@ function index() {
           </Card>
         </Grid>
       </MDBox>
+      <BackgroudCard btnTitle="edit" link="">
+        <DefaultContent
+          title="2024-06-28 업데이트"
+          date="2024-06-28"
+          writer="어드민"
+          content="2024-06-28 업데이트 되었습니다."
+        />
+      </BackgroudCard>
       <Footer/>
     </DashboardLayout>
   );
