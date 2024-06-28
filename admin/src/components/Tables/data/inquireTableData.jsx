@@ -63,7 +63,6 @@ export default function data(data) {
           width: "6rem",
           height: "2.5rem",
           backgroundColor: status ? "#1A73E8" : "#EC407A",
-          border: "3px solid red",
           color: "white !important",
           display: "flex",
           alignItems: "center",
