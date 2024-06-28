@@ -10,6 +10,7 @@ import { handleLogout } from "./utils/handleLogout";
 import Notice from "layouts/notice";
 import NoticeDetail from "layouts/notice/detail";
 import Update from "layouts/update"
+import Inquire from "layouts/inquire"
 
 // @mui icons
 import LoginIcon from "@mui/icons-material/Login";
@@ -20,6 +21,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CampaignIcon from "@mui/icons-material/Campaign";
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
 const routes = [
   {
@@ -56,20 +58,29 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <AssignmentIndIcon></AssignmentIndIcon>,
-    route: "/profile",
-    component: <Profile />,
-  },
-  {
-    type: "collapse",
     name: "Notice",
     key: "notice",
     icon: <CampaignIcon></CampaignIcon>,
     route: "/notice",
     component: <Notice />,
   },
+  {
+    type: "collapse",
+    name: "Question And Answer",
+    key: "inquire",
+    icon: <QuestionAnswerIcon></QuestionAnswerIcon>,
+    route: "/inquire",
+    component: <Inquire />,
+  },
+  {
+    type: "collapse",
+    name: "Profile",
+    key: "profile",
+    icon: <AssignmentIndIcon></AssignmentIndIcon>,
+    route: "/profile",
+    component: <Profile />,
+  },
+
   {
     name: "Sign In",
     key: "sign-in",

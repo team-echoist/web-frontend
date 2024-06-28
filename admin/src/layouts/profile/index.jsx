@@ -98,7 +98,7 @@ function Overview() {
     try{
       const makeAdminActive = await fetchData(`/admin/${id}`, "put", null, {
         params: {
-          activatd: "true",
+          activated: "true",
         },
       });
       if (makeAdminActive.status === 200) {

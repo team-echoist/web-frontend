@@ -6,12 +6,16 @@ export const fetchData = async (url, method, body, options = {}) => {
   }
 
   const config = {
-    ...options, 
-    params: options.params || {}, 
+    ...options,
+    params: options.params || {},
   };
 
-  const response = await AxiosInstance[method](url, body, config)
-
+  const response = await AxiosInstance({
+    method: method,
+    url: url,
+    data: body,
+    ...config,
+  });
 
   const data = response.data.data;
   const status = response.data.statusCode;

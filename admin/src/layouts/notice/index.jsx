@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect } from "react";
 import Tables from "components/Tables";
-import authorsTableData from "components/Tables/data/authorsTableData";
+import noticeTableData from "components/Tables/data/noticeTableData";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -34,7 +34,7 @@ function index() {
         },
       };
       const { data } = await fetchData("/admin/notices", "get", null, options);
-      const { columns, rows } = authorsTableData(data, deleteNotice);
+      const { columns, rows } = noticeTableData(data, deleteNotice);
       setTableData({ columns, rows, totalPages: data.totalPage });
     } catch (err) {
       console.log("err", err);
