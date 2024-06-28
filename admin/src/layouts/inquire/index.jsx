@@ -14,7 +14,7 @@ function index() {
   const rowsPerPage = 10;
 
   useEffect(() => {
-    getInquire("all");
+    getInquire("processed");
   }, [currentPage]);
 
   const getInquire = async (status) => {
