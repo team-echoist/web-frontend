@@ -55,7 +55,7 @@ function index() {
       method: "post",
     },
   };
-
+//릴리즈도 추가하기
   const getDetail = async () => {
     try {
       const { endpoint } = payloads[title];
@@ -82,7 +82,7 @@ function index() {
         showToast.success(successMessage);
         navigate(-1);
       } else {
-        showToast.error("notice update failed.");
+        showToast.error("update failed.");
       }
     };
 
@@ -92,7 +92,7 @@ function index() {
       const { status } = await fetchData(endpoint, method, body);
       handleResponse(status, successMessage);
     } catch (err) {
-      showToast.error("notice update failed.");
+      showToast.error("update failed.");
     }
   };
 
