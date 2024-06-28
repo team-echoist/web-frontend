@@ -22,7 +22,6 @@ function index() {
   };
   useEffect(() => {
     // 데이터 페칭함수 세팅자리
-
     getNotice();
   }, [currentPage]);
   const getNotice = async () => {

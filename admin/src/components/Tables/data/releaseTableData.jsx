@@ -6,7 +6,7 @@ import MDTypography from "components/MDTypography";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export default function data(data, deleteFunc) {
+export default function data(data) {
   const Title = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDTypography display="block" variant="button">
@@ -69,17 +69,11 @@ export default function data(data, deleteFunc) {
       { Header: "delete", accessor: "delete", width: "10%", align: "center" },
     ],
 
-    // rows: data?.Notices?.map((item) => ({
-    //   title: <Title name={item.title} />,
-    //   date: <Date date={item.createdDate.substring(0, 10)} />,
-    //   detail: <DetailButton id={item.id} />,
-    //   delete: <DeleteButton id={item.id} />,
-    // }))|| [],
-    rows: [{
-      title: "2024-06-28 업데이트 내역",
-      date: <Date date="2024-06-28" />,
-      detail: <DetailButton id="1" />,
-      delete: <DeleteButton id="1" />,
-    },]
+    rows: data?.histories?.map((item) => ({
+        title: <Title title={item.history}/>,
+        date: <Date date="2024-06-28" />,
+        detail: <DetailButton id="1" />,
+        delete: <DeleteButton id="1" />,
+    }))|| [],
   };
 }
