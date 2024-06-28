@@ -63,10 +63,10 @@ export default function data() {
   return {
     columns: [
       { Header: "ID", accessor: "essayId", align: "left" },
-      { Header: "essayTitle", accessor: "essayTitle", align: "left" },
-      { Header: "reportCount", accessor: "reportCount", align: "center" },
-      { Header: "createdDate", accessor: "createdDate", align: "center" },
-      { Header: "action", accessor: "action", align: "center" },
+      { Header: "Title", accessor: "essayTitle", align: "left" },
+      { Header: "Report Count", accessor: "reportCount", align: "center" },
+      { Header: "Created Date", accessor: "createdDate", align: "center" },
+      { Header: "Action", accessor: "action", align: "center" },
     ],
 
     rows:

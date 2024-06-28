@@ -12,23 +12,23 @@ function Index() {
   const [data, setData] = useState({ columns: [], rows: [] });
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
-  const [filter, setFilter] = useState("all");
+  const [sort, setSort] = useState("most");
 
   useEffect(() => {
-    getReports(filter);
-  }, [currentPage, filter]);
+    getReports(sort);
+  }, [currentPage, sort]);
 
-  const getReports = async (filter) => {
+  const getReports = async (sort) => {
     try {
       const options = {
         params: {
-          filter: filter,
+          sort: sort,
           page: currentPage,
           limit: rowsPerPage,
         },
       };
-      const { data } = await fetchData("/admin/reports", "get", null, options);
-      const { columns, rows } = reportTableData(data);
+      const response = await fetchData("/admin/reports", "get", null, options);
+      const { columns, rows } = reportTableData(response.data);
       setData({ columns, rows, totalPages: data.totalPages });
     } catch (err) {
       console.error("report list error", err);
