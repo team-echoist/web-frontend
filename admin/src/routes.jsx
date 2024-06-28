@@ -11,6 +11,8 @@ import Notice from "layouts/notice";
 import NoticeDetail from "layouts/notice/detail";
 import Update from "layouts/update"
 import Inquire from "layouts/inquire"
+import Release from "layouts/release"
+import ReleaseDetail from "layouts/release/detail"
 
 // @mui icons
 import LoginIcon from "@mui/icons-material/Login";
@@ -22,6 +24,7 @@ import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import UpdateIcon from '@mui/icons-material/Update';
 
 const routes = [
   {
@@ -74,6 +77,14 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Release Notes",
+    key: "release",
+    icon: <UpdateIcon></UpdateIcon>,
+    route: "/release",
+    component: <Release />,
+  },
+  {
+    type: "collapse",
     name: "Profile",
     key: "profile",
     icon: <AssignmentIndIcon></AssignmentIndIcon>,
@@ -106,6 +117,12 @@ const routes = [
     key: "notice-details",
     route: "/notice-detail",
     component: <NoticeDetail />,
+  },
+  {
+    name: "releasesDetails",
+    key: "release-details",
+    route: "/release-detail",
+    component: <ReleaseDetail />,
   },
   {
     name: "update",
