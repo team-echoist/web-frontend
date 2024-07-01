@@ -16,26 +16,25 @@ import { fetchData } from "../../api";
 import { showToast } from "../../utils/toast";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Input from "components/Input";
 
 function index() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const title = searchParams.get("title");
-  const desc = searchParams.get("desc");
-  const [value, setValue] = useState({ title: "", content: "" });
+  const type = searchParams.get("type");
+  const [value, setValue] = useState({
+    title: "",
+    content: "",
+    isChangeLayout: false,
+  });
   const navigate = useNavigate();
-
+  console.log("title: " + type);
 
   useEffect(() => {
-    if (id && title !== "release") {
+    if (id) {
       getDetail();
-    }
-    if (id && title === "release") {
-      setValue((prev) => ({
-        ...prev,
-        content: desc || "",
-      }));
     }
   }, [id]);
 
@@ -66,7 +65,7 @@ function index() {
         history: value.content,
       },
       endpoint: id
-        ? `/admin/updated_histories/${id}`
+        ? `/admin/updated-histories/${id}`
         : "/admin/updated-histories",
       successMessage: id
         ? "release edited successfully"
@@ -81,9 +80,9 @@ function index() {
       if (status === 200) {
         setValue((prev) => ({
           ...prev,
-          isChangeLayout: title === "inquire",
+          isChangeLayout: title === "inquire" || title === "update",
           title: data.title,
-          content: data.content,
+          content: data?.history ? data.history : data.content,
           answer: title === "inquire" ? data.answer : "",
           date: data?.createdDate?.slice(0.1),
           user: title === "inquire" ? data.user : {},
@@ -105,14 +104,20 @@ function index() {
     };
 
     try {
-      const { body, endpoint, successMessage, method } =
-        payloads[title] || payloads.notice;
+      const { body, endpoint, successMessage, method } = type === "notice";
+      payloads[title] || payloads.notice;
       const { status } = await fetchData(endpoint, method, body);
       handleResponse(status, successMessage);
     } catch (err) {
       showToast.error("update failed.");
     }
   };
+
+  const onChange = (e, key) => {
+    setValue((prev) => ({ ...prev, [key]: e.target.value }));
+  };
+
+  console.log("value", value);
 
   return (
     <DashboardLayout>
@@ -197,24 +202,14 @@ function index() {
             </Box>
           </Grid>
           <Grid item xs={6}>
-            {!value.isChangeLayout ||
-              (title !== "release" && (
-                <TextField
-                  label="제목"
-                  placeholder="제목을 입력하세요..."
-                  variant="outlined"
-                  value={value.title}
-                  onChange={(e) =>
-                    setValue((prev) => ({ ...prev, title: e.target.value }))
-                  }
-                  style={{
-                    width: "100%",
-                    marginBottom: "10px",
-                    backgroundColor: "white",
-                  }}
-                  InputLabelProps={{ shrink: true }}
-                />
-              ))}
+            <Input
+              value={value?.title}
+              onChange={onChange}
+              isShowInput={title === "notice"}
+              label="제목"
+              placeholder="제목을 입력하세요..."
+              name="title"
+            />
 
             <Box
               sx={{
