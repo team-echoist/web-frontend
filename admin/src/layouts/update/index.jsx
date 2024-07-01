@@ -104,11 +104,13 @@ function index() {
     };
 
     try {
-      const { body, endpoint, successMessage, method } = type === "notice";
+      const { body, endpoint, successMessage, method } = payloads[title] || payloads.notice;
+      console.log()
       payloads[title] || payloads.notice;
       const { status } = await fetchData(endpoint, method, body);
       handleResponse(status, successMessage);
     } catch (err) {
+      console.log("err",err)
       showToast.error("update failed.");
     }
   };
@@ -116,8 +118,6 @@ function index() {
   const onChange = (e, key) => {
     setValue((prev) => ({ ...prev, [key]: e.target.value }));
   };
-
-  console.log("value", value);
 
   return (
     <DashboardLayout>
