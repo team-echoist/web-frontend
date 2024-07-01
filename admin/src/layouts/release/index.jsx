@@ -14,7 +14,7 @@ function index() {
   const [tableData, setTableData] = useState({ columns: [], rows: [] });
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
-  
+
   useEffect(() => {
     getRelease();
   }, [currentPage]);
@@ -34,7 +34,6 @@ function index() {
     );
     const { columns, rows } = releaseTableData(data);
     setTableData({ columns, rows, totalPages: data.totalPage });
-    console.log("data", data);
   };
   const handlePageChange = (_, value) => {
     setCurrentPage(value);

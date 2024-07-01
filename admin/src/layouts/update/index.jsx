@@ -22,16 +22,20 @@ function index() {
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const title = searchParams.get("title");
+  const desc = searchParams.get("desc");
   const [value, setValue] = useState({ title: "", content: "" });
   const navigate = useNavigate();
 
 
-  console.log("value",value)
-
-
   useEffect(() => {
-    if (id) {
+    if (id && title !== "release") {
       getDetail();
+    }
+    if (id && title === "release") {
+      setValue((prev) => ({
+        ...prev,
+        content: desc || "",
+      }));
     }
   }, [id]);
 
@@ -57,8 +61,19 @@ function index() {
         : "inquire updated successfully",
       method: "post",
     },
+    release: {
+      body: {
+        history: value.content,
+      },
+      endpoint: id
+        ? `/admin/updated_histories/${id}`
+        : "/admin/updated-histories",
+      successMessage: id
+        ? "release edited successfully"
+        : "release updated successfully",
+      method: id ? "put" : "post",
+    },
   };
-//릴리즈도 추가하기
   const getDetail = async () => {
     try {
       const { endpoint } = payloads[title];
@@ -66,11 +81,11 @@ function index() {
       if (status === 200) {
         setValue((prev) => ({
           ...prev,
-          inquire: title === "inquire" ? true : false,
+          isChangeLayout: title === "inquire",
           title: data.title,
           content: data.content,
+          answer: title === "inquire" ? data.answer : "",
           date: data?.createdDate?.slice(0.1),
-          answer: data?.answer || "",
           user: title === "inquire" ? data.user : {},
         }));
       }
@@ -98,7 +113,6 @@ function index() {
       showToast.error("update failed.");
     }
   };
-
 
   return (
     <DashboardLayout>
@@ -146,7 +160,7 @@ function index() {
               }}
             >
               {/* 미리보기 자리 | 문의글 보기 */}
-              {value.inquire ? (
+              {value.isChangeLayout ? (
                 <Box sx={{ fontSize: "0.8rem" }}>
                   <Typography
                     sx={{ marginBottom: "0.2rem", fontSize: "0.9rem" }}
@@ -183,23 +197,24 @@ function index() {
             </Box>
           </Grid>
           <Grid item xs={6}>
-            {!value.inquire && (
-              <TextField
-                label="제목"
-                placeholder="제목을 입력하세요..."
-                variant="outlined"
-                value={value.title}
-                onChange={(e) =>
-                  setValue((prev) => ({ ...prev, title: e.target.value }))
-                }
-                style={{
-                  width: "100%",
-                  marginBottom: "10px",
-                  backgroundColor: "white",
-                }}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
+            {!value.isChangeLayout ||
+              (title !== "release" && (
+                <TextField
+                  label="제목"
+                  placeholder="제목을 입력하세요..."
+                  variant="outlined"
+                  value={value.title}
+                  onChange={(e) =>
+                    setValue((prev) => ({ ...prev, title: e.target.value }))
+                  }
+                  style={{
+                    width: "100%",
+                    marginBottom: "10px",
+                    backgroundColor: "white",
+                  }}
+                  InputLabelProps={{ shrink: true }}
+                />
+              ))}
 
             <Box
               sx={{
@@ -214,11 +229,11 @@ function index() {
                 }}
               >
                 <MDEditor
-                  value={value.inquire ? value?.answer : value.content}
+                  value={value?.isChangeLayout ? value.answer : value.content}
                   onChange={(newValue) =>
                     setValue((prev) => ({
                       ...prev,
-                      [value.inquire ? "answer" : "content"]: newValue,
+                      [value?.isChangeLayout ? "answer" : "content"]: newValue,
                     }))
                   }
                   height={600}

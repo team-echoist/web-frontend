@@ -7,21 +7,22 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function extractYearAndMonth(dateString) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
 
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-
-    return {
-        year: year,
-        month: month.toString() 
-    };
+  return {
+    year: year,
+    month: month.toString(),
+  };
 }
 export default function data(data) {
   const Title = ({ title }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDTypography display="block" variant="button">
-        {`${extractYearAndMonth(title).year}년${extractYearAndMonth(title).month}월 업데이트 내역`}
+        {`${extractYearAndMonth(title).year}년${
+          extractYearAndMonth(title).month
+        }월 업데이트 내역`}
       </MDTypography>
     </MDBox>
   );
@@ -34,14 +35,14 @@ export default function data(data) {
         color="text"
         fontWeight="medium"
       >
-        {date?.slice(0,10)}
+        {date?.slice(0, 10)}
       </MDTypography>
     </MDBox>
   );
 
-  const DetailButton = (id) => {
+  const EditButton = ({id, history}) => {
     return (
-      <Link to={`/update?id=${encodeURI(JSON.stringify(id))}&title=release`}>
+      <Link to={`/update?id=${encodeURI(JSON.stringify(id))}&title=release&desc=${history}`}>
         <Button
           variant="contained"
           color="primary"
@@ -52,37 +53,19 @@ export default function data(data) {
       </Link>
     );
   };
-  const DeleteButton = ({ id }) => {
-    return (
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{
-          backgroundColor: "#ff1744",
-          color: "white !important",
-          "&:hover": {
-            backgroundColor: "#d50000",
-          },
-        }}
-      >
-        Delete
-      </Button>
-    );
-  };
+
   return {
     columns: [
-      { Header: "title", accessor: "title", width: "45%", align: "left" },
+      { Header: "title", accessor: "title", width: "65%", align: "left" },
       { Header: "date", accessor: "date", align: "center" },
       { Header: "edit", accessor: "edit", width: "10%", align: "center" },
-      { Header: "delete", accessor: "delete", width: "10%", align: "center" },
     ],
 
     rows:
       data?.histories?.map((item) => ({
         title: <Title title={item.createdDate} />,
         date: <Date date={item.createdDate} />,
-        edit: <DetailButton id={item.id} />,
-        delete: <DeleteButton id={item.id} />,
+        edit: <EditButton id={item.id} history={item.history} />,
       })) || [],
   };
 }
