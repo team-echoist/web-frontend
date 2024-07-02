@@ -4,7 +4,6 @@ import { Typography } from "@mui/material";
 import MDEditor from "@uiw/react-md-editor";
 
 const PreviewLayout = ({ isChangeLayout, data }) => {
-    console.log("data",data)
   const GeneralLayout = () => (
     <Box sx={{ fontSize: "0.8rem" }}>
       <Typography sx={{ marginBottom: "0.2rem", fontSize: "0.9rem" }}>
