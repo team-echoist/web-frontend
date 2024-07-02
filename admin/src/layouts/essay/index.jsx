@@ -1,63 +1,58 @@
-// 에세이 페이지]
-// TODO : 에세이 제목, 작성자, 신고 여부, 관리 버튼(-> 상세 페이지)
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useState, useEffect } from 'react'
+import Tables from 'components/Tables'
+import essayTableData from 'components/Tables/data/essayTableData'
+import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'
+import DashboardNavbar from 'examples/Navbars/DashboardNavbar'
+import Footer from 'examples/Footer'
+import { Box, Pagination } from '@mui/material'
+import { fetchData } from '../../api'
 
-// @mui material components
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
+function index() {
+    const [tableData, setTableData] = useState({ columns: [], rows: [] })
+    const [currentPage, setCurrentPage] = useState(1)
+    const rowsPerPage = 10
 
-// Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+    useEffect(() => {
+        getEssay()
+    }, [currentPage])
 
-// Material Dashboard 2 React example components
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
+    const getEssay = async () => {
+        try {
+            const options = {
+                params: {
+                    page: currentPage,
+                    limit: rowsPerPage,
+                },
+            }
+            const { data } = await fetchData('/admin/essays', 'get', null, options)
+            const { columns, rows } = essayTableData(data)
+            setTableData({ columns, rows, totalPages: data.totalPage })
+        } catch (err) {
+            console.error('essay list error', err)
+        }
+    }
 
-// Data
-import essayTableData from "layouts/essay/data/essayTableData";
+    const handlePageChange = (_, value) => {
+        setCurrentPage(value)
+    }
 
-function Essay() {
-  const { columns, rows } = essayTableData();
-
-  return (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
-        <Grid container spacing={6}>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Essay List
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
+    return (
+        <DashboardLayout>
+            <DashboardNavbar />
+            <Tables title="Essay List" columns={tableData.columns} rows={tableData.rows} />
+            <Box display="flex" justifyContent="center" p={2}>
+                <Pagination
+                    count={tableData.totalPages}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    color="secondary"
+                    sx={{ color: 'white' }}
                 />
-              </MDBox>
-            </Card>
-          </Grid>
-        </Grid>
-      </MDBox>
-      <Footer />
-    </DashboardLayout>
-  );
+            </Box>
+            <Footer />
+        </DashboardLayout>
+    )
 }
 
-export default Essay;
+export default index

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -7,7 +8,6 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MDEditor from "@uiw/react-md-editor";
-import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
 import { Typography } from "@mui/material";
@@ -16,15 +16,21 @@ import { fetchData } from "../../api";
 import { showToast } from "../../utils/toast";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Input from "components/Input";
+import PreviewLayout from "./data";
 
 function index() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const title = searchParams.get("title");
-  const [value, setValue] = useState({ title: "", content: "" });
+  const type = searchParams.get("type");
+  const [value, setValue] = useState({
+    title: "",
+    content: "",
+    isChangeLayout: false,
+  });
   const navigate = useNavigate();
-
 
   useEffect(() => {
     if (id) {
@@ -54,20 +60,33 @@ function index() {
         : "inquire updated successfully",
       method: "post",
     },
+    release: {
+      body: {
+        history: value.content,
+      },
+      endpoint: id
+        ? `/admin/updated-histories/${id}`
+        : "/admin/updated-histories",
+      successMessage: id
+        ? "release edited successfully"
+        : "release updated successfully",
+      method: id ? "put" : "post",
+    },
   };
-
+  console.log("테스트",value)
   const getDetail = async () => {
     try {
       const { endpoint } = payloads[title];
       const { data, status } = await fetchData(endpoint, "get");
       if (status === 200) {
+        console.log("data",data)
         setValue((prev) => ({
           ...prev,
-          inquire: title === "inquire" ? true : false,
+          isChangeLayout: title === "inquire" || title === "update",
           title: data.title,
-          content: data.content,
+          content: data?.history ? data.history : data.content,
+          answer: title === "inquire" ? data.answer : "",
           date: data?.createdDate?.slice(0.1),
-          answer: data?.answer || "",
           user: title === "inquire" ? data.user : {},
         }));
       }
@@ -82,20 +101,26 @@ function index() {
         showToast.success(successMessage);
         navigate(-1);
       } else {
-        showToast.error("notice update failed.");
+        showToast.error("update failed.");
       }
     };
 
     try {
       const { body, endpoint, successMessage, method } =
         payloads[title] || payloads.notice;
+      console.log();
+      payloads[title] || payloads.notice;
       const { status } = await fetchData(endpoint, method, body);
       handleResponse(status, successMessage);
     } catch (err) {
-      showToast.error("notice update failed.");
+      console.log("err", err);
+      showToast.error("update failed.");
     }
   };
 
+  const onChange = (e, key) => {
+    setValue((prev) => ({ ...prev, [key]: e.target.value }));
+  };
 
   return (
     <DashboardLayout>
@@ -143,85 +168,38 @@ function index() {
               }}
             >
               {/* 미리보기 자리 | 문의글 보기 */}
-              {value.inquire ? (
-                <Box sx={{ fontSize: "0.8rem" }}>
-                  <Typography
-                    sx={{ marginBottom: "0.2rem", fontSize: "0.9rem" }}
-                  >
-                    제목: {value?.title}
-                  </Typography>
-                  <hr
-                    style={{
-                      marginTop: "10px",
-                      borderTop: "1px solid lightgray",
-                      width: "100%",
-                    }}
-                  />
-                  <Typography
-                    sx={{
-                      marginBottom: "1rem",
-                      fontSize: "0.8rem",
-                      marginTop: "8px",
-                    }}
-                  >
-                    name: {value?.user?.nickname}
-                  </Typography>
-
-                  <Typography sx={{ fontSize: "0.9rem" }}>
-                    {value?.content}
-                  </Typography>
-                </Box>
-              ) : (
-                <MDEditor.Markdown
-                  source={value.content}
-                  style={{ whiteSpace: "pre-wrap" }}
-                />
-              )}
+              <PreviewLayout
+                isChangeLayout={value?.isChangeLayout}
+                data={value}
+              />
             </Box>
           </Grid>
           <Grid item xs={6}>
-            {!value.inquire && (
-              <TextField
-                label="제목"
-                placeholder="제목을 입력하세요..."
-                variant="outlined"
-                value={value.title}
-                onChange={(e) =>
-                  setValue((prev) => ({ ...prev, title: e.target.value }))
-                }
-                style={{
-                  width: "100%",
-                  marginBottom: "10px",
-                  backgroundColor: "white",
-                }}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-
+            <Input
+              value={value?.title}
+              onChange={onChange}
+              isShowInput={title === "notice"}
+              label="제목"
+              placeholder="제목을 입력하세요..."
+              name="title"
+            />
             <Box
               sx={{
                 width: "100%",
                 height: "100%",
               }}
             >
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
-                <MDEditor
-                  value={value.inquire ? value?.answer : value.content}
-                  onChange={(newValue) =>
-                    setValue((prev) => ({
-                      ...prev,
-                      [value.inquire ? "answer" : "content"]: newValue,
-                    }))
-                  }
-                  height={600}
-                  preview={title === "inquire" ? "live" : "edit"}
-                />
-              </Box>
+              <MDEditor
+                value={value?.isChangeLayout ? value.answer : value.content}
+                onChange={(newValue) =>
+                  setValue((prev) => ({
+                    ...prev,
+                    [value?.isChangeLayout ? "answer" : "content"]: newValue,
+                  }))
+                }
+                height={600}
+                preview={title === "inquire" ? "live" : "edit"}
+              />
             </Box>
           </Grid>
         </Grid>
