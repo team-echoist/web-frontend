@@ -138,6 +138,12 @@ const routes = [
         component: <EssayDetail />,
     },
     {
+        name: 'reportDetails',
+        key: 'report-detail',
+        route: '/report-detail',
+        component: <ReportDetail />,
+    },
+    {
         type: 'collapse',
         name: 'logout',
         key: 'logout',
