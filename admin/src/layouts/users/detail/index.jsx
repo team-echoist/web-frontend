@@ -22,8 +22,8 @@ function Index() {
     const [editModalOpen, setEditModalOpen] = useState(false)
 
     useEffect(() => {
-        getDetail()
         editProfile()
+        getDetail()
     }, [id])
 
     const getDetail = async () => {
