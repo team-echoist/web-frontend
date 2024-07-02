@@ -10,21 +10,19 @@ import Button from "@mui/material/Button";
 import MDEditor from "@uiw/react-md-editor";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
-import { Typography } from "@mui/material";
 import MDBox from "components/MDBox";
 import { fetchData } from "../../api";
 import { showToast } from "../../utils/toast";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Input from "components/Input";
-import PreviewLayout from "./data";
+import PreviewLayout from "./components";
 
 function index() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const title = searchParams.get("title");
-  const type = searchParams.get("type");
   const [value, setValue] = useState({
     title: "",
     content: "",
@@ -73,7 +71,6 @@ function index() {
       method: id ? "put" : "post",
     },
   };
-  console.log("테스트",value)
   const getDetail = async () => {
     try {
       const { endpoint } = payloads[title];
