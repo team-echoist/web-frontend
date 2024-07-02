@@ -196,7 +196,7 @@ export default function Index() {
                                         <Button
                                             variant="contained"
                                             color="primary"
-                                            onClick={() => navigate(`/user-detail/${data.author.id}`)}
+                                            onClick={() => navigate(`/user-detail?id=${data.author.id}`)}
                                         >
                                             User Info
                                         </Button>
@@ -220,6 +220,8 @@ export default function Index() {
                             <Grid container>
                                 <Grid item xs={6}>
                                     <MDTypography variant="body1">Thumbnail</MDTypography>
+                                </Grid>
+                                <Grid item xs={6} style={{ textAlign: 'right' }}>
                                     <MDTypography variant="body2">
                                         {data.thumbnail ? data.thumbnail : '---'}
                                     </MDTypography>
