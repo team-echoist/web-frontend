@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -7,7 +8,6 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MDEditor from "@uiw/react-md-editor";
-import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
 import { Typography } from "@mui/material";
@@ -17,6 +17,7 @@ import { showToast } from "../../utils/toast";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Input from "components/Input";
+import PreviewLayout from "./data";
 
 function index() {
   const location = useLocation();
@@ -30,7 +31,6 @@ function index() {
     isChangeLayout: false,
   });
   const navigate = useNavigate();
-  console.log("title: " + type);
 
   useEffect(() => {
     if (id) {
@@ -73,11 +73,13 @@ function index() {
       method: id ? "put" : "post",
     },
   };
+  console.log("테스트",value)
   const getDetail = async () => {
     try {
       const { endpoint } = payloads[title];
       const { data, status } = await fetchData(endpoint, "get");
       if (status === 200) {
+        console.log("data",data)
         setValue((prev) => ({
           ...prev,
           isChangeLayout: title === "inquire" || title === "update",
@@ -104,13 +106,14 @@ function index() {
     };
 
     try {
-      const { body, endpoint, successMessage, method } = payloads[title] || payloads.notice;
-      console.log()
+      const { body, endpoint, successMessage, method } =
+        payloads[title] || payloads.notice;
+      console.log();
       payloads[title] || payloads.notice;
       const { status } = await fetchData(endpoint, method, body);
       handleResponse(status, successMessage);
     } catch (err) {
-      console.log("err",err)
+      console.log("err", err);
       showToast.error("update failed.");
     }
   };
@@ -165,40 +168,10 @@ function index() {
               }}
             >
               {/* 미리보기 자리 | 문의글 보기 */}
-              {value.isChangeLayout ? (
-                <Box sx={{ fontSize: "0.8rem" }}>
-                  <Typography
-                    sx={{ marginBottom: "0.2rem", fontSize: "0.9rem" }}
-                  >
-                    제목: {value?.title}
-                  </Typography>
-                  <hr
-                    style={{
-                      marginTop: "10px",
-                      borderTop: "1px solid lightgray",
-                      width: "100%",
-                    }}
-                  />
-                  <Typography
-                    sx={{
-                      marginBottom: "1rem",
-                      fontSize: "0.8rem",
-                      marginTop: "8px",
-                    }}
-                  >
-                    name: {value?.user?.nickname}
-                  </Typography>
-
-                  <Typography sx={{ fontSize: "0.9rem" }}>
-                    {value?.content}
-                  </Typography>
-                </Box>
-              ) : (
-                <MDEditor.Markdown
-                  source={value.content}
-                  style={{ whiteSpace: "pre-wrap" }}
-                />
-              )}
+              <PreviewLayout
+                isChangeLayout={value?.isChangeLayout}
+                data={value}
+              />
             </Box>
           </Grid>
           <Grid item xs={6}>
@@ -210,31 +183,23 @@ function index() {
               placeholder="제목을 입력하세요..."
               name="title"
             />
-
             <Box
               sx={{
                 width: "100%",
                 height: "100%",
               }}
             >
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
-                <MDEditor
-                  value={value?.isChangeLayout ? value.answer : value.content}
-                  onChange={(newValue) =>
-                    setValue((prev) => ({
-                      ...prev,
-                      [value?.isChangeLayout ? "answer" : "content"]: newValue,
-                    }))
-                  }
-                  height={600}
-                  preview={title === "inquire" ? "live" : "edit"}
-                />
-              </Box>
+              <MDEditor
+                value={value?.isChangeLayout ? value.answer : value.content}
+                onChange={(newValue) =>
+                  setValue((prev) => ({
+                    ...prev,
+                    [value?.isChangeLayout ? "answer" : "content"]: newValue,
+                  }))
+                }
+                height={600}
+                preview={title === "inquire" ? "live" : "edit"}
+              />
             </Box>
           </Grid>
         </Grid>
