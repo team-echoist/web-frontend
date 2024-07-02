@@ -24,15 +24,13 @@ AxiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (error.response && error.response.status === 401) {
+      Cookies.remove("token"); 
+      window.location.href = "/authentication/sign-in"; 
+    }
     return Promise.reject(error);
   }
 );
 
-// // 토큰을 인위적으로 만료시키는 함수(테스트용)
-// const expireToken = () => {
-//   Cookies.remove("token");
-// };
-
-// setTimeout(expireToken, 10000);
 
 export default AxiosInstance;
