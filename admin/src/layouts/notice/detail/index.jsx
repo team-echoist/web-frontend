@@ -32,7 +32,6 @@ function index() {
     }
   };
 
-
   return (
     <DashboardLayout>
       <DashboardNavbar />

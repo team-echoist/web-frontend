@@ -18,11 +18,10 @@ function index() {
   const navigate = useNavigate();
 
   const handleUpdateClick = () => {
-    navigate("/update?title=update");
+    navigate("/update?title=notice&type=update");
   };
   useEffect(() => {
     // 데이터 페칭함수 세팅자리
-
     getNotice();
   }, [currentPage]);
   const getNotice = async () => {
