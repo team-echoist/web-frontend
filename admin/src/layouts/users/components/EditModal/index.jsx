@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import TextField from '@mui/material/TextField'
+import { Radio, RadioGroup } from '@mui/material'
 
 const style = {
     position: 'absolute',
@@ -58,7 +59,7 @@ function EditModal({ open, setOpen, data, setData, onChange, editProfile }) {
                             onChange={onChange}
                             defaultValue={data?.email}
                         />
-                        <TextField
+                        {/* <RadioGroup
                             fullWidth
                             name="gender"
                             label="Gender"
@@ -66,7 +67,11 @@ function EditModal({ open, setOpen, data, setData, onChange, editProfile }) {
                             variant="outlined"
                             margin="normal"
                             onChange={onChange}
-                        />
+                        >
+                            <FormControlLabel value="female" control={<Radio />} label="Female" />
+                            <FormControlLabel value="male" control={<Radio />} label="Male" />
+                            <FormControlLabel value="other" control={<Radio />} label="Other" />
+                        </RadioGroup> */}
                         <TextField
                             fullWidth
                             name="birthdate"

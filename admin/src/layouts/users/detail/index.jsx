@@ -102,7 +102,8 @@ function Index() {
                 btnTitle="list"
                 link={`/users`}
                 optionalBtnTitle="edit"
-                optionalBtnLink={`/user-detail?id=${id}`}
+                optionalBtnLink="#"
+                setEditModalOpen={setEditModalOpen}
             >
                 <MDBox p={3}>
                     <MDTypography variant="h3">User Details</MDTypography>
@@ -246,7 +247,7 @@ function Index() {
                             <MDTypography variant="body2">{data.essayCount ? data.essayCount : '---'}</MDTypography>
                         </Grid>
                     </Grid>
-                    <MDBox mt={4} textAlign="center">
+                    {/* <MDBox mt={4} textAlign="center">
                         <Button
                             variant="contained"
                             color="primary"
@@ -255,7 +256,7 @@ function Index() {
                         >
                             Edit Profile
                         </Button>
-                    </MDBox>
+                    </MDBox> */}
                 </MDBox>
             </BackgroudCard>
             <Footer />
