@@ -2,17 +2,17 @@
 import { useState, useEffect } from 'react'
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar'
-import reportTableData from 'components/Tables/data/userTableData'
+import reportTableData from 'components/Tables/data/reportTableData'
 import Tables from 'components/Tables'
 import Footer from 'examples/Footer'
 import { Pagination, Box } from '@mui/material'
 import { fetchData } from '../../api'
 
 function Index() {
-    const [data, setData] = useState({ columns: [], rows: [] })
+    const [data, setData] = useState({ columns: [], rows: [], totalPages: 0 })
     const [currentPage, setCurrentPage] = useState(1)
     const rowsPerPage = 10
-    const [sort, setSort] = useState('most')
+    const [sort] = useState('most')
 
     useEffect(() => {
         getReports(sort)
@@ -29,7 +29,7 @@ function Index() {
             }
             const response = await fetchData('/admin/reports', 'get', null, options)
             const { columns, rows } = reportTableData(response.data)
-            setData({ columns, rows, totalPages: data.totalPages })
+            setData({ columns, rows, totalPages: response.data.totalPage })
         } catch (err) {
             console.error('report list error', err)
         }
