@@ -6,7 +6,10 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import TextField from '@mui/material/TextField'
-import { Radio, RadioGroup } from '@mui/material'
+import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
+// import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali'
+// import { LocalizationProvider } from '@mui/x-date-pickers'
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 const style = {
     position: 'absolute',
@@ -59,7 +62,7 @@ function EditModal({ open, setOpen, data, setData, onChange, editProfile }) {
                             onChange={onChange}
                             defaultValue={data?.email}
                         />
-                        {/* <RadioGroup
+                        <RadioGroup
                             fullWidth
                             name="gender"
                             label="Gender"
@@ -71,16 +74,19 @@ function EditModal({ open, setOpen, data, setData, onChange, editProfile }) {
                             <FormControlLabel value="female" control={<Radio />} label="Female" />
                             <FormControlLabel value="male" control={<Radio />} label="Male" />
                             <FormControlLabel value="other" control={<Radio />} label="Other" />
-                        </RadioGroup> */}
-                        <TextField
-                            fullWidth
-                            name="birthdate"
-                            label="Birthdate"
-                            defaultValue={data?.birthdate}
-                            variant="outlined"
-                            margin="normal"
-                            onChange={onChange}
-                        />
+                        </RadioGroup>
+                        {/* <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                            <DatePicker
+                                label="Birthdate"
+                                value={data?.birthdate || null}
+                                onChange={(newValue) => {
+                                    onChange({ target: { name: 'birthdate', value: newValue } })
+                                }}
+                                renderInput={(params) => (
+                                    <TextField {...params} fullWidth variant="outlined" margin="normal" />
+                                )}
+                            />
+                        </LocalizationProvider> */}
                         <TextField
                             fullWidth
                             name="status"

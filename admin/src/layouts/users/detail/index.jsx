@@ -22,8 +22,8 @@ function Index() {
     const [editModalOpen, setEditModalOpen] = useState(false)
 
     useEffect(() => {
-        getDetail()
         editProfile()
+        getDetail()
     }, [id])
 
     const getDetail = async () => {
@@ -129,14 +129,7 @@ function Index() {
                             <MDTypography variant="body2">{data.id ? data.id : '---'}</MDTypography>
                         </Grid>
                     </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Nickname</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.nickname ? data.nickname : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
+
                     <Grid container>
                         <Grid item xs={6}>
                             <MDTypography variant="body2">Email</MDTypography>
