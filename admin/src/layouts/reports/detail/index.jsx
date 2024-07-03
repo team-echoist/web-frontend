@@ -10,7 +10,9 @@ import MDBox from 'components/MDBox'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { fetchData } from '../../../api'
+import EditModal from '../components/EditModal'
 import { showToast } from '../../../utils/toast'
+import { Button } from '@mui/material'
 
 export default function Index() {
     const location = useLocation()
@@ -22,7 +24,6 @@ export default function Index() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        editProfile()
         getDetail()
     }, [id])
 
@@ -30,7 +31,6 @@ export default function Index() {
         try {
             const response = await fetchData(`/admin/reports/${id}`, 'get')
             setData(response.data)
-            console.log(response.data)
         } catch (error) {
             console.error('user detail error', error)
         }
@@ -44,7 +44,7 @@ export default function Index() {
         try {
             const editProfile = await fetchData(`/admin/reports/${id}`, 'put', body)
             if (editProfile.status === 200) {
-                showToast.success('유저정보가 업데이트되었습니다.')
+                showToast.success('리포트 정보가 업데이트되었습니다.')
                 setData((prev) => ({
                     ...prev,
                     adminProfile: editProfile.data,
@@ -52,7 +52,7 @@ export default function Index() {
                 setEditModalOpen(false)
             }
         } catch (err) {
-            showToast.error('유저정보가 변경되지 않았습니다.')
+            showToast.error('리포트 정보가 변경되지 않았습니다.')
         }
     }
 
@@ -70,7 +70,14 @@ export default function Index() {
     return (
         <DashboardLayout>
             <DashboardNavbar />
-
+            <EditModal
+                open={editModalOpen}
+                setOpen={setEditModalOpen}
+                data={data.adminProfile}
+                setData={setData}
+                onChange={handleChange}
+                editProfile={editProfile}
+            />
             <MDBox pt={6} pb={3}>
                 <Grid item xs={12}>
                     <Card>
@@ -85,13 +92,78 @@ export default function Index() {
                             coloredShadow="info"
                         >
                             <MDTypography variant="h6" color="white">
-                                Reports Detail
+                                Report Detail
                             </MDTypography>
                         </MDBox>
                     </Card>
                 </Grid>
             </MDBox>
-
+            <BackgroudCard
+                btnTitle="list"
+                link={`/reports`}
+                optionalBtnTitle="edit"
+                optionalBtnLink="#"
+                setEditModalOpen={setEditModalOpen}
+            >
+                <MDBox p={3}>
+                    <MDTypography variant="h3">Report Details</MDTypography>
+                    <Grid item xs={12}>
+                        <Grid container>
+                            <Grid item xs={6}>
+                                <MDTypography variant="body1" style={{ color: 'gray' }}>
+                                    Title
+                                </MDTypography>
+                            </Grid>
+                            <Grid item xs={6} style={{ textAlign: 'right' }}>
+                                <MDTypography variant="body2">{data.title ? data.title : '---'}</MDTypography>
+                            </Grid>
+                            <MDTypography variant="body2">{data.content ? data.content : '---'}</MDTypography>
+                            <MDTypography variant="body2">
+                                {data.linkedOutGauge ? data.linkedOutGauge : '---'}
+                            </MDTypography>
+                            <MDTypography variant="body2">{data.createdDate ? data.createdDate : '---'}</MDTypography>
+                            <MDTypography variant="body2">{data.updatedDate ? data.updatedDate : '---'}</MDTypography>
+                            <MDTypography variant="body2">{data.thumbnail ? data.thumbnail : '---'}</MDTypography>
+                            <MDTypography variant="body2">{data.views ? data.views : '---'}</MDTypography>
+                            <MDTypography variant="body2">{data.status ? data.status : '---'}</MDTypography>
+                            <MDTypography variant="body2">{data.device ? data.device : '---'}</MDTypography>
+                            <MDTypography variant="body2">{data.updatedDate ? data.updatedDate : '---'}</MDTypography>
+                        </Grid>
+                    </Grid>
+                    <hr
+                        style={{
+                            marginTop: '10px',
+                            borderTop: '1px solid lightgray',
+                            marginBottom: '20px',
+                            width: '100%',
+                        }}
+                    />
+                    {/* essay info
+                    <Grid item xs={12}>
+                        <Grid container>
+                            <Grid item xs={6}>
+                                <MDTypography variant="h4" style={{ color: 'gray' }}>
+                                    Report Info
+                                </MDTypography>
+                            </Grid>
+                        </Grid>
+                    </Grid> */}
+                    <hr
+                        style={{
+                            margin: '0px auto',
+                            marginTop: '30px',
+                            borderTop: '1px dotted lightgray',
+                            marginBottom: '30px',
+                            width: '95%',
+                        }}
+                    />
+                    <MDBox mt={4} textAlign="center">
+                        <Button variant="contained" color="primary" onClick={() => setEditModalOpen(true)}>
+                            Edit Profile
+                        </Button>
+                    </MDBox>
+                </MDBox>
+            </BackgroudCard>
             <Footer />
         </DashboardLayout>
     )
