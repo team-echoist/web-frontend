@@ -14,6 +14,7 @@ import Inquire from 'layouts/inquire'
 import Release from 'layouts/release'
 import UserDetail from 'layouts/users/detail'
 import EssayDetail from 'layouts/essay/detail'
+import ReportDetail from 'layouts/reports/detail'
 
 // @mui icons
 import LoginIcon from '@mui/icons-material/Login'
