@@ -117,7 +117,9 @@ export default function Index() {
                             <Grid item xs={6} style={{ textAlign: 'right' }}>
                                 <MDTypography variant="body2">{data.title ? data.title : '---'}</MDTypography>
                             </Grid>
-                            <MDTypography variant="body2">{data.content ? data.content : '---'}</MDTypography>
+                            <div style={{height="300px"}}>
+                                <MDTypography variant="body2">{data.content ? data.content : '---'}</MDTypography>
+                            </div>
                             <MDTypography variant="body2">
                                 {data.linkedOutGauge ? data.linkedOutGauge : '---'}
                             </MDTypography>

@@ -1,8 +1,8 @@
 // 신고받은 내역들 테이블
 import MDBox from 'components/MDBox'
 import MDTypography from 'components/MDTypography'
-import { Button } from '@mui/material'
-import { Link } from 'react-router-dom'
+// import { Button } from '@mui/material'
+// import { Link } from 'react-router-dom'
 
 export default function data(data) {
     const ID = ({ id }) => (
