@@ -106,150 +106,150 @@ function Index() {
                 setEditModalOpen={setEditModalOpen}
             >
                 <MDBox p={3}>
-                    <MDTypography variant="h3">User Details</MDTypography>
+                    <Grid container alignItems="center">
+                        <Grid>
+                            <Grid container justifyContent="center">
+                                {data.profileImage ? (
+                                    <img
+                                        src={data.profileImage}
+                                        alt="profile"
+                                        style={{
+                                            width: '100px',
+                                            height: '100px',
+                                            borderRadius: '50%',
+                                            objectFit: 'cover',
+                                            marginBottom: '10px',
+                                        }}
+                                    />
+                                ) : (
+                                    <div>No image</div>
+                                )}
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={6} marginLeft={4}>
+                            <Grid container direction="column" alignItems="flex-start">
+                                <Grid item>
+                                    <MDTypography variant="h4" marginBottom="5px">
+                                        {data.nickname ? data.nickname : '---'}
+                                    </MDTypography>
+                                </Grid>
+                                <Grid item>
+                                    <Grid container alignItems="center" justifyContent="space-between">
+                                        <Grid item>
+                                            <MDTypography variant="body2">
+                                                {data.email ? data.email : '---'}
+                                            </MDTypography>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
                     <hr
                         style={{
-                            marginTop: '10px',
+                            marginTop: '20px',
                             borderTop: '1px solid lightgray',
                             marginBottom: '20px',
                             width: '100%',
                         }}
                     />
+                    <section>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Email:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.email ? data.email : '---'}</MDTypography>
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Gender:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.gender ? data.gender : '---'}</MDTypography>
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Birth Date:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.birthDate ? data.birthDate : '---'}</MDTypography>
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Status:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.status ? data.status : '---'}</MDTypography>
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Reputation:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.reputation ? data.reputation : '---'}</MDTypography>
+                        </div>
+                    </section>
 
-                    <Grid item xs={6} style={{ textAlign: 'center' }}>
-                        <MDTypography variant="body2">Profile Image</MDTypography>
-                        <MDTypography variant="body2">{data.profileImage ? data.profileImage : '---'}</MDTypography>
-                    </Grid>
-
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">ID</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.id ? data.id : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Email</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.email ? data.email : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Gender</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.gender ? data.gender : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Birth Date</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.birthDate ? data.birthDate : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Status</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.status ? data.status : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Reputation</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.reputation ? data.reputation : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-                    <br />
-
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Role</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.role ? data.role : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Subscription End</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">
+                    <hr
+                        style={{
+                            marginTop: '20px',
+                            borderTop: '1px solid lightgray',
+                            marginBottom: '20px',
+                            width: '100%',
+                        }}
+                    />
+                    <section>
+                        <MDTypography variant="h3" marginBottom="10px">
+                            Other Details
+                        </MDTypography>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Role:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.role ? data.role : '---'}</MDTypography>
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Subscription End:
+                            </MDTypography>
+                            <MDTypography variant="h6">
                                 {data.subscriptionEnd ? data.subscriptionEnd : '---'}
                             </MDTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Created Date</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.createdDate ? data.createdDate : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Updated Date</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.updatedDate ? data.updatedDate : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Deleted Date</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.deletedDate ? data.deletedDate : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Report Count</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.reportCount ? data.reportCount : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Review Count</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.reviewCount ? data.reviewCount : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <MDTypography variant="body2">Essay Count</MDTypography>
-                        </Grid>
-                        <Grid item xs={6} style={{ textAlign: 'right' }}>
-                            <MDTypography variant="body2">{data.essayCount ? data.essayCount : '---'}</MDTypography>
-                        </Grid>
-                    </Grid>
-                    {/* <MDBox mt={4} textAlign="center">
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            sx={{ color: 'white !important' }}
-                            onClick={() => setEditModalOpen(true)}
-                        >
-                            Edit Profile
-                        </Button>
-                    </MDBox> */}
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Created Date:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.createdDate ? data.createdDate : '---'}</MDTypography>
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Updated Date:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.updatedDate ? data.updatedDate : '---'}</MDTypography>
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Deleted Date:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.deletedDate ? data.deletedDate : '---'}</MDTypography>
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Report Count:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.reportCount ? data.reportCount : '---'}</MDTypography>
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Review Count:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.reviewCount ? data.reviewCount : '---'}</MDTypography>
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <MDTypography variant="body2" color="secondary">
+                                Essay Count:
+                            </MDTypography>
+                            <MDTypography variant="h6">{data.essayCount ? data.essayCount : '---'}</MDTypography>
+                        </div>
+                    </section>
                 </MDBox>
             </BackgroudCard>
             <Footer />
