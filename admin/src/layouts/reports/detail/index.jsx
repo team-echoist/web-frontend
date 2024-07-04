@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar'
 import Footer from 'examples/Footer'
@@ -13,7 +12,7 @@ import EditModal from '../components/EditModal'
 import { showToast } from '../../../utils/toast'
 import { Button } from '@mui/material'
 import reportListTableData from 'components/Tables/data/reportListTableData'
-import DataTable from 'examples/Tables/DataTable' // DataTable 컴포넌트 추가
+import DataTable from 'examples/Tables/DataTable'
 
 export default function Index() {
     const location = useLocation()
@@ -45,9 +44,11 @@ export default function Index() {
     }
 
     const editProfile = async () => {
-        const body = { ...data.editedProfile }
+        const { actionType, comment } = data.editedProfile
+        const body = { actionType, comment }
+
         try {
-            const editProfileResponse = await fetchData(`/admin/reports/${id}`, 'put', body)
+            const editProfileResponse = await fetchData(`/admin/reports/${id}`, 'post', body)
             if (editProfileResponse.status === 200) {
                 showToast.success('Report information updated successfully.')
                 setData((prevData) => ({
@@ -78,7 +79,7 @@ export default function Index() {
             <EditModal
                 open={editModalOpen}
                 setOpen={setEditModalOpen}
-                data={data.adminProfile}
+                data={data.editedProfile || {}}
                 setData={setData}
                 onChange={handleChange}
                 editProfile={editProfile}
