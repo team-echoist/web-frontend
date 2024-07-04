@@ -2,7 +2,7 @@
 import React from "react";
 import * as Styled from "./main.styled";
 import styled from "styled-components";
-import useStore from "@/shared/store";
+import { useStore } from "@/shared/store";
 
 const Container = styled.div`
   padding: 20px;
@@ -31,9 +31,9 @@ export const Main = () => {
 
   return (
     <Container>
-      <Counter>Zustand! {bears}</Counter>
-      <Button onClick={increasePopulation}>+1</Button>
-      <Styled.SLayout>Main</Styled.SLayout>
+      {/* <Counter>Zustand! {bears}</Counter>
+      <Button onClick={increasePopulation}>+1</Button> */}
+      {/* <Styled.SLayout>Main</Styled.SLayout> */}
     </Container>
   );
 };
