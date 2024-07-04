@@ -41,7 +41,7 @@ function EditModal({ open, setOpen, data, setData, onChange, editProfile }) {
                         Edit Status
                     </Typography>
                     <Typography id="modal-modal-description" variant="h5" sx={{ mt: 2 }}>
-                        Modify essay status below.
+                        Modify reports status below.
                     </Typography>
                     <Box component="form" sx={{ mt: 2 }}>
                         <RadioGroup
