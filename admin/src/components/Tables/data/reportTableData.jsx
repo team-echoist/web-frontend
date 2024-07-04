@@ -3,11 +3,11 @@ import MDTypography from 'components/MDTypography'
 import { Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-export default function data() {
+export default function data(data) {
     const EssayId = ({ essayId }) => (
         <MDBox display="flex" alignItems="center" lineHeight={1}>
             <MDBox ml={2} lineHeight={1}>
-                <MDTypography display="block" variant="button" fontWeight="medium">
+                <MDTypography display="block" variant="caption" fontWeight="medium">
                     {essayId}
                 </MDTypography>
             </MDBox>
@@ -30,8 +30,8 @@ export default function data() {
         </MDBox>
     )
 
-    const DetailButton = ({ id }) => (
-        <Link to={`/detail?id=${encodeURI(id)}`}>
+    const DetailButton = ({ essayId }) => (
+        <Link to={`/report-detail?id=${essayId}`}>
             <Button variant="contained" color="primary" sx={{ color: 'white !important' }}>
                 detail
             </Button>
@@ -51,17 +51,17 @@ export default function data() {
             { Header: 'ID', accessor: 'essayId', align: 'left' },
             { Header: 'Title', accessor: 'essayTitle', align: 'left' },
             { Header: 'Report Count', accessor: 'reportCount', align: 'center' },
-            { Header: 'Created Date', accessor: 'createdDate', align: 'center' },
+            { Header: 'Oldest Report Date', accessor: 'oldestReportDate', align: 'center' },
             { Header: 'Action', accessor: 'action', align: 'center' },
         ],
 
         rows:
-            data?.essays?.map((item) => ({
-                essayId: <EssayId id={item.essayId} />,
-                essayTitle: <Title title={item.essayTitle} />,
+            data?.reports?.map((item) => ({
+                essayId: <EssayId essayId={item.essayId} />,
+                essayTitle: <Title essayTitle={item.essayTitle} />,
                 reportCount: <Count reportCount={item.reportCount} />,
-                createdDate: formatDate(item.createdDate),
-                action: <DetailButton id={item.id} />,
+                oldestReportDate: formatDate(item.oldestReportDate),
+                action: <DetailButton essayId={item.essayId} />,
             })) || [],
     }
 }
