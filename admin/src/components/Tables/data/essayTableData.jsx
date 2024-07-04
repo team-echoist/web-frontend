@@ -66,7 +66,7 @@ export default function index(data) {
     }
 
     const DetailButton = ({ id }) => (
-        <Link to={`/user-detail?id=${encodeURI(id)}`}>
+        <Link to={`/essay-detail?id=${id}`}>
             <Button variant="contained" color="primary" sx={{ color: 'white !important' }}>
                 detail
             </Button>
