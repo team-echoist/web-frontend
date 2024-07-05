@@ -7,7 +7,9 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { FormControlLabel, Grid, Radio, RadioGroup } from "@mui/material";
-import { DatePicker } from "@mui/lab";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 const style = {
   position: "absolute",
@@ -87,6 +89,7 @@ function EditModal({ open, setOpen, data, onChange, editProfile }) {
             />
             <Grid container spacing={2} sx={{ mb: 2 }}>
               <Grid item xs={6}>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   label="Birthdate"
                   value={data?.birthDate}
@@ -99,6 +102,7 @@ function EditModal({ open, setOpen, data, onChange, editProfile }) {
                     <TextField {...params} fullWidth variant="outlined" />
                   )}
                 />
+                 </LocalizationProvider>
               </Grid>
             </Grid>
             <Grid container>
