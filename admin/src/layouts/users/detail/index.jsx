@@ -42,12 +42,14 @@ function Index() {
         }, {})
         try {
             const editProfile = await fetchData(`/admin/users/${id}`, 'put', body)
+
             if (editProfile.status === 200) {
                 showToast.success('유저정보가 업데이트되었습니다.')
                 setData((prev) => ({
                     ...prev,
                     adminProfile: editProfile.data,
                 }))
+                getDetail()
                 setEditModalOpen(false)
             }
         } catch (err) {
