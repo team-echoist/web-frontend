@@ -77,7 +77,7 @@ function EditModal({ open, setOpen, data, onChange, editProfile }) {
                                 })
                             }}
                             renderInput={(params) => <TextField {...params} fullWidth variant="outlined" />}
-                            sx={{ mt: 2, mb: 2, width: '35vh' }}
+                            sx={{ mt: 2, mb: 2, width: '335px' }}
                         />
                     </LocalizationProvider>
 
