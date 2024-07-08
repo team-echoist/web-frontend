@@ -14,7 +14,7 @@ import { Pagination, Box } from '@mui/material'
 import { fetchData } from '../../api'
 
 function Index() {
-    const [data, setData] = useState({ columns: [], rows: [] })
+    const [data, setData] = useState({ columns: [], rows: [], totalPages: 0 })
     const [currentPage, setCurrentPage] = useState(1)
     const rowsPerPage = 10
     const [filter] = useState('all')
@@ -29,12 +29,12 @@ function Index() {
                 params: {
                     page: currentPage,
                     limit: rowsPerPage,
-                    filter,
+                    filter: filter,
                 },
             }
             const { data } = await fetchData('/admin/users', 'get', null, options)
             const { columns, rows } = userTableData(data)
-            setData({ columns, rows, totalPages: data.totalPages })
+            setData({ columns, rows, totalPages: data.totalPage })
         } catch (err) {
             console.error('user list error', err)
         }

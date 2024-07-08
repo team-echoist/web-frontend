@@ -8,9 +8,6 @@ import Modal from '@mui/material/Modal'
 import TextField from '@mui/material/TextField'
 import { ButtonGroup, FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import Grid from '@mui/material/Grid'
-// import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali'
-// import { LocalizationProvider } from '@mui/x-date-pickers'
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 const style = {
     position: 'absolute',
@@ -44,41 +41,22 @@ function EditModal({ open, setOpen, data, setData, onChange, editProfile }) {
                         Modify reports status below.
                     </Typography>
                     <Box component="form" sx={{ mt: 2 }}>
-                        <RadioGroup
+                        <Typography>Action Type</Typography>
+                        <RadioGroup name="actionType" defaultValue={data?.actionType} onChange={onChange}>
+                            <FormControlLabel value="approved" control={<Radio />} label="approved" />
+                            <FormControlLabel value="rejected" control={<Radio />} label="rejected" />
+                            <FormControlLabel value="pending" control={<Radio />} label="pending" />
+                        </RadioGroup>
+                        <Typography>Comment</Typography>
+                        <TextField
                             fullWidth
-                            name="status"
-                            label="Status"
-                            defaultValue={data?.status}
+                            name="comment"
+                            label="Comment"
+                            defaultValue={data?.comment}
                             variant="outlined"
                             margin="normal"
                             onChange={onChange}
-                        >
-                            <FormControlLabel value="published" control={<Radio />} label="published" />
-                            <FormControlLabel value="linkedout" control={<Radio />} label="linkedout" />
-                            <FormControlLabel value="private" control={<Radio />} label="private" />
-                        </RadioGroup>
-                        {/* <Grid container spacing={2}>
-                            <Grid item xs={3.5} md={3}>
-                                <Button
-                                    sx={{
-                                        color: 'primary.info.light',
-                                        '&:hover': {
-                                            color: 'success',
-                                        },
-                                    }}
-                                    onChange={onChange}
-                                >
-                                    published
-                                </Button>
-                            </Grid>
-                            <Grid item xs={3.5} md={3}>
-                                <Button>linkedout</Button>
-                            </Grid>
-                            <Grid item xs={3.5} md={3}>
-                                <Button>private</Button>
-                            </Grid>
-                        </Grid> */}
-
+                        />
                         <Button
                             variant="contained"
                             color="white"

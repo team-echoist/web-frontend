@@ -22,8 +22,8 @@ function Index() {
     const [editModalOpen, setEditModalOpen] = useState(false)
 
     useEffect(() => {
-        editProfile()
         getDetail()
+        editProfile()
     }, [id])
 
     const getDetail = async () => {
@@ -40,14 +40,17 @@ function Index() {
             acc[key] = data.editedProfile[key]
             return acc
         }, {})
+
         try {
             const editProfile = await fetchData(`/admin/users/${id}`, 'put', body)
+
             if (editProfile.status === 200) {
                 showToast.success('유저정보가 업데이트되었습니다.')
                 setData((prev) => ({
                     ...prev,
                     adminProfile: editProfile.data,
                 }))
+                getDetail()
                 setEditModalOpen(false)
             }
         } catch (err) {
@@ -72,32 +75,11 @@ function Index() {
             <EditModal
                 open={editModalOpen}
                 setOpen={setEditModalOpen}
-                data={data.adminProfile}
+                data={data}
                 setData={setData}
                 onChange={handleChange}
                 editProfile={editProfile}
             />
-            <MDBox pt={6} pb={3}>
-                <Grid item xs={12}>
-                    <Card>
-                        <MDBox
-                            mx={2}
-                            mt={-3}
-                            py={3}
-                            px={2}
-                            variant="gradient"
-                            bgColor="info"
-                            borderRadius="lg"
-                            coloredShadow="info"
-                        >
-                            <MDTypography variant="h6" color="white">
-                                Users Detail
-                            </MDTypography>
-                        </MDBox>
-                    </Card>
-                </Grid>
-            </MDBox>
-
             <BackgroudCard
                 btnTitle="list"
                 link={`/users`}
@@ -105,10 +87,10 @@ function Index() {
                 optionalBtnLink="#"
                 setEditModalOpen={setEditModalOpen}
             >
-                <MDBox p={3}>
-                    <Grid container alignItems="center">
+                <MDBox p={8}>
+                    <Grid container marginLeft={6} marginBottom={4} alignItems="center">
                         <Grid>
-                            <Grid container justifyContent="center">
+                            <Grid container justifyContent="center" alignItems="center">
                                 {data.profileImage ? (
                                     <img
                                         src={data.profileImage}
@@ -122,7 +104,20 @@ function Index() {
                                         }}
                                     />
                                 ) : (
-                                    <div>No image</div>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            border: '1px solid',
+                                            borderRadius: '50%',
+                                            width: '100px',
+                                            height: '100px',
+                                            objectFit: 'cover',
+                                        }}
+                                    >
+                                        No image
+                                    </div>
                                 )}
                             </Grid>
                         </Grid>

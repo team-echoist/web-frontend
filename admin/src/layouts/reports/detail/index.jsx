@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar'
 import Footer from 'examples/Footer'
@@ -13,7 +12,7 @@ import EditModal from '../components/EditModal'
 import { showToast } from '../../../utils/toast'
 import { Button } from '@mui/material'
 import reportListTableData from 'components/Tables/data/reportListTableData'
-import DataTable from 'examples/Tables/DataTable' // DataTable 컴포넌트 추가
+import DataTable from 'examples/Tables/DataTable'
 
 export default function Index() {
     const location = useLocation()
@@ -45,9 +44,11 @@ export default function Index() {
     }
 
     const editProfile = async () => {
-        const body = { ...data.editedProfile }
+        const { actionType, comment } = data.editedProfile
+        const body = { actionType, comment }
+
         try {
-            const editProfileResponse = await fetchData(`/admin/reports/${id}`, 'put', body)
+            const editProfileResponse = await fetchData(`/admin/reports/${id}`, 'post', body)
             if (editProfileResponse.status === 200) {
                 showToast.success('Report information updated successfully.')
                 setData((prevData) => ({
@@ -78,7 +79,7 @@ export default function Index() {
             <EditModal
                 open={editModalOpen}
                 setOpen={setEditModalOpen}
-                data={data.adminProfile}
+                data={data.editedProfile || {}}
                 setData={setData}
                 onChange={handleChange}
                 editProfile={editProfile}
@@ -100,14 +101,55 @@ export default function Index() {
                             width: '100%',
                         }}
                     />
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} md={6}>
-                            <MDTypography variant="h5" color="secondary">
-                                Title
-                            </MDTypography>
-                            <MDTypography variant="body2">{data.title || '---'}</MDTypography>
+                    <Grid container spacing={3} alignItems="center">
+                        <Grid item xs={12} md={6} container alignItems="center">
+                            <Grid item>
+                                {data.thumbnail ? (
+                                    <img
+                                        src={data.thumbnail}
+                                        alt="profile"
+                                        style={{
+                                            width: '100px',
+                                            height: '100px',
+                                            objectFit: 'cover',
+                                            marginBottom: '10px',
+                                        }}
+                                    />
+                                ) : (
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            border: '1px solid',
+                                            width: '100px',
+                                            height: '100px',
+                                            objectFit: 'cover',
+                                        }}
+                                    >
+                                        No image
+                                    </div>
+                                )}
+                            </Grid>
+                            <Grid item style={{ marginLeft: '20px' }}>
+                                <MDTypography variant="h5" color="secondary">
+                                    Title
+                                </MDTypography>
+                                <MDTypography variant="body2">{data.title || '---'}</MDTypography>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={6} container justifyContent="flex-end">
+                            <Button
+                                color="white"
+                                onClick={() => navigate(`/user-detail?id=${data.authorId}`)}
+                                style={{ fontSize: '20px', marginTop: '10px' }}
+                            >
+                                👉 User Info
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} md={12}>
                             <MDTypography variant="h5" color="secondary">
                                 Content
                             </MDTypography>
@@ -151,12 +193,6 @@ export default function Index() {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <MDTypography variant="h5" color="secondary">
-                                Thumbnail
-                            </MDTypography>
-                            <MDTypography variant="body2">{data.thumbnail || '---'}</MDTypography>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <MDTypography variant="h5" color="secondary">
                                 Status
                             </MDTypography>
                             <MDTypography variant="body2">{data.status || '---'}</MDTypography>
@@ -166,14 +202,6 @@ export default function Index() {
                                 Device
                             </MDTypography>
                             <MDTypography variant="body2">{data.device || '---'}</MDTypography>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <MDTypography variant="h5" color="secondary">
-                                User Info
-                            </MDTypography>
-                            <Button color="white" onClick={() => navigate(`/user-detail?id=${data.authorId}`)}>
-                                User Info
-                            </Button>
                         </Grid>
                     </Grid>
                     <MDBox mt={5}>
