@@ -30,13 +30,19 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+
+.container{
 	// @media ${Devices.mobileM} {
 	// 	width:390px;
 	// }
 	// 원래는 이렇게 해야되나, 웹 온보딩이 아직 세팅안되서 모바일 사이즈로 먼저 세팅 추후 주석 걷어 내야됨
 	// 추후 테블릿일경우도 조건 추가 해야됨
 	width:1194px;
-	margin:auto;	
+	height:100vh;
+	margin:auto;
+	background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+}
 }
 ol, ul {
 	list-style: none;

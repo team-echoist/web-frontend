@@ -14,6 +14,10 @@ const Container = styled.div`
   font-family: Arial, sans-serif;
 `;
 
+
+
+
+
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
