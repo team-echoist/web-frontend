@@ -22,8 +22,8 @@ function Index() {
     const [editModalOpen, setEditModalOpen] = useState(false)
 
     useEffect(() => {
-        editProfile()
         getDetail()
+        editProfile()
     }, [id])
 
     const getDetail = async () => {
@@ -40,6 +40,7 @@ function Index() {
             acc[key] = data.editedProfile[key]
             return acc
         }, {})
+
         try {
             const editProfile = await fetchData(`/admin/users/${id}`, 'put', body)
 
@@ -74,7 +75,7 @@ function Index() {
             <EditModal
                 open={editModalOpen}
                 setOpen={setEditModalOpen}
-                data={data.adminProfile}
+                data={data}
                 setData={setData}
                 onChange={handleChange}
                 editProfile={editProfile}
