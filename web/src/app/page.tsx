@@ -33,9 +33,9 @@ export default function Home() {
   // 추후 구체적인 사이즈 나오면 재설정 예정
   // return isDesktop ? <WebOnBoarding /> : <Main />;
   return (
-    <Container>
+    <>
       <OnBoarding />
-    </Container>
+    </>
   );
   // 현재 웹 온보딩 디자인이 안나왔기때문에 앱기준으로 개발 시작
 }

@@ -42,6 +42,8 @@ body {
 	margin:auto;
 	background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
+	display:flex;
+	justify-content: center;
 }
 }
 ol, ul {

@@ -1,7 +1,12 @@
-'use client'
+"use client";
 import React from "react";
-import * as Styled from "./onboarding.styled";
+import DefaultLayout from "./onboardingLayout";
+import FirstStepContent from "./firststepcontent";
 
 export const OnBoarding = () => {
-  return <Styled.SLayout>OnBoarding</Styled.SLayout>;
+  return (
+    <DefaultLayout>
+      <FirstStepContent />
+    </DefaultLayout>
+  );
 };
