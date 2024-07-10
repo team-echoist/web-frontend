@@ -1,7 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { FindInfo } from "./findinfo";
-import { LinkedIn } from "./linkein";
 import { Login } from "./login";
 import { Mypage } from "./mypage";
 import { Register } from "./register";
@@ -17,8 +16,6 @@ export const RenderView = ({ pageName }: { pageName: string }) => {
   switch (pageName) {
     case "findinfo":
       return <FindInfo />;
-    case "linkedin":
-      return <LinkedIn />;
     case "login":
       return <Login />;
     case "mypage":

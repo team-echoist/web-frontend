@@ -1,4 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const withPWA = require('next-pwa')({
+  dest: 'public',
+});
+const withVideos = require('next-videos');
 
-module.exports = nextConfig;
+const nextConfig = {
+  swcMinify: true,
+  compiler: {
+    styledComponents: true,
+  },
+};
+
+module.exports = withPWA(withVideos(nextConfig));

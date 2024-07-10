@@ -33,3 +33,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ignore service worker files
+web/public/sw.js
+web/public/sw.js.map
+web/public/workbox-*.js
+sw.js
+sw.js.map
+workbox-*.js
