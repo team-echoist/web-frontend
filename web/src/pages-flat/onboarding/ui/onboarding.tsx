@@ -1,12 +1,22 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DefaultLayout from "./onboardingLayout";
 import FirstStepContent from "./firststepcontent";
+import GeneralContent from "./generalcontent";
 
 export const OnBoarding = () => {
+  const [isVideoEnded, setIsVideoEnded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVideoEnded(true);
+    }, 4000); 
+
+    return () => clearTimeout(timer); 
+  }, []);
   return (
     <DefaultLayout>
-      <FirstStepContent />
+      {isVideoEnded ? <GeneralContent /> : <FirstStepContent />}
     </DefaultLayout>
   );
 };

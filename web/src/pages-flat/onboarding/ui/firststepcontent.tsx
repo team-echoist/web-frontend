@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import videoSrc from "@/shared/assets/video/apponboarding_1.webm";
+import React from 'react';
+import styled from 'styled-components';
+import videoSrc from '@/shared/assets/video/apponboarding_1.webm';
 
 const VideoContainer = styled.div`
   width: 100%;
@@ -8,6 +9,7 @@ const VideoContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const VideoContents = styled.video`
   width: 100%;
   height: 100%;
@@ -18,7 +20,7 @@ const VideoContents = styled.video`
 function FirstStepContent() {
   return (
     <VideoContainer>
-      <VideoContents controls autoPlay loop muted>
+      <VideoContents controls autoPlay loop muted >
         <source src={videoSrc} type="video/webm" />
       </VideoContents>
     </VideoContainer>
