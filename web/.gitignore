@@ -38,3 +38,6 @@ next-env.d.ts
 web/public/sw.js
 web/public/sw.js.map
 web/public/workbox-*.js
+sw.js
+sw.js.map
+workbox-*.js
