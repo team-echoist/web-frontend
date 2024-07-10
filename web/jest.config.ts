@@ -1,16 +1,23 @@
-import type { Config } from '@jest/types';
+const nextJest = require('next/jest');
 
-// Sync object
-const config: Config.InitialOptions = {
-  preset: 'ts-jest',
+const createJestConfig = nextJest({
+  dir: './',
+});
+
+/** @type {import('jest').Config} */
+const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
-  testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
+  transformIgnorePatterns: [
+    '/node_modules/',
+  ],
 };
-export default config;
+
+module.exports = createJestConfig(customJestConfig);
