@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { styleObjType } from "@/shared/types/btnType";
+import color from "../../styles/color";
 
 interface SButtonProps {
- styleObj: styleObjType;
+  styleObj: styleObjType;
 }
 
 export const SButton = styled.button<SButtonProps>`
@@ -14,4 +15,10 @@ export const SButton = styled.button<SButtonProps>`
   background-color: ${(props) => props.styleObj.backgroundColor};
   width: ${(props) => props.styleObj.width};
   height: ${(props) => props.styleObj.height};
+  color: ${color.black};
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 170%;
 `;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, MouseEventHandler } from "react";
+import React, { useLayoutEffect, useState, MouseEventHandler } from "react";
 import * as Styled from "./button.styled";
 import updateBtnStyle from "@/shared/lib/style/updateBtnStyle";
 import { BtnType, styleObjType } from "@/shared/types/btnType";
@@ -15,7 +15,7 @@ export const Button = ({ text, style, type, scale, onClick }: buttonProps) => {
     height: "",
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const returnedStyle = updateBtnStyle(style, type, scale);
     if (returnedStyle) {
       setStyleObj(returnedStyle);
