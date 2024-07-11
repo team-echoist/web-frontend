@@ -9,6 +9,7 @@ export const SButton = styled.button<SButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   border-radius: ${(props) => props.styleObj.borderRadius};
   background-color: ${(props) => props.styleObj.backgroundColor};
   width: ${(props) => props.styleObj.width};
