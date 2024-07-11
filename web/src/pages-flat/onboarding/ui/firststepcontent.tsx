@@ -1,8 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import videoSrc from '@/shared/assets/video/apponboarding_1.webm';
+import React from "react";
+import styled from "styled-components";
+import SplashImg from "@/shared/assets/img/splash_final_clear.gif";
+import Image from "next/image";
 
-const VideoContainer = styled.div`
+const SContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -10,22 +11,18 @@ const VideoContainer = styled.div`
   align-items: center;
 `;
 
-const VideoContents = styled.video`
+const SImage = styled(Image)`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  pointer-events: none;
 `;
 
 function FirstStepContent() {
   return (
-    <VideoContainer>
-      <VideoContents controls autoPlay loop muted >
-        <source src={videoSrc} type="video/webm" />
-      </VideoContents>
-    </VideoContainer>
+    <SContainer>
+      <SImage src={SplashImg} alt="Splash Image" layout="fill" />
+    </SContainer>
   );
 }
 
 export default FirstStepContent;
-

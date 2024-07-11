@@ -8,6 +8,7 @@ const SLayout = styled.main`
   width: 390px;
   height:100%;
   margin:auto;
+  position:relative;
 `;
 
 function DefaultLayout({ children }: Props) {
