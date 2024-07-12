@@ -39,11 +39,7 @@ const mapper = {
 };
 
 function ImageRenderer() {
-  return (
-    <SLayout bgImage={mapper.step1}>
-      {/* <SImage src={mapper.step1} alt="onboarding Image"></SImage> */}
-    </SLayout>
-  );
+  return <SLayout bgImage={mapper.step1} />;
 }
 
 export default ImageRenderer;
