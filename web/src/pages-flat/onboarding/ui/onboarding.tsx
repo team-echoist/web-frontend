@@ -14,6 +14,7 @@ export const OnBoarding = () => {
 
     return () => clearTimeout(timer); 
   }, []);
+  console.log("isVideoEnded",isVideoEnded)
   return (
     <DefaultLayout>
       {isVideoEnded ? <GeneralContent /> : <FirstStepContent />}
