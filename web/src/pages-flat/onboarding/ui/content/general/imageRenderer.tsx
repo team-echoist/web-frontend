@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Image from "next/image";
 import onBoarding1 from "@/shared/assets/img/onboarding_final_1.gif";
 import onBoarding2 from "@/shared/assets/img/onboarding_final_2.gif";
 import onBoarding3 from "@/shared/assets/img/onboarding_final_3.gif";

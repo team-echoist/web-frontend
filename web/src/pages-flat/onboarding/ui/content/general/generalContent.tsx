@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Button } from "@/shared/ui/button";
-import ImageRenderer from "./ImageRenderer";
+import ImageRenderer from "./imageRenderer";
 
 function GeneralContent() {
   return (
