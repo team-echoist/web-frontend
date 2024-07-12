@@ -23,13 +23,6 @@ const SLayout = styled.section<SLayoutProps>`
   background-repeat: no-repeat;
   background-position: center -50%;
 `;
-const SImage = styled(Image)`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-`;
 
 const mapper = {
   step1: onBoarding1.src,
