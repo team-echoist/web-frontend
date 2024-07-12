@@ -16,7 +16,7 @@ export const OnBoarding = () => {
   }, []);
   return (
     <DefaultLayout>
-      {isGifEnded ? <GeneralContent /> : <FirstStepContent />}
+      {isGifEnded ? <GeneralContent step="step1"/> : <FirstStepContent />}
     </DefaultLayout>
   );
 };
