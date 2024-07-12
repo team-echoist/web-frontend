@@ -10,7 +10,7 @@ export const OnBoarding = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVideoEnded(true);
-    }, 4000); 
+    }, 3000); 
 
     return () => clearTimeout(timer); 
   }, []);
