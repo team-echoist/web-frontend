@@ -2,7 +2,7 @@
 const withPWA = require('next-pwa')({
   dest: 'public',
 });
-const withVideos = require('next-videos');
+
 
 const nextConfig = {
   swcMinify: true,
@@ -11,4 +11,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withPWA(withVideos(nextConfig));
+module.exports = withPWA(nextConfig);
