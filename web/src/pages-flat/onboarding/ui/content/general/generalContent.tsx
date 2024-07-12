@@ -1,6 +1,6 @@
 import { Button } from "@/shared/ui/button";
 import ImageRenderer from "./imageRenderer";
-import TextRenderer from "./TextRenderer";
+import TextRenderer from "./textRenderer";
 
 interface stepType {
   step: string;
