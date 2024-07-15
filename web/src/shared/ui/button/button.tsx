@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState, MouseEventHandler } from "react";
 import * as Styled from "./button.styled";
 import updateBtnStyle from "@/shared/lib/style/updateBtnStyle";
-import { BtnType, styleObjType } from "@/shared/types/btnType";
+import { BtnType, styleObjType } from "@/shared/types";
 
 type buttonProps = BtnType & {
   onClick?: MouseEventHandler<HTMLButtonElement>;

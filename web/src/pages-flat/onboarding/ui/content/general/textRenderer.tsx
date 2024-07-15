@@ -1,9 +1,25 @@
-import React from 'react'
+import React from "react";
 
-function TextRenderer() {
-  return (
-    <div>TextRenderer</div>
-  )
+interface Step {
+  title: string;
+  desc: string;
+  desc2: string;
+  desc3?: string;
 }
 
-export default TextRenderer
+interface TextObj {
+  step1: Step;
+  step2: Step;
+  step3: Step;
+  step4: Step;
+}
+
+interface TextRendererProps {
+  text: TextObj;
+}
+
+function TextRenderer({ text }: TextRendererProps) {
+  return <div>TextRenderer</div>;
+}
+
+export default TextRenderer;

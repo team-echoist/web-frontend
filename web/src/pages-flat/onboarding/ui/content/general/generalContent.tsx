@@ -5,7 +5,21 @@ import TextRenderer from "./textRenderer";
 interface stepType {
   step: string;
 }
-const textObj = {
+
+interface textStep {
+  title: string;
+  desc: string;
+  desc2: string;
+  desc3?: string;
+}
+
+interface TextObj {
+  step1: textStep;
+  step2: textStep;
+  step3: textStep;
+  step4: textStep;
+}
+const textObj:TextObj = {
   step1:{
     title:"오직 나만을 위한 글쓰기",
     desc:"모든 글쓰기 활동은 '필명'으로 진행됩니다.",
@@ -34,7 +48,7 @@ function GeneralContent({ step }: stepType) {
     <>
       <ImageRenderer />
       <Button text="시작하기" style="round_1" type="point" scale="small" />
-      <TextRenderer />
+      <TextRenderer text={textObj}/>
     </>
   );
 }
