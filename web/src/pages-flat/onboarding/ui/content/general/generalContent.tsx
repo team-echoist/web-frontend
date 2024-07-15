@@ -1,8 +1,10 @@
+import React, { useEffect, useState } from "react";
 import { Button } from "@/shared/ui/button";
 import ImageRenderer from "./imageRenderer";
 import TextRenderer from "./textRenderer";
 import { IndicatorBar } from "@/shared/ui/indicator";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
 interface stepType {
   step: "step1" | "step2" | "step3" | "step4";
@@ -47,17 +49,37 @@ const IndicatorDiv = styled.div`
   justify-content: center;
   margin-top: 67px;
 `;
+const ButtonDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 33px;
+`;
 
 function GeneralContent({ step }: stepType) {
+  const router = useRouter();
+  
+  const navigateToLogin = () => {
+      router.push("/linkedout/login");
+  };
   return (
     <>
-      <ImageRenderer step={step}/>
+      <ImageRenderer step={step} />
       <TextRenderer text={textObj[step]} />
       <IndicatorDiv>
-        <IndicatorBar step={step}/>
+        <IndicatorBar step={step} />
       </IndicatorDiv>
-
-      {/* <Button text="시작하기" style="round_1" type="point" scale="small" /> */}
+      {step === "step4" && (
+        <ButtonDiv>
+          <Button
+            text="시작하기"
+            style="round_1"
+            type="point"
+            scale="small"
+            onClick={navigateToLogin}
+          />
+        </ButtonDiv>
+      )}
     </>
   );
 }

@@ -10,17 +10,20 @@ interface SLayoutProps {
 }
 
 interface ImageRendererProps {
-  step: keyof typeof mapper; 
+  step: "step1" | "step2" | "step3" | "step4";
 }
 
-const SLayout = styled.section<SLayoutProps>`
+const SLayout = styled.section.attrs<SLayoutProps>((props) => ({
+  style: {
+    backgroundImage: `url(${props.bgImage})`,
+  },
+}))<SLayoutProps>`
   width: 100%;
   height: 58vh;
   position: relative;
-  background-image: url(${(props) => props.bgImage});
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center -30%;
+  background-position: center -50%;
 `;
 
 const mapper = {

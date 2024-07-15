@@ -39,7 +39,7 @@ function TextRenderer({ text }: TextRendererProps) {
       <SH1>{text.title}</SH1>
       <SP>{text.desc}</SP>
       <SP>{text.desc2}</SP>
-      {text.desc3 && <SP>{text.desc3}</SP>}
+      {text.desc3 ? <SP>{text.desc3}</SP> : <SP>&nbsp;</SP>}
     </>
   );
 }
