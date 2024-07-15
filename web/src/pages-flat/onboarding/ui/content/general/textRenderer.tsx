@@ -9,15 +9,8 @@ interface Step {
   desc3?: string;
 }
 
-interface TextObj {
-  step1: Step;
-  step2: Step;
-  step3: Step;
-  step4: Step;
-}
-
 interface TextRendererProps {
-  text: TextObj;
+  text: Step;
 }
 
 const SH1 = styled.h1`
@@ -43,10 +36,10 @@ const SP = styled.p`
 function TextRenderer({ text }: TextRendererProps) {
   return (
     <>
-      <SH1>{text.step1.title}</SH1>
-      <SP>{text.step1.desc}</SP>
-      <SP>{text.step1.desc2}</SP>
-      {text.step1.desc3 && <SP>{text.step1.desc3}</SP>}
+      <SH1>{text.title}</SH1>
+      <SP>{text.desc}</SP>
+      <SP>{text.desc2}</SP>
+      {text.desc3 && <SP>{text.desc3}</SP>}
     </>
   );
 }

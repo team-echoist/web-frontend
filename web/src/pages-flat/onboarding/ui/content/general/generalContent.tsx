@@ -5,7 +5,7 @@ import { IndicatorBar } from "@/shared/ui/indicator";
 import styled from "styled-components";
 
 interface stepType {
-  step: string;
+  step: "step1" | "step2" | "step3" | "step4";
 }
 
 interface textStep {
@@ -16,10 +16,7 @@ interface textStep {
 }
 
 interface TextObj {
-  step1: textStep;
-  step2: textStep;
-  step3: textStep;
-  step4: textStep;
+  [key: string]: textStep;
 }
 const textObj: TextObj = {
   step1: {
@@ -54,10 +51,10 @@ const IndicatorDiv = styled.div`
 function GeneralContent({ step }: stepType) {
   return (
     <>
-      <ImageRenderer />
-      <TextRenderer text={textObj} />
+      <ImageRenderer step={step}/>
+      <TextRenderer text={textObj[step]} />
       <IndicatorDiv>
-        <IndicatorBar step="1"/>
+        <IndicatorBar step={step}/>
       </IndicatorDiv>
 
       {/* <Button text="시작하기" style="round_1" type="point" scale="small" /> */}

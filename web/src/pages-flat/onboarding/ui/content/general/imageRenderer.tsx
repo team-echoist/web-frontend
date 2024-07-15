@@ -10,7 +10,7 @@ interface SLayoutProps {
 }
 
 interface ImageRendererProps {
-  step: "step1" | "step2" | "step3" | "step4";
+  step: keyof typeof mapper; 
 }
 
 const SLayout = styled.section<SLayoutProps>`
@@ -20,7 +20,7 @@ const SLayout = styled.section<SLayoutProps>`
   background-image: url(${(props) => props.bgImage});
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center -50%;
+  background-position: center -30%;
 `;
 
 const mapper = {
@@ -30,8 +30,8 @@ const mapper = {
   step4: onBoarding4.src,
 };
 
-function ImageRenderer() {
-  return <SLayout bgImage={mapper.step1} />;
+function ImageRenderer({ step }: ImageRendererProps) {
+  return <SLayout bgImage={mapper[step]} />;
 }
 
 export default ImageRenderer;

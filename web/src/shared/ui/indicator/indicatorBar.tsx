@@ -7,13 +7,13 @@ import IndicatorBarStep4 from "@/shared/assets/img/IndicatorBarStep4.svg"
 function IndicatorBar({ step }: { step: string }) {
   const getSvg = () => {
     switch (step) {
-      case "1":
+      case "step1":
         return <IndicatorBarStep1/>;
-      case "2":
+      case "step2":
         return <IndicatorBarStep2/>;;
-      case "3":
+      case "step3":
         return <IndicatorBarStep3/>;;
-      case "4":
+      case "step4":
         return <IndicatorBarStep4/>;;
       default:
         return <IndicatorBarStep1/>;
