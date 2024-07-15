@@ -48,7 +48,7 @@ const IndicatorDiv = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top:67px;
+  margin-top: 67px;
 `;
 
 function GeneralContent({ step }: stepType) {
@@ -57,7 +57,7 @@ function GeneralContent({ step }: stepType) {
       <ImageRenderer />
       <TextRenderer text={textObj} />
       <IndicatorDiv>
-        <IndicatorBar />
+        <IndicatorBar step="1"/>
       </IndicatorDiv>
 
       {/* <Button text="시작하기" style="round_1" type="point" scale="small" /> */}
