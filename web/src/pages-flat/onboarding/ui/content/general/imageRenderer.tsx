@@ -23,7 +23,7 @@ const SLayout = styled.section.attrs<SLayoutProps>((props) => ({
   position: relative;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center -50%;
+  background-position: center -30%;
 `;
 
 const mapper = {
