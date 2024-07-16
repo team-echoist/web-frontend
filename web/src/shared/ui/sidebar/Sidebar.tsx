@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import React, { FC } from 'react'
-import * as Styled from './sidebar.styled'
+import React, { FC } from "react"
+import * as Styled from "./sidebar.styled"
 
 interface ISidebar {
     readonly onClick?: () => void
