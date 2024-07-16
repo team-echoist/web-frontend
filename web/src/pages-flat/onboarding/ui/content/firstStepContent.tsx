@@ -20,7 +20,7 @@ const SImage = styled(Image)`
 function FirstStepContent() {
   return (
     <SContainer>
-      <SImage src={SplashImg} alt="Splash Image" layout="fill" />
+      <SImage src={SplashImg} alt="Splash Image" fill />
     </SContainer>
   );
 }

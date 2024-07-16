@@ -1,23 +1,42 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import DefaultLayout from "./onboardingLayout";
-import FirstStepContent from "./firststepcontent";
-import GeneralContent from "./generalcontent";
+import DefaultLayout from "./layout/onboardingLayout";
+import FirstStepContent from "./content/firstStepContent";
+import GeneralContent from "./content/general/generalContent";
+
+type StepType = "step1" | "step2" | "step3" | "step4";
+const stepObj: { [key: string]: StepType } = {
+  "1": "step1",
+  "2": "step2",
+  "3": "step3",
+  "4": "step4",
+};
 
 export const OnBoarding = () => {
-  const [isVideoEnded, setIsVideoEnded] = useState(false);
+  const [isGifEnded, setIsGifEnded] = useState(false);
+  const [step, setStep] = useState(1);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsVideoEnded(true);
-    }, 3000); 
+      setIsGifEnded(true);
+    }, 3000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
-  console.log("isVideoEnded",isVideoEnded)
+  const handleStep = () => {
+    if (step < 4) {
+      return setStep((prev) => prev + 1);
+    } else {
+      return;
+    }
+  };
   return (
-    <DefaultLayout>
-      {isVideoEnded ? <GeneralContent /> : <FirstStepContent />}
+    <DefaultLayout onClick={handleStep}>
+      {isGifEnded ? (
+        <GeneralContent step={stepObj[step.toString()]} />
+      ) : (
+        <FirstStepContent />
+      )}
     </DefaultLayout>
   );
 };
