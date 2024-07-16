@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import { useServerInsertedHTML } from 'next/navigation'
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 import GlobalStyleComponent from '@/app/GlobalStyle'
-import GlobalStyle from '@/shared/styles/GlobalStyles'
 
 export default function StyledComponentsRegistry({ children }: { children: React.ReactNode }) {
     const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet())
@@ -20,7 +19,6 @@ export default function StyledComponentsRegistry({ children }: { children: React
     return (
         <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
             <GlobalStyleComponent />
-            <GlobalStyle />
             {children}
         </StyleSheetManager>
     )
