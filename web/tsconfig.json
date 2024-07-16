@@ -7,7 +7,7 @@
       "esnext"
     ],
     "allowJs": true,
-    "types": ["@testing-library/jest-dom", "node"],
+    "types": ["@testing-library/jest-dom","react", "react-dom", "node"],
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
