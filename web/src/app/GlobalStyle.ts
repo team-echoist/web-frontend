@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import { Devices } from "@/shared/styles";
+import { createGlobalStyle } from 'styled-components'
+import { Devices } from '@/shared/styles'
 
 const GlobalStyleComponent = createGlobalStyle`
 
@@ -61,6 +61,6 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-`;
+`
 
-export default GlobalStyleComponent;
+export default GlobalStyleComponent

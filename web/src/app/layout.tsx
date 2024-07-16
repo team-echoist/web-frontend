@@ -4,7 +4,7 @@ import React from 'react'
 import { lightTheme, darkTheme } from '@/shared/styles/index'
 import { ThemeProvider } from 'styled-components'
 import { useTheme } from '@/shared/lib/theme'
-import GlobalStyle from '@/shared/styles/GlobalStyles'
+import pretendard from '../../public/fonts'
 
 const defaultValue = {
     theme: 'dark',
@@ -16,7 +16,7 @@ export const CustomThemeContext = React.createContext(defaultValue)
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     const themeProps = useTheme()
     return (
-        <html lang="en">
+        <html lang="en" className={pretendard.className}>
             <head>
                 <link rel="icon" href="/icon-192x192.png" sizes="192x192" />
                 <link rel="icon" href="/icon-256x256.png" sizes="256x256" />
@@ -26,7 +26,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body>
                 <CustomThemeContext.Provider value={themeProps}>
                     <ThemeProvider theme={themeProps.theme === 'light' ? lightTheme : darkTheme}>
-                        <GlobalStyle />
                         <StyledComponentsRegistry>
                             <div className="container">{children}</div>
                         </StyledComponentsRegistry>
