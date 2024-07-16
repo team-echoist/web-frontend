@@ -1,14 +1,20 @@
 /** @type {import('next').NextConfig} */
 const withPWA = require('next-pwa')({
-  dest: 'public',
-});
-
-
+    dest: 'public',
+})
 const nextConfig = {
-  swcMinify: true,
-  compiler: {
-    styledComponents: true,
-  },
-};
+    swcMinify: true,
+    compiler: {
+        styledComponents: true,
+    },
+    webpack(config) {
+        config.module.rules.push({
+            test: /\.svg$/,
+            use: ['@svgr/webpack'],
+        })
 
-module.exports = withPWA(nextConfig);
+        return config
+    },
+}
+
+module.exports = withPWA(nextConfig)
