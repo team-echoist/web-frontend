@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { Button } from "@/shared/ui/button";
 import ImageRenderer from "./imageRenderer";
 import TextRenderer from "./textRenderer";
@@ -43,6 +42,7 @@ const textObj: TextObj = {
     desc2: "문장 속에 담긴 다양한 감정을 마주해보세요",
   },
 };
+
 const IndicatorDiv = styled.div`
   width: 100%;
   display: flex;
@@ -58,9 +58,9 @@ const ButtonDiv = styled.div`
 
 function GeneralContent({ step }: stepType) {
   const router = useRouter();
-  
+
   const navigateToLogin = () => {
-      router.push("/linkedout/login");
+    router.push("/linkedout/login");
   };
   return (
     <>

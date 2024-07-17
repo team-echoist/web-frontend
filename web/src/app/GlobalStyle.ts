@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { Devices } from "@/shared/styles";
+import { minDevices, maxDevices } from "@/shared/styles/device";
 
 const GlobalStyleComponent = createGlobalStyle`
 
@@ -28,22 +28,97 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/shared/assets/fonts/PretendardWoff2/Pretendard-Black.woff2') format('woff2'),
+         url('/shared/assets/fonts/PretendardWoff/Pretendard-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/shared/assets/fonts/PretendardWoff2/Pretendard-ExtraBold.woff2') format('woff2'),
+         url('/shared/assets/fonts/PretendardWoff/Pretendard-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/shared/assets/fonts/PretendardWoff2/Pretendard-Bold.woff2') format('woff2'),
+         url('/shared/assets/fonts/PretendardWoff/Pretendard-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/shared/assets/fonts/PretendardWoff2/Pretendard-SemiBold.woff2') format('woff2'),
+         url('/shared/assets/fonts/PretendardWoff/Pretendard-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/shared/assets/fonts/PretendardWoff2/Pretendard-Medium.woff2') format('woff2'),
+         url('/shared/assets/fonts/PretendardWoff/Pretendard-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/shared/assets/fonts/PretendardWoff2/Pretendard-Regular.woff2') format('woff2'),
+         url('/shared/assets/fonts/PretendardWoff/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/shared/assets/fonts/PretendardWoff2/Pretendard-Light.woff2') format('woff2'),
+         url('/shared/assets/fonts/PretendardWoff/Pretendard-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/shared/assets/fonts/PretendardWoff2/Pretendard-ExtraLight.woff2') format('woff2'),
+         url('/shared/assets/fonts/PretendardWoff/Pretendard-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/shared/assets/fonts/PretendardWoff2/Pretendard-Thin.woff2') format('woff2'),
+         url('/shared/assets/fonts/PretendardWoff/Pretendard-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+  }
+
+
+
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/shared/assets/fonts/PretendardWoff2/Pretendard-Light.woff2') format('woff2'),
+         url('/shared/assets/fonts/PretendardWoff/Pretendard-Light.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+  }
+
 body {
 	line-height: 1;
+	 font-family: 'Pretendard', sans-serif;
 
 .container{
-	// @media ${Devices.mobileM} {
-	// 	width:390px;
-	// }
-	// 원래는 이렇게 해야되나, 웹 온보딩이 아직 세팅안되서 모바일 사이즈로 먼저 세팅 추후 주석 걷어 내야됨
-	// 추후 테블릿일경우도 조건 추가 해야됨
-	width:1194px;
 	height:100vh;
 	margin:auto;
 	background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
 	display:flex;
 	justify-content: center;
+	@media only screen and ${minDevices.tablet} and ${maxDevices.laptop}{
+  width:768px;
+	height:100vh;
+  }
 }
 }
 ol, ul {

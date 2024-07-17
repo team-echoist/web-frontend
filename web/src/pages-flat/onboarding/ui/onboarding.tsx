@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import DefaultLayout from "./layout/onboardingLayout";
 import FirstStepContent from "./content/firstStepContent";
 import GeneralContent from "./content/general/generalContent";
+import Swiper from "@/shared/lib/swiper/swiper";
+import styled from "styled-components";
+import { minDevices, maxDevices } from "@/shared/styles/device";
 
 type StepType = "step1" | "step2" | "step3" | "step4";
 const stepObj: { [key: string]: StepType } = {
@@ -12,9 +15,14 @@ const stepObj: { [key: string]: StepType } = {
   "4": "step4",
 };
 
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
 export const OnBoarding = () => {
-  const [isGifEnded, setIsGifEnded] = useState(false);
   const [step, setStep] = useState(1);
+  const [isGifEnded, setIsGifEnded] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,20 +31,24 @@ export const OnBoarding = () => {
 
     return () => clearTimeout(timer);
   }, []);
-  const handleStep = () => {
-    if (step < 4) {
-      return setStep((prev) => prev + 1);
-    } else {
-      return;
-    }
-  };
+
   return (
-    <DefaultLayout onClick={handleStep}>
+    <>
       {isGifEnded ? (
-        <GeneralContent step={stepObj[step.toString()]} />
+        <Swiper step={step} setStep={setStep} maxStep={4}>
+          {Array.from({ length: 4 }, (_, index) => (
+            <Container key={index}>
+              <DefaultLayout key={index}>
+                <GeneralContent step={stepObj[`${index + 1}`]} />
+              </DefaultLayout>
+            </Container>
+          ))}
+        </Swiper>
       ) : (
-        <FirstStepContent />
+        <DefaultLayout>
+          <FirstStepContent />
+        </DefaultLayout>
       )}
-    </DefaultLayout>
+    </>
   );
 };

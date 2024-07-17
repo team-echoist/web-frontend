@@ -4,7 +4,6 @@ import React from 'react'
 import { lightTheme, darkTheme } from '@/shared/styles/index'
 import { ThemeProvider } from 'styled-components'
 import { useTheme } from '@/shared/lib/theme'
-import GlobalStyle from '@/shared/styles/GlobalStyles'
 
 const defaultValue = {
     theme: 'dark',
@@ -26,7 +25,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body>
                 <CustomThemeContext.Provider value={themeProps}>
                     <ThemeProvider theme={themeProps.theme === 'light' ? lightTheme : darkTheme}>
-                        <GlobalStyle />
                         <StyledComponentsRegistry>
                             <div className="container">{children}</div>
                         </StyledComponentsRegistry>
