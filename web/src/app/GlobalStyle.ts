@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { Devices } from "@/shared/styles";
+import { minDevices, maxDevices } from "@/shared/styles/device";
 
 const GlobalStyleComponent = createGlobalStyle`
 
@@ -28,22 +28,19 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
-	line-height: 1;
+
 
 .container{
-	// @media ${Devices.mobileM} {
-	// 	width:390px;
-	// }
-	// 원래는 이렇게 해야되나, 웹 온보딩이 아직 세팅안되서 모바일 사이즈로 먼저 세팅 추후 주석 걷어 내야됨
-	// 추후 테블릿일경우도 조건 추가 해야됨
-	width:1194px;
 	height:100vh;
 	margin:auto;
 	background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
 	display:flex;
 	justify-content: center;
+	@media only screen and ${minDevices.tablet} and ${maxDevices.laptop}{
+  width:768px;
+	height:100vh;
+  }
 }
 }
 ol, ul {

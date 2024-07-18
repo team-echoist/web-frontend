@@ -1,23 +1,54 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import DefaultLayout from "./onboardingLayout";
-import FirstStepContent from "./firststepcontent";
-import GeneralContent from "./generalcontent";
+import DefaultLayout from "./layout/onboardingLayout";
+import FirstStepContent from "./content/firstStepContent";
+import GeneralContent from "./content/general/generalContent";
+import Swiper from "@/shared/lib/swiper/swiper";
+import styled from "styled-components";
+
+
+type StepType = "step1" | "step2" | "step3" | "step4";
+const stepObj: { [key: string]: StepType } = {
+  "1": "step1",
+  "2": "step2",
+  "3": "step3",
+  "4": "step4",
+};
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 export const OnBoarding = () => {
-  const [isVideoEnded, setIsVideoEnded] = useState(false);
+  const [step, setStep] = useState(1);
+  const [isGifEnded, setIsGifEnded] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsVideoEnded(true);
-    }, 3000); 
+      setIsGifEnded(true);
+    }, 3000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
-  console.log("isVideoEnded",isVideoEnded)
+
   return (
-    <DefaultLayout>
-      {isVideoEnded ? <GeneralContent /> : <FirstStepContent />}
-    </DefaultLayout>
+    <>
+      {isGifEnded ? (
+        <Swiper step={step} setStep={setStep} maxStep={4}>
+          {Array.from({ length: 4 }, (_, index) => (
+            <Container key={index}>
+              <DefaultLayout key={index}>
+                <GeneralContent step={stepObj[`${index + 1}`]} />
+              </DefaultLayout>
+            </Container>
+          ))}
+        </Swiper>
+      ) : (
+        <DefaultLayout>
+          <FirstStepContent />
+        </DefaultLayout>
+      )}
+    </>
   );
 };

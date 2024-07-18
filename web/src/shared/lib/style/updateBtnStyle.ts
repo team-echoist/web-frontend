@@ -5,7 +5,7 @@ import {
   SquareScaleType,
   RoundScaleType,
   ScaleType,
-} from "@/shared/types/btnType";
+} from "@/shared/types";
 
 const { red, gray, pointcolor } = color;
 

@@ -41,3 +41,6 @@ web/public/workbox-*.js
 sw.js
 sw.js.map
 workbox-*.js
+
+# package-lock.json
+package-lock.json

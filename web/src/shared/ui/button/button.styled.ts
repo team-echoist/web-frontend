@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { styleObjType } from "@/shared/types/btnType";
+import { styleObjType } from "@/shared/types";
 import color from "../../styles/color";
 
 interface SButtonProps {
