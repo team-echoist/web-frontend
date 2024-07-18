@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState, MouseEventHandler } from "react";
 import * as Styled from "./button.styled";
-import updateBtnStyle from "@/shared/lib/style/updateBtnStyle";
+import { updateBtnStyle } from "@/shared/lib/style";
 import { BtnType, styleObjType } from "@/shared/types";
 
 type buttonProps = BtnType & {

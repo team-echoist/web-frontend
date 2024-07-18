@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { minDevices,maxDevices } from "@/shared/styles";
+
 
 interface Props {
   children?: React.ReactNode;

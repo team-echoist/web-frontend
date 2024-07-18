@@ -5,7 +5,7 @@ import FirstStepContent from "./content/firstStepContent";
 import GeneralContent from "./content/general/generalContent";
 import Swiper from "@/shared/lib/swiper/swiper";
 import styled from "styled-components";
-import { minDevices, maxDevices } from "@/shared/styles/device";
+
 
 type StepType = "step1" | "step2" | "step3" | "step4";
 const stepObj: { [key: string]: StepType } = {
