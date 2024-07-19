@@ -1,6 +1,6 @@
-// src/shared/ui/sidebar/sidebar.styled.ts
+"use client"
 import styled from "styled-components"
-// import { Button } from "@/shared/ui/button" // 올바른 경로로 임포트
+import { Button } from "@/shared/ui/button"
 
 export const SidebarContainer = styled.div<{ open: boolean }>`
     width: 376px;
@@ -19,11 +19,11 @@ export const SidebarContainer = styled.div<{ open: boolean }>`
 
 export const SidebarItem = styled.div`
     margin: 10px 0;
+    cursor: pointer;
 `
 
-export const SidebarButton = styled.button`
+export const SidebarButton = styled(Button)`
     margin-top: auto;
-    background-color: white;
 `
 
 export const HamburgerButton = styled.button`
