@@ -25,7 +25,6 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
         <Image
           src={LoginLogo}
           alt="Login Logo"
-          layout="fixed"
           width={311.763}
           height={333.002}
           className="next-image"

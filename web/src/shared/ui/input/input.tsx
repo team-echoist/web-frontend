@@ -7,7 +7,11 @@ export const SInput = styled.input`
   width: 442px;
   height: 50px;
   flex-shrink: 0;
-  padding-left: 17px;
+  box-sizing: border-box;
+  border: none;
+   &::placeholder {
+    text-indent: 17px;
+  }
 `;
 
 interface InputProps<T> {

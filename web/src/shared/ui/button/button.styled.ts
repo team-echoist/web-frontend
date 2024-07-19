@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import { styleObjType } from "@/shared/types";
 import color from "../../styles/color";
 
 interface SButtonProps {
-  styleObj: styleObjType;
+  $borderradius: string;
+  $backgroundcolor: string;
+  $width: string;
+  $height: string;
 }
 
 export const SButton = styled.button<SButtonProps>`
@@ -11,12 +13,12 @@ export const SButton = styled.button<SButtonProps>`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border-radius: ${(props) => props.styleObj.borderRadius};
-  background-color: ${(props) => props.styleObj.backgroundColor};
-  width: ${(props) => props.styleObj.width};
-  height: ${(props) => props.styleObj.height};
+  border-radius: ${(props) => props.$borderradius};
+  background-color: ${(props) => props.$backgroundcolor};
+  width: ${(props) => props.$width};
+  height: ${(props) => props.$height};
   color: ${color.black};
-  font-family: Pretendard;
+  font-family: Pretendard, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
