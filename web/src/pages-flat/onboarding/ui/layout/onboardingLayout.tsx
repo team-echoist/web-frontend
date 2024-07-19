@@ -6,7 +6,7 @@ interface Props {
   children?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
-const SLayout = styled.main`
+const Layout = styled.main`
   width: 390px;
   height: 100%;
   margin: auto;
@@ -15,7 +15,7 @@ const SLayout = styled.main`
 `;
 
 function DefaultLayout({ children, onClick }: Props) {
-  return <SLayout onClick={onClick}>{children}</SLayout>;
+  return <Layout onClick={onClick}>{children}</Layout>;
 }
 
 export default DefaultLayout;

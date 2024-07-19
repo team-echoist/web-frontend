@@ -1,11 +1,12 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import { FindInfo } from "./findinfo";
-import { Login } from "./login";
+import { Login } from "./authentication";
 import { Mypage } from "./mypage";
 import { Register } from "./register";
 import { WriteEssay } from "./write_essay";
 import { NotFound } from "./notfound";
+import { SignUp } from "./authentication";
+import { Complete } from "./authentication";
 
 // 이컴포넌트에서 모든 페이지 컴포넌트들의 조건부 렌더링이 실시 된다.
 
@@ -18,6 +19,10 @@ export const RenderView = ({ pageName }: { pageName: string }) => {
       return <FindInfo />;
     case "login":
       return <Login />;
+    case "signup":
+      return <SignUp />;
+    case "complete":
+      return <Complete />;
     case "mypage":
       return <Mypage />;
     case "register":
