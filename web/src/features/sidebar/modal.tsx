@@ -7,14 +7,15 @@ interface ModalProps {
     children: React.ReactNode
 }
 
-export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+export const Modal = ({ isOpen, onClose }: ModalProps) => {
     if (!isOpen) return null
 
     return (
         <Styled.ModalOverlay onClick={onClose}>
             <Styled.ModalContent onClick={(e) => e.stopPropagation()}>
                 <Styled.CloseButton onClick={onClose}>X</Styled.CloseButton>
-                {children}
+                Modal
+                {/* {children} */}
             </Styled.ModalContent>
         </Styled.ModalOverlay>
     )
