@@ -9,6 +9,7 @@ import color from "@/shared/styles/color";
 import ButtonFieldLayout from "../../ui/layout/buttonFieldLayout";
 import { Button } from "@/shared/ui/button";
 import SocialLoginField from "./content/SocialLoginField";
+import Link from "next/link";
 
 const CheckboxContainer = styled.fieldset`
   display: flex;
@@ -42,6 +43,7 @@ const Li = styled.li`
   font-weight: 400;
   line-height: 150%; /* 18px */
   text-decoration-line: underline;
+  cursor: pointer;
 `;
 
 export const Login = () => {
@@ -68,7 +70,9 @@ export const Login = () => {
           <Ul>
             <Li>아이디 찾기</Li>
             <Li>비밀번호 재설정</Li>
-            <Li>회원가입</Li>
+            <Link href="/linkedout/signup">
+              <Li>회원가입</Li>
+            </Link>
           </Ul>
         </Nav>
         <SocialLoginField />

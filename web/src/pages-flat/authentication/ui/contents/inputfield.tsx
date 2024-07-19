@@ -1,7 +1,16 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Input } from "@/shared/ui/input";
 import styled from "styled-components";
-import Check from "@/shared/ui/check/check";
+
+const P = styled.p`
+  color: #616fed;
+  font-family: Abel;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+  padding-left: 17px;
+`;
 
 const Layout = styled.section`
   width: 100%;
@@ -25,10 +34,15 @@ type FormData = {
 interface InputFieldProps {
   data: FormData;
   setData: Dispatch<SetStateAction<FormData>>;
+  isValidateText?: boolean;
 }
 
 // 유효성 검사: 비밀번호는 영문, 특수문자, 숫자 포함 8~12자를 조합해 주세요.
-const InputField: React.FC<InputFieldProps> = ({ data, setData }) => {
+const InputField: React.FC<InputFieldProps> = ({
+  data,
+  setData,
+  isValidateText,
+}) => {
   return (
     <Layout>
       {Object.keys(data).map((key) => (
@@ -39,7 +53,9 @@ const InputField: React.FC<InputFieldProps> = ({ data, setData }) => {
           setState={setData}
         />
       ))}
-   
+      {isValidateText && (
+        <P>비밀번호는 영문, 특수문자, 숫자 포함 8~12자를 조합해 주세요.</P>
+      )}
     </Layout>
   );
 };
