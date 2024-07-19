@@ -38,7 +38,8 @@ export const SideBar = ({ items = [] }: SidebarProps) => {
             <Styled.SidebarContainer open={open}>
                 {items.map((item, index) => (
                     <Styled.SidebarItem key={index} onClick={() => handleItemClick(item.content)}>
-                        {item.label}
+                        <div>{item.label}</div>
+                        <div>{item.content}</div>
                     </Styled.SidebarItem>
                 ))}
             </Styled.SidebarContainer>
