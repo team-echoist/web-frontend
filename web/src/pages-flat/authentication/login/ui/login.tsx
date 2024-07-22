@@ -61,7 +61,7 @@ export const Login = () => {
       />
       <InputField data={infoData} setData={setInfoData} />
       <CheckboxContainer>
-        <Check check={loginCheck} setCheck={setLoginCheck} />
+        <Check check={loginCheck} setCheck={setLoginCheck} type="general"/>
         <P $loginCheck={loginCheck}>자동로그인</P>
       </CheckboxContainer>
       <ButtonFieldLayout>
