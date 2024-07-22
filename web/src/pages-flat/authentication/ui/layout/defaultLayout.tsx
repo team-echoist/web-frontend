@@ -27,7 +27,6 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
           alt="Login Logo"
           width={311.763}
           height={333.002}
-          className="next-image"
         />
       </LoginLogoWrapper>
       {children}

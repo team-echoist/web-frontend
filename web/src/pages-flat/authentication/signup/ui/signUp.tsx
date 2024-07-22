@@ -6,6 +6,7 @@ import InputField from "../../ui/contents/inputfield";
 import CheckField from "./contents/checkField";
 import { Button } from "@/shared/ui/button";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
 const ButtonLayout = styled.div`
   position: absolute;
@@ -13,6 +14,7 @@ const ButtonLayout = styled.div`
 `;
 
 function SignUP() {
+  const router =useRouter();
   const [inputData, setinputData] = useState({
     id: { value: "", placeholder: "이메일 주소 또는 아이디" },
     password: { value: "", placeholder: "비밀번호" },
@@ -41,6 +43,11 @@ function SignUP() {
       required: false,
     },
   });
+
+  const submitSignupForm = () =>{
+    router.push("/linkedout/complete")
+  }
+
   return (
     <DefaultLayout>
       <PrevButton />
@@ -55,7 +62,8 @@ function SignUP() {
       />
       <CheckField check={check} setCheck={setCheck} />
       <ButtonLayout>
-        <Button text="회원가입" style="square" scale="large" type="disable" />
+        <Button text="회원가입" style="square" scale="large" type="disable" onClick={submitSignupForm} />
+        {/* 필수값 채워지면 타입 바뀌게끔 로직 바꾸기 */}
       </ButtonLayout>
     </DefaultLayout>
   );
