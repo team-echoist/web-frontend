@@ -98,12 +98,17 @@ function SignUP() {
       required: false,
     },
   });
+  const [toastText, setToastText] = useState({
+    title: "입력하신 이메일 주소로 인증 메일이 발송됐습니다.",
+    desc: "링크를 클릭해 인증을 완료해주세요.",
+  });
 
   useEffect(() => {
     setIsButtonEnabled(isButtonEnabled(check, inputData));
   }, [check, inputData]);
 
   const onSubmit = async () => {
+    setIsShowToast(false);
     if (!isEmailValid) {
       setError((prev) => ({
         ...prev,
@@ -129,27 +134,24 @@ function SignUP() {
     try {
       const status = await submitSignupForm(body);
       if (status === 201) {
-        setIsShowToast(true);
-        setTimeout(() => {
-          router.back();
-        }, 5000);
+          setIsShowToast(true);
+          setIsButtonEnabled(false)
       }
     } catch (err) {
-      if(err){
-        setError((prev) => ({
-          ...prev,
-          id: true,
-        }));
+      if (err) {
+        console.log("err", err);
+        setIsShowToast(true);
+        setToastText({
+          title: "이메일 인증에 실패했습니다 :( ",
+          desc: "다시 시도해주세요.",
+        });
       }
     }
   };
   return (
     <DefaultLayout>
       {isShowToast && (
-        <GeneralToast
-          title="입력하신 이메일 주소로 인증 메일이 발송됐습니다."
-          desc="링크를 클릭해 인증을 완료해주세요."
-        />
+        <GeneralToast title={toastText.title} desc={toastText.desc} />
       )}
       <PrevButton />
       <TextField

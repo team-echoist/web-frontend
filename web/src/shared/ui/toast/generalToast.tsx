@@ -3,6 +3,19 @@ import color from "@/shared/styles/color";
 import Closebutton from "../button/closebutton";
 import { useState } from "react";
 
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.80);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Layout = styled.div`
   display: flex;
   width: 440px;
@@ -13,9 +26,11 @@ const Layout = styled.div`
   text-align: left;
   border-radius: 10px;
   background: #212121;
-  position:fixed;
+  position: fixed;
   top: 82.21vh;
+  z-index: 1000;
 `;
+
 const P = styled.p`
   font-family: Pretendard;
   font-size: 16px;
@@ -24,6 +39,7 @@ const P = styled.p`
   line-height: 150%;
   color: ${color.pointcolor};
 `;
+
 const H1 = styled.h1`
   font-family: Pretendard;
   font-size: 16px;
@@ -31,6 +47,7 @@ const H1 = styled.h1`
   font-weight: 600;
   line-height: 150%;
 `;
+
 const ContentDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,26 +55,30 @@ const ContentDiv = styled.div`
   left: 20px;
   top: 30px;
 `;
+
 const CloseButtonDiv = styled.div`
   position: absolute;
   top: 30px;
   left: 430px;
 `;
+
 function GeneralToast({ title, desc }: { title: string; desc: string }) {
   const [isClosed, setIsClosed] = useState(false);
   if (isClosed) {
-    return null; 
+    return null;
   }
   return (
-    <Layout>
-      <CloseButtonDiv>
-        <Closebutton setIsClosed={setIsClosed} />
-      </CloseButtonDiv>
-      <ContentDiv>
-        <H1>{title}</H1>
-        <P>{desc}</P>
-      </ContentDiv>
-    </Layout>
+    <Overlay>
+      <Layout>
+        <CloseButtonDiv>
+          <Closebutton setIsClosed={setIsClosed} />
+        </CloseButtonDiv>
+        <ContentDiv>
+          <H1>{title}</H1>
+          <P>{desc}</P>
+        </ContentDiv>
+      </Layout>
+    </Overlay>
   );
 }
 
