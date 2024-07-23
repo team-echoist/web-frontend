@@ -1,4 +1,5 @@
 "use client"
+import React from "react"
 import * as Styled from "./modal.styled"
 
 interface ModalProps {
@@ -7,15 +8,14 @@ interface ModalProps {
     children: React.ReactNode
 }
 
-export const Modal = ({ isOpen, onClose }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
     if (!isOpen) return null
 
     return (
         <Styled.ModalOverlay onClick={onClose}>
             <Styled.ModalContent onClick={(e) => e.stopPropagation()}>
                 <Styled.CloseButton onClick={onClose}>X</Styled.CloseButton>
-                Modal
-                {/* {children} */}
+                {children}
             </Styled.ModalContent>
         </Styled.ModalOverlay>
     )

@@ -1,25 +1,22 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import * as Styled from "./sidebar.styled"
 import { Modal } from "./modal"
 import HamburgerButtonIcon from "@/shared/assets/img/hamburger_button.svg"
+import { useSidebarStore } from "@/shared/store/store"
 
 interface SidebarProps {
     items: Array<{ label: string; content: React.ReactNode }>
 }
 
 export const SideBar = ({ items = [] }: SidebarProps) => {
-    const [open, setOpen] = useState(false)
     const [isClient, setIsClient] = useState(false)
-    const [selectedItem, setSelectedItem] = useState<React.ReactNode | null>(null)
+
+    const { open, toggleSidebar, selectedItem, setSelectedItem } = useSidebarStore()
 
     useEffect(() => {
         setIsClient(true)
     }, [])
-
-    const toggleSidebar = () => {
-        setOpen(!open)
-    }
 
     const handleItemClick = (content: React.ReactNode) => {
         setSelectedItem(content)
@@ -32,14 +29,15 @@ export const SideBar = ({ items = [] }: SidebarProps) => {
 
     return (
         <>
-            <Styled.HamburgerButton onClick={toggleSidebar}>
-                <HamburgerButtonIcon />
-            </Styled.HamburgerButton>
+            {!open && (
+                <Styled.HamburgerButton onClick={toggleSidebar}>
+                    <HamburgerButtonIcon />
+                </Styled.HamburgerButton>
+            )}
             <Styled.SidebarContainer open={open}>
                 {items.map((item, index) => (
                     <Styled.SidebarItem key={index} onClick={() => handleItemClick(item.content)}>
                         <div>{item.label}</div>
-                        <div>{item.content}</div>
                     </Styled.SidebarItem>
                 ))}
             </Styled.SidebarContainer>
