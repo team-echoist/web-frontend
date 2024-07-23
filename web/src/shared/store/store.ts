@@ -29,3 +29,14 @@ export const useSidebarStore = create<SidebarState>((set) => ({
     toggleSidebar: () => set((state) => ({ open: !state.open })),
     setSelectedItem: (item) => set({ selectedItem: item }),
 }))
+
+// 다크모드, 라이트 모드
+interface ThemeState {
+    isDarkMode: boolean
+    toggleTheme: () => void
+}
+
+export const useThemeStore = create<ThemeState>((set) => ({
+    isDarkMode: false,
+    toggleTheme: () => set((state) => ({ isDarkMode: !state.isDarkMode })),
+}))

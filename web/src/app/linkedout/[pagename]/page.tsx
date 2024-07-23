@@ -6,7 +6,7 @@ import { NotificationSettingContent } from "@/features/sidebar/SidebarList/Notif
 import { ProfileContent } from "@/features/sidebar/SidebarList/profileContent"
 import { ShopContent } from "@/features/sidebar/SidebarList/ShopContent"
 import { UpdateHistoryContent } from "@/features/sidebar/SidebarList/UpdateHistoryContent"
-import { WeaknessSettingContent } from "@/features/sidebar/SidebarList/WeaknessSettingContent"
+import { ScreenSettingContent } from "@/features/sidebar/SidebarList/ScreenSettingContent"
 import { RenderView } from "@/pages-flat"
 
 type PageParams = {
@@ -16,9 +16,9 @@ type PageParams = {
 function Page({ params }: { params: PageParams }) {
     const sidebarItems = [
         { label: "프로필", content: <ProfileContent /> },
-        { label: "링크드아웃 지수", content: <LinkedOutIndexContent /> },
+        { label: "주간 링크드아웃 지수", content: <LinkedOutIndexContent /> },
         { label: "상점", content: <ShopContent /> },
-        { label: "취약 설정", content: <WeaknessSettingContent /> },
+        { label: "화면 설정", content: <ScreenSettingContent /> },
         { label: "알림 설정", content: <NotificationSettingContent /> },
         { label: "고객지원", content: <CustomerSupportContent /> },
         { label: "업데이트 기록", content: <UpdateHistoryContent /> },
