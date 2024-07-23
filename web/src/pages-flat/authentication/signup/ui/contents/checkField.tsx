@@ -56,18 +56,10 @@ function CheckField({ check, setCheck }: CheckFieldProps) {
 
     const updatedCheck = {
       allCheck: newAllCheck,
-      service: check.service.required
-        ? { ...check.service, checked: newAllCheck }
-        : check.service,
-      personal: check.personal.required
-        ? { ...check.personal, checked: newAllCheck }
-        : check.personal,
-      age: check.age.required
-        ? { ...check.age, checked: newAllCheck }
-        : check.age,
-      marketing: check.marketing.required
-        ? { ...check.marketing, checked: newAllCheck }
-        : check.marketing,
+      service: { ...check.service, checked: newAllCheck },
+      personal: { ...check.personal, checked: newAllCheck },
+      age: { ...check.age, checked: newAllCheck },
+      marketing: { ...check.marketing, checked: newAllCheck },
     };
 
     setCheck(updatedCheck);
