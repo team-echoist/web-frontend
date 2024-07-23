@@ -22,8 +22,12 @@ const nextConfig = {
         destination: process.env.NEXT_PUBLIC_API_URL + "auth/verify",
       },
       {
-        source: "/emailsignup",
+        source: "/checkfirstlogin",
         destination: process.env.NEXT_PUBLIC_API_URL + "auth/register",
+      },
+      {
+        source: "/signin",
+        destination: process.env.NEXT_PUBLIC_API_URL + "auth/login",
       },
     ];
   },

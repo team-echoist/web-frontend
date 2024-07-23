@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 import Closebutton from "../button/closebutton";
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 
 const Overlay = styled.div`
   position: fixed;
@@ -9,7 +9,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.80);
+  background: rgba(0, 0, 0, 0.8);
   z-index: 999;
   display: flex;
   justify-content: center;
@@ -54,24 +54,36 @@ const ContentDiv = styled.div`
   position: absolute;
   left: 20px;
   top: 30px;
+  gap: 7px;
 `;
 
 const CloseButtonDiv = styled.div`
   position: absolute;
   top: 30px;
-  left: 430px;
+  left: 440px;
 `;
 
-function GeneralToast({ title, desc }: { title: string; desc: string }) {
-  const [isClosed, setIsClosed] = useState(false);
-  if (isClosed) {
+interface GeneralToastProps {
+  title: string;
+  desc: string;
+  isShowToast: boolean;
+  setIsShowToast: Dispatch<SetStateAction<boolean>>;
+}
+
+const GeneralToast: React.FC<GeneralToastProps> = ({
+  title,
+  desc,
+  isShowToast,
+  setIsShowToast,
+}) => {
+  if (!isShowToast) {
     return null;
   }
   return (
     <Overlay>
       <Layout>
         <CloseButtonDiv>
-          <Closebutton setIsClosed={setIsClosed} />
+          <Closebutton isShowModal={isShowToast} setIsShowModal={setIsShowToast} />
         </CloseButtonDiv>
         <ContentDiv>
           <H1>{title}</H1>
@@ -80,6 +92,6 @@ function GeneralToast({ title, desc }: { title: string; desc: string }) {
       </Layout>
     </Overlay>
   );
-}
+};
 
 export default GeneralToast;

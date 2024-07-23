@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Input } from "@/shared/ui/input";
 import styled from "styled-components";
+import { useId } from "react";
 
 const P = styled.p`
   color: #616fed;
@@ -57,12 +58,14 @@ const InputField: React.FC<InputFieldProps> = ({
   isValidateText,
   error,
 }) => {
+  const id = useId();
+
   return (
     <Layout>
       {Object.keys(data).map((key) => (
-        <>
+        <React.Fragment key={key+id}>
           <Input
-            key={key}
+            key={key+`${id}`}
             name={key as keyof FormData}
             placeholder={data[key as keyof FormData].placeholder}
             setState={setData}
@@ -76,7 +79,7 @@ const InputField: React.FC<InputFieldProps> = ({
               비밀번호는 영문, 특수문자, 숫자 포함 8~12자를 조합해 주세요.
             </ErrorMsg>
           )}
-        </>
+        </React.Fragment>
       ))}
 
       {isValidateText && !error?.password ? (

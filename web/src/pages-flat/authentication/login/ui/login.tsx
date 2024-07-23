@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PrevButton } from "@/shared/ui/button";
 import DefaultLayout from "../../ui/layout/defaultLayout";
 import TextField from "../../ui/contents/textfield";
@@ -10,6 +10,10 @@ import ButtonFieldLayout from "../../ui/layout/buttonFieldLayout";
 import { Button } from "@/shared/ui/button";
 import SocialLoginField from "./content/SocialLoginField";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { checkFirstLogin, localLogin } from "../api";
+import { GeneralToast } from "@/shared/ui/toast";
+import { useRouter } from "next/navigation";
 
 const CheckboxContainer = styled.fieldset`
   display: flex;
@@ -51,21 +55,94 @@ export const Login = () => {
     id: { value: "", placeholder: "이메일 주소 또는 아이디" },
     password: { value: "", placeholder: "비밀번호" },
   });
-  const [loginCheck, setLoginCheck] = useState(false);
+  const [autoLoginCheck, setAutoLoginCheck] = useState(false);
+  const [isFirstLogin, setIsFirstLogin] = useState(false);
+  const [isShowToast, setIsShowToast] = useState(false);
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+  const router = useRouter();
+
+  const isValidButton =
+    infoData.id.value.length > 0 && infoData.password.value.length > 0;
+
+  useEffect(() => {
+    if (token) {
+      checkUser(token);
+    }
+  }, [token]);
+
+  const checkUser = async (token: string) => {
+    try {
+      const statusCode = await checkFirstLogin(token);
+      if (statusCode === 205) {
+        setIsFirstLogin(true);
+      }
+    } catch (err) {
+      console.log("Err", err);
+    }
+  };
+
+  const submitLogin = async () => {
+    setIsShowToast(false);
+    const body = {
+      email: infoData.id.value,
+      password: infoData.password.value,
+    };
+    try {
+      const statusCode = await localLogin(body);
+      if (statusCode === 200 || statusCode === 201) {
+        //메인페이지
+        router.push("/linkedout/main");
+      }
+      if (statusCode === 205) {
+        //컴플리트
+        router.push("/linkedout/complete");
+      }
+      if (isFirstLogin) {
+        //컴플리트
+        router.push("/linkedout/complete");
+      }
+    } catch (err) {
+      console.log("err", err);
+      if (err) {
+        setIsShowToast(true);
+      }
+    }
+  };
+
   return (
     <DefaultLayout>
       <PrevButton />
+      {isShowToast && (
+        <GeneralToast
+          title="로그인에 실패 했습니다."
+          desc="아이디와 비밀번호 확인해주세요."
+          isShowToast={isShowToast}
+          setIsShowToast={setIsShowToast}
+        />
+      )}
+
       <TextField
         title="안녕하세요!"
         title2="링크드아웃에 오신 것을 환영합니다."
       />
       <InputField data={infoData} setData={setInfoData} />
       <CheckboxContainer>
-        <Check check={loginCheck} setCheck={setLoginCheck} type="general"/>
-        <P $loginCheck={loginCheck}>자동로그인</P>
+        <Check
+          check={autoLoginCheck}
+          setCheck={setAutoLoginCheck}
+          type="general"
+        />
+        <P $loginCheck={autoLoginCheck}>자동로그인</P>
       </CheckboxContainer>
       <ButtonFieldLayout>
-        <Button text="로그인" style="square" scale="large" type="point" />
+        <Button
+          text="로그인"
+          style="square"
+          scale="large"
+          type={isValidButton ? "point" : "disable"}
+          onClick={isValidButton ? submitLogin : undefined}
+        />
         <Nav>
           <Ul>
             <Li>아이디 찾기</Li>

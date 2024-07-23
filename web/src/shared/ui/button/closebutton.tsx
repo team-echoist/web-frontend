@@ -3,16 +3,17 @@ import CloseImg from "@/shared/assets/img/x.svg";
 import styled from "styled-components";
 
 interface ClosebuttonProps {
-  setIsClosed: React.Dispatch<React.SetStateAction<boolean>>;
+  isShowModal: boolean;
+  setIsShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Container = styled.div`
   cursor: pointer;
 `;
 
-function Closebutton({ setIsClosed }: ClosebuttonProps) {
+function Closebutton({ isShowModal, setIsShowModal }: ClosebuttonProps) {
   const handleClick = () => {
-    setIsClosed(true);
+    setIsShowModal(!isShowModal);
   };
 
   return (

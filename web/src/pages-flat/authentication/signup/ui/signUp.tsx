@@ -59,7 +59,6 @@ const isButtonEnabled = (check: CheckState, inputData: InputData): boolean => {
 };
 
 function SignUP() {
-  const router = useRouter();
   const [inputData, setinputData] = useState({
     id: { value: "", placeholder: "이메일 주소 또는 아이디" },
     password: { value: "", placeholder: "비밀번호" },
@@ -134,12 +133,11 @@ function SignUP() {
     try {
       const status = await submitSignupForm(body);
       if (status === 201) {
-          setIsShowToast(true);
-          setIsButtonEnabled(false)
+        setIsShowToast(true);
+        setIsButtonEnabled(false);
       }
     } catch (err) {
       if (err) {
-        console.log("err", err);
         setIsShowToast(true);
         setToastText({
           title: "이메일 인증에 실패했습니다 :( ",
@@ -150,9 +148,12 @@ function SignUP() {
   };
   return (
     <DefaultLayout>
-      {isShowToast && (
-        <GeneralToast title={toastText.title} desc={toastText.desc} />
-      )}
+      <GeneralToast
+        title={toastText.title}
+        desc={toastText.desc}
+        isShowToast={isShowToast}
+        setIsShowToast={setIsShowToast}
+      />
       <PrevButton />
       <TextField
         title="이메일로 가입하기"

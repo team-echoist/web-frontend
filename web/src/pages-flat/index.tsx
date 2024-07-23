@@ -7,6 +7,7 @@ import { WriteEssay } from "./write_essay";
 import { NotFound } from "./notfound";
 import { SignUp } from "./authentication";
 import { Complete } from "./authentication";
+import { Main } from "./main";
 
 // 이컴포넌트에서 모든 페이지 컴포넌트들의 조건부 렌더링이 실시 된다.
 
@@ -15,6 +16,8 @@ export const RenderView = ({ pageName }: { pageName: string }) => {
     return <div>Loading...</div>;
   }
   switch (pageName) {
+    case "main":
+      return <Main />;
     case "findinfo":
       return <FindInfo />;
     case "login":
