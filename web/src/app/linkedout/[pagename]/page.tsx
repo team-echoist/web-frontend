@@ -15,9 +15,8 @@ type PageParams = {
 
 function Page({ params }: { params: PageParams }) {
     const sidebarItems = [
-        { label: "프로필", content: <ProfileContent /> },
-        { label: "주간 링크드아웃 지수", content: <LinkedOutIndexContent /> },
-        { label: "상점", content: <ShopContent /> },
+        // { label: "주간 링크드아웃 지수", content: <LinkedOutIndexContent /> },
+        // { label: "상점", content: <ShopContent /> },
         { label: "화면 설정", content: <ScreenSettingContent /> },
         { label: "알림 설정", content: <NotificationSettingContent /> },
         { label: "고객지원", content: <CustomerSupportContent /> },

@@ -1,26 +1,34 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+
+const ShopContentSection = styled.div`
+    display: flex;
+    align-items: center;
+    margin: 28px 30px;
+`
+
+const ShopContentP = styled.p`
+    width: 60px;
+    height: 24px;
+    background-color: #191919;
+    border-radius: 42px;
+    margin-left: auto;
+
+    color: #616fed;
+    font-size: 12px;
+    font-style: normal;
+    line-height: 150%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
 
 export const ShopContent = () => {
-    const [profileData, setProfileData] = useState(null)
-
-    useEffect(() => {
-        // API 호출 예시
-        fetch("/api/profile")
-            .then((response) => response.json())
-            .then((data) => setProfileData(data))
-    }, [])
-
-    if (!profileData) {
-        return <div>ShopContent...</div>
-    }
-
     return (
-        <div>
-            <h2>프로필 설정</h2>
-            {/* <p>이름: {profileData.name}</p>
-            <p>이메일: {profileData.email}</p> */}
-            {/* 추가 프로필 데이터 표시 */}
-        </div>
+        <ShopContentSection>
+            <h2>상점</h2>
+            <ShopContentP>준비중</ShopContentP>
+        </ShopContentSection>
     )
 }
