@@ -1,10 +1,11 @@
 "use client";
 import StyledComponentsRegistry from "./registry";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/shared/styles";
 import { ThemeProvider } from "styled-components";
 import { useTheme } from "@/shared/lib/theme";
 import localFont from "next/font/local";
+import { usePathname } from "next/navigation";
 
 const defaultValue = {
   theme: "dark",
@@ -114,6 +115,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const themeProps = useTheme();
+  const pathname = usePathname();
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [prevPathname, setPrevPathname] = useState("");
+
+  useEffect(() => {
+    if (prevPathname === "/" && pathname === "/linkedout/login") {
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 1000);
+      return () => clearTimeout(timer);
+    }
+    setPrevPathname(pathname);
+  }, [pathname, prevPathname]);
   return (
     <html lang="en" className={Pretendard.style.fontFamily}>
       <head>
@@ -128,7 +141,7 @@ export default function RootLayout({
             theme={themeProps.theme === "light" ? lightTheme : darkTheme}
           >
             <StyledComponentsRegistry>
-              <div className="container">{children}</div>
+              <div className={`container ${isAnimating  ? "slide-up" : ""}`}>{children}</div>
             </StyledComponentsRegistry>
           </ThemeProvider>
         </CustomThemeContext.Provider>

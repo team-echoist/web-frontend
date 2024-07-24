@@ -131,8 +131,8 @@ function SignUP() {
       password: password,
     };
     try {
-      const status = await submitSignupForm(body);
-      if (status === 201) {
+      const statusCode = await submitSignupForm(body);
+      if (statusCode === 201) {
         setIsShowToast(true);
         setIsButtonEnabled(false);
       }
