@@ -6,7 +6,7 @@ import HamburgerButtonIcon from "@/shared/assets/img/hamburger_button.svg"
 import { LinkedOutIndexContent } from "./SidebarList/LinkedOutIndexContent"
 import { ShopContent } from "./SidebarList/ShopContent"
 import { ProfileContent } from "./SidebarList/profileContent"
-import { CustomerSupportContent } from "./CustomerSupportContent"
+import { CustomerSupportContent } from "./SidebarList/CustomerSupportContent"
 
 interface SidebarProps {
     items: Array<{ label: string; content: React.ReactNode }>
@@ -51,13 +51,13 @@ export const SideBar = ({ items = [], children }: SidebarProps) => {
                 <ShopContent />
                 <Styled.Divider />
                 {items.map((item, index) => (
-                    <SidebarItem
+                    <Styled.SidebarItem
                         key={index}
                         onClick={() => handleItemClick(item.content)}
                         active={selectedItem === item.content}
                     >
                         <div>{item.label}</div>
-                    </SidebarItem>
+                    </Styled.SidebarItem>
                 ))}
             </Styled.SidebarContainer>
             <Styled.MainContent>{children}</Styled.MainContent>

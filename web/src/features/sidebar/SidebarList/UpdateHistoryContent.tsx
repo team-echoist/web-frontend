@@ -1,26 +1,23 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+import { ModalHeader } from "./ModalHeader"
 
-export const UpdateHistoryContent = () => {
-    const [profileData, setProfileData] = useState(null)
+const UpdateHistoryContentP = styled.p`
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
-    useEffect(() => {
-        // API 호출 예시
-        fetch("/api/profile")
-            .then((response) => response.json())
-            .then((data) => setProfileData(data))
-    }, [])
+interface UpdateHistoryContentProps {
+    onClose: () => void
+}
 
-    if (!profileData) {
-        return <div>UpdateHistoryContent...</div>
-    }
-
+export const UpdateHistoryContent = ({ onClose }: UpdateHistoryContentProps) => {
     return (
         <div>
-            <h2>프로필 설정</h2>
-            {/* <p>이름: {profileData.name}</p>
-            <p>이메일: {profileData.email}</p> */}
-            {/* 추가 프로필 데이터 표시 */}
+            <ModalHeader title="업데이트기록" onClose={onClose} />
+            <UpdateHistoryContentP>업데이트 기록이 없습니다.</UpdateHistoryContentP>
         </div>
     )
 }

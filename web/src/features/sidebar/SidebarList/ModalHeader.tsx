@@ -12,7 +12,6 @@ const HeaderContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    border-bottom: 1px solid #333;
 `
 
 const Title = styled.h2`
@@ -24,9 +23,6 @@ const Title = styled.h2`
     line-height: 150%;
     margin: 0 auto;
     text-align: center;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
 `
 
 const CloseButton = styled.button`
@@ -41,8 +37,8 @@ const CloseButton = styled.button`
 export const ModalHeader = ({ title, onClose }: ModalHeaderProps) => {
     return (
         <HeaderContainer>
-            <CloseButton onClick={onClose}>X</CloseButton>
             <Title>{title}</Title>
+            <CloseButton onClick={onClose}>X</CloseButton>
         </HeaderContainer>
     )
 }

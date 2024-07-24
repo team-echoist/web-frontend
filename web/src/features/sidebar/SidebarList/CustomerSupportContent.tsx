@@ -10,8 +10,6 @@ interface CustomerSupportContentProps {
 
 const CustomerSupportSection = styled.section`
     height: 100vh;
-    width: 100vw;
-    background-color: #000;
 `
 
 const CustomerSupportDiv = styled.div`

@@ -2,7 +2,7 @@
 import styled from "styled-components"
 import ProfileImage from "@/shared/assets/img/profile_icon_01.png"
 import Image from "next/image"
-import ToProfileDetailButton from "@/shared/assets/img/to_profile_detail_button.png"
+import ToProfileDetailButton from "@/shared/assets/img/to_detail_button.png"
 
 const ProfileSection = styled.div`
     display: flex;
@@ -10,17 +10,17 @@ const ProfileSection = styled.div`
     margin: 70px 30px 18px 30px;
 `
 
-const ProfileDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-`
-
 const ProfileFlexRow = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
     margin-left: 15px;
+`
+
+const ProfileDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 `
 
 const ProfileNameRow = styled.div`

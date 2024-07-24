@@ -60,32 +60,34 @@ export const ScreenSettingContent = ({ onClose }: ScreenSettingContentProps) => 
     }
 
     return (
-        <Container>
+        <>
             <ModalHeader title="화면" onClose={onClose} />
-            <ModeContainer>
-                <ModeItem selected={selectedTheme === "light"}>
-                    <LightModeIcon />
-                    <p>라이트모드</p>
-                    <input
-                        type="radio"
-                        name="theme"
-                        checked={selectedTheme === "light"}
-                        onChange={() => handleThemeChange("light")}
-                    />
-                    {selectedTheme === "light" ? <YesCheck /> : <NoCheck />}
-                </ModeItem>
-                <ModeItem selected={selectedTheme === "dark"}>
-                    <DarkModeIcon />
-                    <p>다크모드</p>
-                    <input
-                        type="radio"
-                        name="theme"
-                        checked={selectedTheme === "dark"}
-                        onChange={() => handleThemeChange("dark")}
-                    />
-                    {selectedTheme === "dark" ? <YesCheck /> : <NoCheck />}
-                </ModeItem>
-            </ModeContainer>
-        </Container>
+            <Container>
+                <ModeContainer>
+                    <ModeItem selected={selectedTheme === "light"}>
+                        <LightModeIcon />
+                        <p>라이트모드</p>
+                        <input
+                            type="radio"
+                            name="theme"
+                            checked={selectedTheme === "light"}
+                            onChange={() => handleThemeChange("light")}
+                        />
+                        {selectedTheme === "light" ? <YesCheck /> : <NoCheck />}
+                    </ModeItem>
+                    <ModeItem selected={selectedTheme === "dark"}>
+                        <DarkModeIcon />
+                        <p>다크모드</p>
+                        <input
+                            type="radio"
+                            name="theme"
+                            checked={selectedTheme === "dark"}
+                            onChange={() => handleThemeChange("dark")}
+                        />
+                        {selectedTheme === "dark" ? <YesCheck /> : <NoCheck />}
+                    </ModeItem>
+                </ModeContainer>
+            </Container>
+        </>
     )
 }
