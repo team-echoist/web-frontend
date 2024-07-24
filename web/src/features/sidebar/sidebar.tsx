@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import * as Styled from "./sidebar.styled"
 import { Modal } from "./modal"
 import HamburgerButtonIcon from "@/shared/assets/img/hamburger_button.svg"
@@ -16,10 +16,24 @@ export const SideBar = ({ items = [], children }: SidebarProps) => {
     const [open, setOpen] = useState(false)
     const [isClient, setIsClient] = useState(false)
     const [selectedItem, setSelectedItem] = useState<React.ReactNode | null>(null)
+    const sidebarRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         setIsClient(true)
     }, [])
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+                setOpen(false)
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [sidebarRef])
 
     const toggleSidebar = () => {
         setOpen(!open)
@@ -42,7 +56,7 @@ export const SideBar = ({ items = [], children }: SidebarProps) => {
             <Styled.HamburgerButton onClick={toggleSidebar} isOpen={open}>
                 <HamburgerButtonIcon />
             </Styled.HamburgerButton>
-            <Styled.SidebarContainer open={open}>
+            <Styled.SidebarContainer ref={sidebarRef} open={open}>
                 <ProfileContent />
                 <Styled.Divider />
                 <LinkedOutIndexContent />

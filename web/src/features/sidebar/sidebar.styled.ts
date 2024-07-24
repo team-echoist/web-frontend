@@ -2,10 +2,7 @@
 import styled from "styled-components"
 import { Button } from "@/shared/ui/button"
 
-// TODO : 설정 추가 font-family: Pretendard;
-
 export const SidebarContainer = styled.div<{ open: boolean }>`
-    width: 376px;
     height: 100vh;
     background-color: #000;
     position: fixed;
@@ -36,7 +33,7 @@ export const HamburgerButton = styled.button<{ isOpen: boolean }>`
     position: fixed;
     top: 20px;
     left: 20px;
-    z-index: 1100;
+    z-index: 1;
     background: none;
     border: none;
     cursor: pointer;
@@ -53,8 +50,6 @@ export const LayoutContainer = styled.div`
 `
 
 export const MainContent = styled.div`
-    margin-left: 376px; /* Sidebar width */
-    padding: 20px;
     flex-grow: 1;
     background-color: ${({ theme }) => (theme.isDarkMode ? "#121212" : "#f0f0f0")};
     color: ${({ theme }) => (theme.isDarkMode ? "#fff" : "#000")};
@@ -63,5 +58,5 @@ export const MainContent = styled.div`
 export const Divider = styled.div`
     width: 100%;
     height: 6px;
-    background-color: #1a1a1a;
+    background-color: #191919;
 `

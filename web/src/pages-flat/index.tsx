@@ -8,6 +8,7 @@ import { NotFound } from "./notfound"
 import { SignUp } from "./authentication"
 import { Complete } from "./authentication"
 import { Main } from "./main"
+import { SideBar } from "@/features/sidebar"
 
 type RenderViewProps = {
     pageName: string
