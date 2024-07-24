@@ -82,6 +82,7 @@ export const Login = () => {
     }
   };
 
+
   const submitLogin = async () => {
     setIsShowToast(false);
     const body = {
@@ -92,15 +93,15 @@ export const Login = () => {
       const statusCode = await localLogin(body);
       if (statusCode === 200 || statusCode === 201) {
         //메인페이지
-        router.push("/linkedout/main");
+        router.push("/web/main");
       }
       if (statusCode === 205) {
         //컴플리트
-        router.push("/linkedout/complete");
+        router.push("/web/complete");
       }
       if (isFirstLogin) {
         //컴플리트
-        router.push("/linkedout/complete");
+        router.push("/web/complete");
       }
     } catch (err) {
       console.log("err", err);
@@ -147,7 +148,7 @@ export const Login = () => {
           <Ul>
             <Li>아이디 찾기</Li>
             <Li>비밀번호 재설정</Li>
-            <Link href="/linkedout/signup">
+            <Link href="/web/signup">
               <Li>회원가입</Li>
             </Link>
           </Ul>

@@ -7,7 +7,7 @@ interface bodyType {
 }
 
 export const checkFirstLogin = async (token: string) => {
-  const response = await axios.get("/checkfirstlogin", {
+  const response = await axios.get("auth/register", {
     params: {
       token: token,
     },

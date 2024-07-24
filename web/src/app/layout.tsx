@@ -120,7 +120,7 @@ export default function RootLayout({
   const [prevPathname, setPrevPathname] = useState("");
 
   useEffect(() => {
-    if (prevPathname === "/" && pathname === "/linkedout/login") {
+    if (prevPathname === "/" && pathname === "/web/login") {
       setIsAnimating(true);
       const timer = setTimeout(() => setIsAnimating(false), 1000);
       return () => clearTimeout(timer);
