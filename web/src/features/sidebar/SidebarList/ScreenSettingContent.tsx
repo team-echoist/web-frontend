@@ -6,6 +6,7 @@ import DarkModeIcon from "@/shared/assets/img/darkModeIcon.svg"
 import LightModeIcon from "@/shared/assets/img/lightModeIcon.svg"
 import YesCheck from "@/shared/assets/img/screen_setting_yescheck.svg"
 import NoCheck from "@/shared/assets/img/screen_setting_nocheck.svg"
+import { ModalHeader } from "./ModalHeader"
 
 const Container = styled.div`
     display: flex;
@@ -16,20 +17,11 @@ const Container = styled.div`
     margin: 34px 249px 0 249px;
 `
 
-const ModeTitle = styled.h2`
-    text-align: center;
-    font-family: Pretendard;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 36px;
-    margin: 0 40px;
-    margin-bottom: 70px;
-`
-
 const ModeContainer = styled.div`
     display: flex;
     justify-content: space-around;
     width: 100%;
+    margin-top: 70px; /* 제목과 아이템 사이의 여백 조정 */
 `
 
 const ModeItem = styled.label<{ selected: boolean }>`
@@ -54,7 +46,11 @@ const ModeItem = styled.label<{ selected: boolean }>`
     }
 `
 
-export const ScreenSettingContent = () => {
+interface ScreenSettingContentProps {
+    onClose: () => void
+}
+
+export const ScreenSettingContent = ({ onClose }: ScreenSettingContentProps) => {
     const { isDarkMode, toggleTheme } = useThemeStore()
     const [selectedTheme, setSelectedTheme] = useState(isDarkMode ? "dark" : "light")
 
@@ -65,7 +61,7 @@ export const ScreenSettingContent = () => {
 
     return (
         <Container>
-            <ModeTitle>화면</ModeTitle>
+            <ModalHeader title="화면" onClose={onClose} />
             <ModeContainer>
                 <ModeItem selected={selectedTheme === "light"}>
                     <LightModeIcon />

@@ -3,14 +3,12 @@ import styled from "styled-components"
 
 export const ModalOverlay = styled.div`
     position: fixed;
-    top: 0;
-    left: 0;
     height: 100vh;
     width: calc(100% - 376px);
     margin-left: 376px;
     // background: ${({ theme }) => (theme.isDarkMode ? "#121212" : "#fff")};
+    background-color: #121212;
     display: flex;
-    justify-content: center;
     z-index: 1200;
 `
 
@@ -30,7 +28,7 @@ export const CloseButton = styled.button`
     font-size: 16px;
     cursor: pointer;
     // color: ${({ theme }) => (theme.isDarkMode ? "#fff" : "#000")};
-    color: #ffffff
+    color: #ffffff;
     width: 24px;
     height: 24px;
 `

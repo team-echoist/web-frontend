@@ -21,9 +21,14 @@ export const SidebarContainer = styled.div<{ open: boolean }>`
     background: #121212;
 `
 
-export const SidebarItem = styled.div`
+export const SidebarItem = styled.div<{ active: boolean }>`
     margin: 20px 30px;
     cursor: pointer;
+    color: ${({ active }) => (active ? "#616FED" : "#fff")};
+
+    &:hover {
+        color: #616fed;
+    }
 `
 
 export const SidebarButton = styled(Button)`
