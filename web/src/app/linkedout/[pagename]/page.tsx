@@ -2,7 +2,7 @@
 import { CustomerSupportContent } from "@/features/sidebar/SidebarList/CustomerSupportContent"
 import { LinkedOutIndexContent } from "@/features/sidebar/SidebarList/LinkedOutIndexContent"
 import { LogoutContent } from "@/features/sidebar/SidebarList/LogoutContent"
-import { NotificationSettingContent } from "@/features/sidebar/SidebarList/NotificationSettingContent"
+import { NotificationSettingContent } from "@/features/sidebar/SidebarList/Notification/NotificationSettingContent"
 import { ProfileContent } from "@/features/sidebar/SidebarList/profileContent"
 import { ShopContent } from "@/features/sidebar/SidebarList/ShopContent"
 import { UpdateHistoryContent } from "@/features/sidebar/SidebarList/UpdateHistoryContent"

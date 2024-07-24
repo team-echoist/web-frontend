@@ -1,6 +1,6 @@
 "use client"
 import styled from "styled-components"
-import { ModalHeader } from "./ModalHeader"
+import { ModalHeader } from "./shared/ModalHeader"
 import ToDetailButton from "@/shared/assets/img/to_detail_button.png"
 import Image from "next/image"
 

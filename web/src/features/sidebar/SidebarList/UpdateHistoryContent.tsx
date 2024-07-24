@@ -1,6 +1,6 @@
 "use client"
 import styled from "styled-components"
-import { ModalHeader } from "./ModalHeader"
+import { ModalHeader } from "./shared/ModalHeader"
 
 const UpdateHistoryContentP = styled.p`
     height: 100vh;
