@@ -11,15 +11,23 @@ const ProfileSection = styled.div`
 `
 
 const ProfileDiv = styled.div`
-    margin-left: 15px;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 `
 
 const ProfileFlexRow = styled.div`
     display: flex;
-    flex-direction: row;
     align-items: center;
+    width: 100%;
+    margin-left: 15px;
+`
+
+const ProfileNameRow = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 `
 
 const ProfileName = styled.h2`
@@ -39,11 +47,15 @@ const ProfileFromCreatedDate = styled.h3`
     margin-top: 3px;
 `
 
+const ProfileDetailButtonContainer = styled.div`
+    display: flex;
+    align-items: center;
+`
+
 const ProfileDetailButton = styled(Image)`
     width: 24px;
     height: 24px;
     cursor: pointer;
-    margin-left: 10px;
 `
 
 const profileData = {
@@ -64,10 +76,14 @@ export const ProfileContent = () => {
             />
             <ProfileFlexRow>
                 <ProfileDiv>
-                    <ProfileName>{profileData.name}</ProfileName>
+                    <ProfileNameRow>
+                        <ProfileName>{profileData.name}</ProfileName>
+                        <ProfileDetailButtonContainer>
+                            <ProfileDetailButton src={ToProfileDetailButton} alt="프로필 상세보기 버튼" />
+                        </ProfileDetailButtonContainer>
+                    </ProfileNameRow>
                     <ProfileFromCreatedDate>{profileData.fromCreatedDate}</ProfileFromCreatedDate>
                 </ProfileDiv>
-                <ProfileDetailButton src={ToProfileDetailButton} alt="프로필 상세보기 버튼" />
             </ProfileFlexRow>
         </ProfileSection>
     )
