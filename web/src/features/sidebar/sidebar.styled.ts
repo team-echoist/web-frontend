@@ -4,7 +4,6 @@ import { Button } from "@/shared/ui/button"
 
 export const SidebarContainer = styled.div<{ open: boolean }>`
     height: 100vh;
-    background-color: #000;
     position: fixed;
     top: 0;
     left: ${({ open }) => (open ? "0" : "-376px")};
@@ -13,11 +12,13 @@ export const SidebarContainer = styled.div<{ open: boolean }>`
     color: white;
     display: flex;
     flex-direction: column;
-
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
+
+    border-right: 1px solid #191919;
+    background: #121212;
 `
 
 export const SidebarItem = styled.div`

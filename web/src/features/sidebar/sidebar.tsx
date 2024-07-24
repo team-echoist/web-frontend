@@ -22,18 +22,18 @@ export const SideBar = ({ items = [], children }: SidebarProps) => {
         setIsClient(true)
     }, [])
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
-                setOpen(false)
-            }
-        }
+    // useEffect(() => {
+    //     const handleClickOutside = (event: MouseEvent) => {
+    //         if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+    //             setOpen(false)
+    //         }
+    //     }
 
-        document.addEventListener("mousedown", handleClickOutside)
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside)
-        }
-    }, [sidebarRef])
+    //     document.addEventListener("mousedown", handleClickOutside)
+    //     return () => {
+    //         document.removeEventListener("mousedown", handleClickOutside)
+    //     }
+    // }, [sidebarRef])
 
     const toggleSidebar = () => {
         setOpen(!open)

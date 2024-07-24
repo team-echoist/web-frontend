@@ -5,20 +5,20 @@ export const ModalOverlay = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
+    width: calc(100% - 376px);
+    margin-left: 376px;
+    // background: ${({ theme }) => (theme.isDarkMode ? "#121212" : "#fff")};
     display: flex;
     justify-content: center;
-    align-items: center;
     z-index: 1200;
 `
 
 export const ModalContent = styled.div`
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
+    padding-top: 34px;
     position: relative;
+    width: 90%;
+    background: #121212;
 `
 
 export const CloseButton = styled.button`
@@ -29,4 +29,8 @@ export const CloseButton = styled.button`
     border: none;
     font-size: 16px;
     cursor: pointer;
+    // color: ${({ theme }) => (theme.isDarkMode ? "#fff" : "#000")};
+    color: #ffffff
+    width: 24px;
+    height: 24px;
 `

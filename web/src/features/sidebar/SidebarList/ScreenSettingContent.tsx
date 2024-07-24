@@ -1,27 +1,29 @@
 "use client"
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { useThemeStore } from "@/shared/store/store"
 import DarkModeIcon from "@/shared/assets/img/darkModeIcon.svg"
 import LightModeIcon from "@/shared/assets/img/lightModeIcon.svg"
+import YesCheck from "@/shared/assets/img/screen_setting_yescheck.svg"
+import NoCheck from "@/shared/assets/img/screen_setting_nocheck.svg"
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    // background-color: ${({ theme }) => (theme.isDarkMode ? "#000" : "#fff")};
-    background-color: #000;
+    border-radius: 8px;
+    color: #ffffff;
+    margin: 34px 249px 0 249px;
 `
 
 const ModeTitle = styled.h2`
-    color: #fff;
-
     text-align: center;
     font-family: Pretendard;
     font-size: 24px;
-    font-style: normal;
     font-weight: 700;
-    line-height: 150%; /* 36px */
+    line-height: 36px;
+    margin: 0 40px;
+    margin-bottom: 70px;
 `
 
 const ModeContainer = styled.div`
@@ -35,38 +37,57 @@ const ModeItem = styled.label<{ selected: boolean }>`
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    opacity: ${({ selected }) => (selected ? 1 : 0.5)};
+    margin: 0 40px;
+    transition: opacity 0.3s ease;
 
-    img {
-        width: 100px;
-        height: 150px;
+    input[type="radio"] {
+        display: none;
     }
 
     p {
-        margin-top: 10px;
-    }
-
-    input {
-        display: none;
+        margin: 10px 0;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        color: #fff;
+        line-height: 150%;
     }
 `
 
 export const ScreenSettingContent = () => {
     const { isDarkMode, toggleTheme } = useThemeStore()
+    const [selectedTheme, setSelectedTheme] = useState(isDarkMode ? "dark" : "light")
+
+    const handleThemeChange = (theme: string) => {
+        setSelectedTheme(theme)
+        toggleTheme()
+    }
 
     return (
         <Container>
             <ModeTitle>화면</ModeTitle>
             <ModeContainer>
-                <ModeItem selected={!isDarkMode}>
-                    <input type="radio" name="theme" checked={!isDarkMode} onChange={toggleTheme} />
+                <ModeItem selected={selectedTheme === "light"}>
                     <LightModeIcon />
                     <p>라이트모드</p>
+                    <input
+                        type="radio"
+                        name="theme"
+                        checked={selectedTheme === "light"}
+                        onChange={() => handleThemeChange("light")}
+                    />
+                    {selectedTheme === "light" ? <YesCheck /> : <NoCheck />}
                 </ModeItem>
-                <ModeItem selected={isDarkMode}>
-                    <input type="radio" name="theme" checked={isDarkMode} onChange={toggleTheme} />
+                <ModeItem selected={selectedTheme === "dark"}>
                     <DarkModeIcon />
                     <p>다크모드</p>
+                    <input
+                        type="radio"
+                        name="theme"
+                        checked={selectedTheme === "dark"}
+                        onChange={() => handleThemeChange("dark")}
+                    />
+                    {selectedTheme === "dark" ? <YesCheck /> : <NoCheck />}
                 </ModeItem>
             </ModeContainer>
         </Container>
