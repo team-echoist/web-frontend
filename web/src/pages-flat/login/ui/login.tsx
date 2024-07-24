@@ -1,4 +1,3 @@
-// src/pages-flat/onboarding/ui/login.tsx
 import React from "react"
 import * as Styled from "./login.styled"
 

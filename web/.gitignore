@@ -44,3 +44,5 @@ workbox-*.js
 
 # package-lock.json
 package-lock.json
+
+.env

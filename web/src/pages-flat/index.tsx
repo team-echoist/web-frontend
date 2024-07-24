@@ -1,11 +1,13 @@
 "use client"
 import { FindInfo } from "./findinfo"
-import { Login } from "./login"
+import { Login } from "./authentication"
 import { Mypage } from "./mypage"
 import { Register } from "./register"
 import { WriteEssay } from "./write_essay"
 import { NotFound } from "./notfound"
-import { SideBar } from "@/features/sidebar/sidebar"
+import { SignUp } from "./authentication"
+import { Complete } from "./authentication"
+import { Main } from "./main"
 
 type RenderViewProps = {
     pageName: string

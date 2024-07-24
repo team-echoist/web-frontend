@@ -9,11 +9,19 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: ${({ theme }) => (theme.isDarkMode ? "#000" : "#fff")};
+    // background-color: ${({ theme }) => (theme.isDarkMode ? "#000" : "#fff")};
+    background-color: #000;
 `
 
-const Title = styled.h2`
-    margin-bottom: 20px;
+const ModeTitle = styled.h2`
+    color: #fff;
+
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%; /* 36px */
 `
 
 const ModeContainer = styled.div`
@@ -48,7 +56,7 @@ export const ScreenSettingContent = () => {
 
     return (
         <Container>
-            <Title>화면 설정</Title>
+            <ModeTitle>화면</ModeTitle>
             <ModeContainer>
                 <ModeItem selected={!isDarkMode}>
                     <input type="radio" name="theme" checked={!isDarkMode} onChange={toggleTheme} />
