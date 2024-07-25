@@ -65,22 +65,22 @@ export const Login = () => {
   const isValidButton =
     infoData.id.value.length > 0 && infoData.password.value.length > 0;
 
-  useEffect(() => {
-    if (token) {
-      checkUser(token);
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     checkUser(token);
+  //   }
+  // }, [token]);
 
-  const checkUser = async (token: string) => {
-    try {
-      const statusCode = await checkFirstLogin(token);
-      if (statusCode === 205) {
-        setIsFirstLogin(true);
-      }
-    } catch (err) {
-      console.log("Err", err);
-    }
-  };
+  // const checkUser = async (token: string) => {
+  //   try {
+  //     const statusCode = await checkFirstLogin(token);
+  //     if (statusCode === 205) {
+  //       setIsFirstLogin(true);
+  //     }
+  //   } catch (err) {
+  //     console.log("Err", err);
+  //   }
+  // };
 
 
   const submitLogin = async () => {
@@ -90,15 +90,12 @@ export const Login = () => {
       password: infoData.password.value,
     };
     try {
-      const statusCode = await localLogin(body);
+      const statusCode = await localLogin(body,autoLoginCheck);
       if (statusCode === 200 || statusCode === 201) {
         //메인페이지
         router.push("/web/main");
       }
-      if (statusCode === 205) {
-        //컴플리트
-        router.push("/web/complete");
-      }
+
       if (isFirstLogin) {
         //컴플리트
         router.push("/web/complete");

@@ -16,7 +16,7 @@ export const checkFirstLogin = async (token: string) => {
   return statusCode;
 };
 
-export const localLogin = async (body: bodyType) => {
+export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
   const response = await axios.post("/signin", body);
   const statusCode = response.data.statusCode;
 
@@ -25,7 +25,17 @@ export const localLogin = async (body: bodyType) => {
     authorization && authorization.startsWith("Bearer ")
       ? authorization.slice(7)
       : "";
-  Cookies.set("token", token, { secure: true, sameSite: "Strict" });
+
+  const tenYearsFromNow = new Date(
+    new Date().setFullYear(new Date().getFullYear() + 10)
+  );
+  autoLoginCheck
+    ? Cookies.set("token", token, {
+        expires: tenYearsFromNow,
+        secure: true,
+        sameSite: "Strict",
+      })
+    : sessionStorage.setItem("token", token);
 
   return statusCode;
 };
