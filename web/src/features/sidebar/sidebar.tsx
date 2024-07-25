@@ -6,7 +6,7 @@ import HamburgerButtonIcon from "@/shared/assets/img/hamburger_button.svg"
 import { LinkedOutIndexContent } from "./SidebarList/LinkedOutIndexContent"
 import { ShopContent } from "./SidebarList/ShopContent"
 import { ProfileContent } from "./SidebarList/profileContent"
-import { CustomerSupportContent } from "./SidebarList/CustomerSupportContent"
+import { CustomerSupportContent } from "./SidebarList/CustomerSupport/CustomerSupportContent"
 
 interface SidebarProps {
     items: Array<{ label: string; content: React.ReactNode }>

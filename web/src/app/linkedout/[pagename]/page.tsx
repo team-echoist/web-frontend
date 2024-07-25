@@ -1,5 +1,5 @@
 "use client"
-import { CustomerSupportContent } from "@/features/sidebar/SidebarList/CustomerSupportContent"
+import { CustomerSupportContent } from "@/features/sidebar/SidebarList/CustomerSupport/CustomerSupportContent"
 import { LinkedOutIndexContent } from "@/features/sidebar/SidebarList/LinkedOutIndexContent"
 import { LogoutContent } from "@/features/sidebar/SidebarList/LogoutContent"
 import { NotificationSettingContent } from "@/features/sidebar/SidebarList/Notification/NotificationSettingContent"

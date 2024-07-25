@@ -118,8 +118,8 @@ export const NotificationSettingContent = ({ onClose }: NotificationSettingConte
     }
 
     const handleSaveTime = (formattedTime: string) => {
-        setWritingAlertTime(formattedTime) // 선택한 시간을 업데이트
-        setIsModalOpen(false) // 모달 닫기
+        setWritingAlertTime(formattedTime)
+        setIsModalOpen(false)
     }
 
     return (
