@@ -1,16 +1,15 @@
-import { create } from "zustand";
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+import { SidebarState, createSidebarSlice } from './sidebarSlice';
+import { UserState, createUserSlice } from './userSlice';
 
-interface State {
-  bears: number;
-  increasePopulation: () => void;
-  removeAllBears: () => void;
-}
+type StoreState = SidebarState & UserState;
 
-// 상태 스토어 생성
-const useStore = create<State>((set) => ({
-  bears: 0,
-  increasePopulation: () => set((state: State) => ({ bears: state.bears + 1 })),
-  removeAllBears: () => set({ bears: 0 }),
-}));
+export const useStore = create<StoreState>()(
+  devtools((set, get, api) => ({
+    ...createSidebarSlice(set, get, api),
+    ...createUserSlice(set, get, api),
+  }))
+);
 
 export default useStore;
