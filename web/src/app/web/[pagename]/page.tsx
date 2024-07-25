@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { getUserInfo } from "@/shared/api";
 import { parseJwt } from "@/shared/lib/jwt";
 import useStore from "@/shared/store/store";
-
+import { useRouter } from "next/navigation";
 
 type PageParams = {
   pagename: string;
@@ -13,27 +13,23 @@ type PageParams = {
 
 function Index({ params }: { params: PageParams }) {
   const setUser = useStore((state) => state.setUser);
-
+  const token = sessionStorage.getItem("token") || Cookies.get("token");
+  const router = useRouter();
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      const token = sessionStorage.getItem("token") || Cookies.get("token");
+    const handleUserAuthentication = async () => {
       if (token) {
-        try {
           const userInfo = parseJwt(token);
           const userData = await getUserInfo(userInfo?.id);
           if (userData) {
             setUser(userData);
+            router.push("/web/main");
           }
-        } catch (error) {
-          console.error("Error fetching user info:", error);
-        }
       } else {
-        console.error("No token found");
+        router.push("/web/login");
       }
     };
-
-    fetchUserInfo();
-  }, [setUser]);
+    handleUserAuthentication();
+  }, [setUser, token, router]);
 
   return (
     <>
