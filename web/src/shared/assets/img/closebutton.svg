@@ -1,0 +1,30 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="20" height="20" fill="#BABABA"/>
+<g id="Time picker" clip-path="url(#clip0_1512_2466)">
+<rect width="1194" height="834" transform="translate(-897 -291)" fill="#121212"/>
+<g id="&#235;&#182;&#132;&#237;&#149;&#160; &#236;&#154;&#176;&#236;&#184;&#161; &#237;&#153;&#148;&#235;&#169;&#180;">
+<rect id="Rectangle 34626448" x="-521" y="-291" width="818" height="834" fill="#121212"/>
+</g>
+<rect id="Rectangle 34626447" x="-521" y="-291" width="818" height="834" fill="black" fill-opacity="0.8"/>
+<g id="Group 1437256120">
+<g id="Group 1437256007">
+<g id="&#235;&#176;&#149;&#236;&#138;&#164;">
+<g id="&#235;&#176;&#149;&#236;&#138;&#164;_2">
+<rect id="Rectangle 34626425" x="-262" y="-17" width="299" height="286" rx="10" fill="#212121"/>
+</g>
+</g>
+<g id="&#235;&#139;&#171;&#234;&#184;&#176;">
+<g id="Group 1437255975">
+<path id="Vector 20964" d="M16.25 3.75L3.75 16.25" stroke="#575757" stroke-width="1.25" stroke-linecap="round"/>
+<path id="Vector 20965" d="M3.75 3.75L16.25 16.25" stroke="#575757" stroke-width="1.25" stroke-linecap="round"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_1512_2466">
+<rect width="1194" height="834" fill="white" transform="translate(-897 -291)"/>
+</clipPath>
+</defs>
+</svg>
