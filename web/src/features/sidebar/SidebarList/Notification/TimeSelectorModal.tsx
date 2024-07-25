@@ -44,6 +44,7 @@ const TimeSelectorSaveButton = styled.button`
     border: none;
     margin-top: 10px;
     cursor: pointer;
+    font-family: Pretendard;
 `
 
 const CloseButton = styled(CloseButtonIcon)`
@@ -113,9 +114,10 @@ interface TimeSelectorModalProps {
     isOpen: boolean
     onClose: () => void
     initialTime: string
+    onSave: (formattedTime: string) => void
 }
 
-const TimeSelectorModal = ({ isOpen, onClose, initialTime }: TimeSelectorModalProps) => {
+const TimeSelectorModal = ({ isOpen, onClose, onSave }: TimeSelectorModalProps) => {
     const [selectedPeriod, setSelectedPeriod] = useState("AM")
     const [selectedHour, setSelectedHour] = useState(1)
     const [selectedMinute, setSelectedMinute] = useState(0)
@@ -126,7 +128,7 @@ const TimeSelectorModal = ({ isOpen, onClose, initialTime }: TimeSelectorModalPr
         const formattedTime = `${selectedPeriod} ${selectedHour.toString().padStart(2, "0")}:${selectedMinute
             .toString()
             .padStart(2, "0")}`
-        console.log(`저장된 시간: ${formattedTime}`)
+        onSave(formattedTime)
         onClose()
     }
 

@@ -1,4 +1,3 @@
-// NotificationSettingContent.tsx
 import React, { useState } from "react"
 import { ModalHeader } from "../shared/ModalHeader"
 import styled from "styled-components"
@@ -6,6 +5,7 @@ import TimeSelectorModal from "./TimeSelectorModal"
 
 const NotificationSettingSection = styled.section`
     margin-left: 20px;
+    font-family: Pretendard;
 `
 
 const NotificationSettingH2 = styled.h2`
@@ -70,14 +70,22 @@ const TimeButton = styled.button`
     width: 90px;
     height: 34px;
     border-radius: 4px;
-    background-color: #616fed;
-    color: white;
+    background: #222;
+    color: #979797;
     border: none;
     cursor: pointer;
-    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
     font-size: 16px;
+    font-family: Pretendard;
 `
-const ToggleSwitchTimeButton = styled.div``
+
+const ToggleSwitchTimeButton = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`
 
 interface NotificationSettingContentProps {
     onClose: () => void
@@ -85,7 +93,7 @@ interface NotificationSettingContentProps {
 
 export const NotificationSettingContent = ({ onClose }: NotificationSettingContentProps) => {
     const [postViewAlerts, setPostViewAlerts] = useState([false, false, false])
-    const [writingAlertTime, setWritingAlertTime] = useState("11:00") // 24시간 형식으로 수정
+    const [writingAlertTime, setWritingAlertTime] = useState("--:--") // 초기값 수정
     const [otherAlerts, setOtherAlerts] = useState([false, false, false])
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -107,6 +115,11 @@ export const NotificationSettingContent = ({ onClose }: NotificationSettingConte
 
     const handleModalClose = () => {
         setIsModalOpen(false)
+    }
+
+    const handleSaveTime = (formattedTime: string) => {
+        setWritingAlertTime(formattedTime) // 선택한 시간을 업데이트
+        setIsModalOpen(false) // 모달 닫기
     }
 
     return (
@@ -165,7 +178,12 @@ export const NotificationSettingContent = ({ onClose }: NotificationSettingConte
                     )}
                 </NotificationSettingUl>
             </div>
-            <TimeSelectorModal isOpen={isModalOpen} onClose={handleModalClose} initialTime={writingAlertTime} />
+            <TimeSelectorModal
+                isOpen={isModalOpen}
+                onClose={handleModalClose}
+                initialTime={writingAlertTime}
+                onSave={handleSaveTime}
+            />
         </NotificationSettingSection>
     )
 }
