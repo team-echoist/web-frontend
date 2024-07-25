@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { getUserInfo } from "@/shared/api";
 import { parseJwt } from "@/shared/lib/jwt";
-import useStore from "@/shared/store/store";
+import { useStore } from "@/shared/store";
 import { useRouter } from "next/navigation";
 
 type PageParams = {
@@ -18,12 +18,12 @@ function Index({ params }: { params: PageParams }) {
   useEffect(() => {
     const handleUserAuthentication = async () => {
       if (token) {
-          const userInfo = parseJwt(token);
-          const userData = await getUserInfo(userInfo?.id);
-          if (userData) {
-            setUser(userData);
-            // router.push("/web/main");
-          }
+        const userInfo = parseJwt(token);
+        const userData = await getUserInfo(userInfo?.id);
+        if (userData) {
+          setUser(userData);
+          // router.push("/web/main");
+        }
       } else {
         // router.push("/web/login");
       }
