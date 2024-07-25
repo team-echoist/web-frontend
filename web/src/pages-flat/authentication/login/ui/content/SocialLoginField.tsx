@@ -4,7 +4,7 @@ import color from "@/shared/styles/color";
 import Socialbutton from "@/shared/ui/button/socialbutton";
 import GoogleImage from "@/shared/assets/img/google.webp";
 import KakaoImage from "@/shared/assets/img/kakao.webp";
-import NaverImage from "@/shared/assets/img/naver.webp"
+import NaverImage from "@/shared/assets/img/naver.webp";
 
 const LoginText = styled.div`
   display: flex;
@@ -22,13 +22,17 @@ const P = styled.p`
   white-space: nowrap;
 `;
 const ButtonDiv = styled.div`
- width:100%;
- display: flex;
- justify-content: center;
- gap:24px;
- margin-top:31px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 31px;
 `;
-function SocialLoginField() {
+
+interface SocialLoginFieldProps {
+  submitSocialLogin: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+function SocialLoginField({ submitSocialLogin }: SocialLoginFieldProps) {
   return (
     <>
       <LoginText>
@@ -37,9 +41,30 @@ function SocialLoginField() {
         <Path />
       </LoginText>
       <ButtonDiv>
-        <Socialbutton icon={GoogleImage} imgwidth={19} imgheight={19} bgColor="#FFF"/>
-        <Socialbutton icon={KakaoImage} imgwidth={25.471} imgheight={23.302} bgColor="#F1D700"/>
-        <Socialbutton icon={NaverImage} imgwidth={19} imgheight={19} bgColor="#5BBE38"/>
+        <Socialbutton
+          icon={GoogleImage}
+          imgwidth={19}
+          imgheight={19}
+          bgColor="#FFF"
+          name="google"
+          onClick={submitSocialLogin}
+        />
+        <Socialbutton
+          icon={KakaoImage}
+          imgwidth={25.471}
+          imgheight={23.302}
+          bgColor="#F1D700"
+          name="kakao"
+          onClick={submitSocialLogin}
+        />
+        <Socialbutton
+          icon={NaverImage}
+          imgwidth={19}
+          imgheight={19}
+          bgColor="#5BBE38"
+          name="naver"
+          onClick={submitSocialLogin}
+        />
       </ButtonDiv>
     </>
   );

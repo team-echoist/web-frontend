@@ -24,6 +24,7 @@ interface SocialbuttonProps {
   imgwidth: number;
   imgheight: number;
   bgColor: string;
+  name?:string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -32,10 +33,11 @@ const Socialbutton: React.FC<SocialbuttonProps> = ({
   imgwidth,
   imgheight,
   bgColor,
+  name,
   onClick,
 }) => {
   return (
-    <Button $bgColor={bgColor} onClick={onClick}>
+    <Button $bgColor={bgColor} onClick={onClick} name={name}>
       <Image src={icon} alt="Social Icon" width={imgwidth} height={imgheight} />
     </Button>
   );

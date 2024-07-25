@@ -11,9 +11,11 @@ import { Button } from "@/shared/ui/button";
 import SocialLoginField from "./content/SocialLoginField";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { checkFirstLogin, localLogin } from "../api";
+import { checkFirstLogin, localLogin, socialLogin } from "../api";
 import { GeneralToast } from "@/shared/ui/toast";
 import { useRouter } from "next/navigation";
+
+type SocialLoginName = "google" | "kakao" | "naver";
 
 const CheckboxContainer = styled.fieldset`
   display: flex;
@@ -82,7 +84,6 @@ export const Login = () => {
   //   }
   // };
 
-
   const submitLogin = async () => {
     setIsShowToast(false);
     const body = {
@@ -90,7 +91,7 @@ export const Login = () => {
       password: infoData.password.value,
     };
     try {
-      const statusCode = await localLogin(body,autoLoginCheck);
+      const statusCode = await localLogin(body, autoLoginCheck);
       if (statusCode === 200 || statusCode === 201) {
         //메인페이지
         router.push("/web/main");
@@ -106,6 +107,18 @@ export const Login = () => {
         setIsShowToast(true);
       }
     }
+  };
+
+  const submitSocialLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const { name } = e.currentTarget as HTMLButtonElement;
+    const linkmapper = {
+      google: "/googleAuth",
+      kakao: "/kakaoAuth",
+      naver: "/naverAuth",
+    };
+
+    socialLogin(linkmapper[name as SocialLoginName]);
   };
 
   return (
@@ -150,7 +163,7 @@ export const Login = () => {
             </Link>
           </Ul>
         </Nav>
-        <SocialLoginField />
+        <SocialLoginField submitSocialLogin={submitSocialLogin}/>
       </ButtonFieldLayout>
     </DefaultLayout>
   );

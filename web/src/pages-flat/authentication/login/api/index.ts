@@ -39,3 +39,7 @@ export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
 
   return statusCode;
 };
+
+export const socialLogin = async (link: string) => {
+  return window.location.href = link;
+};
