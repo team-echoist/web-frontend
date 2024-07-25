@@ -1,19 +1,17 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { AxiosInstance } from "@/shared/api";
 
 interface bodyType {
   email: string;
   password: string;
 }
 
-export const checkFirstLogin = async (token: string) => {
-  const response = await axios.get("auth/register", {
-    params: {
-      token: token,
-    },
-  });
-  const statusCode = response.data.statusCode;
-  return statusCode;
+export const checkFirstLogin = async () => {
+  const response = await AxiosInstance.get("users/check-first");
+  console.log("response", response);
+  const isFisrstLogin = response.data.data;
+  return isFisrstLogin;
 };
 
 export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
@@ -41,5 +39,5 @@ export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
 };
 
 export const socialLogin = async (link: string) => {
-  return window.location.href = link;
+  return (window.location.href = link);
 };

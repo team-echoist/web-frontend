@@ -10,7 +10,6 @@ import ButtonFieldLayout from "../../ui/layout/buttonFieldLayout";
 import { Button } from "@/shared/ui/button";
 import SocialLoginField from "./content/SocialLoginField";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { checkFirstLogin, localLogin, socialLogin } from "../api";
 import { GeneralToast } from "@/shared/ui/toast";
 import { useRouter } from "next/navigation";
@@ -58,31 +57,11 @@ export const Login = () => {
     password: { value: "", placeholder: "비밀번호" },
   });
   const [autoLoginCheck, setAutoLoginCheck] = useState(false);
-  const [isFirstLogin, setIsFirstLogin] = useState(false);
   const [isShowToast, setIsShowToast] = useState(false);
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
   const router = useRouter();
 
   const isValidButton =
     infoData.id.value.length > 0 && infoData.password.value.length > 0;
-
-  // useEffect(() => {
-  //   if (token) {
-  //     checkUser(token);
-  //   }
-  // }, [token]);
-
-  // const checkUser = async (token: string) => {
-  //   try {
-  //     const statusCode = await checkFirstLogin(token);
-  //     if (statusCode === 205) {
-  //       setIsFirstLogin(true);
-  //     }
-  //   } catch (err) {
-  //     console.log("Err", err);
-  //   }
-  // };
 
   const submitLogin = async () => {
     setIsShowToast(false);
@@ -94,12 +73,12 @@ export const Login = () => {
       const statusCode = await localLogin(body, autoLoginCheck);
       if (statusCode === 200 || statusCode === 201) {
         //메인페이지
-        router.push("/web/main");
-      }
-
-      if (isFirstLogin) {
-        //컴플리트
-        router.push("/web/complete");
+        const isFistLogin = await checkFirstLogin();
+        if(isFistLogin){
+          router.push("/web/complete");
+        }else{
+          router.push("/web/main");
+        }
       }
     } catch (err) {
       console.log("err", err);
@@ -163,7 +142,7 @@ export const Login = () => {
             </Link>
           </Ul>
         </Nav>
-        <SocialLoginField submitSocialLogin={submitSocialLogin}/>
+        <SocialLoginField submitSocialLogin={submitSocialLogin} />
       </ButtonFieldLayout>
     </DefaultLayout>
   );
