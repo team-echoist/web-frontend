@@ -9,7 +9,6 @@ interface bodyType {
 
 export const checkFirstLogin = async () => {
   const response = await AxiosInstance.get("users/check-first");
-  console.log("response", response);
   const isFisrstLogin = response.data.data;
   return isFisrstLogin;
 };

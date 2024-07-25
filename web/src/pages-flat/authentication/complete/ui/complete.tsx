@@ -4,6 +4,10 @@ import Image from "next/image";
 import BackgroundLogo from "@/shared/assets/img/background_logo.webp";
 import MainRoomImg from "@/shared/assets/img/completeroom.webp";
 import color from "@/shared/styles/color";
+import { parseJwt } from "@/shared/lib/jwt";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+import { getUserInfo } from "@/shared/api";
 
 const Layout = styled.main`
   width: 521px;
