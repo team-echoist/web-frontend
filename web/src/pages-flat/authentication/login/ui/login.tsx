@@ -12,7 +12,8 @@ import SocialLoginField from "./content/SocialLoginField";
 import Link from "next/link";
 import { checkFirstLogin, localLogin, socialLogin } from "../api";
 import { GeneralToast } from "@/shared/ui/toast";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 type SocialLoginName = "google" | "kakao" | "naver";
 
@@ -52,6 +53,7 @@ const Li = styled.li`
 `;
 
 export const Login = () => {
+  const token = useSearchParams().get("token");
   const [infoData, setInfoData] = useState({
     id: { value: "", placeholder: "이메일 주소 또는 아이디" },
     password: { value: "", placeholder: "비밀번호" },
@@ -59,6 +61,32 @@ export const Login = () => {
   const [autoLoginCheck, setAutoLoginCheck] = useState(false);
   const [isShowToast, setIsShowToast] = useState(false);
   const router = useRouter();
+
+  console.log("token", token);
+
+  const fetchFirstLogin = async() =>{
+    try{
+
+    }catch(err){
+      console.log("Err",err)
+    }
+  }
+
+  useEffect(() => {
+    const tenYearsFromNow = new Date(
+      new Date().setFullYear(new Date().getFullYear() + 10)
+    );
+
+    if (token) {
+      autoLoginCheck
+        ? Cookies.set("token", token, {
+            expires: tenYearsFromNow,
+            secure: true,
+            sameSite: "Strict",
+          })
+        : sessionStorage.setItem("token", token);
+    }
+  }, [token, autoLoginCheck]);
 
   const isValidButton =
     infoData.id.value.length > 0 && infoData.password.value.length > 0;
@@ -74,9 +102,9 @@ export const Login = () => {
       if (statusCode === 200 || statusCode === 201) {
         //메인페이지
         const isFistLogin = await checkFirstLogin();
-        if(isFistLogin){
+        if (isFistLogin) {
           router.push("/web/complete");
-        }else{
+        } else {
           router.push("/web/main");
         }
       }
@@ -95,6 +123,7 @@ export const Login = () => {
       google: "/googleAuth",
       kakao: "/kakaoAuth",
       naver: "/naverAuth",
+      apple: "/appleAuth",
     };
 
     socialLogin(linkmapper[name as SocialLoginName]);

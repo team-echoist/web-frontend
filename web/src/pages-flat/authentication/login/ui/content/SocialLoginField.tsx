@@ -5,6 +5,7 @@ import Socialbutton from "@/shared/ui/button/socialbutton";
 import GoogleImage from "@/shared/assets/img/google.webp";
 import KakaoImage from "@/shared/assets/img/kakao.webp";
 import NaverImage from "@/shared/assets/img/naver.webp";
+import AppleImage from "@/shared/assets/img/apple.webp";
 
 const LoginText = styled.div`
   display: flex;
@@ -63,6 +64,14 @@ function SocialLoginField({ submitSocialLogin }: SocialLoginFieldProps) {
           imgheight={19}
           bgColor="#5BBE38"
           name="naver"
+          onClick={submitSocialLogin}
+        />
+        <Socialbutton
+          icon={AppleImage}
+          imgwidth={28.838}
+          imgheight={25.126}
+          bgColor="#FFF"
+          name="apple"
           onClick={submitSocialLogin}
         />
       </ButtonDiv>

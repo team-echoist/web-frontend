@@ -37,6 +37,10 @@ const nextConfig = {
         source: "/naverAuth",
         destination: process.env.NEXT_PUBLIC_API_URL + "auth/naver",
       },
+      {
+        source: "/appleAuth",
+        destination: process.env.NEXT_PUBLIC_API_URL + "auth/apple",
+      },
     ];
   },
 };
