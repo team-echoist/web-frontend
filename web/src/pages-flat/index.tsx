@@ -8,8 +8,15 @@ import { NotFound } from "./notfound";
 import { SignUp } from "./authentication";
 import { Complete } from "./authentication";
 import { Main } from "./main";
+import { withAuth } from "@/shared/lib/auth";
 
-// 이컴포넌트에서 모든 페이지 컴포넌트들의 조건부 렌더링이 실시 된다.
+const ProtectedMain = withAuth(Main);
+const ProtectedFindInfo = withAuth(FindInfo);
+const ProtectedMypage = withAuth(Mypage);
+const ProtectedRegister = withAuth(Register);
+const ProtectedWriteEssay = withAuth(WriteEssay);
+const ProtectedComplete = withAuth(Complete);
+
 
 export const RenderView = ({ pageName }: { pageName: string }) => {
   if (!pageName) {
@@ -17,22 +24,23 @@ export const RenderView = ({ pageName }: { pageName: string }) => {
   }
   switch (pageName) {
     case "main":
-      return <Main />;
+      return <ProtectedMain />;
     case "findinfo":
-      return <FindInfo />;
+      return <ProtectedFindInfo />;
     case "login":
       return <Login />;
     case "signup":
       return <SignUp />;
     case "complete":
-      return <Complete />;
+      return <ProtectedComplete />;
     case "mypage":
-      return <Mypage />;
+      return <ProtectedMypage />;
     case "register":
-      return <Register />;
+      return <ProtectedRegister />;
     case "write_essay":
-      return <WriteEssay />;
+      return <ProtectedWriteEssay />;
     default:
       return <NotFound />;
   }
 };
+

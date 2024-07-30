@@ -64,29 +64,44 @@ export const Login = () => {
 
   console.log("token", token);
 
-  const fetchFirstLogin = async() =>{
-    try{
-
-    }catch(err){
-      console.log("Err",err)
-    }
-  }
-
   useEffect(() => {
-    const tenYearsFromNow = new Date(
-      new Date().setFullYear(new Date().getFullYear() + 10)
-    );
+    const handleLogin = async () => {
+      const tenYearsFromNow = new Date(
+        new Date().setFullYear(new Date().getFullYear() + 10)
+      );
 
-    if (token) {
-      autoLoginCheck
-        ? Cookies.set("token", token, {
-            expires: tenYearsFromNow,
-            secure: true,
-            sameSite: "Strict",
-          })
-        : sessionStorage.setItem("token", token);
-    }
-  }, [token, autoLoginCheck]);
+      const redirectToPage = (isFirstLogin: boolean) => {
+        if (isFirstLogin) {
+          router.push("/web/complete");
+        } else {
+          router.push("/web/main");
+        }
+      };
+
+      if (token) {
+        try {
+          if (autoLoginCheck) {
+            Cookies.set("token", token, {
+              expires: tenYearsFromNow,
+              secure: true,
+              sameSite: "Strict",
+            });
+          } else {
+            sessionStorage.setItem("token", token);
+          }
+
+          const isFirstLogin = await checkFirstLogin();
+          redirectToPage(isFirstLogin);
+        } catch (error) {
+          console.error("Error checking first login:", error);
+        }
+      } else {
+        console.error("No token found");
+      }
+    };
+
+    handleLogin();
+  }, [token, autoLoginCheck, router]);
 
   const isValidButton =
     infoData.id.value.length > 0 && infoData.password.value.length > 0;

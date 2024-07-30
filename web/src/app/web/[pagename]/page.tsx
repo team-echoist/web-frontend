@@ -30,10 +30,7 @@ function Index({ params }: { params: PageParams }) {
         const userData = await getUserInfo(userInfo?.id);
         if (userData) {
           setUser(userData);
-          // router.push("/web/main");
         }
-      } else {
-        // router.push("/web/login");
       }
     };
     handleUserAuthentication();

@@ -4,10 +4,8 @@ import Image from "next/image";
 import BackgroundLogo from "@/shared/assets/img/background_logo.webp";
 import MainRoomImg from "@/shared/assets/img/completeroom.webp";
 import color from "@/shared/styles/color";
-import { parseJwt } from "@/shared/lib/jwt";
-import { useEffect } from "react";
-import Cookies from "js-cookie";
-import { getUserInfo } from "@/shared/api";
+import { useStore } from "@/shared/store";
+
 
 const Layout = styled.main`
   width: 521px;
@@ -86,13 +84,15 @@ const SubDescriptionDiv = styled.div`
 `;
 
 function Complete() {
+  const user = useStore((state) => state.user);
+
   return (
     <Layout>
       <PrevButton />
       <MainContentsDiv>
         <MainTextDiv>
           <H>
-            <HighlightedText>&lsquo;칠이구 아무개&rsquo;</HighlightedText>님,
+            <HighlightedText>&lsquo;{user?.nickname} 아무개&rsquo;</HighlightedText>님,
           </H>
           <P>당신만을 위한 글쓰기 공간을 생성중입니다</P>
           <Small>
