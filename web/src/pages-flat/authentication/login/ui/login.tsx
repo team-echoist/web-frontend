@@ -62,7 +62,12 @@ export const Login = () => {
   const [isShowToast, setIsShowToast] = useState(false);
   const router = useRouter();
 
-  console.log("token", token);
+  useEffect(() => {
+    const token = Cookies.get('token') || sessionStorage.getItem('token');
+    if (token) {
+      router.push('/web/main');
+    }
+  }, [router]);
 
   useEffect(() => {
     const handleLogin = async () => {
