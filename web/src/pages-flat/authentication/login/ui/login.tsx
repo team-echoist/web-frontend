@@ -10,10 +10,12 @@ import ButtonFieldLayout from "../../ui/layout/buttonFieldLayout";
 import { Button } from "@/shared/ui/button";
 import SocialLoginField from "./content/SocialLoginField";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { checkFirstLogin, localLogin } from "../api";
+import { checkFirstLogin, localLogin, socialLogin } from "../api";
 import { GeneralToast } from "@/shared/ui/toast";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+
+type SocialLoginName = "google" | "kakao" | "naver";
 
 const CheckboxContainer = styled.fieldset`
   display: flex;
@@ -51,36 +53,63 @@ const Li = styled.li`
 `;
 
 export const Login = () => {
+  const token = useSearchParams().get("token");
   const [infoData, setInfoData] = useState({
     id: { value: "", placeholder: "이메일 주소 또는 아이디" },
     password: { value: "", placeholder: "비밀번호" },
   });
   const [autoLoginCheck, setAutoLoginCheck] = useState(false);
-  const [isFirstLogin, setIsFirstLogin] = useState(false);
   const [isShowToast, setIsShowToast] = useState(false);
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
   const router = useRouter();
+
+  useEffect(() => {
+    const token = Cookies.get('token') || sessionStorage.getItem('token');
+    if (token) {
+      router.push('/web/main');
+    }
+  }, [router]);
+
+  useEffect(() => {
+    const handleLogin = async () => {
+      const tenYearsFromNow = new Date(
+        new Date().setFullYear(new Date().getFullYear() + 10)
+      );
+
+      const redirectToPage = (isFirstLogin: boolean) => {
+        if (isFirstLogin) {
+          router.push("/web/complete");
+        } else {
+          router.push("/web/main");
+        }
+      };
+
+      if (token) {
+        try {
+          if (autoLoginCheck) {
+            Cookies.set("token", token, {
+              expires: tenYearsFromNow,
+              secure: true,
+              sameSite: "Strict",
+            });
+          } else {
+            sessionStorage.setItem("token", token);
+          }
+
+          const isFirstLogin = await checkFirstLogin();
+          redirectToPage(isFirstLogin);
+        } catch (error) {
+          console.error("Error checking first login:", error);
+        }
+      } else {
+        console.error("No token found");
+      }
+    };
+
+    handleLogin();
+  }, [token, autoLoginCheck, router]);
 
   const isValidButton =
     infoData.id.value.length > 0 && infoData.password.value.length > 0;
-
-  useEffect(() => {
-    if (token) {
-      checkUser(token);
-    }
-  }, [token]);
-
-  const checkUser = async (token: string) => {
-    try {
-      const statusCode = await checkFirstLogin(token);
-      if (statusCode === 205) {
-        setIsFirstLogin(true);
-      }
-    } catch (err) {
-      console.log("Err", err);
-    }
-  };
 
   const submitLogin = async () => {
     setIsShowToast(false);
@@ -89,18 +118,15 @@ export const Login = () => {
       password: infoData.password.value,
     };
     try {
-      const statusCode = await localLogin(body);
+      const statusCode = await localLogin(body, autoLoginCheck);
       if (statusCode === 200 || statusCode === 201) {
         //메인페이지
-        router.push("/linkedout/main");
-      }
-      if (statusCode === 205) {
-        //컴플리트
-        router.push("/linkedout/complete");
-      }
-      if (isFirstLogin) {
-        //컴플리트
-        router.push("/linkedout/complete");
+        const isFistLogin = await checkFirstLogin();
+        if (isFistLogin) {
+          router.push("/web/complete");
+        } else {
+          router.push("/web/main");
+        }
       }
     } catch (err) {
       console.log("err", err);
@@ -110,13 +136,26 @@ export const Login = () => {
     }
   };
 
+  const submitSocialLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const { name } = e.currentTarget as HTMLButtonElement;
+    const linkmapper = {
+      google: "/googleAuth",
+      kakao: "/kakaoAuth",
+      naver: "/naverAuth",
+      apple: "/appleAuth",
+    };
+
+    socialLogin(linkmapper[name as SocialLoginName]);
+  };
+
   return (
     <DefaultLayout>
       <PrevButton />
       {isShowToast && (
         <GeneralToast
           title="로그인에 실패 했습니다."
-          desc="아이디와 비밀번호 확인해주세요."
+          desc="아이디와 비밀번호를 확인해주세요."
           isShowToast={isShowToast}
           setIsShowToast={setIsShowToast}
         />
@@ -147,12 +186,12 @@ export const Login = () => {
           <Ul>
             <Li>아이디 찾기</Li>
             <Li>비밀번호 재설정</Li>
-            <Link href="/linkedout/signup">
+            <Link href="/web/signup">
               <Li>회원가입</Li>
             </Link>
           </Ul>
         </Nav>
-        <SocialLoginField />
+        <SocialLoginField submitSocialLogin={submitSocialLogin} />
       </ButtonFieldLayout>
     </DefaultLayout>
   );

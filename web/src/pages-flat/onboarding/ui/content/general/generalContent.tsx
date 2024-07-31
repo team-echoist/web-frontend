@@ -60,7 +60,7 @@ function GeneralContent({ step }: stepType) {
   const router = useRouter();
 
   const navigateToLogin = () => {
-    router.push("/linkedout/login");
+    router.push("/web/login");
   };
   return (
     <>

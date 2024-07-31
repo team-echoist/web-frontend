@@ -1,42 +1,15 @@
 import { create } from "zustand"
+import { devtools } from "zustand/middleware"
+import { SidebarState, createSidebarSlice } from "./sidebarSlice"
+import { UserState, createUserSlice } from "./userSlice"
 
-interface State {
-    bears: number
-    increasePopulation: () => void
-    removeAllBears: () => void
-}
+type StoreState = SidebarState & UserState
 
-// 상태 스토어 생성
-const useStore = create<State>((set) => ({
-    bears: 0,
-    increasePopulation: () => set((state: State) => ({ bears: state.bears + 1 })),
-    removeAllBears: () => set({ bears: 0 }),
-}))
+export const useStore = create<StoreState>()(
+    devtools((set, get, api) => ({
+        ...createSidebarSlice(set, get, api),
+        ...createUserSlice(set, get, api),
+    })),
+)
 
 export default useStore
-
-//사이드바 전역 상태
-interface SidebarState {
-    open: boolean
-    selectedItem: React.ReactNode | null
-    toggleSidebar: () => void
-    setSelectedItem: (item: React.ReactNode | null) => void
-}
-
-export const useSidebarStore = create<SidebarState>((set) => ({
-    open: false,
-    selectedItem: null,
-    toggleSidebar: () => set((state) => ({ open: !state.open })),
-    setSelectedItem: (item) => set({ selectedItem: item }),
-}))
-
-// 다크모드, 라이트 모드
-interface ThemeState {
-    isDarkMode: boolean
-    toggleTheme: () => void
-}
-
-export const useThemeStore = create<ThemeState>((set) => ({
-    isDarkMode: true,
-    toggleTheme: () => set((state) => ({ isDarkMode: !state.isDarkMode })),
-}))

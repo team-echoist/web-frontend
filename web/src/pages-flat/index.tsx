@@ -8,43 +8,37 @@ import { NotFound } from "./notfound"
 import { SignUp } from "./authentication"
 import { Complete } from "./authentication"
 import { Main } from "./main"
-import { SideBar } from "@/features/sidebar"
+import { withAuth } from "@/shared/lib/auth"
 
-type RenderViewProps = {
-    pageName: string
-    sidebarItems: Array<{ label: string; content: React.ReactNode }>
-}
+const ProtectedMain = withAuth(Main)
+const ProtectedFindInfo = withAuth(FindInfo)
+const ProtectedMypage = withAuth(Mypage)
+const ProtectedRegister = withAuth(Register)
+const ProtectedWriteEssay = withAuth(WriteEssay)
+const ProtectedComplete = withAuth(Complete)
 
-export const RenderView = ({ pageName, sidebarItems }: RenderViewProps) => {
+export const RenderView = ({ pageName }: { pageName: string }) => {
     if (!pageName) {
         return <div>Loading...</div>
     }
-    let Component
     switch (pageName) {
+        case "main":
+            return <ProtectedMain />
         case "findinfo":
-            Component = FindInfo
-            break
+            return <ProtectedFindInfo />
         case "login":
-            Component = Login
-            break
+            return <Login />
+        case "signup":
+            return <SignUp />
+        case "complete":
+            return <ProtectedComplete />
         case "mypage":
-            Component = Mypage
-            break
+            return <ProtectedMypage />
         case "register":
-            Component = Register
-            break
+            return <ProtectedRegister />
         case "write_essay":
-            Component = WriteEssay
-            break
+            return <ProtectedWriteEssay />
         default:
-            Component = NotFound
+            return <NotFound />
     }
-    return (
-        <>
-            <SideBar items={sidebarItems} />
-            <Component />
-        </>
-    )
 }
-
-export default RenderView

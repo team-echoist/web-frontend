@@ -6,7 +6,12 @@ interface bodyType {
 }
 
 export const submitSignupForm = async (body: bodyType) => {
-  const response = await axios.post("/emailcheck", body);
-  const statusCode = response.data.statusCode;
-  return statusCode;
+    try {
+        const response = await axios.post("/emailcheck", body);
+        const statusCode = response.data.statusCode;
+        return statusCode;
+      } catch (error) {
+        console.error("Error response:", error);
+        throw error;
+      }
 };

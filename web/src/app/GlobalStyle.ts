@@ -1,8 +1,16 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, keyframes } from "styled-components";
 import { minDevices, maxDevices } from "@/shared/styles/device";
 
-const GlobalStyleComponent = createGlobalStyle`
+const slideUp = keyframes`
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
 
+const GlobalStyleComponent = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -28,19 +36,23 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-
-
+body{
+background-color: ${({ theme }) => theme.colors.background};
+}
 .container{
 	height:100vh;
 	margin:auto;
 	background-color: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.text};
 	display:flex;
 	justify-content: center;
 	@media only screen and ${minDevices.tablet} and ${maxDevices.laptop}{
-  width:768px;
+    width:768px;
 	height:100vh;
-  }
+    }
+}
+.container.slide-up {
+	animation: ${slideUp} 1s ease-out;
 }
 }
 ol, ul {
