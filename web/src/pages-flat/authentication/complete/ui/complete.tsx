@@ -5,7 +5,10 @@ import BackgroundLogo from "@/shared/assets/img/background_logo.webp";
 import MainRoomImg from "@/shared/assets/img/completeroom.webp";
 import color from "@/shared/styles/color";
 import { useStore } from "@/shared/store";
-
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { LoadingSpinner } from "@/shared/ui/loading";
+import { minDevices, maxDevices, minHeights } from "@/shared/styles/device";
 
 const Layout = styled.main`
   width: 521px;
@@ -81,18 +84,32 @@ const SubDescriptionDiv = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
+  @media only screen and ${minHeights.heightL} {
+    top: 50.86vh;
+  }
 `;
 
 function Complete() {
+  const router = useRouter();
   const user = useStore((state) => state.user);
+
+  useEffect(() => {
+    setTimeout(() => {
+      router.push("/web/main");
+    }, 3000);
+  }, [router]);
 
   return (
     <Layout>
+      <LoadingSpinner />
       <PrevButton />
       <MainContentsDiv>
         <MainTextDiv>
           <H>
-            <HighlightedText>&lsquo;{user?.nickname} 아무개&rsquo;</HighlightedText>님,
+            <HighlightedText>
+              &lsquo;{user?.nickname} 아무개&rsquo;
+            </HighlightedText>
+            님,
           </H>
           <P>당신만을 위한 글쓰기 공간을 생성중입니다</P>
           <Small>
