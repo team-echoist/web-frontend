@@ -2,7 +2,7 @@
 import React from "react";
 import * as Styled from "./main.styled";
 import styled from "styled-components";
-import { useStore } from "@/shared/store";
+// import { useStore } from "@/shared/store";
 
 const Container = styled.div`
   padding: 20px;
@@ -27,7 +27,7 @@ const Button = styled.div`
 `;
 
 export const Main = () => {
-  const { bears, increasePopulation } = useStore();
+  // const { bears, increasePopulation } = useStore();
 
   return (
     <Container>

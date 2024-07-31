@@ -1,30 +1,46 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import { FindInfo } from "./findinfo";
-import { Login } from "./login";
+import { Login } from "./authentication";
 import { Mypage } from "./mypage";
 import { Register } from "./register";
 import { WriteEssay } from "./write_essay";
 import { NotFound } from "./notfound";
+import { SignUp } from "./authentication";
+import { Complete } from "./authentication";
+import { Main } from "./main";
+import { withAuth } from "@/shared/lib/auth";
 
-// 이컴포넌트에서 모든 페이지 컴포넌트들의 조건부 렌더링이 실시 된다.
+const ProtectedMain = withAuth(Main);
+const ProtectedFindInfo = withAuth(FindInfo);
+const ProtectedMypage = withAuth(Mypage);
+const ProtectedRegister = withAuth(Register);
+const ProtectedWriteEssay = withAuth(WriteEssay);
+const ProtectedComplete = withAuth(Complete);
+
 
 export const RenderView = ({ pageName }: { pageName: string }) => {
   if (!pageName) {
     return <div>Loading...</div>;
   }
   switch (pageName) {
+    case "main":
+      return <ProtectedMain />;
     case "findinfo":
-      return <FindInfo />;
+      return <ProtectedFindInfo />;
     case "login":
       return <Login />;
+    case "signup":
+      return <SignUp />;
+    case "complete":
+      return <ProtectedComplete />;
     case "mypage":
-      return <Mypage />;
+      return <ProtectedMypage />;
     case "register":
-      return <Register />;
+      return <ProtectedRegister />;
     case "write_essay":
-      return <WriteEssay />;
+      return <ProtectedWriteEssay />;
     default:
       return <NotFound />;
   }
 };
+
