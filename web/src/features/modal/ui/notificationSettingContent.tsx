@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import { ModalHeader } from "../shared/ModalHeader"
+import { ModalHeader } from "../../../modal/shared/ModalHeader"
 import styled from "styled-components"
-import TimeSelectorModal from "./TimeSelectorModal"
+import TimeSelectorModal from "./timeSelectorModal"
 
 const NotificationSettingSection = styled.section`
     margin-left: 20px;

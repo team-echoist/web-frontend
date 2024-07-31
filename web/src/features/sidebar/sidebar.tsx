@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react"
 import * as Styled from "./sidebar.styled"
 import { Modal } from "./modal"
 import HamburgerButtonIcon from "@/shared/assets/img/hamburger_button.svg"
-import { LinkedOutIndexContent } from "./SidebarList/LinkedOutIndexContent"
-import { ShopContent } from "./SidebarList/ShopContent"
-import { ProfileContent } from "./SidebarList/profileContent"
-import { CustomerSupportContent } from "./SidebarList/CustomerSupport/CustomerSupportContent"
+import { LinkedOutIndexContent } from "./ui/linkedOutIndexContent"
+import { ShopContent } from "./ui/shopContent"
+import { ProfileContent } from "./ui/profileContent"
+import { CustomerSupportContent } from "../modal/customerSupportContent"
 
 interface SidebarProps {
     items: Array<{ label: string; content: React.ReactNode }>

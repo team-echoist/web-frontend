@@ -6,7 +6,7 @@ import DarkModeIcon from "@/shared/assets/img/darkModeIcon.svg"
 import LightModeIcon from "@/shared/assets/img/lightModeIcon.svg"
 import YesCheck from "@/shared/assets/img/screen_setting_yescheck.svg"
 import NoCheck from "@/shared/assets/img/screen_setting_nocheck.svg"
-import { ModalHeader } from "./shared/ModalHeader"
+import { ModalHeader } from "../../modal/ui/modalHeader"
 
 const Container = styled.div`
     display: flex;

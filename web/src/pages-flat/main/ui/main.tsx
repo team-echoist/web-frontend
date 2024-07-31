@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import * as Styled from "./main.styled";
-import styled from "styled-components";
+"use client"
+import React from "react"
+import * as Styled from "./main.styled"
+import styled from "styled-components"
 // import { useStore } from "@/shared/store";
 
 const Container = styled.div`
@@ -27,11 +27,7 @@ const Button = styled.div`
 `
 
 export const Main = () => {
-<<<<<<< HEAD
-    const { bears, increasePopulation } = useStore()
-=======
-  // const { bears, increasePopulation } = useStore();
->>>>>>> df2e468fc59daa2b5d3a6cf5790fcf0c2bf58421
+    // const { bears, increasePopulation } = useStore();
 
     return (
         <Container>
