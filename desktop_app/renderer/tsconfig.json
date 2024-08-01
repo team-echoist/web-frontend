@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/shared/*": ["shared/*"],
+      "@/features/*": ["features/*"],
+      "@/pages/*": ["pages/*"],
+      "@/pages-flat/*": ["pages-flat/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}

@@ -28,7 +28,7 @@ interface SocialbuttonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const Socialbutton: React.FC<SocialbuttonProps> = ({
+const CircleButton: React.FC<SocialbuttonProps> = ({
   icon,
   imgwidth,
   imgheight,
@@ -38,9 +38,9 @@ const Socialbutton: React.FC<SocialbuttonProps> = ({
 }) => {
   return (
     <Button $bgColor={bgColor} onClick={onClick} name={name}>
-      <Image src={icon} alt="Social Icon" width={imgwidth} height={imgheight} />
+      <Image src={icon} alt="button Icon" width={imgwidth} height={imgheight} />
     </Button>
   );
 };
 
-export default Socialbutton;
+export default CircleButton;
