@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import ModalHeader from "../../modal/ui/modalHeader"
 import TimeSelectorModal from "./timeSelectorModal"
-import Toggle from "@/shared/ui/toggle/Toggle"
+import Toggle from "@/shared/ui/toggle/toggle"
 
 const NotificationSettingSection = styled.section`
     margin-left: 20px;

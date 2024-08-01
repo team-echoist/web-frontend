@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react"
 import * as Styled from "./sidebar.styled"
 import { Modal } from "../modal/modal"
+import Image from "next/image"
 import HamburgerButtonIcon from "@/shared/assets/img/hamburger_button.svg"
 import { LinkedOutIndexContent } from "./ui/linkedOutIndexContent"
 import { ShopContent } from "./ui/shopContent"
@@ -48,7 +49,7 @@ export const SideBar = ({ items = [], children }: SidebarProps) => {
     return (
         <Styled.LayoutContainer theme={themeObject}>
             <Styled.HamburgerButton onClick={toggleSidebar} isOpen={open}>
-                <img src={HamburgerButtonIcon} alt="Menu" />
+                <HamburgerButtonIcon />
             </Styled.HamburgerButton>
             <Styled.SidebarContainer open={open}>
                 <ProfileContent />

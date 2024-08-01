@@ -1,8 +1,10 @@
 "use client"
+import React, { useState } from "react"
 import styled from "styled-components"
 import ProfileImage from "@/shared/assets/img/profile_icon_01.png"
 import Image from "next/image"
 import ToProfileDetailButton from "@/shared/assets/img/to_detail_button.png"
+import ProfileDetailModal from "@/features/modal/ui/profileDetailModal"
 
 const ProfileSection = styled.div`
     display: flex;
@@ -67,32 +69,54 @@ const profileData = {
     name: "일공사팔이팔",
     profileImage: ProfileImage,
     fromCreatedDate: "43일째 링크드아웃",
+    stats: {
+        writtenPosts: 38,
+        receivedComments: 24,
+        linkedOut: 7,
+    },
 }
 
 export const ProfileContent = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const handleDetailClick = () => {
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
+    }
+
     return (
-        <ProfileSection>
-            <Image
-                src={profileData.profileImage}
-                alt="프로필 이미지"
-                width={100}
-                height={100}
-                style={{ borderRadius: "50%", marginRight: "15px" }}
-            />
-            <ProfileFlexRow>
-                <ProfileDiv>
-                    <ProfileNameRow>
-                        <ProfileName>
-                            <span>{profileData.name}</span>
-                            <p>아무개</p>
-                        </ProfileName>
-                        <ProfileDetailButtonContainer>
-                            <ProfileDetailButton src={ToProfileDetailButton} alt="프로필 상세보기 버튼" />
-                        </ProfileDetailButtonContainer>
-                    </ProfileNameRow>
-                    <ProfileFromCreatedDate>{profileData.fromCreatedDate}</ProfileFromCreatedDate>
-                </ProfileDiv>
-            </ProfileFlexRow>
-        </ProfileSection>
+        <>
+            <ProfileSection>
+                <Image
+                    src={profileData.profileImage}
+                    alt="프로필 이미지"
+                    width={100}
+                    height={100}
+                    style={{ borderRadius: "50%", marginRight: "15px" }}
+                />
+                <ProfileFlexRow>
+                    <ProfileDiv>
+                        <ProfileNameRow>
+                            <ProfileName>
+                                <span>{profileData.name}</span>
+                                <p>아무개</p>
+                            </ProfileName>
+                            <ProfileDetailButtonContainer>
+                                <ProfileDetailButton
+                                    src={ToProfileDetailButton}
+                                    alt="프로필 상세보기 버튼"
+                                    onClick={handleDetailClick}
+                                />
+                            </ProfileDetailButtonContainer>
+                        </ProfileNameRow>
+                        <ProfileFromCreatedDate>{profileData.fromCreatedDate}</ProfileFromCreatedDate>
+                    </ProfileDiv>
+                </ProfileFlexRow>
+            </ProfileSection>
+            {isModalOpen && <ProfileDetailModal onClose={handleCloseModal} profileData={profileData} />}
+        </>
     )
 }
