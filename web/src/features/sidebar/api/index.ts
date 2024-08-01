@@ -12,14 +12,15 @@ export const fetchUserStatistics = async () => {
     }
 }
 
-export const fetchShopContent = async () => {
-    try {
-        const response = await AxiosInstance.get("/shop/content")
-        return response.data
-    } catch (err) {
-        console.error("Error fetching shop content", err)
-        throw err
-    }
-}
+// 상점 api 요청
+// export const fetchShopContent = async () => {
+//     try {
+//         const response = await AxiosInstance.get("/shop/content")
+//         return response.data
+//     } catch (err) {
+//         console.error("Error fetching shop content", err)
+//         throw err
+//     }
+// }
 
 export { AxiosInstance }

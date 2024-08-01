@@ -1,11 +1,11 @@
 "use client"
+import React, { useState } from "react"
 import styled from "styled-components"
 import ModalHeader from "./modalHeader"
 import ToDetailButton from "@/shared/assets/img/to_detail_button.png"
 import Image from "next/image"
-import { useEffect, useState } from "react"
 import HelpCenter from "./helpCenter"
-import { fetchCustomerSupportContent } from "../api"
+import { fetchHelpCenterInquiries, fetchNotices } from "@/features/modal/api"
 
 const CustomerSupportSection = styled.section`
     height: 100vh;
@@ -38,29 +38,26 @@ interface CustomerSupportContentProps {
     onClose: () => void
 }
 
-const supportItems = [{ label: "링크드아웃 고객센터" }, { label: "공지사항" }, { label: "법적 고지" }]
+const supportItems = [
+    { label: "링크드아웃 고객센터", fetchData: fetchHelpCenterInquiries },
+    { label: "공지사항", fetchData: fetchNotices },
+    { label: "법적 고지" },
+]
 
 export const CustomerSupportContent = ({ onClose }: CustomerSupportContentProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedItem, setSelectedItem] = useState<{ label: string } | null>(null)
-    const [supportItems, setSupportItems] = useState<{ label: string }[]>([])
+    const [data, setData] = useState<any[]>([])
 
-    useEffect(() => {
-        const fetchContent = async () => {
-            try {
-                const data = await fetchCustomerSupportContent()
-                setSupportItems(data)
-            } catch (err) {
-                console.error("Failed to fetch customer support content", err)
-            }
-        }
-
-        fetchContent()
-    }, [])
-
-    const handleItemClick = (item: { label: string }) => {
+    const handleItemClick = async (item: { label: string; fetchData: () => Promise<any[]> }) => {
         setSelectedItem(item)
-        setIsModalOpen(true)
+        try {
+            const fetchedData = await item.fetchData()
+            setData(fetchedData)
+            setIsModalOpen(true)
+        } catch (err) {
+            console.error(`Error fetching data for ${item.label}:`, err)
+        }
     }
 
     return (

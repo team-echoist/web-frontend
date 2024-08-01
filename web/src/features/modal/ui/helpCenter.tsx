@@ -24,6 +24,10 @@ interface HelpCenterProps {
     onClose: () => void
 }
 
+const HelpCenterContainer = styled.section`
+    color: white;
+`
+
 const NoInquiriesMessage = styled.div`
     color: #888;
     text-align: center;
@@ -84,16 +88,8 @@ const HelpCenter = ({ title, onClose }: HelpCenterProps) => {
         fetchInquiries()
     }, [])
 
-    if (loading) {
-        return <h2>로딩 중...</h2>
-    }
-
-    if (error) {
-        return <h2>{error}</h2>
-    }
-
     return (
-        <div>
+        <HelpCenterContainer>
             <HelpCenterHeader title={title} onClose={onClose} />
             <h2>1:1 문의 내역</h2>
             {inquiries.length === 0 ? (
@@ -112,7 +108,7 @@ const HelpCenter = ({ title, onClose }: HelpCenterProps) => {
                     ))}
                 </InquiryList>
             )}
-        </div>
+        </HelpCenterContainer>
     )
 }
 
