@@ -36,6 +36,11 @@ const ProfileName = styled.h2`
     font-weight: 600;
     line-height: 150%;
     margin-bottom: 3px;
+    display: flex;
+    & p {
+        color: white;
+        margin-left: 4px;
+    }
 `
 
 const ProfileFromCreatedDate = styled.h3`
@@ -77,7 +82,10 @@ export const ProfileContent = () => {
             <ProfileFlexRow>
                 <ProfileDiv>
                     <ProfileNameRow>
-                        <ProfileName>{profileData.name}</ProfileName>
+                        <ProfileName>
+                            <span>{profileData.name}</span>
+                            <p>아무개</p>
+                        </ProfileName>
                         <ProfileDetailButtonContainer>
                             <ProfileDetailButton src={ToProfileDetailButton} alt="프로필 상세보기 버튼" />
                         </ProfileDetailButtonContainer>

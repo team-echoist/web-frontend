@@ -1,7 +1,8 @@
 "use client"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { HelpCenterHeader } from "./shared/ui/HelpCenterHeader"
+import HelpCenterHeader from "@/features/modal/ui/helpCenterHeader"
+import { AxiosInstance } from "@/shared/api"
 
 interface Inquiry {
     id: number
@@ -30,6 +31,34 @@ const NoInquiriesMessage = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 160%;
+    margin-top: 20px;
+`
+
+const InquiryList = styled.ul`
+    padding: 20px;
+    list-style: none;
+`
+
+const InquiryItem = styled.li`
+    margin-bottom: 20px;
+    border-bottom: 1px solid #191919;
+    padding-bottom: 20px;
+
+    h3 {
+        color: #fff;
+        font-family: Pretendard;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #888;
+        font-family: Pretendard;
+        font-size: 14px;
+        font-weight: 400;
+        margin-bottom: 5px;
+    }
 `
 
 const HelpCenter = ({ title, onClose }: HelpCenterProps) => {
@@ -40,14 +69,12 @@ const HelpCenter = ({ title, onClose }: HelpCenterProps) => {
     useEffect(() => {
         const fetchInquiries = async () => {
             try {
-                const response = await fetch("https://linkedoutapp.com/api/support/inquiries")
-                if (!response.ok) {
-                    throw new Error("문의 목록을 불러오는 데 실패했습니다.")
+                const response = await AxiosInstance.get("support/inquiries")
+                setInquiries(response.data)
+            } catch (err: unknown) {
+                if (err) {
+                    setError("문의 목록을 불러오는 데 실패했습니다.")
                 }
-                const data = await response.json()
-                setInquiries(data)
-            } catch (err) {
-                setError(err.message)
             } finally {
                 setLoading(false)
             }
@@ -65,29 +92,26 @@ const HelpCenter = ({ title, onClose }: HelpCenterProps) => {
     }
 
     return (
-        <header>
+        <div>
             <HelpCenterHeader title={title} onClose={onClose} />
             <h2>1:1 문의 내역</h2>
             {inquiries.length === 0 ? (
-                <div>
-                    <HelpCenterHeader title={title} onClose={onClose} />
-                    <NoInquiriesMessage>문의 내역이 없습니다</NoInquiriesMessage>
-                </div>
+                <NoInquiriesMessage>문의 내역이 없습니다</NoInquiriesMessage>
             ) : (
-                <ul>
+                <InquiryList>
                     {inquiries.map((inquiry) => (
-                        <li key={inquiry.id}>
+                        <InquiryItem key={inquiry.id}>
                             <h3>{inquiry.title}</h3>
                             <p>작성일: {new Date(inquiry.createdDate).toLocaleDateString()}</p>
                             <p>처리 상태: {inquiry.processed ? "처리 완료" : "처리 중"}</p>
                             <p>
                                 작성자: {inquiry.user.nickname} ({inquiry.user.email})
                             </p>
-                        </li>
+                        </InquiryItem>
                     ))}
-                </ul>
+                </InquiryList>
             )}
-        </header>
+        </div>
     )
 }
 

@@ -1,6 +1,12 @@
-"use client"
-import styled from "styled-components"
+import styled, { DefaultTheme } from "styled-components"
 import { Button } from "@/shared/ui/button"
+
+// DefaultTheme에 isDarkMode를 추가합니다.
+declare module "styled-components" {
+    export interface DefaultTheme {
+        isDarkMode: boolean
+    }
+}
 
 export const SidebarContainer = styled.div<{ open: boolean }>`
     height: 100vh;
@@ -51,11 +57,13 @@ export const HamburgerButton = styled.button<{ isOpen: boolean }>`
     }
 `
 
-export const LayoutContainer = styled.div`
+export const LayoutContainer = styled.div<{ theme: DefaultTheme }>`
     display: flex;
+    background-color: ${({ theme }) => (theme.isDarkMode ? "#121212" : "#f0f0f0")};
+    color: ${({ theme }) => (theme.isDarkMode ? "#fff" : "#000")};
 `
 
-export const MainContent = styled.div`
+export const MainContent = styled.div<{ theme: DefaultTheme }>`
     flex-grow: 1;
     background-color: ${({ theme }) => (theme.isDarkMode ? "#121212" : "#f0f0f0")};
     color: ${({ theme }) => (theme.isDarkMode ? "#fff" : "#000")};
@@ -65,4 +73,17 @@ export const Divider = styled.div`
     width: 100%;
     height: 6px;
     background-color: #191919;
+`
+
+export const ModalContainer = styled.div`
+    position: fixed;
+    top: 0;
+    left: 376px;
+    width: calc(100% - 376px);
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `

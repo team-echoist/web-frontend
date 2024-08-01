@@ -1,12 +1,10 @@
 "use client"
 import styled from "styled-components"
-import { ModalHeader } from "./ui/modalHeader"
+import ModalHeader from "./modalHeader"
 import ToDetailButton from "@/shared/assets/img/to_detail_button.png"
 import Image from "next/image"
 import { useState } from "react"
 import HelpCenter from "./helpCenter"
-
-// 링크드아웃 고객센터 > 1:1 문의 내역 페이지
 
 const CustomerSupportSection = styled.section`
     height: 100vh;

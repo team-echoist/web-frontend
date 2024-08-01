@@ -1,11 +1,14 @@
+"use client"
 import React, { useState } from "react"
-import { ModalHeader } from "../../../modal/shared/ModalHeader"
 import styled from "styled-components"
+import ModalHeader from "../../modal/ui/modalHeader"
 import TimeSelectorModal from "./timeSelectorModal"
+import Toggle from "@/shared/ui/toggle/Toggle"
 
 const NotificationSettingSection = styled.section`
     margin-left: 20px;
     font-family: Pretendard;
+    color: white;
 `
 
 const NotificationSettingH2 = styled.h2`
@@ -24,45 +27,7 @@ const NotificationSettingUl = styled.ul`
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
-    }
-`
-
-const ToggleSwitch = styled.label`
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-
-    input {
-        display: none;
-    }
-
-    .slider {
-        width: 50px;
-        height: 26px;
-        background-color: #222222;
-        border-radius: 34px;
-        position: relative;
-        transition: background-color 0.2s;
-    }
-
-    .slider:before {
-        content: "";
-        position: absolute;
-        width: 22px;
-        height: 22px;
-        left: 2px;
-        margin: 2px 0;
-        background-color: #d9d9d9;
-        border-radius: 50%;
-        transition: transform 0.2s;
-    }
-
-    input:checked + .slider {
-        background-color: #616fed;
-    }
-
-    input:checked + .slider:before {
-        transform: translateX(24px);
+        margin-top: 10px;
     }
 `
 
@@ -87,13 +52,26 @@ const ToggleSwitchTimeButton = styled.div`
     gap: 10px;
 `
 
+const StyledSpan = styled.span`
+    color: #616fed;
+`
+
+const NotificationSettingSpan = styled.span`
+    color: #fff;
+`
+
+const TextWrapper = styled.div`
+    display: flex;
+    gap: 5px;
+`
+
 interface NotificationSettingContentProps {
     onClose: () => void
 }
 
 export const NotificationSettingContent = ({ onClose }: NotificationSettingContentProps) => {
-    const [postViewAlerts, setPostViewAlerts] = useState([false, false, false])
-    const [writingAlertTime, setWritingAlertTime] = useState("--:--") // 초기값 수정
+    const [postViewAlerts, setPostViewAlerts] = useState([false, false])
+    const [writingAlertTime, setWritingAlertTime] = useState("--:--")
     const [otherAlerts, setOtherAlerts] = useState([false, false, false])
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -128,54 +106,32 @@ export const NotificationSettingContent = ({ onClose }: NotificationSettingConte
             <div>
                 <NotificationSettingH2>글 조회 알림</NotificationSettingH2>
                 <NotificationSettingUl>
-                    {["발행한 글", "링크드아웃한 글", "신고 완료"].map((text, index) => (
-                        <li key={index}>
-                            <span>{text} 조회 알림</span>
-                            <ToggleSwitch>
-                                <input
-                                    type="checkbox"
-                                    checked={postViewAlerts[index]}
-                                    onChange={() => togglePostViewAlert(index)}
-                                />
-                                <span className="slider" />
-                            </ToggleSwitch>
-                        </li>
-                    ))}
+                    <li>
+                        <TextWrapper>
+                            <StyledSpan>발행한</StyledSpan>
+                            <NotificationSettingSpan>글 조회 알림</NotificationSettingSpan>
+                        </TextWrapper>
+                        <Toggle checked={postViewAlerts[0]} onChange={() => togglePostViewAlert(0)} />
+                    </li>
+                    <li>
+                        <TextWrapper>
+                            <StyledSpan>신고 완료</StyledSpan>
+                            <NotificationSettingSpan>알림</NotificationSettingSpan>
+                        </TextWrapper>
+                        <Toggle checked={postViewAlerts[1]} onChange={() => togglePostViewAlert(1)} />
+                    </li>
                 </NotificationSettingUl>
             </div>
             <div>
                 <NotificationSettingH2>글쓰기 알림</NotificationSettingH2>
                 <NotificationSettingUl>
                     <li>
-                        <span>글쓰기 시간 알림 설정</span>
+                        <NotificationSettingSpan>글쓰기 시간 알림 설정</NotificationSettingSpan>
                         <ToggleSwitchTimeButton>
-                            <ToggleSwitch>
-                                <input type="checkbox" checked={otherAlerts[0]} onChange={() => toggleOtherAlert(0)} />
-                                <span className="slider" />
-                            </ToggleSwitch>
+                            <Toggle checked={otherAlerts[0]} onChange={() => toggleOtherAlert(0)} />
                             <TimeButton onClick={handleTimeButtonClick}>{writingAlertTime}</TimeButton>
                         </ToggleSwitchTimeButton>
                     </li>
-                </NotificationSettingUl>
-            </div>
-            <div>
-                <NotificationSettingH2>그 외 알림</NotificationSettingH2>
-                <NotificationSettingUl>
-                    {["임시 저장 글 유효 기간 알림", "이벤트 혜택 정보 알림", "알림 허용 시간 설정"].map(
-                        (text, index) => (
-                            <li key={index}>
-                                <span>{text}</span>
-                                <ToggleSwitch>
-                                    <input
-                                        type="checkbox"
-                                        checked={otherAlerts[index]}
-                                        onChange={() => toggleOtherAlert(index)}
-                                    />
-                                    <span className="slider" />
-                                </ToggleSwitch>
-                            </li>
-                        ),
-                    )}
                 </NotificationSettingUl>
             </div>
             <TimeSelectorModal

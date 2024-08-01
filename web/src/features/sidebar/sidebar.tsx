@@ -1,12 +1,14 @@
 "use client"
 import React, { useState, useEffect } from "react"
 import * as Styled from "./sidebar.styled"
-import { Modal } from "./modal"
+import { Modal } from "../modal/modal"
 import HamburgerButtonIcon from "@/shared/assets/img/hamburger_button.svg"
 import { LinkedOutIndexContent } from "./ui/linkedOutIndexContent"
 import { ShopContent } from "./ui/shopContent"
 import { ProfileContent } from "./ui/profileContent"
-import { CustomerSupportContent } from "../modal/customerSupportContent"
+import { CustomerSupportContent } from "../modal/ui/customerSupportContent"
+import { useTheme } from "@/shared/lib/theme/useTheme"
+import { DefaultTheme } from "styled-components"
 
 interface SidebarProps {
     items: Array<{ label: string; content: React.ReactNode }>
@@ -17,6 +19,7 @@ export const SideBar = ({ items = [], children }: SidebarProps) => {
     const [open, setOpen] = useState(false)
     const [isClient, setIsClient] = useState(false)
     const [selectedItem, setSelectedItem] = useState<React.ReactNode | null>(null)
+    const { theme } = useTheme()
 
     useEffect(() => {
         setIsClient(true)
@@ -38,10 +41,14 @@ export const SideBar = ({ items = [], children }: SidebarProps) => {
         return null
     }
 
+    const themeObject: DefaultTheme = {
+        isDarkMode: theme === "dark",
+    }
+
     return (
-        <Styled.LayoutContainer>
+        <Styled.LayoutContainer theme={themeObject}>
             <Styled.HamburgerButton onClick={toggleSidebar} isOpen={open}>
-                <HamburgerButtonIcon />
+                <img src={HamburgerButtonIcon} alt="Menu" />
             </Styled.HamburgerButton>
             <Styled.SidebarContainer open={open}>
                 <ProfileContent />
@@ -60,10 +67,16 @@ export const SideBar = ({ items = [], children }: SidebarProps) => {
                     </Styled.SidebarItem>
                 ))}
             </Styled.SidebarContainer>
-            <Styled.MainContent>{children}</Styled.MainContent>
-            <Modal isOpen={selectedItem !== null} onClose={handleCloseModal}>
-                {selectedItem}
-            </Modal>
+            <Styled.MainContent theme={themeObject}>
+                {children}
+                {selectedItem && (
+                    <Styled.ModalContainer>
+                        <Modal isOpen={selectedItem !== null} onClose={handleCloseModal}>
+                            {selectedItem}
+                        </Modal>
+                    </Styled.ModalContainer>
+                )}
+            </Styled.MainContent>
         </Styled.LayoutContainer>
     )
 }

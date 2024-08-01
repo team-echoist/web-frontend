@@ -5,7 +5,6 @@ export const ModalOverlay = styled.div`
     position: fixed;
     height: 100vh;
     width: calc(100% - 376px);
-    margin-left: 376px;
     // background: ${({ theme }) => (theme.isDarkMode ? "#121212" : "#fff")};
     background-color: #121212;
     display: flex;

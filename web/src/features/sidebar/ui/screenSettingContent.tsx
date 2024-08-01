@@ -1,12 +1,12 @@
 "use client"
 import React, { useState } from "react"
 import styled from "styled-components"
-import { useThemeStore } from "@/shared/store/store"
+import { useTheme } from "@/shared/lib/theme/useTheme"
 import DarkModeIcon from "@/shared/assets/img/darkModeIcon.svg"
 import LightModeIcon from "@/shared/assets/img/lightModeIcon.svg"
 import YesCheck from "@/shared/assets/img/screen_setting_yescheck.svg"
 import NoCheck from "@/shared/assets/img/screen_setting_nocheck.svg"
-import { ModalHeader } from "../../modal/ui/modalHeader"
+import ModalHeader from "../../modal/ui/modalHeader"
 
 const Container = styled.div`
     display: flex;
@@ -21,7 +21,7 @@ const ModeContainer = styled.div`
     display: flex;
     justify-content: space-around;
     width: 100%;
-    margin-top: 70px; /* 제목과 아이템 사이의 여백 조정 */
+    margin-top: 70px;
 `
 
 const ModeItem = styled.label<{ selected: boolean }>`
@@ -51,12 +51,12 @@ interface ScreenSettingContentProps {
 }
 
 export const ScreenSettingContent = ({ onClose }: ScreenSettingContentProps) => {
-    const { isDarkMode, toggleTheme } = useThemeStore()
-    const [selectedTheme, setSelectedTheme] = useState(isDarkMode ? "dark" : "light")
+    const { theme, onChangeTheme } = useTheme()
+    const [selectedTheme, setSelectedTheme] = useState<"light" | "dark">(theme)
 
-    const handleThemeChange = (theme: string) => {
+    const handleThemeChange = (theme: "light" | "dark") => {
         setSelectedTheme(theme)
-        toggleTheme()
+        onChangeTheme()
     }
 
     return (

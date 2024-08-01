@@ -34,7 +34,7 @@ const CloseButton = styled.button`
     margin-right: 38px;
 `
 
-export const ModalHeader = ({ title, onClose }: ModalHeaderProps) => {
+const ModalHeader = ({ title, onClose }: ModalHeaderProps) => {
     return (
         <HeaderContainer>
             <Title>{title}</Title>
@@ -42,3 +42,5 @@ export const ModalHeader = ({ title, onClose }: ModalHeaderProps) => {
         </HeaderContainer>
     )
 }
+
+export default ModalHeader
