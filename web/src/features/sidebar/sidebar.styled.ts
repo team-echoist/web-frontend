@@ -22,7 +22,6 @@ export const SidebarContainer = styled.div<{ open: boolean }>`
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-
     border-right: 1px solid #191919;
     background: #121212;
 `
@@ -78,10 +77,10 @@ export const Divider = styled.div`
 export const ModalContainer = styled.div`
     position: fixed;
     top: 0;
-    left: 376px;
-    width: calc(100% - 376px);
+    left: 350px;
+    width: calc(100% - 276px);
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #121212;
     z-index: 2000;
     display: flex;
     justify-content: center;

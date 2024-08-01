@@ -1,8 +1,9 @@
+// src/features/modal/ui/helpCenter.tsx
 "use client"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import HelpCenterHeader from "@/features/modal/ui/helpCenterHeader"
-import { AxiosInstance } from "@/shared/api"
+import { fetchHelpCenterInquiries } from "../api"
 
 interface Inquiry {
     id: number
@@ -69,8 +70,8 @@ const HelpCenter = ({ title, onClose }: HelpCenterProps) => {
     useEffect(() => {
         const fetchInquiries = async () => {
             try {
-                const response = await AxiosInstance.get("support/inquiries")
-                setInquiries(response.data)
+                const data = await fetchHelpCenterInquiries()
+                setInquiries(data)
             } catch (err: unknown) {
                 if (err) {
                     setError("문의 목록을 불러오는 데 실패했습니다.")

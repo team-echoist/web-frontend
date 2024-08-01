@@ -3,8 +3,9 @@ import styled from "styled-components"
 import ModalHeader from "./modalHeader"
 import ToDetailButton from "@/shared/assets/img/to_detail_button.png"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import HelpCenter from "./helpCenter"
+import { fetchCustomerSupportContent } from "../api"
 
 const CustomerSupportSection = styled.section`
     height: 100vh;
@@ -42,6 +43,20 @@ const supportItems = [{ label: "링크드아웃 고객센터" }, { label: "공�
 export const CustomerSupportContent = ({ onClose }: CustomerSupportContentProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedItem, setSelectedItem] = useState<{ label: string } | null>(null)
+    const [supportItems, setSupportItems] = useState<{ label: string }[]>([])
+
+    useEffect(() => {
+        const fetchContent = async () => {
+            try {
+                const data = await fetchCustomerSupportContent()
+                setSupportItems(data)
+            } catch (err) {
+                console.error("Failed to fetch customer support content", err)
+            }
+        }
+
+        fetchContent()
+    }, [])
 
     const handleItemClick = (item: { label: string }) => {
         setSelectedItem(item)
