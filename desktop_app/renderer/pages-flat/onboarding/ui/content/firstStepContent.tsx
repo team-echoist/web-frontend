@@ -10,6 +10,7 @@ const SContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  overflow: hidden;
 `;
 
 const SImage = styled(Image)`

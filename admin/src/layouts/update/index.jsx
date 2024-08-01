@@ -76,7 +76,6 @@ function index() {
       const { endpoint } = payloads[title];
       const { data, status } = await fetchData(endpoint, "get");
       if (status === 200) {
-        console.log("data",data)
         setValue((prev) => ({
           ...prev,
           isChangeLayout: title === "inquire" || title === "update",

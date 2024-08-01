@@ -6,7 +6,6 @@ import GeneralContent from "./content/general/generalContent";
 import Swiper from "@/shared/lib/swiper/swiper";
 import styled from "styled-components";
 
-
 type StepType = "step1" | "step2" | "step3" | "step4";
 const stepObj: { [key: string]: StepType } = {
   "1": "step1",
@@ -25,30 +24,34 @@ export const OnBoarding = () => {
   const [isGifEnded, setIsGifEnded] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsGifEnded(true);
-    }, 3000);
+    if (typeof window !== "undefined") {
+      const timer = setTimeout(() => {
+        setIsGifEnded(true);
+      }, 3000);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
+  useEffect(() => {
+    console.log("isGifEnded:", isGifEnded);
+  }, [isGifEnded]);
+
   return (
-    <>
+    <DefaultLayout>
       {isGifEnded ? (
         <Swiper step={step} setStep={setStep} maxStep={4}>
           {Array.from({ length: 4 }, (_, index) => (
             <Container key={index}>
-              <DefaultLayout key={index}>
-                <GeneralContent step={stepObj[`${index + 1}`]} />
-              </DefaultLayout>
+              <GeneralContent step={stepObj[`${index + 1}`]} />
             </Container>
           ))}
         </Swiper>
       ) : (
-        <DefaultLayout>
+        <>
           <FirstStepContent />
-        </DefaultLayout>
+        </>
       )}
-    </>
+    </DefaultLayout>
   );
 };

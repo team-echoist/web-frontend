@@ -37,7 +37,17 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body{
-background-color: ${({ theme }) => theme.colors.background};
+    width: 100%;
+	height:100vh;
+	margin:auto;
+	background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+	display:flex;
+	justify-content: center;
+	@media only screen and ${minDevices.tablet} and ${maxDevices.laptop}{
+    width:768px;
+	height:100vh;
+    }
 }
 .container{
 	height:100vh;

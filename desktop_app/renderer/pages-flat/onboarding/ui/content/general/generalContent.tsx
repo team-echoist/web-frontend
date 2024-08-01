@@ -5,6 +5,7 @@ import { IndicatorBar } from "@/shared/ui/indicator";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
+
 interface stepType {
   step: "step1" | "step2" | "step3" | "step4";
 }

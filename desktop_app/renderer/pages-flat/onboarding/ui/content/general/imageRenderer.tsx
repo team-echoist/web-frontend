@@ -6,6 +6,7 @@ import onBoarding3 from "@/shared/assets/img/onboarding_final_3.gif";
 import onBoarding4 from "@/shared/assets/img/onboarding_final_4.gif";
 import { minHeights } from "@/shared/styles";
 
+
 interface SLayoutProps {
   bgImage: string;
 }
@@ -19,12 +20,12 @@ const SLayout = styled.section.attrs<SLayoutProps>((props) => ({
     backgroundImage: `url(${props.bgImage})`,
   },
 }))<SLayoutProps>`
-  width: 100%;
+  width: 385.379px;
   height: 58vh;
   position: relative;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center -30%;
+  background-position: center 10%;
   @media only screen and ${minHeights.heightL} {
     height: 40vh;
   }
