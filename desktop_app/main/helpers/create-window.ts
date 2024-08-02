@@ -7,6 +7,7 @@ import {
 import Store from 'electron-store'
 import * as path from 'path'
 
+
 export const createWindow = (
   windowName: string,
   options: BrowserWindowConstructorOptions
@@ -15,8 +16,8 @@ export const createWindow = (
   const name = `window-state-${windowName}`
   const store = new Store<Rectangle>({ name })
   const defaultSize: Rectangle = {
-    width: options.width || 800, // 기본 크기 지정
-    height: options.height || 600, // 기본 크기 지정
+    width: options.width || 1193, // 기본 크기 지정
+    height: options.height || 835, // 기본 크기 지정
     x: 0,
     y: 0,
   }
@@ -75,11 +76,14 @@ export const createWindow = (
 
   state = ensureVisibleOnSomeDisplay(restore())
 
+  const iconPath = path.join(__dirname, '../../resources/logo.png'); // 아이콘 경로 설정
+  console.log('Icon Path:', iconPath);
+
   const win = new BrowserWindow({
     ...state,
     ...options,
     autoHideMenuBar: true,
-    icon: path.join(__dirname, 'path/to/your/icon.png'),
+    icon: iconPath,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

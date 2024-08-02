@@ -11,8 +11,8 @@ files:
       - app
 publish: null
 mac:
-  icon: resources/linkedout_icon.icns
+  icon: resources/icon.icns
 win:
-  icon: resources/linkedout_icon.ico
+  icon: resources/icon.ico
 linux:
   icon: resources/icon.png

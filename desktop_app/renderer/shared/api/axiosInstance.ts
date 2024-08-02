@@ -5,8 +5,11 @@ const AxiosInstance = axios.create({
   baseURL: "https://linkedoutapp.com/api/",
 });
 
+
+
 AxiosInstance.interceptors.request.use((config) => {
   let token: string | null = sessionStorage.getItem("token");
+  console.log("Test",token)
   if (!token) {
     token = Cookies.get("token") || null;
   }
