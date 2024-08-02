@@ -140,10 +140,10 @@ export const Login = () => {
     e.preventDefault();
     const { name } = e.currentTarget as HTMLButtonElement;
     const linkmapper = {
-      google: "https://linkedoutapp.com/api/" + "auth/google",
-      kakao:"https://linkedoutapp.com/api/" + "auth/kakao",
-      naver: "https://linkedoutapp.com/api/" + "auth/naver",
-      apple: "https://linkedoutapp.com/api/" + "auth/apple",
+      google: process.env.NEXT_PUBLIC_API_URL + "auth/google",
+      kakao: process.env.NEXT_PUBLIC_API_URL + "auth/kakao",
+      naver: process.env.NEXT_PUBLIC_API_URL + "auth/naver",
+      apple: process.env.NEXT_PUBLIC_API_URL + "auth/apple",
     };
 
     socialLogin(linkmapper[name as SocialLoginName]);

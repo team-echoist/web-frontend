@@ -14,7 +14,7 @@ export const checkFirstLogin = async () => {
 };
 
 export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
-  const response = await axios.post("https://linkedoutapp.com/api/auth/login", body);
+  const response = await axios.post(process.env.NEXT_PUBLIC_API_URL+"auth/login", body);
   const statusCode = response.data.statusCode;
 
   const authorization = response.headers.authorization;
