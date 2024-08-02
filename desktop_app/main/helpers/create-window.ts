@@ -3,7 +3,9 @@ import {
   BrowserWindow,
   BrowserWindowConstructorOptions,
   Rectangle,
-  nativeImage
+  nativeImage,
+  ipcMain,
+  app
 } from 'electron'
 import Store from 'electron-store'
 import * as path from 'path'
@@ -85,14 +87,58 @@ export const createWindow = (
     ...options,
     autoHideMenuBar: true,
     icon: appIcon,
+    frame: false,
+    backgroundColor:"#101012",
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      sandbox: false,
+      preload: path.join(process.cwd(), 'main', 'preload.js'),
       ...options.webPreferences,
     },
   })
+
 
   win.on('close', saveState)
 
   return win
 }
+
+// IPC 이벤트 핸들러 추가
+ipcMain.on('minimize-window', (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender)
+  win?.minimize()
+})
+
+ipcMain.on('maximize-window', (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (win?.isMaximized()) {
+    win.unmaximize();
+  } else {
+    win?.maximize();
+  }
+});
+
+ipcMain.on('restore-window', (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender)
+  win?.unmaximize()
+})
+
+ipcMain.on('close-window', (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender)
+  win?.close()
+})
+
+// app.on('ready', () => createWindow('main', {}));
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow('main', {});
+  }
+});

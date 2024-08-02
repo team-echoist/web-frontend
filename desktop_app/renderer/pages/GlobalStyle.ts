@@ -49,6 +49,71 @@ body{
 	height:100vh;
     }
 }
+#titlebar {
+  display: block;
+  position: fixed;
+  height: 32px;
+  width: calc(100% - 2px); /*Compensate for body 1px border*/
+  background: #101012;
+  color:#373737;
+
+
+}
+
+	#window-title{
+	margin-left:9px;
+	margin-top:6px;
+	img{
+	width: 22px;
+	height: 19px;
+	flex-shrink: 0;
+	}
+  }
+#titlebar #drag-region {
+  width: 100%;
+  height: 24px;
+  -webkit-app-region: drag;
+}
+  #window-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 46px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+cursor: pointer;
+}
+
+
+#window-controls .button {
+  grid-row: 1 / span 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+#min-button {
+  grid-column: 1;
+}
+#max-button, #restore-button {
+  grid-column: 2;
+   cursor: pointer;
+}
+#close-button {
+  grid-column: 3;
+   cursor: pointer;
+}
+  #window-controls {
+  -webkit-app-region: no-drag;
+}
+
+#window-controls .button {
+  user-select: none;
+}
+
+
 .container{
 	height:100vh;
 	margin:auto;
