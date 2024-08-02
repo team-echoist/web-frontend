@@ -13,15 +13,17 @@ export const createWindow = (
   const key = 'window-state'
   const name = `window-state-${windowName}`
   const store = new Store<Rectangle>({ name })
-  const defaultSize = {
-    width: options.width,
-    height: options.height,
+  const defaultSize: Rectangle = {
+    width: options.width || 800, // 기본 크기 지정
+    height: options.height || 600, // 기본 크기 지정
+    x: 0,
+    y: 0,
   }
-  let state = {}
+  let state: Rectangle = {} as Rectangle
 
-  const restore = () => store.get(key, defaultSize)
+  const restore = (): Rectangle => store.get(key, defaultSize)
 
-  const getCurrentPosition = () => {
+  const getCurrentPosition = (): Rectangle => {
     const position = win.getPosition()
     const size = win.getSize()
     return {
@@ -32,7 +34,7 @@ export const createWindow = (
     }
   }
 
-  const windowWithinBounds = (windowState, bounds) => {
+  const windowWithinBounds = (windowState: Rectangle, bounds: Rectangle): boolean => {
     return (
       windowState.x >= bounds.x &&
       windowState.y >= bounds.y &&
@@ -41,15 +43,16 @@ export const createWindow = (
     )
   }
 
-  const resetToDefaults = () => {
+  const resetToDefaults = (): Rectangle => {
     const bounds = screen.getPrimaryDisplay().bounds
-    return Object.assign({}, defaultSize, {
+    return {
+      ...defaultSize,
       x: (bounds.width - defaultSize.width) / 2,
       y: (bounds.height - defaultSize.height) / 2,
-    })
+    }
   }
 
-  const ensureVisibleOnSomeDisplay = (windowState) => {
+  const ensureVisibleOnSomeDisplay = (windowState: Rectangle): Rectangle => {
     const visible = screen.getAllDisplays().some((display) => {
       return windowWithinBounds(windowState, display.bounds)
     })
@@ -61,7 +64,7 @@ export const createWindow = (
     return windowState
   }
 
-  const saveState = () => {
+  const saveState = (): void => {
     if (!win.isMinimized() && !win.isMaximized()) {
       Object.assign(state, getCurrentPosition())
     }

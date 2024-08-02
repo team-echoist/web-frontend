@@ -1,9 +1,5 @@
-import HomeClient from "./homeClient";
+import { OnBoarding } from "../pages-flat/onboarding";
 
-export default function Home() {
-  return (
-    <>
-      <HomeClient />
-    </>
-  );
+export default function HomeClient() {
+  return <OnBoarding />;
 }
