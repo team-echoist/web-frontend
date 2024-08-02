@@ -3,7 +3,7 @@
   "name": "linkedout",
   "description": "My application description",
   "version": "1.0.0",
-  "author": "Yoshihide Shiono <shiono.yoshihide@gmail.com>",
+  "author": "ehoist",
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",

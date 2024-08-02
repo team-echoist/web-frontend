@@ -1,6 +1,6 @@
 appId: com.example.nextron
-productName: My Nextron App
-copyright: Copyright © 2018 Yoshihide Shiono
+productName: Linkedout
+copyright: echoist
 directories:
   output: dist
   buildResources: resources
@@ -11,8 +11,8 @@ files:
       - app
 publish: null
 mac:
-  icon: resources/icon.icns
+  icon: resources/logo.icns
 win:
-  icon: resources/icon.ico
+  icon: resources/logo.ico
 linux:
-  icon: resources/icon.png
+  icon: resources/logo.png
