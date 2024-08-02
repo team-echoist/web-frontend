@@ -31,6 +31,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <title>Linkedout</title>
           <link rel="icon" href="/icon-192x192.png" sizes="192x192" />
           <link rel="icon" href="/icon-256x256.png" sizes="256x256" />
           <link rel="icon" href="/icon-384x384.png" sizes="384x384" />

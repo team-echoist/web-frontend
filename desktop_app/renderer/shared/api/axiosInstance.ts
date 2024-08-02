@@ -9,7 +9,6 @@ const AxiosInstance = axios.create({
 
 AxiosInstance.interceptors.request.use((config) => {
   let token: string | null = sessionStorage.getItem("token");
-  console.log("Test",token)
   if (!token) {
     token = Cookies.get("token") || null;
   }

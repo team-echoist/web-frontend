@@ -7,7 +7,7 @@ interface bodyType {
 
 export const submitSignupForm = async (body: bodyType) => {
     try {
-        const response = await axios.post("/emailcheck", body);
+        const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + "auth/verify", body);
         const statusCode = response.data.statusCode;
         return statusCode;
       } catch (error) {

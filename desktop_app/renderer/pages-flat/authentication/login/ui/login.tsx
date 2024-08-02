@@ -54,6 +54,7 @@ const Li = styled.li`
 
 export const Login = () => {
   const token = useSearchParams().get("token");
+  const redirectToken = Cookies.get("token") || sessionStorage.getItem("token");
   const [infoData, setInfoData] = useState({
     id: { value: "", placeholder: "이메일 주소 또는 아이디" },
     password: { value: "", placeholder: "비밀번호" },
@@ -62,12 +63,6 @@ export const Login = () => {
   const [isShowToast, setIsShowToast] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const token = Cookies.get("token") || sessionStorage.getItem("token");
-    if (token) {
-      router.push("/web/main");
-    }
-  }, [router]);
 
   useEffect(() => {
     const handleLogin = async () => {
@@ -122,6 +117,7 @@ export const Login = () => {
       if (statusCode === 200 || statusCode === 201) {
         //메인페이지
         const isFistLogin = await checkFirstLogin();
+        console.log("isFistLogin",isFistLogin)
         if (isFistLogin) {
           router.push("/web/complete");
         } else {

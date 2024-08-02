@@ -132,7 +132,7 @@ function SignUP() {
     };
     try {
       const statusCode = await submitSignupForm(body);
-      if (statusCode === 201) {
+      if (statusCode === 201 || statusCode === 204) {
         setIsShowToast(true);
         setIsButtonEnabled(false);
       }
