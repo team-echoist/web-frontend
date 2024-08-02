@@ -63,9 +63,9 @@ export const Login = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = Cookies.get('token') || sessionStorage.getItem('token');
+    const token = Cookies.get("token") || sessionStorage.getItem("token");
     if (token) {
-      router.push('/web/main');
+      router.push("/web/main");
     }
   }, [router]);
 
@@ -140,10 +140,10 @@ export const Login = () => {
     e.preventDefault();
     const { name } = e.currentTarget as HTMLButtonElement;
     const linkmapper = {
-      google: "/googleAuth",
-      kakao: "/kakaoAuth",
-      naver: "/naverAuth",
-      apple: "/appleAuth",
+      google: process.env.NEXT_PUBLIC_API_URL + "auth/google",
+      kakao: process.env.NEXT_PUBLIC_API_URL + "auth/kakao",
+      naver: process.env.NEXT_PUBLIC_API_URL + "auth/naver",
+      apple: process.env.NEXT_PUBLIC_API_URL + "auth/apple",
     };
 
     socialLogin(linkmapper[name as SocialLoginName]);

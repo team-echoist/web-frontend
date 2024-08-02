@@ -10,3 +10,9 @@ files:
       - package.json
       - app
 publish: null
+mac:
+  icon: resources/linkedout_icon.icns
+win:
+  icon: resources/linkedout_icon.ico
+linux:
+  icon: resources/icon.png

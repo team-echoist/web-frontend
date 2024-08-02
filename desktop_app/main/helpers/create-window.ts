@@ -5,6 +5,7 @@ import {
   Rectangle,
 } from 'electron'
 import Store from 'electron-store'
+import * as path from 'path'
 
 export const createWindow = (
   windowName: string,
@@ -19,6 +20,7 @@ export const createWindow = (
     x: 0,
     y: 0,
   }
+  
   let state: Rectangle = {} as Rectangle
 
   const restore = (): Rectangle => store.get(key, defaultSize)
@@ -76,6 +78,8 @@ export const createWindow = (
   const win = new BrowserWindow({
     ...state,
     ...options,
+    autoHideMenuBar: true,
+    icon: path.join(__dirname, 'path/to/your/icon.png'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

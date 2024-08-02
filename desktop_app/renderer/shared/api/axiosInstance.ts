@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: "https://linkedoutapp.com/api/",
 });
 
 AxiosInstance.interceptors.request.use((config) => {
