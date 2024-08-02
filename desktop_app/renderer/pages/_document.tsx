@@ -32,10 +32,7 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <title>Linkedout</title>
-          <link rel="icon" href="/icon-192x192.png" sizes="192x192" />
-          <link rel="icon" href="/icon-256x256.png" sizes="256x256" />
-          <link rel="icon" href="/icon-384x384.png" sizes="384x384" />
-          <link rel="icon" href="/icon-512x512.png" sizes="512x512" />
+          <link rel="icon" href="/images/logo.png" />
         </Head>
         <body>
           <Main />

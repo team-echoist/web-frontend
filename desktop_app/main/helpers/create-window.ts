@@ -3,6 +3,7 @@ import {
   BrowserWindow,
   BrowserWindowConstructorOptions,
   Rectangle,
+  nativeImage
 } from 'electron'
 import Store from 'electron-store'
 import * as path from 'path'
@@ -76,14 +77,14 @@ export const createWindow = (
 
   state = ensureVisibleOnSomeDisplay(restore())
 
-  const iconPath = path.join(__dirname, '../../resources/logo.png'); // 아이콘 경로 설정
-  console.log('Icon Path:', iconPath);
+  let appIcon = nativeImage.createFromPath(path.join(process.cwd(), 'main', 'icons', 'logo.png'));
+
 
   const win = new BrowserWindow({
     ...state,
     ...options,
     autoHideMenuBar: true,
-    icon: iconPath,
+    icon: appIcon,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
