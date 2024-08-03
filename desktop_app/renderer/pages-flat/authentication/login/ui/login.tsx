@@ -14,6 +14,8 @@ import { checkFirstLogin, localLogin, socialLogin } from "../api";
 import { GeneralToast } from "@/shared/ui/toast";
 import { useSearchParams, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useStore } from "@/shared/store";
+import { getUserInfo } from "@/shared/api";
 
 type SocialLoginName = "google" | "kakao" | "naver";
 
@@ -53,8 +55,10 @@ const Li = styled.li`
 `;
 
 export const Login = () => {
-  const token = useSearchParams().get("token");
-  const redirectToken = Cookies.get("token") || sessionStorage.getItem("token");
+  const token =
+    useSearchParams().get("token") ||
+    Cookies.get("token") ||
+    sessionStorage.getItem("token");
   const [infoData, setInfoData] = useState({
     id: { value: "", placeholder: "이메일 주소 또는 아이디" },
     password: { value: "", placeholder: "비밀번호" },
@@ -62,21 +66,21 @@ export const Login = () => {
   const [autoLoginCheck, setAutoLoginCheck] = useState(false);
   const [isShowToast, setIsShowToast] = useState(false);
   const router = useRouter();
+  const setUser = useStore((state) => state.setUser);
 
+  const redirectToPage = (isFirstLogin: boolean) => {
+    if (isFirstLogin) {
+      router.push("/web/complete");
+    } else {
+      router.push("/web/main");
+    }
+  };
 
   useEffect(() => {
     const handleLogin = async () => {
       const tenYearsFromNow = new Date(
         new Date().setFullYear(new Date().getFullYear() + 10)
       );
-
-      const redirectToPage = (isFirstLogin: boolean) => {
-        if (isFirstLogin) {
-          router.push("/web/complete");
-        } else {
-          router.push("/web/main");
-        }
-      };
 
       if (token) {
         try {
@@ -90,8 +94,12 @@ export const Login = () => {
             sessionStorage.setItem("token", token);
           }
 
-          const isFirstLogin = await checkFirstLogin();
-          redirectToPage(isFirstLogin);
+          const userData = await getUserInfo();
+          if (userData) {
+            setUser(userData);
+            redirectToPage(userData.isFirst);
+          }
+        
         } catch (error) {
           console.error("Error checking first login:", error);
         }
@@ -116,12 +124,10 @@ export const Login = () => {
       const statusCode = await localLogin(body, autoLoginCheck);
       if (statusCode === 200 || statusCode === 201) {
         //메인페이지
-        const isFistLogin = await checkFirstLogin();
-        console.log("isFistLogin",isFistLogin)
-        if (isFistLogin) {
-          router.push("/web/complete");
-        } else {
-          router.push("/web/main");
+        const userData = await getUserInfo();
+        if (userData) {
+          setUser(userData);
+          redirectToPage(userData.isFirst);
         }
       }
     } catch (err) {
