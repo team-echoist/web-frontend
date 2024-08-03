@@ -4,17 +4,28 @@ import styled from "styled-components";
 import { AlarmButton } from "@/shared/ui/button";
 import { CircleButton } from "@/shared/ui/button";
 import WriteIcon from "@/shared/assets/img/write_icon.svg"
+import HomeImg from "@/shared/assets/img/mainroom.webp"
+import Image from "next/image";
 
-const Container = styled.div`
-  padding: 20px;
-  font-family: Arial, sans-serif;
+const Container = styled.main`
+width:1194px;
+font-family: Arial, sans-serif;
+position:fixed;
+top:32px;
 `;
+const HomeDiv =styled.div`
+width: 100%;
+height: 764px;
+`
 
 export const Main = () => {
   return (
     <Container>
-      <AlarmButton></AlarmButton>
-      <WriteIcon></WriteIcon>
+      <HomeDiv>
+      <Image alt="home" src={HomeImg} fill/>
+      </HomeDiv>
+      {/* <AlarmButton></AlarmButton>
+      <WriteIcon></WriteIcon> */}
     </Container>
   );
 };

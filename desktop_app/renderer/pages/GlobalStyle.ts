@@ -37,9 +37,10 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body{
-    width: 100%;
+  width: 100%;
 	height:100vh;
 	margin:auto;
+  overflow-x: hidden;
 	background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
 	display:flex;
@@ -56,8 +57,6 @@ body{
   width: calc(100% - 2px); /*Compensate for body 1px border*/
   background: #101012;
   color:#373737;
-
-
 }
   #window-controls {
   -webkit-app-region: no-drag;
@@ -149,7 +148,7 @@ cursor: pointer;
 
 
 .container{
-  width: 100vw;
+  width: 100%;
 	height:100vh;
 	margin:auto;
   overflow-x: none;
@@ -159,6 +158,7 @@ cursor: pointer;
 	justify-content: center;
 }
 .container.slide-up {
+  width: 100vw;
 	animation: ${slideUp} 1s ease-out;
 }
 }
