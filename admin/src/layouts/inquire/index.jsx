@@ -9,7 +9,7 @@ import { Pagination, Box } from "@mui/material";
 import { fetchData } from "../../api";
 
 function index() {
-  const [data, setData] = useState({ columns: [], rows: [] });
+  const [data, setData] = useState({ columns: [], rows: [], totalPages: 0 });
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
@@ -39,6 +39,10 @@ function index() {
     }
   };
 
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -48,7 +52,13 @@ function index() {
         rows={data?.rows && data?.rows}
       />
       <Box display="flex" justifyContent="center" p={2}>
-        <Pagination color="secondary" sx={{ color: "white" }} />
+        <Pagination
+          color="secondary"
+          sx={{ color: "white" }}
+          count={data.totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+        />
       </Box>
       <Footer />
     </DashboardLayout>
