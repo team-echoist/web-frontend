@@ -67,12 +67,12 @@ body{
   user-select: none;
 }
 
-.window-hover:hover {
-    background: rgba(255,255,255,0.1);
-  }
-  .window-hover:hover:active {
-    background: rgba(255,255,255,0.2);
-  }
+// .window-hover:hover {
+//     background: rgba(255,255,255,0.1);
+//   }
+//   .window-hover:hover:active {
+//     background: rgba(255,255,255,0.2);
+//   }
 
   .window-hover-close:hover {
     background: #E81123 !important;
