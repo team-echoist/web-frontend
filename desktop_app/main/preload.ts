@@ -42,6 +42,7 @@ ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
 
   notif.on('click', () => {
     ipcRenderer.send('notification-clicked', notification);
+    
   });
 
   notif.show();

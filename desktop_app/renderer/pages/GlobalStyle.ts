@@ -59,6 +59,40 @@ body{
 
 
 }
+  #window-controls {
+  -webkit-app-region: no-drag;
+}
+
+#window-controls .button {
+  user-select: none;
+}
+
+.window-hover:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .window-hover:hover:active {
+    background: rgba(255,255,255,0.2);
+  }
+
+  .window-hover-close:hover {
+    background: #E81123 !important;
+  }
+  .window-hover-close:active {
+    background: #F1707A !important;
+  }
+  .window-hover-close:active .icon {
+    filter: invert(1);
+  }
+
+.mac-controls:hover .mac-hover{
+    display: flex;
+}
+.mac-hover{
+display: none;
+}
+#restore-button {
+  display: none !important;
+}
 
 	#window-title{
 	margin-left:9px;
@@ -115,16 +149,14 @@ cursor: pointer;
 
 
 .container{
+  width: 100vw;
 	height:100vh;
 	margin:auto;
+  overflow-x: none;
 	background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
 	display:flex;
 	justify-content: center;
-	@media only screen and ${minDevices.tablet} and ${maxDevices.laptop}{
-    width:768px;
-	height:100vh;
-    }
 }
 .container.slide-up {
 	animation: ${slideUp} 1s ease-out;

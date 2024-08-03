@@ -31,6 +31,7 @@ function PrevButton() {
     <PrevBtn onClick={handleClick}>
       <PrevButtonImg />
     </PrevBtn>
+
   );
 }
 

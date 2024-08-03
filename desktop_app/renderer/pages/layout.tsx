@@ -117,23 +117,12 @@ export default function RootLayout({
 }) {
   const themeProps = useTheme();
   const pathname = usePathname();
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [prevPathname, setPrevPathname] = useState("");
-
-  useEffect(() => {
-    if (prevPathname === "/" && pathname === "/web/login") {
-      setIsAnimating(true);
-      const timer = setTimeout(() => setIsAnimating(false), 1000);
-      return () => clearTimeout(timer);
-    }
-    setPrevPathname(pathname);
-  }, [pathname, prevPathname]);
 
   return (
     <CustomThemeContext.Provider value={themeProps}>
       <ThemeProvider theme={themeProps.theme === "light" ? lightTheme : darkTheme}>
         <StyledComponentsRegistry>
-          <div className={`container ${isAnimating ? "slide-up" : ""}`}>
+          <div className={`container ${pathname?.includes("/web/login")  ? "slide-up" : ""}`}>
             {children}
           </div>
         </StyledComponentsRegistry>

@@ -99,7 +99,6 @@ export const Login = () => {
             setUser(userData);
             redirectToPage(userData.isFirst);
           }
-        
         } catch (error) {
           console.error("Error checking first login:", error);
         }
@@ -152,49 +151,51 @@ export const Login = () => {
   };
 
   return (
-    <DefaultLayout>
+    <>
       <PrevButton />
-      {isShowToast && (
-        <GeneralToast
-          title="로그인에 실패 했습니다."
-          desc="아이디와 비밀번호를 확인해주세요."
-          isShowToast={isShowToast}
-          setIsShowToast={setIsShowToast}
-        />
-      )}
+      <DefaultLayout>
+        {isShowToast && (
+          <GeneralToast
+            title="로그인에 실패 했습니다."
+            desc="아이디와 비밀번호를 확인해주세요."
+            isShowToast={isShowToast}
+            setIsShowToast={setIsShowToast}
+          />
+        )}
 
-      <TextField
-        title="안녕하세요!"
-        title2="링크드아웃에 오신 것을 환영합니다."
-      />
-      <InputField data={infoData} setData={setInfoData} />
-      <CheckboxContainer>
-        <Check
-          check={autoLoginCheck}
-          setCheck={setAutoLoginCheck}
-          type="general"
+        <TextField
+          title="안녕하세요!"
+          title2="링크드아웃에 오신 것을 환영합니다."
         />
-        <P $loginCheck={autoLoginCheck}>자동로그인</P>
-      </CheckboxContainer>
-      <ButtonFieldLayout>
-        <Button
-          text="로그인"
-          style="square"
-          scale="large"
-          type={isValidButton ? "point" : "disable"}
-          onClick={isValidButton ? submitLogin : undefined}
-        />
-        <Nav>
-          <Ul>
-            <Li>아이디 찾기</Li>
-            <Li>비밀번호 재설정</Li>
-            <Link href="/web/signup">
-              <Li>회원가입</Li>
-            </Link>
-          </Ul>
-        </Nav>
-        <SocialLoginField submitSocialLogin={submitSocialLogin} />
-      </ButtonFieldLayout>
-    </DefaultLayout>
+        <InputField data={infoData} setData={setInfoData} />
+        <CheckboxContainer>
+          <Check
+            check={autoLoginCheck}
+            setCheck={setAutoLoginCheck}
+            type="general"
+          />
+          <P $loginCheck={autoLoginCheck}>자동로그인</P>
+        </CheckboxContainer>
+        <ButtonFieldLayout>
+          <Button
+            text="로그인"
+            style="square"
+            scale="large"
+            type={isValidButton ? "point" : "disable"}
+            onClick={isValidButton ? submitLogin : undefined}
+          />
+          <Nav>
+            <Ul>
+              <Li>아이디 찾기</Li>
+              <Li>비밀번호 재설정</Li>
+              <Link href="/web/signup">
+                <Li>회원가입</Li>
+              </Link>
+            </Ul>
+          </Nav>
+          <SocialLoginField submitSocialLogin={submitSocialLogin} />
+        </ButtonFieldLayout>
+      </DefaultLayout>
+    </>
   );
 };
