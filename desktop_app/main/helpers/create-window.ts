@@ -103,8 +103,7 @@ export const createWindow = (
     },
   });
 
-  win.on('close', saveState);
-
+  setupPushReceiver(win.webContents);
   return win;
 };
 
@@ -141,29 +140,20 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow('main', {});
-  }
+const store = new Store();
+ipcMain.on("storeFCMToken", (e, token) => {
+  store.set('fcm_token', token);
 });
+
+ipcMain.on("getFCMToken", async (e) => {
+  e.sender.send('getFCMToken', store.get('fcm_token'));
+});
+
+// app.on('activate', () => {
+//   if (BrowserWindow.getAllWindows().length === 0) {
+//     createWindow('main', {});
+//   }
+// });
 
 // 아래의 코드 블록 추가
 
-const store = new Store();
-
-app.whenReady().then(() => {
-  const mainWindow = createWindow('main', {
-    width: 1440,
-    height: 900,
-  });
-
-  setupPushReceiver(mainWindow.webContents);
-
-  ipcMain.on("storeFCMToken", (e, token) => {
-    store.set('fcm_token', token);
-  });
-
-  ipcMain.on("getFCMToken", async (e) => {
-    e.sender.send('getFCMToken', store.get('fcm_token'));
-  });
-});
