@@ -19,8 +19,8 @@ export const createWindow = (
   const name = `window-state-${windowName}`
   const store = new Store<Rectangle>({ name })
   const defaultSize: Rectangle = {
-    width: options.width || 1193, // 기본 크기 지정
-    height: options.height || 835, // 기본 크기 지정
+    width: options.width || 1440, // 기본 크기 지정
+    height: options.height || 900, // 기본 크기 지정
     x: 0,
     y: 0,
   }

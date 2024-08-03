@@ -25,7 +25,7 @@ const SLayout = styled.section.attrs<SLayoutProps>((props) => ({
   position: relative;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center 10%;
+  background-position: center -10%;
   @media only screen and ${minHeights.heightL} {
     height: 40vh;
   }
