@@ -9,6 +9,6 @@
       "@/pages-flat/*": ["pages-flat/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../electron-push-receiver.d.ts"],
   "exclude": ["node_modules"]
 }

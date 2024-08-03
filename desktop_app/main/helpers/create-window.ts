@@ -5,82 +5,87 @@ import {
   Rectangle,
   nativeImage,
   ipcMain,
-  app
-} from 'electron'
-import Store from 'electron-store'
-import * as path from 'path'
-
+  app,
+} from 'electron';
+import Store from 'electron-store';
+import * as path from 'path';
+import { setup as setupPushReceiver } from 'electron-push-receiver';
 
 export const createWindow = (
   windowName: string,
   options: BrowserWindowConstructorOptions
 ): BrowserWindow => {
-  const key = 'window-state'
-  const name = `window-state-${windowName}`
-  const store = new Store<Rectangle>({ name })
+  const key = 'window-state';
+  const name = `window-state-${windowName}`;
+  const store = new Store<Rectangle>({ name });
+
   const defaultSize: Rectangle = {
     width: options.width || 1440, // 기본 크기 지정
     height: options.height || 900, // 기본 크기 지정
     x: 0,
     y: 0,
-  }
-  
-  let state: Rectangle = {} as Rectangle
+  };
 
-  const restore = (): Rectangle => store.get(key, defaultSize)
+  let state: Rectangle = {} as Rectangle;
+
+  const restore = (): Rectangle => store.get(key, defaultSize);
 
   const getCurrentPosition = (): Rectangle => {
-    const position = win.getPosition()
-    const size = win.getSize()
+    const position = win.getPosition();
+    const size = win.getSize();
     return {
       x: position[0],
       y: position[1],
       width: size[0],
       height: size[1],
-    }
-  }
+    };
+  };
 
-  const windowWithinBounds = (windowState: Rectangle, bounds: Rectangle): boolean => {
+  const windowWithinBounds = (
+    windowState: Rectangle,
+    bounds: Rectangle
+  ): boolean => {
     return (
       windowState.x >= bounds.x &&
       windowState.y >= bounds.y &&
       windowState.x + windowState.width <= bounds.x + bounds.width &&
       windowState.y + windowState.height <= bounds.y + bounds.height
-    )
-  }
+    );
+  };
 
   const resetToDefaults = (): Rectangle => {
-    const bounds = screen.getPrimaryDisplay().bounds
+    const bounds = screen.getPrimaryDisplay().bounds;
     return {
       ...defaultSize,
       x: (bounds.width - defaultSize.width) / 2,
       y: (bounds.height - defaultSize.height) / 2,
-    }
-  }
+    };
+  };
 
   const ensureVisibleOnSomeDisplay = (windowState: Rectangle): Rectangle => {
     const visible = screen.getAllDisplays().some((display) => {
-      return windowWithinBounds(windowState, display.bounds)
-    })
+      return windowWithinBounds(windowState, display.bounds);
+    });
     if (!visible) {
       // Window is partially or fully not visible now.
       // Reset it to safe defaults.
-      return resetToDefaults()
+      return resetToDefaults();
     }
-    return windowState
-  }
+    return windowState;
+  };
 
   const saveState = (): void => {
     if (!win.isMinimized() && !win.isMaximized()) {
-      Object.assign(state, getCurrentPosition())
+      Object.assign(state, getCurrentPosition());
     }
-    store.set(key, state)
-  }
+    store.set(key, state);
+  };
 
-  state = ensureVisibleOnSomeDisplay(restore())
+  state = ensureVisibleOnSomeDisplay(restore());
 
-  let appIcon = nativeImage.createFromPath(path.join(process.cwd(), 'main', 'icons', 'logo.png'));
-
+  let appIcon = nativeImage.createFromPath(
+    path.join(process.cwd(), 'main', 'icons', 'logo.png')
+  );
 
   const win = new BrowserWindow({
     ...state,
@@ -88,7 +93,7 @@ export const createWindow = (
     autoHideMenuBar: true,
     icon: appIcon,
     frame: false,
-    backgroundColor:"#101012",
+    backgroundColor: '#101012',
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -96,19 +101,18 @@ export const createWindow = (
       preload: path.join(process.cwd(), 'main', 'preload.js'),
       ...options.webPreferences,
     },
-  })
+  });
 
+  win.on('close', saveState);
 
-  win.on('close', saveState)
-
-  return win
-}
+  return win;
+};
 
 // IPC 이벤트 핸들러 추가
 ipcMain.on('minimize-window', (event) => {
-  const win = BrowserWindow.fromWebContents(event.sender)
-  win?.minimize()
-})
+  const win = BrowserWindow.fromWebContents(event.sender);
+  win?.minimize();
+});
 
 ipcMain.on('maximize-window', (event) => {
   const win = BrowserWindow.fromWebContents(event.sender);
@@ -120,14 +124,14 @@ ipcMain.on('maximize-window', (event) => {
 });
 
 ipcMain.on('restore-window', (event) => {
-  const win = BrowserWindow.fromWebContents(event.sender)
-  win?.unmaximize()
-})
+  const win = BrowserWindow.fromWebContents(event.sender);
+  win?.unmaximize();
+});
 
 ipcMain.on('close-window', (event) => {
-  const win = BrowserWindow.fromWebContents(event.sender)
-  win?.close()
-})
+  const win = BrowserWindow.fromWebContents(event.sender);
+  win?.close();
+});
 
 // app.on('ready', () => createWindow('main', {}));
 
@@ -141,4 +145,25 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow('main', {});
   }
+});
+
+// 아래의 코드 블록 추가
+
+const store = new Store();
+
+app.whenReady().then(() => {
+  const mainWindow = createWindow('main', {
+    width: 1440,
+    height: 900,
+  });
+
+  setupPushReceiver(mainWindow.webContents);
+
+  ipcMain.on("storeFCMToken", (e, token) => {
+    store.set('fcm_token', token);
+  });
+
+  ipcMain.on("getFCMToken", async (e) => {
+    e.sender.send('getFCMToken', store.get('fcm_token'));
+  });
 });

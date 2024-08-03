@@ -1,7 +1,8 @@
 import path from "path";
-import { app, ipcMain, nativeImage } from "electron";
+import { app, ipcMain, nativeImage, BrowserWindow } from "electron";
 import serve from "electron-serve";
 import { createWindow } from "./helpers";
+import Store from 'electron-store';
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -33,10 +34,8 @@ if (isProd) {
     mainWindow.webContents.openDevTools();
   }
 
-  ipcMain.on("toggle-debug", () => {
-    //디버기 툴 토글(on/off)
-    mainWindow.webContents.toggleDevTools();
-  });
+
+
 })();
 
 app.on("window-all-closed", () => {
