@@ -15,7 +15,7 @@ top:32px;
 `;
 const HomeDiv =styled.div`
 width: 100%;
-height: 91.6vh;
+height: 89.6vh;
 `
 
 export const Main = () => {
