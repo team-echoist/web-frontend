@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const Policies = () => {
     return (
-        <main className="p-4 sm:p-8">
+        <main className="p-4 sm:p-8 bg-white">
             <article className="space-y-8">
                 <section className="border-b-2 py-6 sm:py-10">
                     <h2 className="text-xl sm:text-2xl font-black mb-4">1. 링크드아웃 개인정보 처리방침</h2>

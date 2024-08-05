@@ -2,7 +2,7 @@ import Header from "./_components/header/Header"
 
 export default function Home() {
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <main className="bg-[#121212] min-h-screen p-12">
             <Header />
         </main>
     )
