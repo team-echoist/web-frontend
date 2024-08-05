@@ -74,12 +74,6 @@ export const createWindow = (
     return windowState;
   };
 
-  const saveState = (): void => {
-    if (!win.isMinimized() && !win.isMaximized()) {
-      Object.assign(state, getCurrentPosition());
-    }
-    store.set(key, state);
-  };
 
   state = ensureVisibleOnSomeDisplay(restore());
 

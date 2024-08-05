@@ -1,12 +1,16 @@
+import { useState, useEffect } from "react";
 import Check from "@/shared/ui/check/check";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
-
+import ConfirmIcon from "@/shared/assets/img/confirm_icon.svg";
+import { Button } from "@/shared/ui/button";
+import { PrevButton } from "@/shared/ui/button";
 
 interface CheckItem {
   desc: string;
   checked: boolean;
   required: boolean;
+  isOpenDesc:boolean
 }
 
 interface CheckState {
@@ -15,24 +19,30 @@ interface CheckState {
   personal: CheckItem;
   age: CheckItem;
   marketing: CheckItem;
+  location: CheckItem;
+  alert: CheckItem;
 }
 
 interface CheckFieldProps {
   check: CheckState;
   setCheck: React.Dispatch<React.SetStateAction<CheckState>>;
 }
+
 const Layout = styled.section`
   width: 100%;
   position: absolute;
-  top: 441px;
+  top: 321px;
 `;
+
 const AllCheckDiv = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
   margin-bottom: 10px;
 `;
+
 const P = styled.p``;
+
 const CheckDiv = styled.div`
   display: flex;
   gap: 8px;
@@ -40,6 +50,7 @@ const CheckDiv = styled.div`
   width: 100%;
   height: 34px;
   margin-bottom: 12px;
+  position: relative;
   p {
     color: ${color.gray};
     text-align: center;
@@ -51,7 +62,22 @@ const CheckDiv = styled.div`
   }
 `;
 
+const ConfirmDiv = styled.div`
+  position: absolute;
+  right: 29px;
+`;
+
 function CheckField({ check, setCheck }: CheckFieldProps) {
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    const requiredItems = ["service", "personal", "age"];
+    const allRequiredChecked = requiredItems.every(
+      (item) => (check[item as keyof CheckState] as CheckItem).checked
+    );
+    setIsButtonEnabled(allRequiredChecked);
+  }, [check]);
+
   const handleAllCheck = () => {
     const newAllCheck = !check.allCheck;
 
@@ -61,10 +87,13 @@ function CheckField({ check, setCheck }: CheckFieldProps) {
       personal: { ...check.personal, checked: newAllCheck },
       age: { ...check.age, checked: newAllCheck },
       marketing: { ...check.marketing, checked: newAllCheck },
+      alert: { ...check.alert, checked: newAllCheck },
+      location: { ...check.location, checked: newAllCheck },
     };
 
     setCheck(updatedCheck);
   };
+
   const handleIndividualCheck = (key: keyof CheckState) => {
     setCheck((prevCheck) => ({
       ...prevCheck,
@@ -74,13 +103,19 @@ function CheckField({ check, setCheck }: CheckFieldProps) {
       },
     }));
   };
+
   const checkItems = [
     { key: "service", item: check.service },
     { key: "personal", item: check.personal },
     { key: "age", item: check.age },
+    { key: "location", item: check.location },
+    { key: "marketing", item: check.marketing },
+    { key: "alert", item: check.alert },
   ];
+
   return (
     <Layout>
+      <PrevButton />
       <AllCheckDiv onClick={handleAllCheck}>
         <Check check={check.allCheck} setCheck={() => {}} type="circle" />
         <P>전체 동의</P>
@@ -93,8 +128,19 @@ function CheckField({ check, setCheck }: CheckFieldProps) {
             type="general"
           />
           <P>{item.desc}</P>
+          {item.isOpenDesc && (
+            <ConfirmDiv>
+              <ConfirmIcon />
+            </ConfirmDiv>
+          )}
         </CheckDiv>
       ))}
+      <Button
+        text="확인"
+        style="square"
+        scale="large"
+        type={isButtonEnabled ? "point" : "disable"}
+      />
     </Layout>
   );
 }

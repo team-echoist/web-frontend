@@ -6,7 +6,6 @@ import InputField from "../../ui/contents/inputfield";
 import CheckField from "./contents/checkField";
 import { Button } from "@/shared/ui/button";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
 import { submitSignupForm } from "../api";
 import { GeneralToast } from "@/shared/ui/toast";
 
