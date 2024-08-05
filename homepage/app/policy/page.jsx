@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 const Policies = () => {
     return (
@@ -303,8 +304,10 @@ const Policies = () => {
                         처리합니다.
                     </p>
                     <p className="mb-4 font-bold">
-                        <span className="text-blue-800">링크드아웃 위치정보 이용약관 제4조</span>에 따른 서비스의 제공을
-                        위해 개인위치정보를 보유할 수 있습니다.
+                        <Link href="/위치기반서비스_이용약관.pdf" target="_blank" className="text-blue-800">
+                            링크드아웃 위치정보 이용약관 제4조
+                        </Link>
+                        에 따른 서비스의 제공을 위해 개인위치정보를 보유할 수 있습니다.
                     </p>
                     <ul className="list-disc pl-4 ml-4 sm:pl-6 mb-4">
                         <li className="mb-4">
@@ -360,8 +363,14 @@ const Policies = () => {
                         </p>
                         <p className="mb-4">
                             그 외 개인위치정보 처리와 관련된 자세한 내용은{" "}
-                            <span className="text-blue-800 font-bold">링크드아웃 위치정보 이용약관</span>을 참고하시기
-                            바랍니다.
+                            <Link
+                                href="/위치기반서비스_이용약관.pdf"
+                                target="_blank"
+                                className="text-blue-800 font-semibold"
+                            >
+                                링크드아웃 위치정보 이용약관
+                            </Link>
+                            을 참고하시기 바랍니다.
                         </p>
                     </div>
                     <div className="p-8 border text-center flex flex-col items-center">
@@ -602,7 +611,7 @@ const Policies = () => {
                                 <ul className=" pl-4 sm:pl-6">
                                     <li className="mb-4">
                                         - 서비스 내 고객센터
-                                        <a href="#" className="text-blue-700">
+                                        <a href="#" className="text-blue-800">
                                             (바로가기)
                                         </a>
                                     </li>
