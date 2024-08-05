@@ -1,9 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
 
+// TODO: text - gray - 500 변경
+
 const Policies = () => {
     return (
-        <main className="p-4 sm:p-8 bg-white">
+        <main className="p-4 sm:p-8 bg-white ">
             <article className="space-y-8">
                 <section className="border-b-2 py-6 sm:py-10">
                     <h2 className="text-xl sm:text-2xl font-black mb-4">1. 링크드아웃 개인정보 처리방침</h2>
@@ -12,7 +14,7 @@ const Policies = () => {
                         할 지침을 의미하며, 링크드아웃은 개인정보처리자가 준수하여야 하는 대한민국의 관계 법령 및
                         개인정보보호 규정, 가이드라인을 준수하여 개인정보 처리방침을 제공합니다.
                     </p>
-                    <p className="mb-4">
+                    <p className="my-4">
                         링크드아웃은 이용자의 동의를 기반으로 개인정보를 수집&middot;이용 및 제공하고 있습니다. 이용자의
                         권리(개인정보 자기결정권)를 적극적으로 보장하기 위해 개인정보 처리방침을 알기 쉽게 제공할 수
                         있도록 다양한 노력을 기울이고 있으며, 이러한 노력의 일환으로 링크드아웃의 주요 개인정보 처리
@@ -20,32 +22,32 @@ const Policies = () => {
                     </p>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 justify-center items-center">
                         <div className="p-2 sm:p-4 flex flex-col items-center">
-                            <Image src="/images/개인정보.png" alt="개인정보" width={64} height={64} />
-                            <p className="mt-2 text-center font-bold">개인정보</p>
+                            <Image src="/images/개인정보.png" alt="개인정보" width={100} height={100} />
+                            <p className="mt-6 text-center font-bold">개인정보</p>
                         </div>
                         <div className="p-2 sm:p-4 flex flex-col items-center">
-                            <Image src="/images/처리목적.png" alt="처리목적" width={64} height={64} />
+                            <Image src="/images/처리목적.png" alt="처리목적" width={100} height={100} />
                             <p className="mt-2 text-center font-bold">처리목적</p>
                         </div>
                         <div className="p-2 sm:p-4 flex flex-col items-center">
-                            <Image src="/images/제3자제공.png" alt="제3자 제공" width={64} height={64} />
+                            <Image src="/images/제3자제공.png" alt="제3자 제공" width={100} height={100} />
                             <p className="mt-2 text-center font-bold">제3자 제공</p>
                         </div>
                         <div className="p-2 sm:p-4 flex flex-col items-center">
-                            <Image src="/images/처리위탁.png" alt="처리위탁" width={64} height={64} />
-                            <p className="mt-2 text-center font-bold">처리위탁</p>
+                            <Image src="/images/처리위탁.png" alt="처리위탁" width={100} height={100} />
+                            <p className="mt-6 text-center font-bold">처리위탁</p>
                         </div>
                         <div className="p-2 sm:p-4 flex flex-col items-center">
                             <Image
                                 src="/images/정보주체의권리의무.png"
                                 alt="정보주체의 권리의무"
-                                width={64}
-                                height={64}
+                                width={100}
+                                height={100}
                             />
                             <p className="mt-2 text-center font-bold">정보주체의 권리의무</p>
                         </div>
                         <div className="info-card p-2 sm:p-4 flex flex-col items-center">
-                            <Image src="/images/고충처리부서.png" alt="고충처리 부서" width={64} height={64} />
+                            <Image src="/images/고충처리부서.png" alt="고충처리 부서" width={100} height={100} />
                             <p className="mt-2 text-center font-bold">고충처리 부서</p>
                         </div>
                     </div>
@@ -73,9 +75,9 @@ const Policies = () => {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border rounded-lg mt-8">
                         <figure className="p-4 flex flex-col justify-center items-center relative">
-                            <Image src="/images/개인정보.png" alt="개인정보" width={64} height={64} />
+                            <Image src="/images/개인정보.png" alt="개인정보" width={100} height={100} />
                             <figcaption className="font-bold my-4">개인정보</figcaption>
-                            <figcaption className="mt-2 text-center">
+                            <figcaption className="text-center">
                                 링크드아웃 계정 가입 시 서비스 제공을 위해 필요한 최소한의 개인 정보를 수집하고
                                 있습니다. 서비스 이용 시 특화된 기능 이용을 위해 이용자의 동의를 받고 추가적인
                                 개인정보를 수집할 수 있습니다.
@@ -83,9 +85,9 @@ const Policies = () => {
                             <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-52 w-px bg-gray-300"></div>
                         </figure>
                         <figure className="p-4 flex flex-col justify-center items-center">
-                            <Image src="/images/자동화수집.png" alt="자동화 수집" width={64} height={64} />
+                            <Image src="/images/자동화수집.png" alt="자동화 수집" width={100} height={100} />
                             <figcaption className="font-bold my-4">자동화 수집</figcaption>
-                            <figcaption className="mt-2 text-center">
+                            <figcaption className="text-center">
                                 링크드아웃 서비스 이용 과정에서 단말기정보, IP주소, 쿠키, 방문일 시, 부정이용기록,
                                 서비스 이용 기록 등의 정보가 자동으로 생성되어 수집될 수 있습니다.
                             </figcaption>
@@ -129,7 +131,7 @@ const Policies = () => {
                         이용자의 이익을 부당하게 침해하는지, 가명처리 또는 암호화 등 안전성 확보에 필요한 조치를
                         하였는지&apos;를 종합적으로 고려합니다.
                     </p>
-                    <p className="mb-4">
+                    <p className="mb-16">
                         링크드아웃은 수집한 개인정보를 특정 개인을 알아볼 수 없도록 가명처리하여 통계작성, 과학적 연구,
                         공익적 기록보존 등을 위하여 처리할 수 있습니다. 이 때 가명정보는 재식별되지 않도록 추가정보와
                         분리하여 별도 저장・관리하고 필요한 기술적・관리적 보호조치를 취합니다.
@@ -140,15 +142,15 @@ const Policies = () => {
                                 <Image
                                     src="/images/처리항목.png"
                                     alt="처리항목"
-                                    width={64}
-                                    height={64}
+                                    width={100}
+                                    height={100}
                                     className="mx-4"
                                 />
                                 <Image
                                     src="/images/처리목적.png"
                                     alt="처리목적"
-                                    width={64}
-                                    height={64}
+                                    width={100}
+                                    height={100}
                                     className="mx-4"
                                 />
                             </div>
@@ -164,8 +166,8 @@ const Policies = () => {
                             <Image
                                 src="/images/추가적이용.png"
                                 alt="추가적 이용"
-                                width={64}
-                                height={64}
+                                width={100}
+                                height={100}
                                 className="my-2"
                             />
                             <figcaption className="font-bold">추가적 이용</figcaption>
@@ -179,8 +181,8 @@ const Policies = () => {
                             <Image
                                 src="/images/가명정보처리.png"
                                 alt="가명정보 처리"
-                                width={64}
-                                height={64}
+                                width={100}
+                                height={100}
                                 className="my-2"
                             />
                             <figcaption className="font-bold">가명정보 처리</figcaption>
@@ -222,7 +224,7 @@ const Policies = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border rounded-l text-center p-4">
                         <div className="p-4 relative">
                             <figure className="flex flex-col items-center">
-                                <Image src="/images/제3자제공.png" alt="제3자 제공" width={64} height={64} />
+                                <Image src="/images/제3자제공.png" alt="제3자 제공" width={100} height={100} />
                                 <figcaption className="my-2 text-center font-bold">제3자 제공</figcaption>
                             </figure>
                             <p className="mt-2">
@@ -232,9 +234,9 @@ const Policies = () => {
                             </p>
                             <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-72 w-px bg-gray-300"></div>
                         </div>
-                        <div className="p-4 relative">
+                        <div className="p-4 my-4 relative">
                             <figure className="flex flex-col items-center">
-                                <Image src="/images/처리위탁.png" alt="처리위탁" width={64} height={64} />
+                                <Image src="/images/처리위탁.png" alt="처리위탁" width={100} height={100} />
                                 <figcaption className="my-2 text-center font-bold">처리위탁</figcaption>
                             </figure>
                             <p className="mt-2">
@@ -246,7 +248,7 @@ const Policies = () => {
                         </div>
                         <div className="p-4">
                             <figure className="flex flex-col items-center">
-                                <Image src="/images/국외이전.png" alt="국외이전" width={64} height={64} />
+                                <Image src="/images/국외이전.png" alt="국외이전" width={100} height={100} />
                                 <figcaption className="my-2 text-center font-bold">국외이전</figcaption>
                             </figure>
                             <p className="mt-2">
@@ -285,8 +287,14 @@ const Policies = () => {
                     <div className="p-8 border text-center flex flex-col items-center">
                         <figure>
                             <div className="flex items-center justify-cener">
-                                <Image src="/images/보유기간.png" alt="보유기간" width={64} height={64} />
-                                <Image src="/images/파기.png" alt="파기" width={64} height={64} />
+                                <Image
+                                    src="/images/보유기간.png"
+                                    alt="보유기간"
+                                    width={100}
+                                    height={100}
+                                    className="mx-2"
+                                />
+                                <Image src="/images/파기.png" alt="파기" width={100} height={100} className="mx-2" />
                             </div>
                             <figcaption className="my-4 text-center font-bold">보유기간 및 파기</figcaption>
                         </figure>
@@ -383,8 +391,8 @@ const Policies = () => {
                     <div className="p-8 border text-center flex flex-col items-center">
                         <figure>
                             <div className="flex items-center justify-cener">
-                                <Image src="/images/보유기간.png" alt="보유기간" width={64} height={64} />
-                                <Image src="/images/파기.png" alt="파기" width={64} height={64} />
+                                <Image src="/images/보유기간.png" alt="보유기간" width={100} height={100} />
+                                <Image src="/images/파기.png" alt="파기" width={100} height={100} />
                             </div>
                             <figcaption className="my-4 text-center font-bold">보유기간 및 파기</figcaption>
                         </figure>
@@ -451,10 +459,10 @@ const Policies = () => {
                                 <Image
                                     src="/images/정보주체의권리의무.png"
                                     alt="정보주체의권리의무"
-                                    width={64}
-                                    height={64}
+                                    width={100}
+                                    height={100}
                                 />
-                                <Image src="/images/열람청구.png" alt="열람청구" width={64} height={64} />
+                                <Image src="/images/열람청구.png" alt="열람청구" width={100} height={100} />
                             </div>
                             <figcaption className="my-4 text-center font-bold">정보주체의 권리의무</figcaption>
                         </figure>
@@ -550,7 +558,7 @@ const Policies = () => {
                     </ul>
                     <div className="info-card p-4 border rounded-lg text-center">
                         <figure className="flex flex-col items-center">
-                            <Image src="/images/안정성확보조치.png" alt="안정성 확보조치" width={64} height={64} />
+                            <Image src="/images/안정성확보조치.png" alt="안정성 확보조치" width={100} height={100} />
                             <figcaption className="mb-2 mt-4 text-center font-bold">안전성 확보조치</figcaption>
                         </figure>
                         <p className="mt-2">
@@ -616,12 +624,7 @@ const Policies = () => {
                             <li className="mb-4">문의</li>
                             <li className="list-none">
                                 <ul className="pl-4 sm:pl-6">
-                                    <li className="mb-4">
-                                        - 서비스 내 고객센터
-                                        <a href="#" className="text-blue-700 font-bold">
-                                            (바로가기)
-                                        </a>
-                                    </li>
+                                    <li className="mb-4">- 서비스 내 고객센터</li>
                                     <li>- Email : linkedoutapp@gmail.com</li>
                                 </ul>
                             </li>
@@ -638,10 +641,10 @@ const Policies = () => {
                                     <Image
                                         src="/images/개인정보보호책임자.png"
                                         alt="개인정보보호책임자"
-                                        width={64}
-                                        height={64}
+                                        width={100}
+                                        height={100}
                                     />
-                                    <Image src="/images/고충처리부서.png" alt="고충처리부서" width={64} height={64} />
+                                    <Image src="/images/고충처리부서.png" alt="고충처리부서" width={100} height={100} />
                                 </div>
                                 <figcaption className="my-2 text-center font-bold">
                                     개인정보보호책임자 & 고충처리 부서
@@ -655,7 +658,7 @@ const Policies = () => {
                         </div>
                         <div className="p-2">
                             <figure className="flex flex-col items-center">
-                                <Image src="/images/권익침해구제.png" alt="권익침해 구제" width={64} height={64} />
+                                <Image src="/images/권익침해구제.png" alt="권익침해 구제" width={100} height={100} />
                                 <figcaption className="my-2 text-center font-bold">권익침해 구제</figcaption>
                             </figure>
                             <p className="mt-2">
@@ -685,8 +688,8 @@ const Policies = () => {
                             <Image
                                 src="/images/개인정보처리방침변경.png"
                                 alt="개인정보처리방침변경"
-                                width={64}
-                                height={64}
+                                width={100}
+                                height={100}
                             />
                             <figcaption className="mt-2 font-bold">개인정보처리방침변경</figcaption>
                         </figure>
