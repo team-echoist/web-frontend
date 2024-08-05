@@ -26,7 +26,6 @@ ipcRenderer.send(START_NOTIFICATION_SERVICE, senderId);
 
 // Listen for service successfully started
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_, token) => {
-  console.log('FCM service started');
   ipcRenderer.send('storeFCMToken', token);
 });
 

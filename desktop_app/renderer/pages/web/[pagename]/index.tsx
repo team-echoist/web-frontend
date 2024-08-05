@@ -3,59 +3,39 @@ import RenderView from "@/pages-flat/index";
 import { SetStateAction, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-
-
-
-
 function Index() {
-  const [pageName, setPageName] = useState<string>('');
+  const [pageName, setPageName] = useState<string>("");
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [fcmToken, setFcmToken] = useState('');
-  const [machineId, setMachineId] = useState('');
-
-  console.log("machineId",machineId)
+  const [fcmToken, setFcmToken] = useState("");
+  const [machineId, setMachineId] = useState("");
 
   useEffect(() => {
-
-    console.log("window", window.electron);
-
     const handleDeviceInfo = (data: string) => {
-      console.log("Device info received:", data);
       setMachineId(data);
     };
 
     window.electron.onDeviceInfo(handleDeviceInfo);
     window.electron.requestDeviceInfo();
-    window.electron?.getFCMToken('getFCMToken', (_: any, token: SetStateAction<string>) => {
-      console.log("token", token);
-      setFcmToken(token);
-    });
-
-
-    // window.electron.ipcRenderer.on('machine-id', handleMachineId);
-
-    // return () => {
-    //   // Cleanup the listener when the component is unmounted
-    //   window.electron.ipcRenderer.removeListener('machine-id', handleMachineId);
-    // };
+    window.electron?.getFCMToken(
+      "getFCMToken",
+      (_: any, token: SetStateAction<string>) => {
+        setFcmToken(token);
+      }
+    );
   }, []);
 
-  console.log("머신",machineId)
+  console.log("머신", machineId);
   useEffect(() => {
-    const pagename = searchParams.get('pagename');
+    const pagename = searchParams.get("pagename");
     if (pagename) {
       setPageName(pagename);
     }
   }, [router, searchParams]);
 
-
-
   return (
-    <>
-      {pageName ? <RenderView pageName={pageName} /> : <div>Loading...</div>}
-    </>
+    <>{pageName ? <RenderView pageName={pageName} /> : <div>Loading...</div>}</>
   );
 }
 
