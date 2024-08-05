@@ -8,12 +8,12 @@ const Policies = () => {
                 <section className="border-b-2 py-6 sm:py-10">
                     <h2 className="text-xl sm:text-2xl font-black mb-4">1. 링크드아웃 개인정보 처리방침</h2>
                     <p className="mb-2">
-                        “개인정보 처리방침”이란 이용자가 안심하고 서비스를 이용할 수 있도록 회사가 준수해야 할 지침을
-                        의미하며, 링크드아웃은 개인정보처리자가 준수하여야 하는 대한민국의 관계 법령 및 개인정보보호
-                        규정, 가이드라인을 준수하여 개인정보 처리방침을 제공합니다.
+                        &ldquo;개인정보 처리방침&rdquo;이란 이용자가 안심하고 서비스를 이용할 수 있도록 회사가 준수해야
+                        할 지침을 의미하며, 링크드아웃은 개인정보처리자가 준수하여야 하는 대한민국의 관계 법령 및
+                        개인정보보호 규정, 가이드라인을 준수하여 개인정보 처리방침을 제공합니다.
                     </p>
                     <p className="mb-4">
-                        링크드아웃은 이용자의 동의를 기반으로 개인정보를 수집·이용 및 제공하고 있습니다. 이용자의
+                        링크드아웃은 이용자의 동의를 기반으로 개인정보를 수집&middot;이용 및 제공하고 있습니다. 이용자의
                         권리(개인정보 자기결정권)를 적극적으로 보장하기 위해 개인정보 처리방침을 알기 쉽게 제공할 수
                         있도록 다양한 노력을 기울이고 있으며, 이러한 노력의 일환으로 링크드아웃의 주요 개인정보 처리
                         관련 정보를 라벨링으로 제공합니다.
@@ -95,7 +95,7 @@ const Policies = () => {
                 <section className="border-b-2 py-6 sm:py-10">
                     <h2 className="text-xl sm:text-2xl font-black mb-4">3. 개인정보 이용</h2>
                     <p className="mb-4 font-black">
-                        회원관리, 서비스 제공·개선, 신규 서비스 개발 등을 위해 이용합니다.
+                        회원관리, 서비스 제공&middot;개선, 신규 서비스 개발 등을 위해 이용합니다.
                     </p>
                     <ul className="list-disc pl-4 sm:pl-10 mb-4">
                         <li className="my-4">회원 식별/가입의사 확인, 본인/연령 확인</li>
@@ -106,7 +106,7 @@ const Policies = () => {
                         <li className="my-4">이용자간 팔로우 및 추천 기능의 제공</li>
                         <li className="my-4">팔로워에게 활동내역을 알리거나 이용자 검색, 등록 등의 기능 제공</li>
                         <li className="my-4">문의사항 또는 불만처리, 공지사항 전달</li>
-                        <li className="my-4">유료서비스 이용 시 콘텐츠 등의 전송이나 배송·요금 정산</li>
+                        <li className="my-4">유료서비스 이용 시 콘텐츠 등의 전송이나 배송&middot;요금 정산</li>
                         <li className="my-4">
                             서비스의 원할한 운영에 지장을 주는 행위(계정 도용 및 부정 이용 행위 등 포함)에 대한 방지 및
                             제재
@@ -124,10 +124,10 @@ const Policies = () => {
                     <p className="mb-8 mt-12 font-black">개인정보의 추가적인 이용・제공을 하는 경우가 있습니다.</p>
                     <p className="mb-6">
                         수집 목적과 합리적으로 관련된 범위에서는 법령에 따라 이용자의 동의 없이 개인정보를 이용하거나
-                        제3자에게 제공할 수 있습니다. 이 때 '당초 수집 목적과 관련성이 있는지, 수집한 정황 또는 처리
-                        관행에 비추어 볼 때 개인정보의 추가적인 이용 또는 제공에 대한 예측 가능성이 있는지, 이용자의
-                        이익을 부당하게 침해하는지, 가명처리 또는 암호화 등 안전성 확보에 필요한 조치를 하였는지'를
-                        종합적으로 고려합니다.
+                        제3자에게 제공할 수 있습니다. 이 때 &apos;당초 수집 목적과 관련성이 있는지, 수집한 정황 또는
+                        처리 관행에 비추어 볼 때 개인정보의 추가적인 이용 또는 제공에 대한 예측 가능성이 있는지,
+                        이용자의 이익을 부당하게 침해하는지, 가명처리 또는 암호화 등 안전성 확보에 필요한 조치를
+                        하였는지&apos;를 종합적으로 고려합니다.
                     </p>
                     <p className="mb-4">
                         링크드아웃은 수집한 개인정보를 특정 개인을 알아볼 수 없도록 가명처리하여 통계작성, 과학적 연구,
@@ -214,10 +214,10 @@ const Policies = () => {
                     <p className="mb-8">
                         서비스 제공을 위해 필요한 경우 개인정보 처리 업무 중 일부를 외부에 위탁할 수 있습니다. 위탁받은
                         업체가 위탁받은 업무 목적 외로 개인정보를 처리하는 것을 제한하고, 기술적・관리적 보호조치 적용
-                        및 재위탁 제한 등 위탁받은 업체의 개인정보 보호 관련 법령 준수 여부를 관리·감독하고 있습니다.
-                        이용자는 고객센터를 통해 개인정보의 국외 이전을 거부할 수 있습니다. 이용자가 개인정보의 국외
-                        이전을 거부하는 경우, 개인정보 국외이전이 필수적으로 수반되는 서비스의 이용이 제한될 수
-                        있습니다.
+                        및 재위탁 제한 등 위탁받은 업체의 개인정보 보호 관련 법령 준수 여부를 관리&middot;감독하고
+                        있습니다. 이용자는 고객센터를 통해 개인정보의 국외 이전을 거부할 수 있습니다. 이용자가
+                        개인정보의 국외 이전을 거부하는 경우, 개인정보 국외이전이 필수적으로 수반되는 서비스의 이용이
+                        제한될 수 있습니다.
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border rounded-l text-center p-4">
                         <div className="p-4 relative">
@@ -304,7 +304,12 @@ const Policies = () => {
                         처리합니다.
                     </p>
                     <p className="mb-4 font-bold">
-                        <Link href="/위치기반서비스_이용약관.pdf" target="_blank" className="text-blue-800">
+                        <Link
+                            href="/위치기반서비스_이용약관.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-800"
+                        >
                             링크드아웃 위치정보 이용약관 제4조
                         </Link>
                         에 따른 서비스의 제공을 위해 개인위치정보를 보유할 수 있습니다.
@@ -352,9 +357,10 @@ const Policies = () => {
                     </p>
                     <div>
                         <p className="mb-4">
-                            위치정보법 제26조제1항에 따라 '8세 이하의 아동', '피성년후견인', '장애인복지법에 따른
-                            장애인에 해당하는 이용자'의 생명 또는 신체 보호를 위하여 보호의무자가 개인위치정보의 이용
-                            또는 제공에 동의하는 경우에는 본인의 동의가 있는 것으로 봅니다.
+                            위치정보법 제26조제1항에 따라 &lsquo;8세 이하의 아동&rsquo;, &lsquo;피성년후견인&rsquo;,
+                            &lsquo;장애인복지법에 따른 장애인에 해당하는 이용자&rsquo;의 생명 또는 신체 보호를 위하여
+                            보호의무자가 개인위치정보의 이용 또는 제공에 동의하는 경우에는 본인의 동의가 있는 것으로
+                            봅니다.
                         </p>
                         <p className="mb-4">
                             위 권리를 행사하고자 하는 보호의무자는 서면동의서에 보호의무자임을 증명하는 서면을 첨부하여
@@ -366,7 +372,8 @@ const Policies = () => {
                             <Link
                                 href="/위치기반서비스_이용약관.pdf"
                                 target="_blank"
-                                className="text-blue-800 font-semibold"
+                                rel="noopener noreferrer"
+                                className="text-blue-800 font-bold"
                             >
                                 링크드아웃 위치정보 이용약관
                             </Link>
@@ -459,7 +466,7 @@ const Policies = () => {
                 </section>
                 <section className="border-b-2 py-6 sm:py-10">
                     <h2 className="text-xl sm:text-2xl font-black mb-4">8. 개인정보 자동 수집 장치에 관한 사항</h2>
-                    <p className="mb-4 font-bold">웹기반 서비스 제공을 위하여 쿠키를 설치·운영할 수 있습니다.</p>
+                    <p className="mb-4 font-bold">웹기반 서비스 제공을 위하여 쿠키를 설치・운영할 수 있습니다.</p>
                     <p className="mb-4">
                         빠르고 편리한 웹사이트 사용을 지원하고 맞춤형 서비스를 제공하기 위해 쿠키를 사용합니다.
                     </p>
@@ -484,9 +491,9 @@ const Policies = () => {
                         <div className="my-8">
                             <h3 className="font-bold mb-6">쿠키 수집 거부</h3>
                             <p>
-                                이용자는 쿠키 설치에 대한 선택권을 가지고 있으며, 웹브라우저 상단의 ‘설정 &gt;
-                                개인정보보호 &gt; 쿠키 및 기타 사이트 데이터’ 경로에서 쿠키 설정을 통해 쿠키 허용 및
-                                거부를 할 수 있습니다. 다만, 쿠키 설치를 거부할 경우 웹 사용이 불편해지며, 로그인이
+                                이용자는 쿠키 설치에 대한 선택권을 가지고 있으며, 웹브라우저 상단의 &lsquo;설정 &gt;
+                                개인정보보호 &gt; 쿠키 및 기타 사이트 데이터&rsquo; 경로에서 쿠키 설정을 통해 쿠키 허용
+                                및 거부를 할 수 있습니다. 다만, 쿠키 설치를 거부할 경우 웹 사용이 불편해지며, 로그인이
                                 필요한 일부 서비스 이용이 어려울 수 있습니다.
                             </p>
                             <div className="my-6">
@@ -554,7 +561,7 @@ const Policies = () => {
                     </div>
                     <p className="my-4 font-bold">
                         링크드아웃은 유럽연합 일반 개인정보보호법(General Data Protection Regulation) 및 EU 회원국의
-                        법률(이하 'GDPR등')을 준수합니다.
+                        법률(이하 &lsquo;GDPR등&rsquo;)을 준수합니다.
                     </p>
                     <p className="mb-4">
                         유럽연합 내 이용자를 대상으로 서비스를 제공하는 경우, 아래 내용이 적용될 수 있습니다.
@@ -562,9 +569,9 @@ const Policies = () => {
                     <div>
                         <h3 className="font-semibold mb-4 mt-12">[개인정보 처리의 목적 및 처리근거]</h3>
                         <p className="mb-4">
-                            링크드아웃은 수집한 개인정보를 "3. 개인정보의 이용"에 기재된 목적으로만 이용하며, 사전에
-                            이용자에게 해당 사실을 알리고 동의를 구하고 있습니다. 그리고 GDPR등에 따라 링크드아웃은 아래
-                            하나에 해당하는 경우에 이용자의 개인정보를 처리할 수 있습니다.
+                            링크드아웃은 수집한 개인정보를 &ldquo;3. 개인정보의 이용&rdquo;에 기재된 목적으로만
+                            이용하며, 사전에 이용자에게 해당 사실을 알리고 동의를 구하고 있습니다. 그리고 GDPR등에 따라
+                            링크드아웃은 아래 하나에 해당하는 경우에 이용자의 개인정보를 처리할 수 있습니다.
                         </p>
                         <ul className="list-disc pl-4 ml-4 sm:pl-6 mb-4">
                             <li className="mb-4">정보주체의 동의</li>
@@ -608,10 +615,10 @@ const Policies = () => {
                             <li className="mb-4">책임자: 조대찬 (대표)</li>
                             <li className="mb-4">문의</li>
                             <li className="list-none">
-                                <ul className=" pl-4 sm:pl-6">
+                                <ul className="pl-4 sm:pl-6">
                                     <li className="mb-4">
                                         - 서비스 내 고객센터
-                                        <a href="#" className="text-blue-800">
+                                        <a href="#" className="text-blue-700 font-bold">
                                             (바로가기)
                                         </a>
                                     </li>
