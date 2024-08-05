@@ -88,12 +88,7 @@ export const createWindow = (
 
 
   let machineId = machineIdSync();
-  console.log('Machine ID:', machineId);
 
-  // // Machine ID를 IPC를 통해 렌더러 프로세스로 보냄
-  // win.webContents.on("did-finish-load", () => {
-  //   win.webContents.send("machine-id", machineId);
-  // });
   ipcMain.on('request-device-info', (event) => {
     event.sender.send('device-info', machineId);
   });

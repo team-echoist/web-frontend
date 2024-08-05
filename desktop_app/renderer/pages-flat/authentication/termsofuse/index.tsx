@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,SetStateAction } from "react";
 import CheckField from "./ui/chekcField";
 import DefaultLayout from "../ui/layout/defaultLayout";
 import TextField from "../ui/contents/textfield";
@@ -44,7 +44,24 @@ function index() {
       isOpenDesc:false
     },
   });
+  const [fcmToken, setFcmToken] = useState("");
+  const [machineId, setMachineId] = useState("");
+  useEffect(() => {
+    const handleDeviceInfo = (data: string) => {
+      setMachineId(data);
+    };
+
+    window.electron.onDeviceInfo(handleDeviceInfo);
+    window.electron.requestDeviceInfo();
+    window.electron?.getFCMToken(
+      "getFCMToken",
+      (_: any, token: SetStateAction<string>) => {
+        setFcmToken(token);
+      }
+    );
+  }, []);
   return (
+    
     <DefaultLayout>
       <TextField
         title="이용약관 동의"
