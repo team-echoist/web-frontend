@@ -4,7 +4,6 @@ import DashboardNavbar from 'examples/Navbars/DashboardNavbar'
 import Footer from 'examples/Footer'
 import BackgroudCard from 'components/BackgroundCard'
 import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
 import MDTypography from 'components/MDTypography'
 import MDBox from 'components/MDBox'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -30,16 +29,18 @@ export default function Index() {
 
     const getDetail = async () => {
         try {
-            const response = await fetchData(`/admin/essays/${id}`, 'get')
-            setData(response.data)
+            const {data} = await fetchData(`/admin/essays/${id}`, 'get')
+            setData(data)
         } catch (error) {
             console.error('user detail error', error)
         }
     }
-
     const editProfile = async () => {
-        const body = Object.keys(data.editedProfile).reduce((acc, key) => {
-            acc[key] = data.editedProfile[key]
+        if (!data || !data.editedProfile) {
+            return;
+        }
+        const body = Object?.keys(data?.editedProfile).reduce((acc, key) => {
+            acc[key] = data?.editedProfile[key]
             return acc
         }, {})
         try {
@@ -138,7 +139,7 @@ export default function Index() {
                         <Grid item xs={12} md={6} container justifyContent="flex-end">
                             <Button
                                 color="white"
-                                onClick={() => navigate(`/user-detail?id=${data.authorId}`)}
+                                onClick={() => navigate(`/user-detail?id=${data?.author?.id}`)}
                                 style={{ fontSize: '20px', marginTop: '10px' }}
                             >
                                 👉 Author Info

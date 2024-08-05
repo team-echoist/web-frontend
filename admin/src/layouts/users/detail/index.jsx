@@ -4,7 +4,6 @@ import DashboardNavbar from 'examples/Navbars/DashboardNavbar'
 import Footer from 'examples/Footer'
 import BackgroudCard from 'components/BackgroundCard'
 import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
 import MDTypography from 'components/MDTypography'
 import MDBox from 'components/MDBox'
 import { useLocation } from 'react-router-dom'
@@ -12,7 +11,6 @@ import { useEffect, useState } from 'react'
 import { fetchData } from '../../../api'
 import EditModal from '../components/EditModal'
 import { showToast } from '../../../utils/toast'
-import { Button } from '@mui/material'
 
 function Index() {
     const location = useLocation()
@@ -36,6 +34,9 @@ function Index() {
     }
 
     const editProfile = async () => {
+        if (!data || !data.editedProfile) {
+            return;
+        }
         const body = Object.keys(data.editedProfile).reduce((acc, key) => {
             acc[key] = data.editedProfile[key]
             return acc
