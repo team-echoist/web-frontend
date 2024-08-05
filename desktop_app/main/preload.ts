@@ -1,4 +1,4 @@
-import { ipcRenderer, Notification, contextBridge } from 'electron';
+import { ipcRenderer, Notification, contextBridge,IpcRendererEvent  } from 'electron';
 
 // Sometimes these constants do not work properly. It's recommended to set the
 // string directly in the ipcRenderer listener.
@@ -10,13 +10,15 @@ import {
   TOKEN_UPDATED,
 } from 'electron-push-receiver/src/constants';
 
+
 // Connects the renderer.js with main.js
 contextBridge.exposeInMainWorld("electron", {
-  // Gets called through the window object and returns the token stored locally
-  getFCMToken: (channel: string, func: (event: Electron.IpcRendererEvent, ...args: any[]) => void) => {
+  getFCMToken: (channel: string, func: (event: IpcRendererEvent, ...args: any[]) => void) => {
     ipcRenderer.once(channel, func);
     ipcRenderer.send("getFCMToken");
   },
+  requestDeviceInfo: () => ipcRenderer.send('request-device-info'),
+  onDeviceInfo: (callback:any) => ipcRenderer.on('device-info', (event, data) => callback(data))
 });
 
 const senderId = 710166131124; // Replace 'yourSenderID' with your actual sender ID
@@ -42,7 +44,6 @@ ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
 
   notif.on('click', () => {
     ipcRenderer.send('notification-clicked', notification);
-    
   });
 
   notif.show();

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CheckField from "./ui/chekcField";
 import DefaultLayout from "../ui/layout/defaultLayout";
 import TextField from "../ui/contents/textfield";
+import { fetchData } from "@/shared/api/fetchData";
 
 function index() {
   const [check, setCheck] = useState({

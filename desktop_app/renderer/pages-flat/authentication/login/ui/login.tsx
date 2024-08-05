@@ -70,7 +70,7 @@ export const Login = () => {
 
   const redirectToPage = (isFirstLogin: boolean) => {
     if (isFirstLogin) {
-      router.push("/web/complete");
+      router.push("/web/termsofuse");
     } else {
       router.push("/web/main");
     }
@@ -188,7 +188,7 @@ export const Login = () => {
             <Ul>
               <Li>아이디 찾기</Li>
               <Li>비밀번호 재설정</Li>
-              <Link href="/web/termsofuse">
+              <Link href="/web/register">
                 <Li>회원가입</Li>
               </Link>
             </Ul>
