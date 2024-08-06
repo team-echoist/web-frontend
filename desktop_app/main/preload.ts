@@ -8,7 +8,7 @@ import {
   NOTIFICATION_SERVICE_ERROR,
   NOTIFICATION_RECEIVED as ON_NOTIFICATION_RECEIVED,
   TOKEN_UPDATED,
-} from 'electron-push-receiver/src/constants';
+} from 'electron-push-receiver';
 
 
 // Connects the renderer.js with main.js
@@ -95,8 +95,8 @@ const handler = {
   send(channel: string, value: any) {
     ipcRenderer.send(channel, value);
   },
-  
-  on(channel: string, callback: (arg0: any) => any) {
+
+  on(channel: string, callback: (...args: any[]) => any) {
     const subscription = (_event: any, ...args: any[]) => callback(...args);
     ipcRenderer.on(channel, subscription);
 
@@ -108,9 +108,9 @@ const handler = {
     ipcRenderer.send('storeFCMToken', token);
   },
   getFCMToken() {
-    return new Promise((resolve) => {
+    return new Promise<string>((resolve) => {
       ipcRenderer.send('getFCMToken');
-      ipcRenderer.on('getFCMToken', (event, token) => {
+      ipcRenderer.once('getFCMToken', (event, token) => {
         resolve(token);
       });
     });
