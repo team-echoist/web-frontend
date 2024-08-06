@@ -60,9 +60,10 @@ function index() {
     const handleDeviceInfo = (data: string) => {
       setMachineId(data);
     };
+    console.log("window.Electron?",window.Electron)
 
-    window.Electron.onDeviceInfo(handleDeviceInfo);
-    window.Electron.requestDeviceInfo();
+    window.Electron?.onDeviceInfo(handleDeviceInfo);
+    window.Electron?.requestDeviceInfo();
     window.Electron?.getFCMToken(
       "getFCMToken",
       (_: any, token: SetStateAction<string>) => {

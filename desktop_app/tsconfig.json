@@ -5,7 +5,8 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
+    "noEmit": false,
+    "noEmitOnError": false,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -21,7 +22,7 @@
     "paths": {
       "@/*": ["./renderer/*"]
     },
-    "typeRoots": ["./node_modules/@types", "./types"],
+    "typeRoots": ["./node_modules/@types", "./type"],
     "forceConsistentCasingInFileNames": true,
     "types": []
   },
@@ -30,7 +31,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "types/**/*.d.ts"
+    "type/**/*.d.ts"
   ],
   "exclude": ["node_modules", "renderer/next.config.js", "app", "dist"]
 }
