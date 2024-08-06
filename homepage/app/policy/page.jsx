@@ -1,14 +1,12 @@
 import Image from "next/image"
 import Link from "next/link"
 
-// TODO: text - gray - 500 변경
-
 const Policies = () => {
     return (
-        <main className="p-4 sm:p-8 bg-white ">
+        <main className="p-4 bg-white sm:p-8 ">
             <article className="space-y-8">
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-black mb-4">1. 링크드아웃 개인정보 처리방침</h2>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-black sm:text-2xl">1. 링크드아웃 개인정보 처리방침</h2>
                     <p className="mb-2">
                         &ldquo;개인정보 처리방침&rdquo;이란 이용자가 안심하고 서비스를 이용할 수 있도록 회사가 준수해야
                         할 지침을 의미하며, 링크드아웃은 개인정보처리자가 준수하여야 하는 대한민국의 관계 법령 및
@@ -20,41 +18,41 @@ const Policies = () => {
                         있도록 다양한 노력을 기울이고 있으며, 이러한 노력의 일환으로 링크드아웃의 주요 개인정보 처리
                         관련 정보를 라벨링으로 제공합니다.
                     </p>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 justify-center items-center">
-                        <div className="p-2 sm:p-4 flex flex-col items-center">
+                    <div className="grid items-center justify-center grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
+                        <div className="flex flex-col items-center p-2 sm:p-4">
                             <Image src="/images/개인정보.png" alt="개인정보" width={100} height={100} />
-                            <p className="mt-6 text-center font-bold">개인정보</p>
+                            <p className="mt-6 font-bold text-center">개인정보</p>
                         </div>
-                        <div className="p-2 sm:p-4 flex flex-col items-center">
+                        <div className="flex flex-col items-center p-2 sm:p-4">
                             <Image src="/images/처리목적.png" alt="처리목적" width={100} height={100} />
-                            <p className="mt-2 text-center font-bold">처리목적</p>
+                            <p className="mt-2 font-bold text-center">처리목적</p>
                         </div>
-                        <div className="p-2 sm:p-4 flex flex-col items-center">
+                        <div className="flex flex-col items-center p-2 sm:p-4">
                             <Image src="/images/제3자제공.png" alt="제3자 제공" width={100} height={100} />
-                            <p className="mt-2 text-center font-bold">제3자 제공</p>
+                            <p className="mt-2 font-bold text-center">제3자 제공</p>
                         </div>
-                        <div className="p-2 sm:p-4 flex flex-col items-center">
+                        <div className="flex flex-col items-center p-2 sm:p-4">
                             <Image src="/images/처리위탁.png" alt="처리위탁" width={100} height={100} />
-                            <p className="mt-6 text-center font-bold">처리위탁</p>
+                            <p className="mt-6 font-bold text-center">처리위탁</p>
                         </div>
-                        <div className="p-2 sm:p-4 flex flex-col items-center">
+                        <div className="flex flex-col items-center p-2 sm:p-4">
                             <Image
                                 src="/images/정보주체의권리의무.png"
                                 alt="정보주체의 권리의무"
                                 width={100}
                                 height={100}
                             />
-                            <p className="mt-2 text-center font-bold">정보주체의 권리의무</p>
+                            <p className="mt-2 font-bold text-center">정보주체의 권리의무</p>
                         </div>
-                        <div className="info-card p-2 sm:p-4 flex flex-col items-center">
+                        <div className="flex flex-col items-center p-2 info-card sm:p-4">
                             <Image src="/images/고충처리부서.png" alt="고충처리 부서" width={100} height={100} />
-                            <p className="mt-2 text-center font-bold">고충처리 부서</p>
+                            <p className="mt-2 font-bold text-center">고충처리 부서</p>
                         </div>
                     </div>
                 </section>
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-black mb-4">2. 개인정보 수집</h2>
-                    <h3 className="text-l font-bold mb-2">서비스 제공을 위한 필요 최소한의 개인정보를 수집합니다.</h3>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-black sm:text-2xl">2. 개인정보 수집</h2>
+                    <h3 className="mb-2 font-bold text-l">서비스 제공을 위한 필요 최소한의 개인정보를 수집합니다.</h3>
                     <p className="mb-4">
                         회원 가입 시 또는 서비스 이용 과정에서 홈페이지 또는 개별 어플리케이션이나 프로그램 등을 통해
                         서비스 제공을 위해 필요 최소한의 개인정보를 수집하고 있습니다. 서비스 제공을 위해 반드시 필요한
@@ -73,20 +71,20 @@ const Policies = () => {
                         <p className="mb-4 font-semibold">[고객상담 시]</p>
                         <p>고객센터로 문의 및 상담 시 상담 처리를 위한 추가적인 정보를 수집할 수 있습니다.</p>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border rounded-lg mt-8">
-                        <figure className="p-4 flex flex-col justify-center items-center relative">
+                    <div className="grid grid-cols-1 gap-4 mt-8 border rounded-lg sm:grid-cols-2">
+                        <figure className="relative flex flex-col items-center justify-center p-4">
                             <Image src="/images/개인정보.png" alt="개인정보" width={100} height={100} />
-                            <figcaption className="font-bold my-4">개인정보</figcaption>
+                            <figcaption className="my-4 font-bold">개인정보</figcaption>
                             <figcaption className="text-center">
                                 링크드아웃 계정 가입 시 서비스 제공을 위해 필요한 최소한의 개인 정보를 수집하고
                                 있습니다. 서비스 이용 시 특화된 기능 이용을 위해 이용자의 동의를 받고 추가적인
                                 개인정보를 수집할 수 있습니다.
                             </figcaption>
-                            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-52 w-px bg-gray-300"></div>
+                            <div className="absolute right-0 w-px transform -translate-y-1/2 bg-gray-300 top-1/2 h-52"></div>
                         </figure>
-                        <figure className="p-4 flex flex-col justify-center items-center">
+                        <figure className="flex flex-col items-center justify-center p-4">
                             <Image src="/images/자동화수집.png" alt="자동화 수집" width={100} height={100} />
-                            <figcaption className="font-bold my-4">자동화 수집</figcaption>
+                            <figcaption className="my-4 font-bold">자동화 수집</figcaption>
                             <figcaption className="text-center">
                                 링크드아웃 서비스 이용 과정에서 단말기정보, IP주소, 쿠키, 방문일 시, 부정이용기록,
                                 서비스 이용 기록 등의 정보가 자동으로 생성되어 수집될 수 있습니다.
@@ -94,12 +92,12 @@ const Policies = () => {
                         </figure>
                     </div>
                 </section>
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-black mb-4">3. 개인정보 이용</h2>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-black sm:text-2xl">3. 개인정보 이용</h2>
                     <p className="mb-4 font-black">
                         회원관리, 서비스 제공&middot;개선, 신규 서비스 개발 등을 위해 이용합니다.
                     </p>
-                    <ul className="list-disc pl-4 sm:pl-10 mb-4">
+                    <ul className="pl-4 mb-4 list-disc sm:pl-10">
                         <li className="my-4">회원 식별/가입의사 확인, 본인/연령 확인</li>
                         <li className="my-4">
                             14세 미만 아동의 개인정보 수집 시 법정 대리인 동의여부 확인, 법정 대리인 권리행사 시 본인
@@ -123,7 +121,7 @@ const Policies = () => {
                         </li>
                         <li className="my-4">서비스 이용 기록, 접속 빈도 및 서비스 이용에 대한 통계</li>
                     </ul>
-                    <p className="mb-8 mt-12 font-black">개인정보의 추가적인 이용・제공을 하는 경우가 있습니다.</p>
+                    <p className="mt-12 mb-8 font-black">개인정보의 추가적인 이용・제공을 하는 경우가 있습니다.</p>
                     <p className="mb-6">
                         수집 목적과 합리적으로 관련된 범위에서는 법령에 따라 이용자의 동의 없이 개인정보를 이용하거나
                         제3자에게 제공할 수 있습니다. 이 때 &apos;당초 수집 목적과 관련성이 있는지, 수집한 정황 또는
@@ -136,8 +134,8 @@ const Policies = () => {
                         공익적 기록보존 등을 위하여 처리할 수 있습니다. 이 때 가명정보는 재식별되지 않도록 추가정보와
                         분리하여 별도 저장・관리하고 필요한 기술적・관리적 보호조치를 취합니다.
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border rounded-l text-center">
-                        <figure className="p-4 flex flex-col justify-center items-center relative">
+                    <div className="grid grid-cols-1 gap-4 text-center border rounded-l sm:grid-cols-2 md:grid-cols-3">
+                        <figure className="relative flex flex-col items-center justify-center p-4">
                             <div className="flex my-2">
                                 <Image
                                     src="/images/처리항목.png"
@@ -160,9 +158,9 @@ const Policies = () => {
                                 목적으로 처리합니다. 링크드아웃에서 처리하는 개인정보 항목 및 이용 목적은 개인정보
                                 처리방침을 통해 상시 공개하고 있습니다.
                             </figcaption>
-                            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-52 w-px bg-gray-300"></div>
+                            <div className="absolute right-0 w-px transform -translate-y-1/2 bg-gray-300 top-1/2 h-52"></div>
                         </figure>
-                        <figure className="p-4 flex flex-col items-center relative">
+                        <figure className="relative flex flex-col items-center p-4">
                             <Image
                                 src="/images/추가적이용.png"
                                 alt="추가적 이용"
@@ -175,9 +173,9 @@ const Policies = () => {
                                 당초 수집 목적과 관련성, 수집한 정황 또는 처리 관행 등을 종합적으로 고려하여 수집 목적과
                                 합리적으로 관련된 범위에서 추가적으로 개인정보를 이용 및 제공할 수 있습니다.
                             </figcaption>
-                            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-52 w-px bg-gray-300"></div>
+                            <div className="absolute right-0 w-px transform -translate-y-1/2 bg-gray-300 top-1/2 h-52"></div>
                         </figure>
-                        <figure className="p-4 flex flex-col items-center">
+                        <figure className="flex flex-col items-center p-4">
                             <Image
                                 src="/images/가명정보처리.png"
                                 alt="가명정보 처리"
@@ -193,8 +191,8 @@ const Policies = () => {
                         </figure>
                     </div>
                 </section>
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-black mb-4">4. 개인정보 제공</h2>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-black sm:text-2xl">4. 개인정보 제공</h2>
                     <p className="mb-4 font-bold">
                         링크드아웃은 이용자의 별도 동의가 있거나 법령에 규정된 경우를 제외하고는 이용자의 개인정보를
                         제3자에게 제공하지 않습니다.
@@ -221,35 +219,35 @@ const Policies = () => {
                         개인정보의 국외 이전을 거부하는 경우, 개인정보 국외이전이 필수적으로 수반되는 서비스의 이용이
                         제한될 수 있습니다.
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border rounded-l text-center p-4">
-                        <div className="p-4 relative">
+                    <div className="grid grid-cols-1 gap-4 p-4 text-center border rounded-l sm:grid-cols-2 md:grid-cols-3">
+                        <div className="relative p-4">
                             <figure className="flex flex-col items-center">
                                 <Image src="/images/제3자제공.png" alt="제3자 제공" width={100} height={100} />
-                                <figcaption className="my-2 text-center font-bold">제3자 제공</figcaption>
+                                <figcaption className="my-2 font-bold text-center">제3자 제공</figcaption>
                             </figure>
                             <p className="mt-2">
                                 외부 제휴사 등의 서비스 이용 시 이용자에게 제3자 제공 동의를 받은 후 개인정보를 제공하고
                                 있습니다. 개인정보가 제공될 수 있는 제3자 업체 목록은 링크드아웃 개인정보 처리방침을
                                 통해 확인하실 수 있습니다.
                             </p>
-                            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-72 w-px bg-gray-300"></div>
+                            <div className="absolute right-0 w-px transform -translate-y-1/2 bg-gray-300 top-1/2 h-72"></div>
                         </div>
-                        <div className="p-4 my-4 relative">
+                        <div className="relative p-4 my-4">
                             <figure className="flex flex-col items-center">
                                 <Image src="/images/처리위탁.png" alt="처리위탁" width={100} height={100} />
-                                <figcaption className="my-2 text-center font-bold">처리위탁</figcaption>
+                                <figcaption className="my-2 font-bold text-center">처리위탁</figcaption>
                             </figure>
                             <p className="mt-2">
                                 링크드아웃 서비스 제공에 있어 반드시 필요한 업무 중 일부를 외부 업체에서 수행할 수
                                 있도록 개인정보를 위탁하고 있습니다. 위탁 시 위탁받은 업체가 개인정보보호 관련 법령을
                                 준수할 수 있도록 정기적으로 관리・감독하고 있습니다.
                             </p>
-                            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-72 w-px bg-gray-300"></div>
+                            <div className="absolute right-0 w-px transform -translate-y-1/2 bg-gray-300 top-1/2 h-72"></div>
                         </div>
                         <div className="p-4">
                             <figure className="flex flex-col items-center">
                                 <Image src="/images/국외이전.png" alt="국외이전" width={100} height={100} />
-                                <figcaption className="my-2 text-center font-bold">국외이전</figcaption>
+                                <figcaption className="my-2 font-bold text-center">국외이전</figcaption>
                             </figure>
                             <p className="mt-2">
                                 국외 제휴 업체의 서비스를 이용 시 사전 동의를 받아 이용자의 개인정보가 국외로 제공될 수
@@ -259,8 +257,8 @@ const Policies = () => {
                         </div>
                     </div>
                 </section>
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-black mb-4">5. 개인정보 파기</h2>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-black sm:text-2xl">5. 개인정보 파기</h2>
                     <p className="mb-4 font-bold">
                         수집 및 이용목적이 달성된 경우 수집한 개인정보는 지체없이 파기합니다.
                     </p>
@@ -270,10 +268,10 @@ const Policies = () => {
                         기록물, 인쇄물, 서면 등의 경우 분쇄하거나 소각하여 파기합니다.
                     </p>
                     <p className="mb-4">내부 방침에 따라 일정 기간 보관 후 파기하는 정보는 아래와 같습니다.</p>
-                    <ul className="pl-4 sm:pl-6 mb-4">
+                    <ul className="pl-4 mb-4 sm:pl-6">
                         <li>
                             1. 아래 정보는 탈퇴일로부터 최대 1년간 보관 후 파기합니다.
-                            <ul className="list-disc ml-6 sm:pl-6">
+                            <ul className="ml-6 list-disc sm:pl-6">
                                 <li className="my-4">
                                     안내메일 발송 및 CS문의 대응을 위해 링크드아웃계정과 탈퇴안내 이메일 주소를
                                     암호화하여 보관
@@ -284,7 +282,7 @@ const Policies = () => {
                         <li className="my-4">2. 권리침해 신고 및 유해정보 신고 이력은 5년간 보관 후 파기합니다.</li>
                     </ul>
                     <p className="mb-4">이 외에 법령에 따라 개인정보를 처리합니다.</p>
-                    <div className="p-8 border text-center flex flex-col items-center">
+                    <div className="flex flex-col items-center p-8 text-center border">
                         <figure>
                             <div className="flex items-center justify-cener">
                                 <Image
@@ -296,7 +294,7 @@ const Policies = () => {
                                 />
                                 <Image src="/images/파기.png" alt="파기" width={100} height={100} className="mx-2" />
                             </div>
-                            <figcaption className="my-4 text-center font-bold">보유기간 및 파기</figcaption>
+                            <figcaption className="my-4 font-bold text-center">보유기간 및 파기</figcaption>
                         </figure>
                         <p>
                             수집 및 이용 목적의 달성 또는 회원 탈퇴 등 파기사유가 발생한 개인정보는 안전하게 파기합니다.
@@ -305,8 +303,8 @@ const Policies = () => {
                         </p>
                     </div>
                 </section>
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-black mb-4">6. 개인위치정보의 처리</h2>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-black sm:text-2xl">6. 개인위치정보의 처리</h2>
                     <p className="mb-4 font-bold">
                         링크드아웃은 위치정보의 보호 및 이용 등에 관한 법률에 따라 아래와 같이 개인위치정보를
                         처리합니다.
@@ -322,7 +320,7 @@ const Policies = () => {
                         </Link>
                         에 따른 서비스의 제공을 위해 개인위치정보를 보유할 수 있습니다.
                     </p>
-                    <ul className="list-disc pl-4 ml-4 sm:pl-6 mb-4">
+                    <ul className="pl-4 mb-4 ml-4 list-disc sm:pl-6">
                         <li className="mb-4">
                             위치기반서비스 이용 및 제공 목적 달성한 때에는 지체없이 개인위치정보를 파기합니다.
                         </li>
@@ -381,20 +379,20 @@ const Policies = () => {
                                 href="/위치기반서비스_이용약관.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-800 font-bold"
+                                className="font-bold text-blue-800"
                             >
                                 링크드아웃 위치정보 이용약관
                             </Link>
                             을 참고하시기 바랍니다.
                         </p>
                     </div>
-                    <div className="p-8 border text-center flex flex-col items-center">
+                    <div className="flex flex-col items-center p-8 text-center border">
                         <figure>
                             <div className="flex items-center justify-cener">
                                 <Image src="/images/보유기간.png" alt="보유기간" width={100} height={100} />
                                 <Image src="/images/파기.png" alt="파기" width={100} height={100} />
                             </div>
-                            <figcaption className="my-4 text-center font-bold">보유기간 및 파기</figcaption>
+                            <figcaption className="my-4 font-bold text-center">보유기간 및 파기</figcaption>
                         </figure>
                         <p>
                             수집 및 이용 목적의 달성 또는 회원 탈퇴 등 파기사유가 발생한 개인정보는 안전하게 파기합니다.
@@ -403,24 +401,24 @@ const Policies = () => {
                         </p>
                     </div>
                 </section>
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-black mb-4">7. 이용자 및 법정대리인의 권리와 행사 방법</h2>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-black sm:text-2xl">7. 이용자 및 법정대리인의 권리와 행사 방법</h2>
 
                     <p className="mb-4 font-bold">
                         이용자는 자신의 개인정보 처리에 관하여 아래와 같은 권리를 가질 수 있습니다.
                     </p>
-                    <ul className="list-disc pl-4 ml-4 sm:pl-6 mb-4">
+                    <ul className="pl-4 mb-4 ml-4 list-disc sm:pl-6">
                         <li className="mb-4">개인정보 열람(조회)을 요구할 권리</li>
                         <li className="mb-4">개인정보 정정을 요구할 권리</li>
                         <li className="mb-4">개인정보 처리정지를 요구할 권리</li>
                         <li className="mb-4">개인정보 삭제요구 및 동의철회/탈퇴를 요구할 권리</li>
                     </ul>
                     <div>
-                        <p className="mb-4 font-bold mt-16">
+                        <p className="mt-16 mb-4 font-bold">
                             이용자는 서비스 내 다음과 같은 기능을 통해 언제든지 개인정보 열람(조회) 등의 권리를 직접
                             행사하거나 또는 고객센터를 통해 요청할 수 있습니다.
                         </p>
-                        <ul className="list-disc pl-4 ml-4 sm:pl-6 mb-4">
+                        <ul className="pl-4 mb-4 ml-4 list-disc sm:pl-6">
                             <li className="mb-4">링크드아웃계정 정보 열람 및 수정</li>
                             <li className="mb-4">링크드아웃계정과 연결된 서비스 관리</li>
                             <li className="mb-4">
@@ -433,7 +431,7 @@ const Policies = () => {
                         </p>
                     </div>
                     <div>
-                        <p className="mb-4 font-bold mt-16">
+                        <p className="mt-16 mb-4 font-bold">
                             14세 미만 아동의 개인정보를 처리할 경우에는 법정대리인의 동의를 받아야 합니다. 법정대리인은
                             아동의 개인정보를 조회하거나 수정 및 삭제, 처리정지 및 동의 철회 등의 권리를 행사할 수
                             있습니다.
@@ -442,7 +440,7 @@ const Policies = () => {
                             법정대리인 동의를 받기 위하여 아동에게 법정대리인의 성명, 연락처와 같이 최소한의 정보를
                             요구할 수 있으며, 아래 방법으로 법정대리인의 동의를 확인합니다.
                         </p>
-                        <ul className="list-disc pl-4 ml-4 sm:pl-6 mb-4">
+                        <ul className="pl-4 mb-4 ml-4 list-disc sm:pl-6">
                             <li className="mb-4">법정대리인의 휴대전화 본인인증을 통해 본인여부를 확인하는 방법</li>
                             <li className="mb-4">
                                 법정대리인에게 동의내용이 적힌 서면을 제공하여 서명날인 후 제출하게 하는 방법
@@ -453,7 +451,7 @@ const Policies = () => {
                             </li>
                         </ul>
                     </div>
-                    <div className="p-8 border text-center flex flex-col items-center">
+                    <div className="flex flex-col items-center p-8 text-center border">
                         <figure>
                             <div className="flex items-center justify-cener">
                                 <Image
@@ -464,7 +462,7 @@ const Policies = () => {
                                 />
                                 <Image src="/images/열람청구.png" alt="열람청구" width={100} height={100} />
                             </div>
-                            <figcaption className="my-4 text-center font-bold">정보주체의 권리의무</figcaption>
+                            <figcaption className="my-4 font-bold text-center">정보주체의 권리의무</figcaption>
                         </figure>
                         <p>
                             링크드아웃 이용자는 언제든지 자신의 개인정보를 조회하거나 수정할 수 있으며, 동의한 개인정보
@@ -472,22 +470,22 @@ const Policies = () => {
                         </p>
                     </div>
                 </section>
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-black mb-4">8. 개인정보 자동 수집 장치에 관한 사항</h2>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-black sm:text-2xl">8. 개인정보 자동 수집 장치에 관한 사항</h2>
                     <p className="mb-4 font-bold">웹기반 서비스 제공을 위하여 쿠키를 설치・운영할 수 있습니다.</p>
                     <p className="mb-4">
                         빠르고 편리한 웹사이트 사용을 지원하고 맞춤형 서비스를 제공하기 위해 쿠키를 사용합니다.
                     </p>
                     <div className="grid grid-cols-1 gap-4">
                         <div className="my-8">
-                            <h3 className="font-bold mb-6">쿠키란?</h3>
+                            <h3 className="mb-6 font-bold">쿠키란?</h3>
                             <p>
                                 이용자가 웹사이트를 접속할 때 해당 웹사이트에서 이용자의 브라우저에 보내는 저용량 텍스트
                                 파일로 이용자 PC에 저장됩니다.
                             </p>
                         </div>
                         <div className="my-4">
-                            <h3 className="font-bold mb-6">사용목적</h3>
+                            <h3 className="mb-6 font-bold">사용목적</h3>
                             <p>
                                 개인화되고 맞춤화된 서비스를 제공하기 위해서 이용자의 정보를 저장하고 수시로 불러오는
                                 쿠키를 사용합니다. 이용자가 웹사이트에 방문할 경우 웹 사이트 서버는 이용자의 디바이스에
@@ -497,7 +495,7 @@ const Policies = () => {
                             </p>
                         </div>
                         <div className="my-8">
-                            <h3 className="font-bold mb-6">쿠키 수집 거부</h3>
+                            <h3 className="mb-6 font-bold">쿠키 수집 거부</h3>
                             <p>
                                 이용자는 쿠키 설치에 대한 선택권을 가지고 있으며, 웹브라우저 상단의 &lsquo;설정 &gt;
                                 개인정보보호 &gt; 쿠키 및 기타 사이트 데이터&rsquo; 경로에서 쿠키 설정을 통해 쿠키 허용
@@ -506,7 +504,7 @@ const Policies = () => {
                             </p>
                             <div className="my-6">
                                 <p className="mb-6">웹브라우저에서 쿠키 허용/차단</p>
-                                <ul className="list-disc pl-4 sm:pl-6 mb-2">
+                                <ul className="pl-4 mb-2 list-disc sm:pl-6">
                                     <li className="my-4">
                                         크롬(Chrome): 웹 브라우저 설정 &gt; 개인정보 보호 및 보안 &gt; 인터넷 사용 기록
                                         삭제
@@ -519,7 +517,7 @@ const Policies = () => {
                             </div>
                             <div className="mt-4">
                                 <p className="mb-6">모바일브라우저에서 쿠키 허용/차단</p>
-                                <ul className="list-disc pl-4 sm:pl-6">
+                                <ul className="pl-4 list-disc sm:pl-6">
                                     <li className="my-4">
                                         크롬(Chrome): 모바일 브라우저 설정 &gt; 개인정보 보호 및 보안 &gt; 인터넷 사용
                                         기록 삭제
@@ -537,10 +535,10 @@ const Policies = () => {
                         </div>
                     </div>
                 </section>
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-black mb-4">9. 개인정보의 안전성 확보 조치에 관한 사항</h2>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-black sm:text-2xl">9. 개인정보의 안전성 확보 조치에 관한 사항</h2>
                     <p className="mb-4 font-bold">링크드아웃은 이용자의 개인정보 보호를 위해 아래의 노력을 합니다.</p>
-                    <ul className="list-disc pl-4 ml-4 sm:pl-6 mb-4">
+                    <ul className="pl-4 mb-4 ml-4 list-disc sm:pl-6">
                         <li className="mb-4">
                             이용자의 개인정보를 암호화된 통신구간을 이용하여 전송하고, 비밀번호 등 중요정보는 암호화하여
                             보관하고 있습니다.
@@ -556,10 +554,10 @@ const Policies = () => {
                             감사를 실시하고 있습니다.
                         </li>
                     </ul>
-                    <div className="info-card p-4 border rounded-lg text-center">
+                    <div className="p-4 text-center border rounded-lg info-card">
                         <figure className="flex flex-col items-center">
                             <Image src="/images/안정성확보조치.png" alt="안정성 확보조치" width={100} height={100} />
-                            <figcaption className="mb-2 mt-4 text-center font-bold">안전성 확보조치</figcaption>
+                            <figcaption className="mt-4 mb-2 font-bold text-center">안전성 확보조치</figcaption>
                         </figure>
                         <p className="mt-2">
                             이용자의 개인정보를 안전하게 관리하기 위해 개인정보보호법에 따른 법적 요구사항을 모두
@@ -575,13 +573,13 @@ const Policies = () => {
                         유럽연합 내 이용자를 대상으로 서비스를 제공하는 경우, 아래 내용이 적용될 수 있습니다.
                     </p>
                     <div>
-                        <h3 className="font-semibold mb-4 mt-12">[개인정보 처리의 목적 및 처리근거]</h3>
+                        <h3 className="mt-12 mb-4 font-semibold">[개인정보 처리의 목적 및 처리근거]</h3>
                         <p className="mb-4">
                             링크드아웃은 수집한 개인정보를 &ldquo;3. 개인정보의 이용&rdquo;에 기재된 목적으로만
                             이용하며, 사전에 이용자에게 해당 사실을 알리고 동의를 구하고 있습니다. 그리고 GDPR등에 따라
                             링크드아웃은 아래 하나에 해당하는 경우에 이용자의 개인정보를 처리할 수 있습니다.
                         </p>
-                        <ul className="list-disc pl-4 ml-4 sm:pl-6 mb-4">
+                        <ul className="pl-4 mb-4 ml-4 list-disc sm:pl-6">
                             <li className="mb-4">정보주체의 동의</li>
                             <li className="mb-4">정보주체와의 계약의 체결 및 이행을 위한 경우</li>
                             <li className="mb-4">법적 의무사항 준수를 위한 경우</li>
@@ -593,7 +591,7 @@ const Policies = () => {
                         </ul>
                     </div>
                     <div>
-                        <h3 className="font-semibold mb-4 mt-12">[유럽연합 내 이용자의 권리 보장]</h3>
+                        <h3 className="mt-12 mb-4 font-semibold">[유럽연합 내 이용자의 권리 보장]</h3>
                         <p className="mb-4">
                             GDPR 등에 따라 이용자는 자신의 개인정보를 다른 관리자에게 이전해 달라고 요청할 수 있고,
                             자신의 정보 처리 거부를 요청할 수 있습니다. 그리고 이용자는 개인정보보호 권한 당국에 불만을
@@ -611,15 +609,15 @@ const Policies = () => {
                         </p>
                     </div>
                 </section>
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-black mb-4">10. 개인정보 보호책임자 및 고충처리 부서</h2>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-black sm:text-2xl">10. 개인정보 보호책임자 및 고충처리 부서</h2>
                     <p className="mb-4 font-bold">
                         링크드아웃은 이용자의 개인정보 관련 문의사항 및 불만 처리 등을 위하여 개인정보 보호책임자를
                         지정하고 있습니다.
                     </p>
                     <div>
                         <p className="mb-4 font-bold">개인정보 보호 책임자</p>
-                        <ul className="list-disc pl-4 ml-4 sm:pl-6 mb-4">
+                        <ul className="pl-4 mb-4 ml-4 list-disc sm:pl-6">
                             <li className="mb-4">책임자: 조대찬 (대표)</li>
                             <li className="mb-4">문의</li>
                             <li className="list-none">
@@ -634,8 +632,8 @@ const Policies = () => {
                             답변 드리겠습니다.
                         </p>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border rounded-lg text-center p-4">
-                        <div className="p-4 relative">
+                    <div className="grid grid-cols-1 gap-4 p-4 text-center border rounded-lg sm:grid-cols-2">
+                        <div className="relative p-4">
                             <figure className="flex flex-col items-center">
                                 <div className="flex justify-center">
                                     <Image
@@ -646,7 +644,7 @@ const Policies = () => {
                                     />
                                     <Image src="/images/고충처리부서.png" alt="고충처리부서" width={100} height={100} />
                                 </div>
-                                <figcaption className="my-2 text-center font-bold">
+                                <figcaption className="my-2 font-bold text-center">
                                     개인정보보호책임자 & 고충처리 부서
                                 </figcaption>
                             </figure>
@@ -654,12 +652,12 @@ const Policies = () => {
                                 링크드아웃 서비스 이용 시 발생하는 모든 개인정보보호 관련 문의 및 불만사항은
                                 개인정보보호책임자 고충처리 부서(링크드아웃 고객 센터)로 문의해주시면 됩니다.
                             </p>
-                            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-60 w-px bg-gray-300"></div>
+                            <div className="absolute right-0 w-px transform -translate-y-1/2 bg-gray-300 top-1/2 h-60"></div>
                         </div>
                         <div className="p-2">
                             <figure className="flex flex-col items-center">
                                 <Image src="/images/권익침해구제.png" alt="권익침해 구제" width={100} height={100} />
-                                <figcaption className="my-2 text-center font-bold">권익침해 구제</figcaption>
+                                <figcaption className="my-2 font-bold text-center">권익침해 구제</figcaption>
                             </figure>
                             <p className="mt-2">
                                 개인정보가 침해되어서 이에 대한 신고나 상담이 필요하신 경우 국가기관에 문의하여 도움을
@@ -668,8 +666,8 @@ const Policies = () => {
                         </div>
                     </div>
                 </section>
-                <section className="border-b-2 py-6 sm:py-10">
-                    <h2 className="text-xl sm:text-2xl font-bold mb-4">11. 개정 전 고지의무 등 안내</h2>
+                <section className="py-6 border-b-2 sm:py-10">
+                    <h2 className="mb-4 text-xl font-bold sm:text-2xl">11. 개정 전 고지의무 등 안내</h2>
                     <p className="mb-4">
                         법령이나 서비스의 변경사항을 반영하기 위한 목적 등으로 개인정보 처리방침을 수정할 수 있습니다.
                         개인정보 처리방침이 변경되는 경우 최소 7일 전 변경 사항을 사전에 안내 하겠습니다. 다만, 이용자
@@ -679,11 +677,11 @@ const Policies = () => {
                         링크드아웃은 이용자 여러분의 정보를 소중히 생각하며, 이용자가 더욱 안심하고 서비스를 이용할 수
                         있도록 최선의 노력을 다할 것을 약속드립니다.
                     </p>
-                    <ul className="list-disc pl-4 ml-4 sm:pl-6 mb-4">
+                    <ul className="pl-4 mb-4 ml-4 list-disc sm:pl-6">
                         <li className="mb-4">공고일자: 2024년 00월 00일</li>
                         <li>시행일자: 2024년 00월 00일</li>
                     </ul>
-                    <div className="info-card p-4 border rounded-lg text-center">
+                    <div className="p-4 text-center border rounded-lg info-card">
                         <figure className="flex flex-col items-center">
                             <Image
                                 src="/images/개인정보처리방침변경.png"
