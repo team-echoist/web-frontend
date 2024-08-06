@@ -9,7 +9,7 @@ import {
 } from "electron";
 import Store from "electron-store";
 import * as path from "path";
-import { setup as setupPushReceiver } from "electron-push-receiver";
+import { setup as setupPushReceiver ,NOTIFICATION_RECEIVED } from "electron-push-receiver";
 import { machineIdSync } from "node-machine-id";
 
 export const createWindow = (
@@ -93,6 +93,9 @@ export const createWindow = (
     event.sender.send('device-info', machineId);
   });
   setupPushReceiver(win.webContents);
+  ipcMain.on(NOTIFICATION_RECEIVED, (event, notification) => {
+    win.webContents.send('notification', notification);
+  });
   return win;
 };
 

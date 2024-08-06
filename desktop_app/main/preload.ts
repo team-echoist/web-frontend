@@ -18,7 +18,12 @@ contextBridge.exposeInMainWorld("Electron", {
     ipcRenderer.send("getFCMToken");
   },
   requestDeviceInfo: () => ipcRenderer.send('request-device-info'),
-  onDeviceInfo: (callback:any) => ipcRenderer.on('device-info', (event, data) => callback(data))
+  onDeviceInfo: (callback:any) => ipcRenderer.on('device-info', (event, data) => callback(data)),
+  onNotification: (callback:any) => {
+    ipcRenderer.on('notification', (event, notification) => {
+      callback(notification);
+    });
+  },
 });
 
 const senderId = 710166131124; // Replace 'yourSenderID' with your actual sender ID
