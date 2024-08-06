@@ -461,7 +461,7 @@ const policiesData = [
        </ul>`,
             `<div class="p-4 text-center border rounded-lg info-card">
           <figure class="flex flex-col items-center">
-              <Image src="/images/안정성확보조치.png" alt="안정성 확보조치" width={64} height={64} />
+              <Image src="/images/안정성확보조치.png" alt="안정성 확보조치" width={50} height={50} />
               <figcaption class="mt-4 mb-2 font-bold text-center">안전성 확보조치</figcaption>
           </figure>
           <p class="mt-2">
@@ -536,7 +536,6 @@ const policiesData = [
               <ul class="pl-4 sm:pl-6">
                   <li class="mb-4">
                       - 서비스 내 고객센터
-                      <a href="#" class="font-bold text-blue-700">(바로가기)</a>
                   </li>
                   <li>- Email : linkedoutapp@gmail.com</li>
               </ul>
