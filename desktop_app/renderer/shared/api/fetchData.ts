@@ -6,7 +6,12 @@ interface FetchDataResponse<T> {
   status: number;
 }
 
-export const fetchData = async <T>(
+export const fetchData: <T>(
+  url: string,
+  method: Method,
+  body?: any,
+  options?: AxiosRequestConfig
+) => Promise<FetchDataResponse<T>> = async <T>(
   url: string,
   method: Method,
   body?: any,
@@ -21,15 +26,19 @@ export const fetchData = async <T>(
     params: options.params || {},
   };
 
-  const response = await AxiosInstance({
-    method: method,
-    url: url,
-    data: body,
-    ...config,
-  });
+  try {
+    const response = await AxiosInstance({
+      method: method,
+      url: url,
+      data: body,
+      ...config,
+    });
 
-  const data = response.data.data as T;
-  const status = response.data.statusCode;
+    const data = response.data.data as T;
+    const status = response.data.statusCode;
 
-  return { data, status };
+    return { data, status };
+  } catch (error) {
+    throw new Error(`fetchData 에러: ${error}`);
+  }
 };

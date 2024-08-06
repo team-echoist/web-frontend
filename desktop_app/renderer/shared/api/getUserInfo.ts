@@ -8,6 +8,7 @@ interface UserData {
     createdDate: string;
     isFirst: boolean;
     locationConsent: boolean;
+    deviceId?: string;
   }
 
 export const getUserInfo = async () => {
@@ -21,7 +22,8 @@ export const getUserInfo = async () => {
         profileImage: data.profileImage,
         createdDate: data.createdDate,
         isFirst:data.isFirst,
-        locationConsent:data.locationConsent
+        locationConsent:data.locationConsent,
+        deviceId:data?.deviceId
       };
   
       return userData;

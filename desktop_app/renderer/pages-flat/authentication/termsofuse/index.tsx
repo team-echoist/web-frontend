@@ -1,9 +1,13 @@
-import { useState, useEffect, SetStateAction } from "react";
+import { useState, useEffect, SetStateAction, MouseEvent } from "react";
 import CheckField from "./ui/chekcField";
 import DefaultLayout from "../ui/layout/defaultLayout";
 import TextField from "../ui/contents/textfield";
 import { fetchData } from "@/shared/api/fetchData";
 import { Modal } from "@/shared/ui/modal";
+import { useRouter } from "next/navigation";
+import { GeneralToast } from "@/shared/ui/toast";
+import { useStore } from "@/shared/store";
+import { getUserInfo } from "@/shared/api";
 
 function index() {
   const [check, setCheck] = useState({
@@ -48,6 +52,10 @@ function index() {
   const [fcmToken, setFcmToken] = useState("");
   const [machineId, setMachineId] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isShowToast, setIsShowToast] = useState(false);
+  const router = useRouter();
+  const setUser = useStore((state) => state.setUser);
+
   useEffect(() => {
     const handleDeviceInfo = (data: string) => {
       setMachineId(data);
@@ -63,12 +71,78 @@ function index() {
     );
   }, []);
   const handelModalOpen = () => {
-    console.log("확인");
     setIsModalOpen(!isModalOpen);
   };
-  console.log("isModalOpen", isModalOpen);
+  const userInfoUpdate = async () => {
+    try {
+      const body = {
+        deviceId: machineId,
+        deviceToken: fcmToken,
+      };
+      const { status } = await fetchData(
+        "support/devices/register",
+        "post",
+        body
+      );
+      if (status === 201) {
+        const sendAlertList = {
+          viewed: check.alert.checked,
+          report: check.alert.checked,
+          marketing: check.marketing.checked,
+        };
+        const { status } = await fetchData(
+          `support/settings/${machineId}`,
+          "post",
+          sendAlertList
+        );
+        if (check.location.checked) {
+          await handleAgreeLocation();
+        } else if (status === 201) {
+          const userData = await getUserInfo();
+          if (userData) {
+            setUser(userData);
+          }
+          router.push("/web/complete");
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      if (err) {
+        setIsShowToast(true);
+      }
+    }
+  };
+
+  const handleAgreeLocation = async () => {
+    try {
+      const body = {
+        locationConsent: true,
+      };
+      const { status } = await fetchData(`users`, "put", body);
+
+      if (status === 200) {
+        const userData = await getUserInfo();
+        if (userData) {
+          setUser(userData);
+        }
+        router.push("/web/complete");
+      }
+    } catch (err) {
+      console.error("Error updating location consent:", err);
+      setIsShowToast(true);
+    }
+  };
+
   return (
     <DefaultLayout>
+      {isShowToast && (
+        <GeneralToast
+          title="약관 설정에 실패 했습니다."
+          desc="잠시후 다시 시도해 주세요."
+          isShowToast={isShowToast}
+          setIsShowToast={setIsShowToast}
+        />
+      )}
       <Modal
         title="서비스 이용 약관"
         url="https://tech.kakao.com/posts/453"
@@ -84,6 +158,7 @@ function index() {
         check={check}
         setCheck={setCheck}
         handelModalOpen={handelModalOpen}
+        onClick={userInfoUpdate}
       />
     </DefaultLayout>
   );

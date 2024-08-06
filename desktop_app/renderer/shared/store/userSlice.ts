@@ -6,6 +6,8 @@ export interface User {
   nickname: string;
   profileImage: string;
   createdDate: string;
+  locationConsent:boolean;
+  deviceId?:string;
 }
 
 export interface UserState {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import Check from "@/shared/ui/check/check";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
@@ -27,6 +27,7 @@ interface CheckFieldProps {
   check: CheckState;
   setCheck: React.Dispatch<React.SetStateAction<CheckState>>;
   handelModalOpen: () => void;
+  onClick: () => void;
 }
 
 const Layout = styled.section`
@@ -73,9 +74,10 @@ function CheckField({
   check,
   setCheck,
   handelModalOpen,
+  onClick
 }: CheckFieldProps) {
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-
+  // 필수 체크사항 판별 로직
   useEffect(() => {
     const requiredItems = ["service", "personal", "age"];
     const allRequiredChecked = requiredItems.every(
@@ -123,7 +125,7 @@ function CheckField({
     <Layout>
       <PrevButton />
       <AllCheckDiv onClick={handleAllCheck}>
-        <Check check={check.allCheck} setCheck={() => {}} type="circle" />
+        <Check check={isButtonEnabled} setCheck={() => {}} type="circle" />
         <P>전체 동의</P>
       </AllCheckDiv>
       {checkItems.map(({ key, item }) => (
@@ -146,6 +148,7 @@ function CheckField({
         style="square"
         scale="large"
         type={isButtonEnabled ? "point" : "disable"}
+        onClick={onClick}
       />
     </Layout>
   );
