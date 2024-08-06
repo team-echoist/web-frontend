@@ -1,12 +1,14 @@
-import { Policy } from "../_components"
 import policiesData from "../data/policiesData"
+import { Section } from "../_components"
 
-const PolicyPage = () => {
+function PoliciesPage() {
     return (
-        <div className="policies-container p-4 bg-white">
-            <Policy sections={policiesData} />
+        <div className="policies-container">
+            {policiesData.map((policy, index) => (
+                <Section key={index} title={policy.title} content={policy.content} figures={policy.figure} />
+            ))}
         </div>
     )
 }
 
-export default PolicyPage
+export default PoliciesPage
