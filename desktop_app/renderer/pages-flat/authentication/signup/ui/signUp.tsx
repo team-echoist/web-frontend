@@ -3,7 +3,6 @@ import { PrevButton } from "@/shared/ui/button";
 import TextField from "../../ui/contents/textfield";
 import { useState, useEffect } from "react";
 import InputField from "../../ui/contents/inputfield";
-import CheckField from "./contents/checkField";
 import { Button } from "@/shared/ui/button";
 import styled from "styled-components";
 import { submitSignupForm } from "../api";
@@ -164,7 +163,6 @@ function SignUP() {
         isValidateText={true}
         error={error}
       />
-      <CheckField check={check} setCheck={setCheck} />
       <ButtonLayout>
         <Button
           text="회원가입"
