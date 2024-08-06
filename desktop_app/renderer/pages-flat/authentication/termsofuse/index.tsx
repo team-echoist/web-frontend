@@ -51,15 +51,16 @@ function index() {
       setMachineId(data);
     };
 
-    window.electron.onDeviceInfo(handleDeviceInfo);
-    window.electron.requestDeviceInfo();
-    window.electron?.getFCMToken(
+    window.Electron.onDeviceInfo(handleDeviceInfo);
+    window.Electron.requestDeviceInfo();
+    window.Electron?.getFCMToken(
       "getFCMToken",
       (_: any, token: SetStateAction<string>) => {
         setFcmToken(token);
       }
     );
   }, []);
+
   return (
     
     <DefaultLayout>

@@ -12,7 +12,7 @@ import {
 
 
 // Connects the renderer.js with main.js
-contextBridge.exposeInMainWorld("electron", {
+contextBridge.exposeInMainWorld("Electron", {
   getFCMToken: (channel: string, func: (event: IpcRendererEvent, ...args: any[]) => void) => {
     ipcRenderer.once(channel, func);
     ipcRenderer.send("getFCMToken");

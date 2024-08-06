@@ -188,7 +188,7 @@ export const Login = () => {
             <Ul>
               <Li>아이디 찾기</Li>
               <Li>비밀번호 재설정</Li>
-              <Link href="/web/register">
+              <Link href="/web/termsofuse">
                 <Li>회원가입</Li>
               </Link>
             </Ul>
