@@ -10,7 +10,7 @@ interface CheckItem {
   desc: string;
   checked: boolean;
   required: boolean;
-  isOpenDesc:boolean
+  isOpenDesc: boolean;
 }
 
 interface CheckState {
@@ -26,6 +26,7 @@ interface CheckState {
 interface CheckFieldProps {
   check: CheckState;
   setCheck: React.Dispatch<React.SetStateAction<CheckState>>;
+  handelModalOpen: () => void;
 }
 
 const Layout = styled.section`
@@ -65,9 +66,14 @@ const CheckDiv = styled.div`
 const ConfirmDiv = styled.div`
   position: absolute;
   right: 29px;
+  cursor: pointer;
 `;
 
-function CheckField({ check, setCheck }: CheckFieldProps) {
+function CheckField({
+  check,
+  setCheck,
+  handelModalOpen,
+}: CheckFieldProps) {
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
   useEffect(() => {
@@ -129,7 +135,7 @@ function CheckField({ check, setCheck }: CheckFieldProps) {
           />
           <P>{item.desc}</P>
           {item.isOpenDesc && (
-            <ConfirmDiv>
+            <ConfirmDiv onClick={handelModalOpen}>
               <ConfirmIcon />
             </ConfirmDiv>
           )}

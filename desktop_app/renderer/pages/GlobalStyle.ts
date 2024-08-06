@@ -45,6 +45,7 @@ body{
     color: ${({ theme }) => theme.colors.text};
 	display:flex;
 	justify-content: center;
+
 	@media only screen and ${minDevices.tablet} and ${maxDevices.laptop}{
     width:768px;
 	height:100vh;
@@ -66,12 +67,12 @@ body{
   user-select: none;
 }
 
-// .window-hover:hover {
-//     background: rgba(255,255,255,0.1);
-//   }
-//   .window-hover:hover:active {
-//     background: rgba(255,255,255,0.2);
-//   }
+.window-hover:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .window-hover:hover:active {
+    background: rgba(255,255,255,0.2);
+  }
 
   .window-hover-close:hover {
     background: #E81123 !important;
@@ -156,6 +157,39 @@ cursor: pointer;
     color: ${({ theme }) => theme.colors.text};
 	display:flex;
 	justify-content: center;
+      /* 전역 스크롤바 스타일 */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #242424;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  /* Firefox 스크롤바 스타일 */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #242424;
+  }
+  *::-webkit-scrollbar {
+    width: 6px;
+  }
+  *::-webkit-scrollbar-track {
+    background: #242424;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    border: 3px solid #242424;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
 }
 .container.slide-up {
   width: 100vw;
