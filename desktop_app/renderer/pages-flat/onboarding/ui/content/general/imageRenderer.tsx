@@ -20,12 +20,12 @@ const SLayout = styled.section.attrs<SLayoutProps>((props) => ({
     backgroundImage: `url(${props.bgImage})`,
   },
 }))<SLayoutProps>`
-  width: 385.379px;
+  width: 100%;
   height: 58vh;
   position: relative;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center -10%;
+  background-position: 100% -10%;
   @media only screen and ${minHeights.heightL} {
     height: 40vh;
   }
