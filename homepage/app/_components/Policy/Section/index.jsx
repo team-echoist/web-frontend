@@ -25,25 +25,27 @@ function Section({ title, content, figures }) {
                 ) : null,
             )}
             {figures && (
-                <div className="flex items-center py-2 border rounded-lg">
+                <div className="flex items-center justify-center py-2 border rounded-lg">
                     {figures.map((figure, idx) => (
                         <div
                             key={idx}
-                            className={`flex flex-col items-center justify-center ${
-                                figures.length > 1 ? "border-right p-4" : ""
+                            className={`flex flex-col items-center justify-center p-4 ${
+                                figures.length > 1 ? "border-right" : ""
                             }`}
                         >
                             {Array.isArray(figure.imageSrc) ? (
-                                figure.imageSrc.map((src, index) => (
-                                    <Image
-                                        key={index}
-                                        src={src}
-                                        alt={figure.alt}
-                                        width={100}
-                                        height={100}
-                                        className="mb-2"
-                                    />
-                                ))
+                                <div className="flex items-center justify-center">
+                                    {figure.imageSrc.map((src, index) => (
+                                        <Image
+                                            key={index}
+                                            src={src}
+                                            alt={figure.alt}
+                                            width={100}
+                                            height={100}
+                                            className="mx-2 mb-4"
+                                        />
+                                    ))}
+                                </div>
                             ) : (
                                 <Image
                                     src={figure.imageSrc}
@@ -53,7 +55,7 @@ function Section({ title, content, figures }) {
                                     className="mb-2"
                                 />
                             )}
-                            <p className="font-bold text-center">{figure.caption}</p>
+                            <p className="mb-4 font-bold text-center">{figure.caption}</p>
                             <p className="text-center">{figure.description}</p>
                         </div>
                     ))}
