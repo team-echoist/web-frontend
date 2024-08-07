@@ -96,6 +96,10 @@ export const createWindow = (
   ipcMain.on(NOTIFICATION_RECEIVED, (event, notification) => {
     win.webContents.send('notification', notification);
   });
+  ipcMain.on('notification-clicked', (event, notification) => {
+    console.log('Notification clicked:', notification);
+    win.webContents.send('navigate-to', notification.url || 'http://localhost:8888/home');
+  });
   return win;
 };
 
@@ -124,7 +128,9 @@ ipcMain.on("close-window", (event) => {
   win?.close();
 });
 
-// app.on('ready', () => createWindow('main', {}));
+app.on('ready', () => {
+  app.setAppUserModelId("linkedout");
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {

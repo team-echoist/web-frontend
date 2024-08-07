@@ -8,6 +8,8 @@ declare global {
         func: (event: any, token: string) => void
       ) => void;
       onNotification: (callback: (notification: any) => void) => void; 
+      removeNotificationListener: (callback: (notification: any) => void) => void; 
+      showNotification: (title: string, body: any) => void; 
     };
   }
 }

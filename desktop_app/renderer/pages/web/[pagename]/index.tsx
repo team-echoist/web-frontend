@@ -15,13 +15,6 @@ function Index() {
     }
   }, [router, searchParams]);
 
-  useEffect(() => {
-    window.Electron.onNotification((notification) => {
-      new Notification(notification.title, {
-        body: notification.body,
-      });
-    });
-  }, []);
   return (
     <>{pageName ? <RenderView pageName={pageName} /> : <div>Loading...</div>}</>
   );
