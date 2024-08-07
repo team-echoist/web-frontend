@@ -31,6 +31,7 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
+        justify-content: center;
     }
 }
 
@@ -40,11 +41,15 @@
     }
 }
 
+/* 정책 페이지 border */
 .border-right:not(:last-child) {
     border-right: 1px solid #ccc;
 }
 
-/* Ensures no border on the last item */
 .border-right:last-child {
     border-right: none;
+}
+
+.section:last-child {
+    border-bottom: none;
 }

@@ -4,7 +4,7 @@ const policiesData = [
     {
         title: "1. 링크드아웃 개인정보 처리방침",
         content: [
-            `<p class="mb-2 font-bold"> 
+            `<p class="mb-2"> 
          &ldquo;개인정보 처리방침&rdquo;이란 이용자가 안심하고 서비스를 이용할 수 있도록 회사가 준수해야 할 
          지침을 의미하며, 링크드아웃은 개인정보처리자가 준수하여야 하는 대한민국의 관계 법령 및 개인정보보호 
          규정, 가이드라인을 준수하여 개인정보 처리방침을 제공합니다. 
@@ -97,7 +97,7 @@ const policiesData = [
             고객센터를 통한 상담 과정에서 웹페이지, 메일, 팩스, 전화 등
           </li>
        </ul>`,
-            `<h3 class="mb-2 font-bold text-l">서비스 이용 과정에서 단말기정보, IP주소, 쿠키, 서비스 이용 내역 등의 정보가 자동으로 생성되어 수집될 수 있습니다</h3>`,
+            `<h3 class="mb-2 font-bold text-l">서비스 이용 과정에서 단말기정보, IP주소, 쿠키, 서비스 이용 내역 등의 정보가 자동으로 생성되어 수집될 수 있습니다.</h3>`,
             `<p class="mb-4"> 
          서비스 이용 내역이란 서비스 이용 과정에서 자동화된 방법으로 생성되거나 이용자가 입력한 정보가 송수신되면서 링크드아웃 서버에
 자동으로 기록 및 수집될 수 있는 정보를 의미합니다. 이와 같은 정보는 다른 정보와의 결합 여부, 처리하는 방식 등에 따라 개인정보에
@@ -160,7 +160,7 @@ const policiesData = [
          부당하게 침해하는지, 가명처리 또는 암호화 등 안전성 확보에 필요한 조치를 하였는지&apos;를 종합적으로 
          고려합니다.
       </p>`,
-            `<p class="mb-4">
+            `<p class="mb-12">
          링크드아웃은 수집한 개인정보를 특정 개인을 알아볼 수 없도록 가명처리하여 통계작성, 과학적 연구, 
          공익적 기록보존 등을 위하여 처리할 수 있습니다. 이 때 가명정보는 재식별되지 않도록 추가정보와 
          분리하여 별도 저장・관리하고 필요한 기술적・관리적 보호조치를 취합니다.
@@ -282,9 +282,9 @@ const policiesData = [
          링크드아웃은 위치정보의 보호 및 이용 등에 관한 법률에 따라 아래와 같이 개인위치정보를 처리합니다.
       </p>`,
             `<p class="mb-4 font-bold">
-         <Link href="/위치기반서비스_이용약관.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-800">
+         <a href="/위치기반서비스_이용약관.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-800">
            링크드아웃 위치정보 이용약관 제4조
-         </Link>
+         </a>
          에 따른 서비스의 제공을 위해 개인위치정보를 보유할 수 있습니다.
       </p>`,
             `<ul class="pl-4 mb-4 ml-4 list-disc sm:pl-6">
@@ -339,9 +339,9 @@ const policiesData = [
           </p>
           <p class="mb-4">
             그 외 개인위치정보 처리와 관련된 자세한 내용은
-            <Link href="/위치기반서비스_이용약관.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-800">
+            <a href="/위치기반서비스_이용약관.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-800">
               링크드아웃 위치정보 이용약관
-            </Link>
+            </a>
             을 참고하시기 바랍니다.
           </p>
        </div>`,
@@ -451,7 +451,7 @@ const policiesData = [
           </p>
           <div class="my-6">
               <p class="mb-6">웹브라우저에서 쿠키 허용/차단</p>
-              <ul class="pl-4 mb-2 list-disc sm:pl-6">
+              <ul class="pl-4 mb-4 ml-4 list-disc sm:pl-6">
                   <li class="my-4">
                       크롬(Chrome): 웹 브라우저 설정 &gt; 개인정보 보호 및 보안 &gt; 인터넷 사용 기록 삭제
                   </li>
@@ -463,7 +463,7 @@ const policiesData = [
           </div>
           <div class="mt-4">
               <p class="mb-6">모바일브라우저에서 쿠키 허용/차단</p>
-              <ul class="pl-4 list-disc sm:pl-6">
+              <ul class="pl-4 mb-4 ml-4 list-disc sm:pl-6">
                   <li class="my-4">
                       크롬(Chrome): 모바일 브라우저 설정 &gt; 개인정보 보호 및 보안 &gt; 인터넷 사용 기록 
                       삭제
@@ -502,8 +502,10 @@ const policiesData = [
        </ul>`,
             `<div class="p-4 text-center border rounded-lg info-card">
           <figure class="flex flex-col items-center">
-              <Image src="/images/안정성확보조치.png" alt="안정성 확보조치" width={50} height={50} />
-              <figcaption class="mt-4 mb-2 font-bold text-center">안전성 확보조치</figcaption>
+            <div class="w-[100px] h-[100px] mb-8">
+                <Image src="/images/안정성확보조치.png" alt="안정성 확보조치" width={100} height={100} />
+            </div>
+            <figcaption class="mt-4 mb-2 font-bold text-center">안전성 확보조치</figcaption>
           </figure>
           <p class="mt-2">
             이용자의 개인정보를 안전하게 관리하기 위해 개인정보보호법에 따른 법적 요구사항을 모두 준수하고 
@@ -553,15 +555,7 @@ const policiesData = [
          제공하지 않습니다.
       </p>`,
         ],
-        // figures: [
-        //     {
-        //         imageSrc: "/images/안정성확보조치.png",
-        //         alt: "안정성 확보조치",
-        //         caption: "안전성 확보조치",
-        //         description:
-        //             "이용자의 개인정보를 안전하게 관리하기 위해 개인정보보호법에 따른 법적 요구사항을 모두 준수하고 있으며, 보호조치 수준에 대해서는 내부 점검 및 외부 검증을 통해 정기적으로 확인하고 있습니다.",
-        //     },
-        // ],
+        figure: [],
     },
     {
         title: "10. 개인정보 보호책임자 및 고충처리 부서",

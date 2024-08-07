@@ -1,9 +1,15 @@
 import Image from "next/image"
+import Link from "next/link"
 
 function Section({ title, content, figures }) {
+    const gridCols = {
+        2: "grid-cols-2",
+        3: "grid-cols-3",
+    }
+
     return (
-        <section className="py-6 border-b-2 section">
-            <h2 className="mb-4 text-xl font-bold title">{title}</h2>
+        <section className="border-b-2 section">
+            <h2 className="mt-8 mb-8 text-xl font-bold title">{title}</h2>
             {content.map((paragraph, index) =>
                 typeof paragraph === "string" ? (
                     <div key={index} dangerouslySetInnerHTML={{ __html: paragraph }} className="mt-4"></div>
@@ -14,25 +20,20 @@ function Section({ title, content, figures }) {
                                 <Image
                                     src={figure.src}
                                     alt={figure.alt}
-                                    width={figure.width}
-                                    height={figure.height}
-                                    className="mb-2"
+                                    width={100}
+                                    height={100}
+                                    className="mx-auto mb-2"
                                 />
-                                <p className="text-center">{figure.caption}</p>
+                                <p className="font-bold text-center">{figure.caption}</p>
                             </div>
                         ))}
                     </div>
                 ) : null,
             )}
             {figures && (
-                <div className="flex items-center justify-center py-2 border rounded-lg">
+                <div className={`grid ${gridCols[figures.length]} gap-4 py-2 border rounded-lg`}>
                     {figures.map((figure, idx) => (
-                        <div
-                            key={idx}
-                            className={`flex flex-col items-center justify-center p-4 ${
-                                figures.length > 1 ? "border-right" : ""
-                            }`}
-                        >
+                        <div key={idx} className="flex flex-col items-center justify-center p-4">
                             {Array.isArray(figure.imageSrc) ? (
                                 <div className="flex items-center justify-center">
                                     {figure.imageSrc.map((src, index) => (
