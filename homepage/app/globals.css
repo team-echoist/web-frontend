@@ -2,15 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 반응형 */
+/* Responsive styling */
 @media (min-width: 640px) {
     .policies-container {
         padding: 2rem;
     }
 
     .section {
-        padding-top: 2.5rem;
-        padding-bottom: 2.5rem;
+        padding: 2.5rem;
     }
 
     .title {
@@ -18,27 +17,34 @@
     }
 
     .figure-grid {
-        grid-template-columns: repeat(3, 1fr);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: center;
+        margin: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
     }
 
     .figure-item {
-        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 }
 
 @media (min-width: 768px) {
     .figure-grid {
-        grid-template-columns: repeat(6, 1fr);
+        flex-direction: row;
     }
 }
 
-.policies-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.5rem;
+.border-right:not(:last-child) {
+    border-right: 1px solid #ccc;
 }
 
-.policies-item:not(:last-child) {
-    border-right: 1px solid #ccc;
+/* Ensures no border on the last item */
+.border-right:last-child {
+    border-right: none;
 }
