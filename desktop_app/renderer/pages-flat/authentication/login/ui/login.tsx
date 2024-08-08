@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, SetStateAction } from "react";
 import { PrevButton } from "@/shared/ui/button";
 import DefaultLayout from "../../ui/layout/defaultLayout";
 import TextField from "../../ui/contents/textfield";
@@ -16,6 +16,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useStore } from "@/shared/store";
 import { getUserInfo } from "@/shared/api";
+import { fetchData } from "@/shared/api/fetchData";
 
 type SocialLoginName = "google" | "kakao" | "naver";
 
@@ -77,6 +78,18 @@ export const Login = () => {
   };
 
   useEffect(() => {
+    let deviceId = "";
+    let fcmToken = "";
+    const handleDeviceInfo = (data: string) => {
+      deviceId = data;
+    };
+
+    window.Electron?.requestDeviceInfo();
+    window.Electron?.onDeviceInfo(handleDeviceInfo);
+    window.Electron?.getFCMToken("getFCMToken", (_: any, token: string) => {
+      fcmToken = token;
+    });
+
     const handleLogin = async () => {
       const tenYearsFromNow = new Date(
         new Date().setFullYear(new Date().getFullYear() + 10)
@@ -97,7 +110,24 @@ export const Login = () => {
           const userData = await getUserInfo();
           if (userData) {
             setUser(userData);
-            redirectToPage(userData.isFirst);
+
+            if (userData.isFirst) {
+              redirectToPage(true);
+              return;
+            }
+
+            const deviceExists = userData.devices?.some(
+              (device) => device === deviceId
+            );
+            if (!deviceExists) {
+              const body = {
+                deviceId: deviceId,
+                deviceToken: fcmToken,
+              };
+              await fetchData("support/devices/register", "post", body);
+            }
+
+            redirectToPage(false);
           }
         } catch (error) {
           console.error("Error checking first login:", error);

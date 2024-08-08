@@ -7,7 +7,7 @@ export interface User {
   profileImage: string;
   createdDate: string;
   locationConsent:boolean;
-  deviceId?:string;
+  devices?:string[];
 }
 
 export interface UserState {
