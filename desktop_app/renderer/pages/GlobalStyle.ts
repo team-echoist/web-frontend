@@ -42,14 +42,9 @@ body{
 	margin:auto;
   overflow-x: hidden;
 	background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
 	display:flex;
 	justify-content: center;
-
-	@media only screen and ${minDevices.tablet} and ${maxDevices.laptop}{
-    width:768px;
-	height:100vh;
-    }
 }
 #titlebar {
   display: block;
@@ -58,6 +53,7 @@ body{
   width: calc(100% - 2px); /*Compensate for body 1px border*/
   background: #101012;
   color:#373737;
+  z-index:999;
 }
   #window-controls {
   -webkit-app-region: no-drag;
