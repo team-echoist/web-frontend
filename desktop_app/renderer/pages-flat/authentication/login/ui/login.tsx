@@ -96,7 +96,11 @@ export const Login = () => {
           deviceId: deviceId,
           deviceToken: fcmToken,
         };
-        await fetchData("support/devices/register", "post", body);
+        try {
+          await fetchData("support/devices/register", "post", body);
+        } catch (err) {
+          console.log("err", err);
+        }
       }
 
       redirectToPage(false);
