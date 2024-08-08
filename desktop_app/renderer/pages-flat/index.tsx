@@ -10,7 +10,8 @@ import { Complete } from "./authentication";
 import { Main } from "./main";
 import { withAuth } from "@/shared/lib/auth";
 import { TermsofUse } from "./authentication";
-
+import { Essay } from "./essay";
+import { Community } from "./community";
 
 const ProtectedMain = withAuth(Main);
 const ProtectedFindInfo = withAuth(FindInfo);
@@ -18,6 +19,8 @@ const ProtectedMypage = withAuth(Mypage);
 const ProtectedRegister = withAuth(Register);
 const ProtectedWriteEssay = withAuth(WriteEssay);
 const ProtectedComplete = withAuth(Complete);
+const ProtectedEssay = withAuth(Essay);
+const ProtectedCommunity = withAuth(Community);
 
 type PageParams = {
   pagename: string;
@@ -68,6 +71,10 @@ const RenderView: React.FC<RenderViewProps> = ({ pageName }) => {
       return <TermsofUse />;
     case "signup":
       return <SignUp />;
+    case "essay":
+      return <ProtectedEssay />;
+    case "community":
+      return <ProtectedCommunity />;
     case "complete":
       return <ProtectedComplete />;
     case "mypage":
