@@ -34,7 +34,7 @@ export const OnBoarding = () => {
   }, []);
 
   return (
-    <DefaultLayout>
+    <>
       {isGifEnded ? (
         <Swiper step={step} setStep={setStep} maxStep={4}>
           {Array.from({ length: 4 }, (_, index) => (
@@ -48,6 +48,6 @@ export const OnBoarding = () => {
           <FirstStepContent />
         </DefaultLayout>
       )}
-    </DefaultLayout>
+    </>
   );
 };
