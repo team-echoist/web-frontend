@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-function Content({ content }) {
+function Content({ content, isFirstSection }) {
   return (
     <>
       {content.map((paragraph, index) =>
@@ -14,7 +14,11 @@ function Content({ content }) {
         ) : paragraph.type === "images" ? (
           <div
             key={index}
-            className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 md:grid-cols-6"
+            className={`grid gap-4 mt-4 ${
+              isFirstSection
+                ? "first-section-grid"
+                : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6"
+            }`}
           >
             {paragraph.images.map((figure, idx) => (
               <div

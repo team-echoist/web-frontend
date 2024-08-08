@@ -1,3 +1,4 @@
-export { default as Section } from "./Section";
-export { default as Content } from "./Content";
-export { default as FigureGrid } from "./FigureGrid";
+import React from "react";
+import Section from "./Section";
+
+export { Section };

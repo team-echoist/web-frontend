@@ -1,16 +1,22 @@
+import dynamic from "next/dynamic";
 import { Section } from "../_components/Policy";
 import policiesData from "../data/policiesData";
+
+const DynamicSection = dynamic(() => import("../_components/Policy/Section"), {
+  ssr: false,
+});
 
 const Index = () => {
   return (
     <>
       <div className="policies-container">
         {policiesData.map((policy, index) => (
-          <Section
+          <DynamicSection
             key={index}
             title={policy.title}
             content={policy.content}
             figures={policy.figures}
+            isFirstSection={index === 0} // 첫 번째 섹션인지 확인
           />
         ))}
       </div>
