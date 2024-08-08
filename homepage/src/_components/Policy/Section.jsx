@@ -1,6 +1,5 @@
 import React from "react";
 import Content from "./Content";
-import Image from "next/image";
 
 function Section({ title, content, figures, isFirstSection }) {
   const gridCols = {
@@ -26,7 +25,7 @@ function Section({ title, content, figures, isFirstSection }) {
               {Array.isArray(figure.imageSrc) ? (
                 <div className="flex items-center justify-center">
                   {figure.imageSrc.map((src, index) => (
-                    <Image
+                    <img
                       key={index}
                       src={src}
                       alt={figure.alt}
@@ -37,7 +36,7 @@ function Section({ title, content, figures, isFirstSection }) {
                   ))}
                 </div>
               ) : (
-                <Image
+                <img
                   src={figure.imageSrc}
                   alt={figure.alt}
                   width={100}

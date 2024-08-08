@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 function FigureGrid({ figures }) {
   const gridCols = {
@@ -21,7 +20,7 @@ function FigureGrid({ figures }) {
           {Array.isArray(figure.imageSrc) ? (
             <div className="flex items-center justify-center">
               {figure.imageSrc.map((src, index) => (
-                <Image
+                <img
                   key={index}
                   src={src}
                   alt={figure.alt}
@@ -32,7 +31,7 @@ function FigureGrid({ figures }) {
               ))}
             </div>
           ) : (
-            <Image
+            <img
               src={figure.imageSrc}
               alt={figure.alt}
               width={100}
