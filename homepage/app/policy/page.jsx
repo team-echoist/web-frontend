@@ -1,4 +1,4 @@
-import { Policy } from "../_components";
+import { Section } from "../_components/Policy";
 import policiesData from "../data/policiesData";
 
 const Index = () => {
@@ -6,7 +6,7 @@ const Index = () => {
     <>
       <div className="policies-container">
         {policiesData.map((policy, index) => (
-          <Policy
+          <Section
             key={index}
             title={policy.title}
             content={policy.content}
