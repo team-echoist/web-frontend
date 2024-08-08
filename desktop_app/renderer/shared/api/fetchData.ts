@@ -2,8 +2,8 @@ import AxiosInstance from "./axiosInstance";
 import { AxiosRequestConfig, Method } from "axios";
 
 interface FetchDataResponse<T> {
-  data: T | null;
-  status: number | null;
+  data: T;
+  status: number;
 }
 
 export const fetchData: <T>(
@@ -39,7 +39,6 @@ export const fetchData: <T>(
 
     return { data, status };
   } catch (error) {
-    console.log("Err", error);
-    return { data: null, status: null };
+    throw new Error(`fetchData 에러: ${error}`);
   }
 };

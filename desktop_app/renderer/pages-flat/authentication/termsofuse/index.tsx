@@ -75,6 +75,10 @@ function index() {
   };
   const userInfoUpdate = async () => {
     try {
+      const isFirstLoginDisabled = {
+        isFirst: false,
+      };
+      await fetchData(`users`, "put", isFirstLoginDisabled);
       const body = {
         deviceId: machineId,
         deviceToken: fcmToken,
