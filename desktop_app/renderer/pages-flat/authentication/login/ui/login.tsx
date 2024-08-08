@@ -68,6 +68,8 @@ export const Login = () => {
   const [isShowToast, setIsShowToast] = useState(false);
   const router = useRouter();
   const setUser = useStore((state) => state.setUser);
+  let deviceId = "";
+  let fcmToken = "";
 
   const redirectToPage = (isFirstLogin: boolean) => {
     if (isFirstLogin) {
@@ -76,10 +78,32 @@ export const Login = () => {
       router.push("/web/main");
     }
   };
+  const handleUserInfo = async () => {
+    const userData = await getUserInfo();
+    if (userData) {
+      setUser(userData);
+
+      if (userData.isFirst) {
+        redirectToPage(true);
+        return;
+      }
+
+      const deviceExists = userData.devices?.some(
+        (device) => device === deviceId
+      );
+      if (!deviceExists) {
+        const body = {
+          deviceId: deviceId,
+          deviceToken: fcmToken,
+        };
+        await fetchData("support/devices/register", "post", body);
+      }
+
+      redirectToPage(false);
+    }
+  };
 
   useEffect(() => {
-    let deviceId = "";
-    let fcmToken = "";
     const handleDeviceInfo = (data: string) => {
       deviceId = data;
     };
@@ -107,28 +131,7 @@ export const Login = () => {
             sessionStorage.setItem("token", token);
           }
 
-          const userData = await getUserInfo();
-          if (userData) {
-            setUser(userData);
-
-            if (userData.isFirst) {
-              redirectToPage(true);
-              return;
-            }
-
-            const deviceExists = userData.devices?.some(
-              (device) => device === deviceId
-            );
-            if (!deviceExists) {
-              const body = {
-                deviceId: deviceId,
-                deviceToken: fcmToken,
-              };
-              await fetchData("support/devices/register", "post", body);
-            }
-
-            redirectToPage(false);
-          }
+          handleUserInfo();
         } catch (error) {
           console.error("Error checking first login:", error);
         }
@@ -153,11 +156,7 @@ export const Login = () => {
       const statusCode = await localLogin(body, autoLoginCheck);
       if (statusCode === 200 || statusCode === 201) {
         //메인페이지
-        const userData = await getUserInfo();
-        if (userData) {
-          setUser(userData);
-          redirectToPage(userData.isFirst);
-        }
+        handleUserInfo();
       }
     } catch (err) {
       console.log("err", err);
