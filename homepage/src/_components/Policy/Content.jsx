@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 function Content({ content, isFirstSection }) {
   return (
@@ -25,7 +24,7 @@ function Content({ content, isFirstSection }) {
                 key={idx}
                 className="flex flex-col items-center justify-center figure-item"
               >
-                <Image
+                <img
                   src={figure.src}
                   alt={figure.alt}
                   width={100}
