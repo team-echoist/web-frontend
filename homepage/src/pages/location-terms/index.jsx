@@ -1,12 +1,15 @@
-// 위치정보 약관
+// 위치 기반 서비스 이용 약관
 import React from "react";
-import Section from "../../_components/Policies/Section";
-import TermsFooter from "../../_components/TermsFooter";
+import Section from "../../_components/Policy/Section";
+import PoliciesFooter from "../../_components/Policy/PoliciesFooter";
 import locationTermsData from "../../data/locationTermsData";
 
 const Index = () => {
   return (
     <>
+      <h1 className="text-4xl text-center font-black mt-16">
+        위치 기반 서비스 이용 약관
+      </h1>
       <div className="policies-container">
         {locationTermsData.map((policy, index) => (
           <Section
@@ -18,7 +21,7 @@ const Index = () => {
           />
         ))}
       </div>
-      <TermsFooter />
+      <PoliciesFooter />
     </>
   );
 };

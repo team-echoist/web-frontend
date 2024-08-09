@@ -1,5 +1,5 @@
 import Main from "./pages/main";
-import Policy from "./pages/operational-policy";
+import OperationalPolicy from "./pages/operational-policy";
 import Terms from "./pages/terms";
 import LocationTerms from "./pages/location-terms";
 import PrivacyPolicy from "./pages/privacy-policy";
@@ -26,9 +26,9 @@ const routes = [
     component: <PrivacyPolicy />,
   },
   {
-    key: "policy",
-    route: "/policy",
-    component: <Policy />,
+    key: "operational-policy",
+    route: "/operational-policy",
+    component: <OperationalPolicy />,
   },
 ];
 

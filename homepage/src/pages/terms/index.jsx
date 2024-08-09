@@ -1,12 +1,13 @@
 // 이용약관
 import React from "react";
-import Section from "../../_components/Policies/Section";
-import TermsFooter from "../../_components/TermsFooter";
+import Section from "../../_components/Policy/Section";
+import PoliciesFooter from "../../_components/Policy/PoliciesFooter";
 import termsData from "../../data/termsData";
 
 const Index = () => {
   return (
     <>
+      <h1 className="text-4xl text-center font-black mt-16">이용약관</h1>
       <div className="policies-container">
         {termsData.map((policy, index) => (
           <Section
@@ -18,7 +19,7 @@ const Index = () => {
           />
         ))}
       </div>
-      <TermsFooter />
+      <PoliciesFooter />
     </>
   );
 };

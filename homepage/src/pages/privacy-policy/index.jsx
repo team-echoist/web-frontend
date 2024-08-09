@@ -1,12 +1,15 @@
-// 개인정보보호 약관
+// 개인정보처리방침
 import React from "react";
-import Section from "../../_components/Policies/Section";
+import Section from "../../_components/Policy/Section";
 import policiesData from "../../data/policiesData";
-import TermsFooter from "../../_components/TermsFooter";
+import PoliciesFooter from "../../_components/Policy/PoliciesFooter";
 
 const Index = () => {
   return (
     <>
+      <h1 className="text-4xl text-center font-black mt-16">
+        개인정보처리방침
+      </h1>
       <div className="policies-container">
         {policiesData.map((policy, index) => (
           <Section
@@ -18,7 +21,7 @@ const Index = () => {
           />
         ))}
       </div>
-      <TermsFooter />
+      <PoliciesFooter />
     </>
   );
 };
