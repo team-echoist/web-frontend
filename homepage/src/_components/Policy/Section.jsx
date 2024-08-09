@@ -9,7 +9,7 @@ function Section({ title, content, figures, isFirstSection }) {
 
   return (
     <section className="border-b-2 section">
-      <h2 className="mt-8 mb-8 text-xl font-bold title">{title}</h2>
+      <h2 className="mb-8 text-xl font-bold title">{title}</h2>
       <Content content={content} isFirstSection={isFirstSection} />
       {figures && (
         <div
