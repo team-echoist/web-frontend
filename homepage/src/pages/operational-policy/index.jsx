@@ -1,15 +1,17 @@
-// 운영정책
+// 링크드아웃 운영정책
 import React from "react";
 import Section from "../../_components/Policy/Section";
+import policiesData from "../../data/policiesData";
 import PoliciesFooter from "../../_components/Policy/PoliciesFooter";
-import privacyPolicyData from "../../data/privacyPolicyData";
 
 const Index = () => {
   return (
     <>
-      <h1 className="text-4xl text-center font-black mt-16">운영정책</h1>
+      <h1 className="text-4xl text-center font-black mt-16">
+        링크드아웃 운영정책
+      </h1>
       <div className="policies-container">
-        {privacyPolicyData.map((policy, index) => (
+        {policiesData.map((policy, index) => (
           <Section
             key={index}
             title={policy.title}
