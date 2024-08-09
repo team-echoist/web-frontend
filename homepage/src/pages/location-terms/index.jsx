@@ -7,7 +7,7 @@ import locationTermsData from "../../data/locationTermsData";
 const Index = () => {
   return (
     <>
-      <h1 className="text-4xl text-center font-black mt-16">
+      <h1 className="text-3xl text-center font-black mt-16 sm:mt-20 sm:text-4xl">
         위치 기반 서비스 이용 약관
       </h1>
       <div className="policies-container">

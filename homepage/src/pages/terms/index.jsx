@@ -7,7 +7,9 @@ import termsData from "../../data/termsData";
 const Index = () => {
   return (
     <>
-      <h1 className="text-4xl text-center font-black mt-16">이용약관</h1>
+      <h1 className="text-3xl text-center font-black mt-16 sm:mt-20 sm:text-4xl">
+        이용약관
+      </h1>
       <div className="policies-container">
         {termsData.map((policy, index) => (
           <Section

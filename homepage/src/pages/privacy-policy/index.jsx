@@ -7,7 +7,7 @@ import privacyPolicyData from "../../data/privacyPolicyData";
 const Index = () => {
   return (
     <>
-      <h1 className="text-4xl text-center font-black mt-16">
+      <h1 className="text-3xl text-center font-black mt-16 sm:mt-20 sm:text-4xl">
         개인정보처리방침
       </h1>
       <div className="policies-container">
