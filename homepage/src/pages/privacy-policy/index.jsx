@@ -8,7 +8,7 @@ const Index = () => {
   return (
     <>
       <h1 className="text-4xl text-center font-black mt-16">
-        개인정보처리방침
+        링크드아웃 운영정책
       </h1>
       <div className="policies-container">
         {policiesData.map((policy, index) => (
