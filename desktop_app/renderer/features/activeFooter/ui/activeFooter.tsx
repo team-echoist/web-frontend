@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Footer } from "@/shared/ui/footer";
 import { useRouter } from "next/navigation";
+import { useStore } from "@/shared/store";
+
 interface IconMap {
   home: React.ReactElement;
   essay: React.ReactElement;
@@ -9,20 +11,32 @@ interface IconMap {
 }
 
 const routerMapper = {
-  home: "/web/home",
+  home: "/web/main",
   essay: "/web/essay",
   community: "/web/community",
   mypage: "/web/mypage",
 };
 
 function ActiveFooter() {
-  const [focusedKey, setFocusedKey] = useState<keyof IconMap>("home");
   const router = useRouter();
+  const path = useStore((state) => state.path);
+  const setPath = useStore((state) => state.setPath);
+  const focusedKey =
+    (Object.keys(routerMapper) as Array<keyof IconMap>).find(
+      (key) => routerMapper[key] === path
+    ) || "home";
+
+  useEffect(() => {
+    if (focusedKey !== "home") {
+      setPath(routerMapper[focusedKey]);
+    }
+  }, [focusedKey, setPath]);
 
   const handleIconClick = (key: keyof IconMap) => {
-    setFocusedKey(key);
+    setPath(routerMapper[key]);
     router.push(routerMapper[key]);
   };
+
   return <Footer focusedKey={focusedKey} onIconClick={handleIconClick} />;
 }
 
