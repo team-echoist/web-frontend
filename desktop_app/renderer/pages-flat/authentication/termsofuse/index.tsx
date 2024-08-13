@@ -80,8 +80,8 @@ function index() {
       };
       await fetchData(`users`, "put", isFirstLoginDisabled);
       const body = {
-        deviceId: machineId,
-        deviceToken: fcmToken,
+        uid: machineId,
+        fcmToken: fcmToken,
       };
       const { status } = await fetchData(
         "support/devices/register",
@@ -95,7 +95,7 @@ function index() {
           marketing: check.marketing.checked,
         };
         const { status } = await fetchData(
-          `support/settings/${machineId}`,
+          `support/settings`,
           "post",
           sendAlertList
         );

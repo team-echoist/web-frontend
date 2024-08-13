@@ -94,7 +94,7 @@ export const Login = () => {
       if (!deviceExists) {
         const body = {
           deviceId: deviceId,
-          deviceToken: fcmToken,
+          fcmToken: fcmToken,
         };
         try {
           await fetchData("support/devices/register", "post", body);
