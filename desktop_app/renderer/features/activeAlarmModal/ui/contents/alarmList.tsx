@@ -38,7 +38,7 @@ function AlarmList() {
   const [isFocused, setIsFocused] = useState(false);
   return (
     <Layout>
-      <Letter></Letter>
+      {/* <Letter></Letter> */}
       <Time>2024.06.13</Time>
       <GeneralCard isFocused={isFocused}>
         <AvatarLayout>
