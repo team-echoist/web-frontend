@@ -15,6 +15,7 @@ const Layout = styled.div<{ isFocused: boolean }>`
   align-items: center;
   padding-left:10px;
   padding-right:10px;
+  cursor: pointer;
 `;
 
 function GeneralCard({

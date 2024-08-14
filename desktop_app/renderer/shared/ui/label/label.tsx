@@ -3,7 +3,7 @@ import styled from "styled-components";
 import color from "@/shared/styles/color";
 
 const Layout = styled.div`
-  min-width: 70px;
+  width: 70px;
   height: 22px;
   flex-shrink: 0;
   border-radius: 20px;
@@ -12,6 +12,9 @@ const Layout = styled.div`
   justify-content: center;
   align-items: center;
   z-index:100;
+  padding-left:5px;
+  padding-right:5px;
+  white-space: nowrap;
 `;
 const LabelText = styled.label`
   color: ${color.pointcolor};

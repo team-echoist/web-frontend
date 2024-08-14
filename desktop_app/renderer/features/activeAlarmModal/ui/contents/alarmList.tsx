@@ -5,7 +5,8 @@ import LinkedoutLetter from "@/shared/assets/img/linkedout_letter.webp";
 import styled from "styled-components";
 import { Label } from "@/shared/ui/label";
 import TextField from "./textField";
-import Letter from "@/shared/assets/img/letter.webp";
+import LetterImg from "@/shared/assets/img/letter.webp";
+import Letter from "./letter"
 
 const Layout = styled.div`
   position: absolute;
@@ -30,13 +31,14 @@ const AvatarLayout = styled.div`
 const LabelDiv = styled.div`
   position: absolute;
   top: 67px;
-  left: 5px;
+  left: 3px;
 `;
 
 function AlarmList() {
   const [isFocused, setIsFocused] = useState(false);
   return (
     <Layout>
+      <Letter></Letter>
       <Time>2024.06.13</Time>
       <GeneralCard isFocused={isFocused}>
         <AvatarLayout>
@@ -49,7 +51,7 @@ function AlarmList() {
       </GeneralCard>
       <GeneralCard isFocused={isFocused}>
         <AvatarLayout>
-          <CircularAvatar img={Letter} width={61} height={59} />
+          <CircularAvatar img={LetterImg} width={61} height={59} />
           <LabelDiv>
             <Label text="발행한 글" />
           </LabelDiv>
