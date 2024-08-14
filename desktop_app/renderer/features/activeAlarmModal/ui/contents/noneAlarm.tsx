@@ -47,7 +47,7 @@ const Strong = styled.strong`
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
-  margin: 0; /* 기본 마진 제거 */
+  margin: 0; 
 `;
 
 function NoneAlarm() {

@@ -14,7 +14,7 @@ import ActiveAlarmModal from "@/features/activeAlarmModal/ui"
 const StyledWriteButton = styled(WriteButtonSVG)`
   position: absolute;
   left: 92.5%;
-  top: 88.89%;
+  top: 85.89%;
   z-index: 10;
   cursor: pointer;
 `;
@@ -32,7 +32,7 @@ const Container = styled.main<{ isModalOpen: boolean }>`
 
 const HomeDiv = styled.div`
   width: 100%;
-  height: 88.6vh;
+  height: 90vh;
   position: relative;
 `;
 export const Main = () => {

@@ -1,5 +1,6 @@
 import { AlarmModal } from "@/shared/ui/modal";
 import NoneAlarm from "./contents/noneAlarm";
+import AlarmList from "./contents/alarmList";
 
 interface AlarmModalProps {
   isModalOpen: boolean;
@@ -12,7 +13,8 @@ function index({ isModalOpen, handleAlarmButtonClick }: AlarmModalProps) {
       isOpen={isModalOpen}
       handleAlarmButtonClick={handleAlarmButtonClick}
     >
-      <NoneAlarm />
+      {/* <NoneAlarm /> */}
+      <AlarmList />
     </AlarmModal>
   );
 }

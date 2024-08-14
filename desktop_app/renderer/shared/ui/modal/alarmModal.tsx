@@ -24,7 +24,7 @@ const slideOut = keyframes`
 const Layout = styled.div<{ isOpen: boolean }>`
   z-index: 500;
   width: 390px;
-  height: 96.8vh;
+  height: 95vh;
   background: #121212;
   position: absolute;
   top: 30px;
