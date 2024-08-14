@@ -4,7 +4,7 @@ import color from "@/shared/styles/color";
 
 const Layout = styled.div<{ isFocused: boolean }>`
   width: 330px;
-  height: 119px;
+  height: 159px;
   flex-shrink: 0;
   border-radius: 10px;
   border: 1px solid #191919;
