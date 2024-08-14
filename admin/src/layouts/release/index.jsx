@@ -44,7 +44,7 @@ function index() {
           releaseId:id
         }
       }
-      const { status } = await fetchData(`/admin/releases/${id}`,'delete',null,params);
+      const { status } = await fetchData(`/admin/releases`,'delete',null,params);
       if (status === 200) {
         showToast.success("notice deleted successfully");
 
