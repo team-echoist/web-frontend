@@ -17,7 +17,7 @@ const routerMapper = {
   mypage: "/web/mypage",
 };
 
-function ActiveFooter() {
+function ActiveFooter({ isModalOpen }: { isModalOpen: boolean }) {
   const router = useRouter();
   const path = useStore((state) => state.path);
   const setPath = useStore((state) => state.setPath);
@@ -37,7 +37,7 @@ function ActiveFooter() {
     router.push(routerMapper[key]);
   };
 
-  return <Footer focusedKey={focusedKey} onIconClick={handleIconClick} />;
+  return <Footer focusedKey={focusedKey} onIconClick={handleIconClick} isModalOpen={isModalOpen} />;
 }
 
 export default ActiveFooter;
