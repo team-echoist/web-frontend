@@ -31,7 +31,7 @@ const AvatarLayout = styled.div`
 const LabelDiv = styled.div`
   position: absolute;
   top: 67px;
-  left: 3px;
+  left: 0px;
 `;
 
 function AlarmList() {
