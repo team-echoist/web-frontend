@@ -11,16 +11,24 @@ const Layout = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  background:#1A1A1A;
 `;
+
+
 
 function CircularAvatar({
   img,
+  width,
+  height
 }: {
   img: StaticImageData | string;
+  width: number;
+  height: number;
 }) {
   return (
     <Layout>
-      <Image src={img} alt="Circular Avatar" width={75} height={75} />
+      <Image src={img} alt="Circular Avatar" width={width} height={height} />
     </Layout>
   );
 }

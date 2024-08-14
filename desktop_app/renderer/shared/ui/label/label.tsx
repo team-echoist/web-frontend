@@ -11,9 +11,7 @@ const Layout = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 67px;
-  left: 5px;
+  z-index:100;
 `;
 const LabelText = styled.label`
   color: ${color.pointcolor};
