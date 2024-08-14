@@ -68,8 +68,10 @@ export const Login = () => {
   const [isShowToast, setIsShowToast] = useState(false);
   const router = useRouter();
   const setUser = useStore((state) => state.setUser);
-  let deviceId = "";
-  let fcmToken = "";
+  const [deviceId, setDeviceId] = useState("");
+  const [fcmToken, setFcmToken] = useState("");
+  // let deviceId = "";
+  // let fcmToken = "";
 
   const redirectToPage = (isFirstLogin: boolean) => {
     if (isFirstLogin) {
@@ -87,14 +89,13 @@ export const Login = () => {
         redirectToPage(true);
         return;
       }
-  
+
       const deviceExists = userData.devices?.some(
         (device) => device?.uid === deviceId
       );
-  
       if (!deviceExists) {
         const body = {
-          deviceId: deviceId,
+          uid: deviceId,
           fcmToken: fcmToken,
         };
         try {
@@ -110,13 +111,13 @@ export const Login = () => {
 
   useEffect(() => {
     const handleDeviceInfo = (data: string) => {
-      deviceId = data;
+      setDeviceId(data);
     };
 
     window.Electron?.requestDeviceInfo();
     window.Electron?.onDeviceInfo(handleDeviceInfo);
     window.Electron?.getFCMToken("getFCMToken", (_: any, token: string) => {
-      fcmToken = token;
+      setFcmToken(token);
     });
 
     const handleLogin = async () => {
