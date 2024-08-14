@@ -87,7 +87,7 @@ export const Login = () => {
         redirectToPage(true);
         return;
       }
-
+  
       const deviceExists = userData.devices?.some(
         (device) => device === deviceId
       );

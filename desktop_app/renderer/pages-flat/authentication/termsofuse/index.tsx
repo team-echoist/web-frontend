@@ -9,6 +9,8 @@ import { GeneralToast } from "@/shared/ui/toast";
 import { useStore } from "@/shared/store";
 import { getUserInfo } from "@/shared/api";
 
+type TermKey = 'service' | 'personal' | 'location';
+
 function index() {
   const [check, setCheck] = useState({
     allCheck: false,
@@ -55,7 +57,8 @@ function index() {
   const [isShowToast, setIsShowToast] = useState(false);
   const router = useRouter();
   const setUser = useStore((state) => state.setUser);
-
+  const [currentTerm, setCurrentTerm] = useState<TermKey>("service");
+  console.log("currentTerm",currentTerm)
   useEffect(() => {
     const handleDeviceInfo = (data: string) => {
       setMachineId(data);
@@ -137,6 +140,25 @@ function index() {
     }
   };
 
+  const handleTerms = (key: TermKey) => {
+    setCurrentTerm(key);
+  };
+
+  const termsMapper: Record<TermKey, { title: string; url: string }> = {
+    service:{
+      title:"서비스 이용 약관",
+      url:"https://www.linkedoutapp.com/terms"
+    },
+    personal:{
+      title:"개인정보처리 방침",
+      url:"https://www.linkedoutapp.com/privacy-policy"
+    },
+    location:{
+      title:"위치기반서비스 이용 약관",
+      url:"https://www.linkedoutapp.com/location-terms"
+    }
+  }
+
   return (
     <DefaultLayout>
       {isShowToast && (
@@ -148,8 +170,8 @@ function index() {
         />
       )}
       <Modal
-        title="서비스 이용 약관"
-        url="https://tech.kakao.com/posts/453"
+        title={termsMapper[`${currentTerm}`].title}
+        url={termsMapper[`${currentTerm}`].url}
         isModalOpen={isModalOpen}
         onClick={handelModalOpen}
       />
@@ -163,6 +185,7 @@ function index() {
         setCheck={setCheck}
         handelModalOpen={handelModalOpen}
         onClick={userInfoUpdate}
+        handleTerms={handleTerms}
       />
     </DefaultLayout>
   );

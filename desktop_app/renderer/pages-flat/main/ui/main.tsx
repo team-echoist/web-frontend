@@ -2,7 +2,6 @@
 import React from "react";
 import styled from "styled-components";
 import { AlarmButton } from "@/shared/ui/button";
-import { CircleButton } from "@/shared/ui/button";
 import WriteButtonSVG from "@/shared/assets/img/write_icon.svg";
 import HomeImg from "@/shared/assets/img/mainroom.webp";
 import Image from "next/image";
