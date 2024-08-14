@@ -8,6 +8,8 @@ import Image from "next/image";
 import ActiveFooter from "@/features/activeFooter/ui/activeFooter";
 import { useRouter } from "next/navigation";
 import { AlarmModal } from "@/shared/ui/modal";
+import ActiveAlarmModal from "@/features/activeAlarmModal/ui"
+
 
 const StyledWriteButton = styled(WriteButtonSVG)`
   position: absolute;
@@ -46,11 +48,16 @@ export const Main = () => {
   };
   return (
     <>
-      {isModalOpen && <AlarmModal isOpen={isModalOpen} />}
+      {isModalOpen && <ActiveAlarmModal isModalOpen={isModalOpen} handleAlarmButtonClick={handleAlarmButtonClick}/>}
       <Container isModalOpen={isModalOpen}>
         <HomeDiv>
-          <StyledWriteButton onClick={handleClick} />
-          <AlarmButton onClick={handleAlarmButtonClick} />
+          {!isModalOpen && (
+            <>
+              <StyledWriteButton onClick={handleClick} />
+              <AlarmButton onClick={handleAlarmButtonClick} />
+            </>
+          )}
+
           <Image alt="home" src={HomeImg} fill />
         </HomeDiv>
       </Container>
