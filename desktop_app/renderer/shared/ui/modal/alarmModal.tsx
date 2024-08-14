@@ -23,7 +23,7 @@ const slideOut = keyframes`
 
 const Layout = styled.div<{ isOpen: boolean }>`
   z-index: 500;
-  width: 390px;
+  width: 410px;
   height: 95vh;
   background: #121212;
   position: absolute;
@@ -37,8 +37,8 @@ const Layout = styled.div<{ isOpen: boolean }>`
       : css`
           ${slideOut} 0.3s ease
         `};
-  transition: width 0.3s ease; /* 너비 조정 시 부드러운 애니메이션 */
-  padding: 10px; /* 모달 내부 여백 추가 */
+  transition: width 0.3s ease;
+  padding: 10px ;
 `;
 
 const CloseButton = styled.div`
