@@ -22,12 +22,13 @@ interface CheckState {
   location: CheckItem;
   alert: CheckItem;
 }
-
+type TermKey = "service" | "personal" | "location";
 interface CheckFieldProps {
   check: CheckState;
   setCheck: React.Dispatch<React.SetStateAction<CheckState>>;
   handelModalOpen: () => void;
   onClick: () => void;
+  handleTerms: (key: TermKey) => void;
 }
 
 const Layout = styled.section`
@@ -74,7 +75,8 @@ function CheckField({
   check,
   setCheck,
   handelModalOpen,
-  onClick
+  onClick,
+  handleTerms,
 }: CheckFieldProps) {
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   // 필수 체크사항 판별 로직
@@ -137,7 +139,14 @@ function CheckField({
           />
           <P>{item.desc}</P>
           {item.isOpenDesc && (
-            <ConfirmDiv onClick={handelModalOpen}>
+            <ConfirmDiv
+              onClick={() => {
+                handelModalOpen();
+                if (["service", "personal", "location"].includes(key)) {
+                  handleTerms(key as TermKey);
+                }
+              }}
+            >
               <ConfirmIcon />
             </ConfirmDiv>
           )}
