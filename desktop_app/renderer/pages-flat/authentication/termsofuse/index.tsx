@@ -58,7 +58,7 @@ function index() {
   const router = useRouter();
   const setUser = useStore((state) => state.setUser);
   const [currentTerm, setCurrentTerm] = useState<TermKey>("service");
-  console.log("currentTerm",currentTerm)
+
   useEffect(() => {
     const handleDeviceInfo = (data: string) => {
       setMachineId(data);
