@@ -1,4 +1,12 @@
-import { StateCreator } from 'zustand';
+import { StateCreator } from "zustand";
+export interface Device {
+  uid: string;
+  fcmToken: string;
+  id: number;
+  model: string;
+  os: string;
+  type: string;
+}
 
 export interface User {
   id: number;
@@ -6,8 +14,8 @@ export interface User {
   nickname: string;
   profileImage: string;
   createdDate: string;
-  locationConsent:boolean;
-  devices?:string[];
+  locationConsent: boolean;
+  devices?: Device[];
 }
 
 export interface UserState {

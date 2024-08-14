@@ -89,8 +89,9 @@ export const Login = () => {
       }
   
       const deviceExists = userData.devices?.some(
-        (device) => device === deviceId
+        (device) => device?.uid === deviceId
       );
+      console.log("deviceExists",deviceExists)
       if (!deviceExists) {
         const body = {
           deviceId: deviceId,
@@ -103,7 +104,7 @@ export const Login = () => {
         }
       }
 
-      redirectToPage(false);
+      // redirectToPage(false);
     }
   };
 
