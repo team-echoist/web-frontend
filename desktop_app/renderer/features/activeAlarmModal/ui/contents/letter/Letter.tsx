@@ -7,6 +7,7 @@ import { Label } from "@/shared/ui/label";
 import color from "@/shared/styles/color";
 import LinkedoutTextField from "./LinkedoutTextField";
 import UserSupportTextField from "./UserSupportTextField";
+import { Alert } from "@/shared/types";
 
 const ImgDiv = styled.div`
   position: absolute;
@@ -29,22 +30,26 @@ function Letter({
   img,
   width,
   height,
-  text,
+  type,
+  title,
+  createdDate,
 }: {
   img: StaticImageData;
   width: number;
   height: number;
-  text: string;
+  type: "published" | "support" | "linkedout";
+  title: string;
+  createdDate: string;
 }) {
   return (
     <Layout>
       <EnvelopDiv>
         <LabelDiv>
-          <Label text={text} />
+          <Label text={type} />
         </LabelDiv>
-    
-        <UserSupportTextField />
-        {/* <LinkedoutTextField /> */}
+
+        {/* <UserSupportTextField createdDate={createdDate} /> */}
+        <LinkedoutTextField title={title} createdDate={createdDate} />
         <Image src={Envelop} width={450} height={438} alt="Envelop_img" />
       </EnvelopDiv>
 

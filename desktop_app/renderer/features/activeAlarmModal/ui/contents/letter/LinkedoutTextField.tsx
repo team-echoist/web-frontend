@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 import { Button } from "@/shared/ui/button";
+import { formatDateToFullKorean } from "@/shared/lib/date";
 
 const TitleText = styled.h1`
   color: ${color.pointcolor};
@@ -15,6 +16,9 @@ const TitleText = styled.h1`
   top: 180px;
   left: 75px;
   width: 300px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 `;
 const P = styled.p`
   color: #c5c5c5;
@@ -38,18 +42,20 @@ const ButtonDiv = styled.div`
   left: 80px;
 `;
 
-function LinkedoutTextField() {
+function LinkedoutTextField({
+  title,
+  createdDate,
+}: {
+  title: string;
+  createdDate: string;
+}) {
   return (
     <>
-      <TitleText>
-        " 사실 문은 이미 꽤 열려
-        있었는데었는데었는데었는데었는데었는데었는데었는데었는데었는데었는데었는데었는데.
-        (···) "
-      </TitleText>
+      <TitleText>{title}</TitleText>
       <TitleDiv>
         <P>로 시작하는 글, 기억하시나요? </P>
         <br />
-        <P>2024년 6월 10일에 </P>
+        <P>{formatDateToFullKorean(createdDate)}에 </P>
         <P>링크드아웃한 글이 발견됐어요.</P>
       </TitleDiv>
       <ButtonDiv>

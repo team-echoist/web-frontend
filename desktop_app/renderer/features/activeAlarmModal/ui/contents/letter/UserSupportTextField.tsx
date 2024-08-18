@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 import { Button } from "@/shared/ui/button";
+import { formatDateToKorean } from "@/shared/lib/date";
 
 const TitleText = styled.h1`
   color: ${color.pointcolor};
@@ -51,10 +52,14 @@ const ButtonDiv = styled.div`
   left: 80px;
 `;
 
-function UserSupportTextField() {
+function UserSupportTextField({
+  createdDate,
+}: {
+  createdDate: string;
+}) {
   return (
     <>
-      <TitleText>6월 5일에 신고하신 게시물이 비공개 처리되었습니다.</TitleText>
+      <TitleText>{formatDateToKorean(createdDate)}에 신고하신 게시물이 비공개 처리되었습니다.</TitleText>
       <DescDiv>
         <P>
           해당 글은 검토 결과

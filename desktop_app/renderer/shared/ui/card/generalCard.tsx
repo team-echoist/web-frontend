@@ -3,29 +3,33 @@ import styled from "styled-components";
 import color from "@/shared/styles/color";
 
 const Layout = styled.div<{ isFocused: boolean }>`
-  width: 330px;
-  height: 159px;
+  width: 320px;
+  min-height: 159px;
   flex-shrink: 0;
   border-radius: 10px;
-  border: 1px solid #191919;
-  background: ${({ isFocused }) => (isFocused ? color.pointcolor : "#121212")};
+  border: 1px solid  ${({ isFocused }) => (isFocused ? color.pointcolor : "#191919")};
+  background:#121212;
   z-index: 10;
   display:flex;
   justify-content: center;
   align-items: center;
-  padding-left:10px;
-  padding-right:10px;
+  padding-left:24px;
+  padding-right:24px;
+  padding-bottom:auto;
   cursor: pointer;
+
 `;
 
 function GeneralCard({
   children,
   isFocused,
+  onClick
 }: {
   children: ReactNode;
   isFocused: boolean;
+  onClick?: () => void;
 }) {
-  return <Layout isFocused={isFocused}>{children}</Layout>;
+  return <Layout isFocused={isFocused} onClick={onClick}>{children}</Layout>;
 }
 
 export default GeneralCard;

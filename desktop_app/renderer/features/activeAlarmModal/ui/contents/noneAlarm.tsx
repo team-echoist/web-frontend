@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
+import { useStore } from "@/shared/store";
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 330px;
+  width: 360px;
   height: 119px;
   flex-shrink: 0;
   border-radius: 10px;
@@ -14,9 +15,9 @@ const Layout = styled.div`
   background: #121212;
   position: absolute;
   top: 40vh;
-  padding-left: 30px;
-  padding-right: 30px;
-  display: flex;
+  left:30px;
+  // padding-left: 30px;
+  // padding-right: 30px;
   align-items: center;
   justify-content: center;
 `;
@@ -51,10 +52,11 @@ const Strong = styled.strong`
 `;
 
 function NoneAlarm() {
+  const user = useStore((state)=>state.user);
   return (
     <Layout>
       <Row>
-        <P>칠이구 아무개님의</P>
+        <P>{user?.nickname} 아무개님의</P>
         <Strong>새 글</Strong>
         <P>이</P>
       </Row>

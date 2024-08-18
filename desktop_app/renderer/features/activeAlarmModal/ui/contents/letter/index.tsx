@@ -3,6 +3,7 @@ import BigLetter from "@/shared/assets/img/linkedout_letter_big.webp";
 import ReportedLetter from "@/shared/assets/img/reported_letter.webp";
 import Letter from "./Letter";
 import styled from "styled-components";
+import { Alert } from "@/shared/types";
 
 const Layout = styled.div`
   width: 430px;
@@ -14,11 +15,31 @@ const Layout = styled.div`
   background: rgba(0, 0, 0, 0.9);
 `;
 
+const mapper ={
+  support:ReportedLetter,
+  linkedout: BigLetter,
+  published:BigLetter
+}
 
-function index() {
+function index({
+  type,
+  title,
+  createdDate,
+}: {
+  type:"published"|"support" | "linkedout";
+  title: string;
+  createdDate: string;
+}) {
   return (
     <Layout>
-      <Letter img={BigLetter} width={430} height={230} text="Linked-out"/>
+      <Letter
+        img={mapper[type]}
+        width={430}
+        height={230}
+        type={type}
+        title={title}
+        createdDate={createdDate}
+      />
     </Layout>
   );
 }

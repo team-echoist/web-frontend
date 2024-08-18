@@ -28,7 +28,7 @@ function CircularAvatar({
 }) {
   return (
     <Layout>
-      <Image src={img} alt="Circular Avatar" width={width} height={height} />
+      <Image src={img} alt="Circular Avatar" width={width} height={height}/>
     </Layout>
   );
 }

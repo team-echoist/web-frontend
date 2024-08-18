@@ -24,7 +24,7 @@ const slideOut = keyframes`
 const Layout = styled.div<{ isOpen: boolean }>`
   z-index: 500;
   width: 410px;
-  height: 95vh;
+  // height: 95vh;
   background: #121212;
   position: absolute;
   top: 30px;
@@ -38,7 +38,10 @@ const Layout = styled.div<{ isOpen: boolean }>`
           ${slideOut} 0.3s ease
         `};
   transition: width 0.3s ease;
-  padding: 10px ;
+  padding: 10px;
+  height: auto;
+  min-height: 95vh;
+  overflow-y: auto;
 `;
 
 const CloseButton = styled.div`
@@ -60,8 +63,8 @@ const H1 = styled.h1`
   position: absolute;
   top: 3vh;
   left: 30px;
+  margin: 0;
 `;
-
 
 interface AlarmModalProps {
   isOpen: boolean;

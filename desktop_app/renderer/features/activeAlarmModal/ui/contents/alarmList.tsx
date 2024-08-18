@@ -6,7 +6,10 @@ import styled from "styled-components";
 import { Label } from "@/shared/ui/label";
 import TextField from "./textField";
 import LetterImg from "@/shared/assets/img/letter.webp";
-import Letter from "./letter"
+import Letter from "./letter";
+import { Alert } from "@/shared/types";
+import { formatDateString } from "@/shared/lib/date";
+import Imformation from "@/shared/assets/img/information.webp";
 
 const Layout = styled.div`
   position: absolute;
@@ -33,31 +36,55 @@ const LabelDiv = styled.div`
   top: 67px;
   left: 0px;
 `;
+type MapperKey = "published" | "support" | "linkedout";
+const mapper = {
+  published: { img: LetterImg, label: "발행한 글" },
+  support: { img: Imformation, label: "고객지원" },
+  linkedout: { img: LinkedoutLetter, label: "Linked-out" },
+};
 
-function AlarmList() {
-  const [isFocused, setIsFocused] = useState(false);
+function AlarmList({ list }: { list: Alert[] }) {
+  const [focusedId, setFocusedId] = useState<number | null>(null);
+  const handleCardClick = (id: number) => {
+    setFocusedId((prev) => (prev === id ? null : id));
+  };
   return (
     <Layout>
-      {/* <Letter></Letter> */}
-      <Time>2024.06.13</Time>
-      <GeneralCard isFocused={isFocused}>
-        <AvatarLayout>
-          <CircularAvatar img={LinkedoutLetter} width={97} height={55} />
-          <LabelDiv>
-            <Label text="Linked-out" />
-          </LabelDiv>
-        </AvatarLayout>
-        <TextField />
-      </GeneralCard>
-      <GeneralCard isFocused={isFocused}>
-        <AvatarLayout>
-          <CircularAvatar img={LetterImg} width={61} height={59} />
-          <LabelDiv>
-            <Label text="발행한 글" />
-          </LabelDiv>
-        </AvatarLayout>
-        <TextField />
-      </GeneralCard>
+      {list.map((item) => {
+        const { img, label } = mapper[item.type as MapperKey];
+        const width =
+          item.type === "linkedout" ? 97 : item.type === "support" ? 26 : 65;
+        const height =
+          item.type === "linkedout" ? 55 : item.type === "support" ? 26 : 59;
+        return (
+          <>
+            {/* {(item.type === "linkedout" || "support") &&
+            focusedId === item.id ? (
+              <Letter type={item.type} title={item.title} createdDate={item.createdDate}/>
+            ) : (
+              ""
+            )} */}
+            <Time>{formatDateString(item.createdDate)}</Time>
+            <GeneralCard
+              key={item.id}
+              isFocused={!item.read}
+              onClick={() => handleCardClick(item.id)}
+            >
+              <AvatarLayout>
+                <CircularAvatar img={img} width={width} height={height} />
+                <LabelDiv>
+                  <Label text={label} />
+                </LabelDiv>
+              </AvatarLayout>
+              <TextField
+                createdDate={item.createdDate}
+                title={item.title}
+                type={item.type}
+              />
+            </GeneralCard>
+          </>
+        );
+      })}
     </Layout>
   );
 }
