@@ -70,8 +70,6 @@ export const Login = () => {
   const setUser = useStore((state) => state.setUser);
   const [deviceId, setDeviceId] = useState("");
   const [fcmToken, setFcmToken] = useState("");
-  // let deviceId = "";
-  // let fcmToken = "";
 
   const redirectToPage = (isFirstLogin: boolean) => {
     if (isFirstLogin) {
@@ -89,19 +87,20 @@ export const Login = () => {
         redirectToPage(true);
         return;
       }
-
-      const deviceExists = userData.devices?.some(
-        (device) => device?.uid === deviceId
-      );
-      if (!deviceExists) {
-        const body = {
-          uid: deviceId,
-          fcmToken: fcmToken,
-        };
-        try {
-          await fetchData("support/devices/register", "post", body);
-        } catch (err) {
-          console.log("err", err);
+      if (deviceId.length > 0) {
+        const deviceExists = userData.devices?.some(
+          (device) => device?.uid === deviceId
+        );
+        if (!deviceExists) {
+          const body = {
+            uid: deviceId,
+            fcmToken: fcmToken,
+          };
+          try {
+            await fetchData("support/devices/register", "post", body);
+          } catch (err) {
+            console.log("err", err);
+          }
         }
       }
 
