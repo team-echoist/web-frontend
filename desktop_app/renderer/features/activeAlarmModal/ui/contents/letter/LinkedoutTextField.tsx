@@ -45,9 +45,11 @@ const ButtonDiv = styled.div`
 function LinkedoutTextField({
   title,
   createdDate,
+  handleCloseModal
 }: {
   title: string;
   createdDate: string;
+  handleCloseModal?:()=>void;
 }) {
   return (
     <>
@@ -59,7 +61,7 @@ function LinkedoutTextField({
         <P>링크드아웃한 글이 발견됐어요.</P>
       </TitleDiv>
       <ButtonDiv>
-        <Button text="확인" style="square" scale="small" type="point"></Button>
+        <Button text="확인" style="square" scale="small" type="point" onClick={handleCloseModal}/>
       </ButtonDiv>
     </>
   );

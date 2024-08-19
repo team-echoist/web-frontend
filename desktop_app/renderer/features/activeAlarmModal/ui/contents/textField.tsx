@@ -78,7 +78,6 @@ function TextField({ createdDate, title, type }: TextFieldProps) {
         <Row>
           <Strong>'{truncatedText}'</Strong>
           <P>{mapper[type]} <Time>{timeAgo(createdDate)}</Time> </P>
-          
         </Row>
       )}
     </Layout>

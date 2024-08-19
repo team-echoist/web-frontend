@@ -33,6 +33,7 @@ function Letter({
   type,
   title,
   createdDate,
+  handleCloseModal,
 }: {
   img: StaticImageData;
   width: number;
@@ -40,6 +41,7 @@ function Letter({
   type: "published" | "support" | "linkedout";
   title: string;
   createdDate: string;
+  handleCloseModal?: () => void;
 }) {
   return (
     <Layout>
@@ -47,9 +49,16 @@ function Letter({
         <LabelDiv>
           <Label text={type} />
         </LabelDiv>
+        {type === "support" ? (
+          <UserSupportTextField createdDate={createdDate} handleCloseModal={handleCloseModal}/>
+        ) : (
+          <LinkedoutTextField
+            title={title}
+            createdDate={createdDate}
+            handleCloseModal={handleCloseModal}
+          />
+        )}
 
-        {/* <UserSupportTextField createdDate={createdDate} /> */}
-        <LinkedoutTextField title={title} createdDate={createdDate} />
         <Image src={Envelop} width={450} height={438} alt="Envelop_img" />
       </EnvelopDiv>
 

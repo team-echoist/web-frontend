@@ -25,10 +25,12 @@ function index({
   type,
   title,
   createdDate,
+  handleCloseModal
 }: {
   type:"published"|"support" | "linkedout";
   title: string;
   createdDate: string;
+  handleCloseModal?: () => void;
 }) {
   return (
     <Layout>
@@ -39,6 +41,7 @@ function index({
         type={type}
         title={title}
         createdDate={createdDate}
+        handleCloseModal={handleCloseModal}
       />
     </Layout>
   );

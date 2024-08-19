@@ -54,8 +54,10 @@ const ButtonDiv = styled.div`
 
 function UserSupportTextField({
   createdDate,
+  handleCloseModal
 }: {
   createdDate: string;
+  handleCloseModal?:() =>void;
 }) {
   return (
     <>
@@ -70,7 +72,7 @@ function UserSupportTextField({
         </P>
       </DescDiv>
       <ButtonDiv>
-        <Button text="확인" style="square" scale="small" type="point"></Button>
+        <Button text="확인" style="square" scale="small" type="point" onClick={handleCloseModal}/>
       </ButtonDiv>
     </>
   );
