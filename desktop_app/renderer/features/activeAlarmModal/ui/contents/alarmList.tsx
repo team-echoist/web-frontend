@@ -83,6 +83,7 @@ function AlarmList({ list }: { list: Alert[] }) {
   const [renderedComponent, setRenderedComponent] =
     useState<React.ReactNode | null>(null);
   const handleCardClick = (
+    id:number,
     type: MapperKey,
     title: string,
     createdDate: string
@@ -118,6 +119,7 @@ function AlarmList({ list }: { list: Alert[] }) {
               isFocused={!item.read}
               onClick={() =>
                 handleCardClick(
+                  item.id,
                   item.type,
                   item.title,
                   item.createdDate
