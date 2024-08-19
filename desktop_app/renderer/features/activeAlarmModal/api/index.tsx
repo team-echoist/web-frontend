@@ -19,20 +19,32 @@ export const getAlramList = async ({
       params,
     });
 
- 
     return { alerts: data?.alerts || [], totalPage: data?.totalPage || 0 };
   } catch (err) {
     console.log("Err", err);
-    return { alerts: [], totalPage: 0 }; 
+    return { alerts: [], totalPage: 0 };
+  }
 };
-}
-export const updateReadStatus = async (id: number, getList: () => void) => {
+export const updateReadStatus = async (
+  id: number,
+  list: Alert[],
+  setAlarmList: React.Dispatch<React.SetStateAction<Alert[]>>
+) => {
   try {
-    const { status } = await fetchData(`alerts/read/${id}`, "patch");
-    if (status === 204) {
-      getList();
+    const alertToUpdate = list.find(alert => alert.id === id);
+
+    if (alertToUpdate && alertToUpdate.read) {
+      console.log("Alert is already read.");
+      return;
     }
-    console.log("status", status);
+
+    const { status } = await fetchData(`alerts/read/${id}`, "patch");
+    if (status === 200) {
+      const updatedList = list.map(alert => 
+        alert.id === id ? { ...alert, read: true } : alert
+      );
+      setAlarmList(updatedList);
+    }
   } catch (err) {
     console.log("Err", err);
   }

@@ -1,7 +1,7 @@
 import { AlarmModal } from "@/shared/ui/modal";
 import NoneAlarm from "./contents/noneAlarm";
 import AlarmList from "./contents/alarmList";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { getAlramList } from "../api";
 import { Alert } from "@/shared/types";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -14,14 +14,14 @@ interface AlarmModalProps {
 interface RenderAlarmProps {
   list: Alert[];
   length: number;
-  fetchData: () => void;
+  setAlarmList: Dispatch<SetStateAction<Alert[]>>;
 }
 
-const RenderAlarm = ({ list, length, fetchData }: RenderAlarmProps) => {
+const RenderAlarm = ({ list, length, setAlarmList }: RenderAlarmProps) => {
   return length === 0 ? (
     <NoneAlarm />
   ) : (
-    <AlarmList list={list} fetchData={fetchData} />
+    <AlarmList list={list} setAlarmList={setAlarmList} />
   );
 };
 
@@ -71,7 +71,7 @@ function Index({ isModalOpen, handleAlarmButtonClick }: AlarmModalProps) {
         <RenderAlarm
           list={alarmList}
           length={alarmList.length}
-          fetchData={fetchData}
+          setAlarmList={setAlarmList}
         />
       </InfiniteScroll>
     </AlarmModal>

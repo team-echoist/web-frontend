@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import { GeneralCard } from "@/shared/ui/card";
 import { CircularAvatar } from "@/shared/ui/avatar";
 import LinkedoutLetter from "@/shared/assets/img/linkedout_letter.webp";
@@ -77,21 +77,21 @@ const handleNotification = (
 };
 function AlarmList({
   list,
-  fetchData,
+  setAlarmList,
 }: {
   list: Alert[];
-  fetchData: () => void;
+  setAlarmList: Dispatch<SetStateAction<Alert[]>>;
 }) {
   const [renderedComponent, setRenderedComponent] =
     useState<React.ReactNode | null>(null);
-    
-  const handleCardClick = async(
+
+  const handleCardClick = async (
     id: number,
     type: MapperKey,
     title: string,
     createdDate: string
   ) => {
-    await updateReadStatus(id, fetchData);
+    await updateReadStatus(id, list,setAlarmList);
     const { component } = handleNotification(
       type,
       title,
