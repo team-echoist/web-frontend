@@ -13,7 +13,8 @@ const Layout = styled.div`
 const Row = styled.div`
   display: flex;
   gap: 4px;
-  align-items: center;
+  // align-items: center;
+  flex-wrap: wrap;
 `;
 const P = styled.p`
   color: ${color.white};
@@ -32,7 +33,8 @@ const Strong = styled.strong`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
-  white-space: nowrap;
+  word-break: break-all;
+  // white-space: nowrap;
 `;
 const Time = styled.time`
   color: #777;
@@ -56,7 +58,7 @@ const mapper = {
 };
 
 function TextField({ createdDate, title, type }: TextFieldProps) {
-  const MaxLength = 5;
+  const MaxLength = 15;
   const truncatedText =
     title.length > MaxLength ? title.substring(0, MaxLength) + "..." : title;
   const user = useStore((state) => state.user);
@@ -75,8 +77,8 @@ function TextField({ createdDate, title, type }: TextFieldProps) {
       {type !== "support" && (
         <Row>
           <Strong>'{truncatedText}'</Strong>
-          <P>{mapper[type]} </P>
-          <Time>{timeAgo(createdDate)}</Time>
+          <P>{mapper[type]} <Time>{timeAgo(createdDate)}</Time> </P>
+          
         </Row>
       )}
     </Layout>
