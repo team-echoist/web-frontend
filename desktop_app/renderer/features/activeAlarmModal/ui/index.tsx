@@ -4,6 +4,7 @@ import AlarmList from "./contents/alarmList";
 import { useEffect, useState } from "react";
 import { getAlramList } from "../api";
 import { Alert } from "@/shared/types";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface AlarmModalProps {
   isModalOpen: boolean;
@@ -17,30 +18,62 @@ interface RenderAlarmProps {
 }
 
 const RenderAlarm = ({ list, length, fetchData }: RenderAlarmProps) => {
-  return length === 0 ? <NoneAlarm /> : <AlarmList list={list} fetchData={fetchData}/>;
+  return length === 0 ? (
+    <NoneAlarm />
+  ) : (
+    <AlarmList list={list} fetchData={fetchData} />
+  );
 };
 
 function Index({ isModalOpen, handleAlarmButtonClick }: AlarmModalProps) {
   const [alarmList, setAlarmList] = useState<Alert[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalAlertPage, setTotalAlertPage] = useState<number | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
+
   const fetchData = async () => {
-    const data = await getAlramList({ page: 1, limit: 10 });
-    setAlarmList(data);
+    if (isFetching || (totalAlertPage && page > totalAlertPage)) return;
+    setIsFetching(true);
+    try {
+      const { alerts, totalPage } = await getAlramList({
+        page: page,
+        limit: 20,
+      });
+      setAlarmList((prev) => [...prev, ...alerts]);
+      setTotalAlertPage(totalPage);
+    } catch (error) {
+      console.error("Failed to fetch data", error);
+    } finally {
+      setIsFetching(false);
+    }
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [page]);
 
   return (
     <AlarmModal
       isOpen={isModalOpen}
       handleAlarmButtonClick={handleAlarmButtonClick}
     >
-      <RenderAlarm
-        list={alarmList}
-        length={alarmList.length}
-        fetchData={fetchData}
-      />
+      <InfiniteScroll
+        dataLength={alarmList.length}
+        next={() => {
+          if (totalAlertPage === null || page <= totalAlertPage) {
+            setPage((prev) => prev + 1);
+          }
+        }}
+        scrollableTarget="scrollableDiv"
+        hasMore={totalAlertPage === null || page <= totalAlertPage}
+        loader={null}
+      >
+        <RenderAlarm
+          list={alarmList}
+          length={alarmList.length}
+          fetchData={fetchData}
+        />
+      </InfiniteScroll>
     </AlarmModal>
   );
 }
