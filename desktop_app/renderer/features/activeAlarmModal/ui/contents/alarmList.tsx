@@ -85,13 +85,15 @@ function AlarmList({
   const [renderedComponent, setRenderedComponent] =
     useState<React.ReactNode | null>(null);
 
+  const renderedDates = new Set<string>();
+
   const handleCardClick = async (
     id: number,
     type: MapperKey,
     title: string,
     createdDate: string
   ) => {
-    await updateReadStatus(id, list,setAlarmList);
+    await updateReadStatus(id, list, setAlarmList);
     const { component } = handleNotification(
       type,
       title,
@@ -101,7 +103,6 @@ function AlarmList({
     if (component) {
       setRenderedComponent(component);
     }
-    // api 경로에 따른 api 호출 부를 자리
   };
   const handleCloseModal = () => {
     setRenderedComponent(null);
@@ -115,9 +116,16 @@ function AlarmList({
           item.type === "linkedout" ? 97 : item.type === "support" ? 26 : 65;
         const height =
           item.type === "linkedout" ? 55 : item.type === "support" ? 26 : 59;
+
+        const formattedDate = formatDateString(item.createdDate);
+        const isFirstOccurrence = !renderedDates.has(formattedDate);
+        if (isFirstOccurrence) {
+          renderedDates.add(formattedDate);
+        }
+
         return (
           <>
-            <Time>{formatDateString(item.createdDate)}</Time>
+            {isFirstOccurrence && <Time>{formattedDate}</Time>}
             <GeneralCard
               key={item.id}
               isFocused={!item.read}
