@@ -4,7 +4,6 @@ import AlarmList from "./contents/alarmList";
 import { useEffect, useState } from "react";
 import { getAlramList } from "../api";
 import { Alert } from "@/shared/types";
-import { useStore } from "@/shared/store";
 
 interface AlarmModalProps {
   isModalOpen: boolean;
@@ -14,21 +13,21 @@ interface AlarmModalProps {
 interface RenderAlarmProps {
   list: Alert[];
   length: number;
+  fetchData: () => void;
 }
 
-const RenderAlarm = ({ list, length }: RenderAlarmProps) => {
-  return length === 0 ? <NoneAlarm /> : <AlarmList list={list}/>;
+const RenderAlarm = ({ list, length, fetchData }: RenderAlarmProps) => {
+  return length === 0 ? <NoneAlarm /> : <AlarmList list={list} fetchData={fetchData}/>;
 };
 
 function Index({ isModalOpen, handleAlarmButtonClick }: AlarmModalProps) {
   const [alarmList, setAlarmList] = useState<Alert[]>([]);
+  const fetchData = async () => {
+    const data = await getAlramList({ page: 1, limit: 10 });
+    setAlarmList(data);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAlramList({ page: 1, limit: 10 });
-      setAlarmList(data);
-    };
-
     fetchData();
   }, []);
 
@@ -37,7 +36,11 @@ function Index({ isModalOpen, handleAlarmButtonClick }: AlarmModalProps) {
       isOpen={isModalOpen}
       handleAlarmButtonClick={handleAlarmButtonClick}
     >
-      <RenderAlarm list={alarmList} length={alarmList.length}/>
+      <RenderAlarm
+        list={alarmList}
+        length={alarmList.length}
+        fetchData={fetchData}
+      />
     </AlarmModal>
   );
 }

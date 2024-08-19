@@ -10,6 +10,7 @@ import Letter from "./letter";
 import { Alert } from "@/shared/types";
 import { formatDateString } from "@/shared/lib/date";
 import Imformation from "@/shared/assets/img/information.webp";
+import { updateReadStatus } from "../../api";
 
 const Layout = styled.div`
   position: absolute;
@@ -38,7 +39,6 @@ const LabelDiv = styled.div`
 `;
 type MapperKey = "published" | "support" | "linkedout";
 interface NotificationConfig {
-  api: string;
   isShow: boolean;
 }
 const mapper = {
@@ -54,15 +54,12 @@ const handleNotification = (
 ) => {
   const notificationMapper: Record<MapperKey, NotificationConfig> = {
     published: {
-      api: "",
       isShow: false,
     },
     support: {
-      api: "",
       isShow: true,
     },
     linkedout: {
-      api: "",
       isShow: true,
     },
   };
@@ -76,25 +73,31 @@ const handleNotification = (
     />
   ) : null;
 
-  return { api: notificationMapper[type].api, component: component };
+  return { component: component };
 };
-function AlarmList({ list }: { list: Alert[] }) {
-  const [focusedId, setFocusedId] = useState<number | null>(null);
+function AlarmList({
+  list,
+  fetchData,
+}: {
+  list: Alert[];
+  fetchData: () => void;
+}) {
   const [renderedComponent, setRenderedComponent] =
     useState<React.ReactNode | null>(null);
-  const handleCardClick = (
-    id:number,
+    
+  const handleCardClick = async(
+    id: number,
     type: MapperKey,
     title: string,
     createdDate: string
   ) => {
-    const { api, component } = handleNotification(
+    await updateReadStatus(id, fetchData);
+    const { component } = handleNotification(
       type,
       title,
       createdDate,
       handleCloseModal
     );
-
     if (component) {
       setRenderedComponent(component);
     }
@@ -103,6 +106,7 @@ function AlarmList({ list }: { list: Alert[] }) {
   const handleCloseModal = () => {
     setRenderedComponent(null);
   };
+
   return (
     <Layout>
       {list.map((item) => {

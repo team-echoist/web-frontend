@@ -14,6 +14,14 @@ export const getAlramList = async ({
   }
 };
 
-export const getUnreadList = async () => {};
-
-export const changeReadList = async () => {};
+export const updateReadStatus = async (id: number, getList: () => void) => {
+  try {
+    const { status } = await fetchData(`alerts/read/${id}`, "patch");
+    if(status ===204){
+      getList();
+    }
+    console.log("status", status);
+  } catch (err) {
+    console.log("Err", err);
+  }
+};
