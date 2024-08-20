@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 import { SmallInput } from "@/shared/ui/input";
+import { registerUser } from "../../api";
+import { useRouter } from "next/navigation";
 
 const RectangleDiv = styled.div`
   width: 100%;
@@ -73,6 +75,7 @@ function VerificationField() {
   const [inputValues, setInputValues] = useState<string[]>(Array(6).fill(""));
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
 
   const handleChange =
     (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,26 +86,26 @@ function VerificationField() {
   useEffect(() => {
     const isComplete = inputValues.every((value) => value.length === 1);
     if (isComplete) {
-      console.log("확인");
-      //   const timer = setTimeout(async () => {
-      //     try {
-      //       const response = await callVerificationAPI(inputValues.join(""));
-      //       if (response.status !== 200) {
-      //         setHasError(true);
-      //         setErrorMessage(*인증번호를 잘못 입력하셨습니다.);
-      //       } else {
-      //         setHasError(false);
-      //         setErrorMessage("");
-      //       }
-      //     } catch (error) {
-      //       setHasError(true);
-      //       setErrorMessage(
-      //         "서버와의 연결에 문제가 발생했습니다. 다시 시도해 주세요."
-      //       );
-      //     }
-      //   }, 2000);
+      const timer = setTimeout(async () => {
+        try {
+          const statusCode = await registerUser(inputValues.join(""));
+          if (statusCode === 200) {
+            setHasError(false);
+            setErrorMessage("");
+            router.push("/web/main");
+          } else {
+            setHasError(true);
+            setErrorMessage("인증번호를 잘못 입력하셨습니다.");
+          }
+        } catch (error) {
+          setHasError(true);
+          setErrorMessage(
+            "서버와의 연결에 문제가 발생했습니다. 다시 시도해 주세요."
+          );
+        }
+      }, 2000);
 
-      //   return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
     }
   }, [inputValues]);
   return (
@@ -115,7 +118,6 @@ function VerificationField() {
       <InputDiv>
         {inputValues.map((value, index) => (
           <SmallInput
-            type="number"
             key={index}
             value={value}
             onChange={handleChange(index)}
