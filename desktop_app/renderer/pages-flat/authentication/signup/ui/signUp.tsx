@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { submitSignupForm } from "../api";
 import { GeneralToast } from "@/shared/ui/toast";
 import { BottomSeet } from "@/shared/ui/modal";
-import { SmallInput } from "@/shared/ui/input";
+import VerificationField from "./contents/VerificationField";
 
 const ButtonLayout = styled.div`
   position: absolute;
@@ -58,6 +58,7 @@ function SignUP() {
     title: "입력하신 이메일 주소로 인증 메일이 발송됐습니다.",
     desc: "링크를 클릭해 인증을 완료해주세요.",
   });
+  const [isVerificationOpen,setIsVerificationOpen] =useState(false);
 
   useEffect(() => {
     setIsButtonEnabled(isButtonEnabled(inputData));
@@ -105,7 +106,9 @@ function SignUP() {
   };
   return (
     <DefaultLayout>
-      <BottomSeet>sdfads</BottomSeet>
+      <BottomSeet isOpen={isVerificationOpen}>
+        <VerificationField />
+      </BottomSeet>
       <GeneralToast
         title={toastText.title}
         desc={toastText.desc}

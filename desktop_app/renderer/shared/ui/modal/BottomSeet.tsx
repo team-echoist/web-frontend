@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 
-const Dialog = styled.dialog`
+const Dialog = styled.div`
   width: 442px;
   height: 359px;
   flex-shrink: 0;
@@ -15,15 +15,19 @@ const Dialog = styled.dialog`
   margin: 0;
   border-radius: 20px 20px 0px 0px;
   background: ${color.lightBlack};
-  z-index:1000;
+  z-index: 1000;
 `;
 
 interface BottomSheetProps {
   children: ReactNode;
+  isOpen: boolean;
 }
 
-function BottomSeet({ children }: BottomSheetProps) {
-  return <Dialog open>{children}</Dialog>;
+function BottomSeet({ children, isOpen }: BottomSheetProps) {
+  if (!isOpen) {
+    return null;
+  }
+  return <Dialog>{children}</Dialog>;
 }
 
 export default BottomSeet;
