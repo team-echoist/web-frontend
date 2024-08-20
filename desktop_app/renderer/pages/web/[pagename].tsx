@@ -2,12 +2,14 @@
 import RenderView from "@/pages-flat/index";
 import {  useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useStore } from "@/shared/store";
+
 
 function Index() {
   const [pageName, setPageName] = useState<string>("");
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  
   useEffect(() => {
     const pagename = searchParams.get("pagename");
     if (pagename) {

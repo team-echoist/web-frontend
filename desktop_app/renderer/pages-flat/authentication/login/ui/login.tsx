@@ -68,8 +68,8 @@ export const Login = () => {
   const [isShowToast, setIsShowToast] = useState(false);
   const router = useRouter();
   const setUser = useStore((state) => state.setUser);
-  let deviceId = "";
-  let fcmToken = "";
+  const [deviceId, setDeviceId] = useState("");
+  const [fcmToken, setFcmToken] = useState("");
 
   const redirectToPage = (isFirstLogin: boolean) => {
     if (isFirstLogin) {
@@ -87,19 +87,20 @@ export const Login = () => {
         redirectToPage(true);
         return;
       }
-
-      const deviceExists = userData.devices?.some(
-        (device) => device === deviceId
-      );
-      if (!deviceExists) {
-        const body = {
-          deviceId: deviceId,
-          deviceToken: fcmToken,
-        };
-        try {
-          await fetchData("support/devices/register", "post", body);
-        } catch (err) {
-          console.log("err", err);
+      if (deviceId.length > 0) {
+        const deviceExists = userData.devices?.some(
+          (device) => device?.uid === deviceId
+        );
+        if (!deviceExists) {
+          const body = {
+            uid: deviceId,
+            fcmToken: fcmToken,
+          };
+          try {
+            await fetchData("support/devices/register", "post", body);
+          } catch (err) {
+            console.log("err", err);
+          }
         }
       }
 
@@ -109,13 +110,13 @@ export const Login = () => {
 
   useEffect(() => {
     const handleDeviceInfo = (data: string) => {
-      deviceId = data;
+      setDeviceId(data);
     };
 
     window.Electron?.requestDeviceInfo();
     window.Electron?.onDeviceInfo(handleDeviceInfo);
     window.Electron?.getFCMToken("getFCMToken", (_: any, token: string) => {
-      fcmToken = token;
+      setFcmToken(token);
     });
 
     const handleLogin = async () => {
