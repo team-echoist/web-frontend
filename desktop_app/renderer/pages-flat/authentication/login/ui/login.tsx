@@ -57,9 +57,12 @@ const Li = styled.li`
 
 export const Login = () => {
   const token =
-    useSearchParams().get("token") ||
-    Cookies.get("token") ||
-    sessionStorage.getItem("token");
+    (useSearchParams().get("accessToken") &&
+      useSearchParams().get("refreshToken")) ||
+    (Cookies.get("accessToken") && Cookies.get("refreshToken")) ||
+    (sessionStorage.getItem("accessToken") &&
+      sessionStorage.getItem("refreshToken"));
+
   const [infoData, setInfoData] = useState({
     id: { value: "", placeholder: "이메일 주소 또는 아이디" },
     password: { value: "", placeholder: "비밀번호" },
@@ -78,6 +81,12 @@ export const Login = () => {
       router.push("/web/main");
     }
   };
+  const calculateExpiryDate = (days: number): Date => {
+    const expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + days);
+    return expiryDate;
+  };
+
   const handleUserInfo = async () => {
     const userData = await getUserInfo();
     if (userData) {
@@ -120,28 +129,35 @@ export const Login = () => {
     });
 
     const handleLogin = async () => {
-      const tenYearsFromNow = new Date(
-        new Date().setFullYear(new Date().getFullYear() + 10)
-      );
+      const accessToken = useSearchParams().get("accessToken");
+      const refreshToken = useSearchParams().get("refreshToken");
+      try {
+        if (accessToken && refreshToken) {
+          const accessTokenExpiry = calculateExpiryDate(7);
+          const refreshTokenExpiry = calculateExpiryDate(30); 
 
-      if (token) {
-        try {
           if (autoLoginCheck) {
-            Cookies.set("token", token, {
-              expires: tenYearsFromNow,
+            Cookies.set("accessToken", accessToken, {
+              expires: accessTokenExpiry,
+              secure: true,
+              sameSite: "Strict",
+            });
+            Cookies.set("refreshToken", refreshToken, {
+              expires: refreshTokenExpiry,
               secure: true,
               sameSite: "Strict",
             });
           } else {
-            sessionStorage.setItem("token", token);
+            sessionStorage.setItem("accessToken", accessToken);
+            sessionStorage.setItem("refreshToken", refreshToken);
           }
 
           handleUserInfo();
-        } catch (error) {
-          console.error("Error checking first login:", error);
+        } else {
+          console.error("Access token or refresh token is missing");
         }
-      } else {
-        console.error("No token found");
+      } catch (error) {
+        console.error("Error handling tokens:", error);
       }
     };
 
