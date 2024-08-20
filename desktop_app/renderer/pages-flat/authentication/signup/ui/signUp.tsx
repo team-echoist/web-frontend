@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import styled from "styled-components";
 import { submitSignupForm } from "../api";
 import { GeneralToast } from "@/shared/ui/toast";
+import { BottomSeet } from "@/shared/ui/modal";
 
 const ButtonLayout = styled.div`
   position: absolute;
@@ -103,6 +104,7 @@ function SignUP() {
   };
   return (
     <DefaultLayout>
+      <BottomSeet>asdfadf</BottomSeet>
       <GeneralToast
         title={toastText.title}
         desc={toastText.desc}
