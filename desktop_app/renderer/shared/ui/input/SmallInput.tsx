@@ -8,9 +8,10 @@ const Input = styled.input`
   flex-shrink: 0;
   border-radius: 10px;
   background: #252525;
-
+  border: 1px solid transparent;
   &:focus {
     border: 1px solid ${color.pointcolor};
+    outline: none; 
   }
 `;
 
