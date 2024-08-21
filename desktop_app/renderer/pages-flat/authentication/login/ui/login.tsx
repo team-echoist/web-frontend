@@ -56,10 +56,14 @@ const Li = styled.li`
 `;
 
 export const Login = () => {
+  const searchParams = useSearchParams();
   const token =
-    useSearchParams().get("token") ||
-    Cookies.get("token") ||
-    sessionStorage.getItem("token");
+    (searchParams.get("accessToken") &&
+    searchParams.get("refreshToken")) ||
+    (Cookies.get("accessToken") && Cookies.get("refreshToken")) ||
+    (sessionStorage.getItem("accessToken") &&
+      sessionStorage.getItem("refreshToken"));
+
   const [infoData, setInfoData] = useState({
     id: { value: "", placeholder: "이메일 주소 또는 아이디" },
     password: { value: "", placeholder: "비밀번호" },
@@ -78,6 +82,12 @@ export const Login = () => {
       router.push("/web/main");
     }
   };
+  const calculateExpiryDate = (days: number): Date => {
+    const expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + days);
+    return expiryDate;
+  };
+
   const handleUserInfo = async () => {
     const userData = await getUserInfo();
     if (userData) {
@@ -120,28 +130,36 @@ export const Login = () => {
     });
 
     const handleLogin = async () => {
-      const tenYearsFromNow = new Date(
-        new Date().setFullYear(new Date().getFullYear() + 10)
-      );
-
-      if (token) {
-        try {
-          if (autoLoginCheck) {
-            Cookies.set("token", token, {
-              expires: tenYearsFromNow,
-              secure: true,
-              sameSite: "Strict",
-            });
+      const socialAccessToken = searchParams.get("accessToken");
+      const socialRefreshToken = searchParams.get("refreshToken");
+      
+      try {
+        if(token){
+          if (socialAccessToken && socialRefreshToken) {
+            // 소셜로그인 쿼리로 토큰이 세팅 되어있을때
+            const accessTokenExpiry = calculateExpiryDate(7);
+            const refreshTokenExpiry = calculateExpiryDate(30); 
+  
+              Cookies.set("accessToken", socialAccessToken, {
+                expires: accessTokenExpiry,
+                secure: true,
+                sameSite: "Strict",
+              });
+              Cookies.set("refreshToken", socialRefreshToken, {
+                expires: refreshTokenExpiry,
+                secure: true,
+                sameSite: "Strict",
+              });
+              // 소셜로그인의 경우 자동로그인 되게 
+            handleUserInfo();
           } else {
-            sessionStorage.setItem("token", token);
+            redirectToPage(false);
+            // 로컬 로그인의 경우이면서 이미 자동로그인 체크한 상태
           }
-
-          handleUserInfo();
-        } catch (error) {
-          console.error("Error checking first login:", error);
         }
-      } else {
-        console.error("No token found");
+    
+      } catch (error) {
+        console.error("Error handling tokens:", error);
       }
     };
 
