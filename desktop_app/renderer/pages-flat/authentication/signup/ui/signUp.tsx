@@ -91,6 +91,10 @@ function SignUP() {
     try {
       const statusCode = await submitSignupForm(body);
       if (statusCode === 201 || statusCode === 204) {
+        setToastText({
+          title: "입력하신 이메일 주소로 인증 메일이 발송됐습니다.",
+          desc: "인증 번호를 입력해 설정을 완료해주세요.",
+        });
         setIsVerificationOpen(true);
         setHasError(false);
         setIsButtonEnabled(false);
