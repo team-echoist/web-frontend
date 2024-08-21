@@ -56,9 +56,10 @@ const Li = styled.li`
 `;
 
 export const Login = () => {
+  const searchParams = useSearchParams();
   const token =
-    (useSearchParams().get("accessToken") &&
-      useSearchParams().get("refreshToken")) ||
+    (searchParams.get("accessToken") &&
+    searchParams.get("refreshToken")) ||
     (Cookies.get("accessToken") && Cookies.get("refreshToken")) ||
     (sessionStorage.getItem("accessToken") &&
       sessionStorage.getItem("refreshToken"));
@@ -129,8 +130,8 @@ export const Login = () => {
     });
 
     const handleLogin = async () => {
-      const accessToken = useSearchParams().get("accessToken");
-      const refreshToken = useSearchParams().get("refreshToken");
+      const accessToken = searchParams.get("accessToken");
+      const refreshToken = searchParams.get("refreshToken");
       try {
         if (accessToken && refreshToken) {
           const accessTokenExpiry = calculateExpiryDate(7);

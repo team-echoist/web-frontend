@@ -58,6 +58,7 @@ function SignUP() {
     desc: "인증 번호를 입력해 설정을 완료해주세요.",
   });
   const [isVerificationOpen, setIsVerificationOpen] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     setIsButtonEnabled(isButtonEnabled(inputData));
@@ -91,12 +92,12 @@ function SignUP() {
       const statusCode = await submitSignupForm(body);
       if (statusCode === 201 || statusCode === 204) {
         setIsVerificationOpen(true);
-        setIsVerificationOpen(true);
+        setHasError(false);
         setIsButtonEnabled(false);
       }
     } catch (err) {
       if (err) {
-        setIsVerificationOpen(true);
+        setHasError(true);
         setToastText({
           title: "이메일 인증에 실패했습니다 :( ",
           desc: "다시 시도해주세요.",
@@ -109,14 +110,13 @@ function SignUP() {
       <GeneralToast
         title={toastText.title}
         desc={toastText.desc}
-        isShowToast={isVerificationOpen}
-        setIsShowToast={setIsVerificationOpen}
-        positionTop ="45.4vh"
+        isShowToast={isVerificationOpen || hasError}
+        setIsShowToast={hasError ? setHasError : setIsVerificationOpen}
+        positionTop={hasError ? "" : "45.4vh"}
       />
       <BottomSeet isOpen={isVerificationOpen}>
         <VerificationField />
       </BottomSeet>
-
       <PrevButton />
       <TextField
         title="이메일로 가입하기"

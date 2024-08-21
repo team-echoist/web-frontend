@@ -45,6 +45,7 @@ const InputDiv = styled.div`
   padding-left: 31px;
   display: flex;
   gap: 7px;
+  margin-bottom: 7px;
 `;
 const H2 = styled.h2`
   color: #6b6b6b;
@@ -71,6 +72,16 @@ const Button = styled.button`
   line-height: 170%;
   text-decoration-line: underline;
 `;
+const ErrorMsg = styled.output`
+  color: #e43446;
+  font-family: Abel;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+  padding-left: 31px;
+  margin-top: 7px;
+`;
 function VerificationField() {
   const [inputValues, setInputValues] = useState<string[]>(Array(6).fill(""));
   const [hasError, setHasError] = useState(false);
@@ -89,7 +100,7 @@ function VerificationField() {
       const timer = setTimeout(async () => {
         try {
           const statusCode = await registerUser(inputValues.join(""));
-          if (statusCode === 200) {
+          if (statusCode === 201) {
             setHasError(false);
             setErrorMessage("");
             router.push("/web/main");
@@ -126,6 +137,7 @@ function VerificationField() {
           />
         ))}
       </InputDiv>
+      <ErrorMsg>{errorMessage}</ErrorMsg>
       <RetryDiv>
         <H2>인증번호를 못 받으셨나요?</H2>
         <Button>인증번호 재전송</Button>

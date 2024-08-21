@@ -26,7 +26,7 @@ export const registerUser = async (code: string) => {
       code: code,
     };
     const response = await axios.post(
-      process.env.NEXT_PUBLIC_API_URL + "suth/register",
+      process.env.NEXT_PUBLIC_API_URL + "auth/register",
       body
     );
     console.log("test", response.data.data,response.data.statusCode)
