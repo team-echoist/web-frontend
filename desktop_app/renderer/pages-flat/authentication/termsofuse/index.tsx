@@ -59,6 +59,7 @@ function index() {
   const setUser = useStore((state) => state.setUser);
   const [currentTerm, setCurrentTerm] = useState<TermKey>("service");
 
+
   useEffect(() => {
     const handleDeviceInfo = (data: string) => {
       setMachineId(data);

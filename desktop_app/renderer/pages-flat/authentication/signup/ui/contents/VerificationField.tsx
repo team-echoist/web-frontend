@@ -104,7 +104,6 @@ function VerificationField() {
     const userData = await getUserInfo();
     if (userData) {
       setUser(userData);
-
       const body = {
         uid: deviceId,
         fcmToken: fcmToken,
@@ -129,7 +128,7 @@ function VerificationField() {
       setFcmToken(token);
     });
   }, []);
-  
+
   useEffect(() => {
     const isComplete = inputValues.every((value) => value.length === 1);
     if (isComplete) {

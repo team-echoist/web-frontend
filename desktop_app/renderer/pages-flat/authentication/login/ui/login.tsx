@@ -58,8 +58,7 @@ const Li = styled.li`
 export const Login = () => {
   const searchParams = useSearchParams();
   const token =
-    (searchParams.get("accessToken") &&
-    searchParams.get("refreshToken")) ||
+    (searchParams.get("accessToken") && searchParams.get("refreshToken")) ||
     (Cookies.get("accessToken") && Cookies.get("refreshToken")) ||
     (sessionStorage.getItem("accessToken") &&
       sessionStorage.getItem("refreshToken"));
@@ -108,12 +107,12 @@ export const Login = () => {
           };
           try {
             await fetchData("support/devices/register", "post", body);
+            redirectToPage(false);
           } catch (err) {
             console.log("err", err);
           }
         }
       }
-
       redirectToPage(false);
     }
   };
@@ -132,34 +131,32 @@ export const Login = () => {
     const handleLogin = async () => {
       const socialAccessToken = searchParams.get("accessToken");
       const socialRefreshToken = searchParams.get("refreshToken");
-      
-      try {
-        if(token){
-          if (socialAccessToken && socialRefreshToken) {
+      if (token) {
+        if (socialAccessToken && socialRefreshToken) {
+          try {
             // 소셜로그인 쿼리로 토큰이 세팅 되어있을때
             const accessTokenExpiry = calculateExpiryDate(7);
-            const refreshTokenExpiry = calculateExpiryDate(30); 
-  
-              Cookies.set("accessToken", socialAccessToken, {
-                expires: accessTokenExpiry,
-                secure: true,
-                sameSite: "Strict",
-              });
-              Cookies.set("refreshToken", socialRefreshToken, {
-                expires: refreshTokenExpiry,
-                secure: true,
-                sameSite: "Strict",
-              });
-              // 소셜로그인의 경우 자동로그인 되게 
-            handleUserInfo();
-          } else {
-            redirectToPage(false);
-            // 로컬 로그인의 경우이면서 이미 자동로그인 체크한 상태
+            const refreshTokenExpiry = calculateExpiryDate(30);
+
+            Cookies.set("accessToken", socialAccessToken, {
+              expires: accessTokenExpiry,
+              secure: true,
+              sameSite: "Strict",
+            });
+            Cookies.set("refreshToken", socialRefreshToken, {
+              expires: refreshTokenExpiry,
+              secure: true,
+              sameSite: "Strict",
+            });
+            // 소셜로그인의 경우 자동로그인 되게
+            await handleUserInfo();
+          } catch (error) {
+            console.error("Error handling tokens:", error);
           }
+        } else {
+          await handleUserInfo();
+          // 로컬 로그인의 경우이면서 이미 자동로그인 체크한 상태
         }
-    
-      } catch (error) {
-        console.error("Error handling tokens:", error);
       }
     };
 
@@ -178,8 +175,8 @@ export const Login = () => {
     try {
       const statusCode = await localLogin(body, autoLoginCheck);
       if (statusCode === 200 || statusCode === 201) {
-        //메인페이지
-        handleUserInfo();
+        //메인페이지 로컬회원가입의 경우 회원가입후 디바이스가 등록됨
+        redirectToPage(false);
       }
     } catch (err) {
       console.log("err", err);
