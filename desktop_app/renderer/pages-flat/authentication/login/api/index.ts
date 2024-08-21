@@ -22,9 +22,11 @@ export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
   try {
     const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + "auth/login", body);
     const statusCode = response.data.statusCode;
+    const data =response.data.data
+    console.log("response",response.data.data)
 
-    const accessToken = response.headers['access-token'];
-    const refreshToken = response.headers['refresh-token'];
+    const accessToken = data.accessToken;
+    const refreshToken = data.refreshToken;
 
     if (accessToken && refreshToken) {
       const accessTokenExpiry = calculateExpiryDate(7); 

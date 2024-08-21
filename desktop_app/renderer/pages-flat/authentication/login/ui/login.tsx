@@ -130,33 +130,34 @@ export const Login = () => {
     });
 
     const handleLogin = async () => {
-      const accessToken = searchParams.get("accessToken");
-      const refreshToken = searchParams.get("refreshToken");
+      const socialAccessToken = searchParams.get("accessToken");
+      const socialRefreshToken = searchParams.get("refreshToken");
+      
       try {
-        if (accessToken && refreshToken) {
-          const accessTokenExpiry = calculateExpiryDate(7);
-          const refreshTokenExpiry = calculateExpiryDate(30); 
-
-          if (autoLoginCheck) {
-            Cookies.set("accessToken", accessToken, {
-              expires: accessTokenExpiry,
-              secure: true,
-              sameSite: "Strict",
-            });
-            Cookies.set("refreshToken", refreshToken, {
-              expires: refreshTokenExpiry,
-              secure: true,
-              sameSite: "Strict",
-            });
+        if(token){
+          if (socialAccessToken && socialRefreshToken) {
+            // 소셜로그인 쿼리로 토큰이 세팅 되어있을때
+            const accessTokenExpiry = calculateExpiryDate(7);
+            const refreshTokenExpiry = calculateExpiryDate(30); 
+  
+              Cookies.set("accessToken", socialAccessToken, {
+                expires: accessTokenExpiry,
+                secure: true,
+                sameSite: "Strict",
+              });
+              Cookies.set("refreshToken", socialRefreshToken, {
+                expires: refreshTokenExpiry,
+                secure: true,
+                sameSite: "Strict",
+              });
+              // 소셜로그인의 경우 자동로그인 되게 
+            handleUserInfo();
           } else {
-            sessionStorage.setItem("accessToken", accessToken);
-            sessionStorage.setItem("refreshToken", refreshToken);
+            redirectToPage(false);
+            // 로컬 로그인의 경우이면서 이미 자동로그인 체크한 상태
           }
-
-          handleUserInfo();
-        } else {
-          console.error("Access token or refresh token is missing");
         }
+    
       } catch (error) {
         console.error("Error handling tokens:", error);
       }
