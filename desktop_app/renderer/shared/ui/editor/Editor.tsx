@@ -16,7 +16,7 @@ function Editor() {
 
   const modules = {
     toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ header: "1" },{ font: [] }],
       [{ list: "ordered" }, { list: "bullet" }],
       ["bold", "italic", "underline", "strike", "blockquote"],
       ["link", "image"],
@@ -44,7 +44,7 @@ function Editor() {
     const Quill = require("quill");
     const icons = Quill.import("ui/icons");
 
-    icons["customText"] = `
+    icons["header"] = `
       <span style="
         color: #FFF;
         font-family: Baskervville;
