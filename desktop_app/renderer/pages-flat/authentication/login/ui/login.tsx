@@ -88,32 +88,35 @@ export const Login = () => {
   };
 
   const handleUserInfo = async () => {
-    const userData = await getUserInfo();
-    const body = {
-      uid: deviceId,
-      fcmToken: fcmToken,
-    };
-    if (userData) {
-      setUser(userData);
-      if (userData.isFirst) {
-        await fetchData("support/devices/register", "post", body);
-        redirectToPage(true);
-        return;
-      }
-      if (deviceId.length > 0) {
-        const deviceExists = userData.devices?.some(
-          (device) => device?.uid === deviceId
-        );
-        if (!deviceExists) {
-          try {
-            await fetchData("support/devices/register", "post", body);
-            redirectToPage(false);
-          } catch (err) {
-            console.log("err", err);
+    if (deviceId && fcmToken) {
+      const userData = await getUserInfo();
+      const body = {
+        uid: deviceId,
+        fcmToken: fcmToken,
+      };
+
+      if (userData) {
+        setUser(userData);
+        if (userData.isFirst) {
+          await fetchData("support/devices/register", "post", body);
+          redirectToPage(true);
+          return;
+        }
+        if (deviceId.length > 0) {
+          const deviceExists = userData.devices?.some(
+            (device) => device?.uid === deviceId
+          );
+          if (!deviceExists) {
+            try {
+              await fetchData("support/devices/register", "post", body);
+              redirectToPage(false);
+            } catch (err) {
+              console.log("err", err);
+            }
           }
         }
+        redirectToPage(false);
       }
-      redirectToPage(false);
     }
   };
 
@@ -127,7 +130,9 @@ export const Login = () => {
     window.Electron?.getFCMToken("getFCMToken", (_: any, token: string) => {
       setFcmToken(token);
     });
+  }, []);
 
+  useEffect(() => {
     const handleLogin = async () => {
       const socialAccessToken = searchParams.get("accessToken");
       const socialRefreshToken = searchParams.get("refreshToken");
@@ -161,7 +166,7 @@ export const Login = () => {
     };
 
     handleLogin();
-  }, [token, autoLoginCheck]);
+  }, [token, autoLoginCheck, deviceId, fcmToken]);
 
   const isValidButton =
     infoData.id.value.length > 0 && infoData.password.value.length > 0;
