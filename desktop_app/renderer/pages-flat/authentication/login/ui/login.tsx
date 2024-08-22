@@ -89,10 +89,14 @@ export const Login = () => {
 
   const handleUserInfo = async () => {
     const userData = await getUserInfo();
+    const body = {
+      uid: deviceId,
+      fcmToken: fcmToken,
+    };
     if (userData) {
       setUser(userData);
-
       if (userData.isFirst) {
+        await fetchData("support/devices/register", "post", body);
         redirectToPage(true);
         return;
       }
@@ -101,10 +105,6 @@ export const Login = () => {
           (device) => device?.uid === deviceId
         );
         if (!deviceExists) {
-          const body = {
-            uid: deviceId,
-            fcmToken: fcmToken,
-          };
           try {
             await fetchData("support/devices/register", "post", body);
             redirectToPage(false);
@@ -148,8 +148,8 @@ export const Login = () => {
               secure: true,
               sameSite: "Strict",
             });
-            // 소셜로그인의 경우 자동로그인 되게
             await handleUserInfo();
+            // 소셜로그인의 경우 자동로그인 되게
           } catch (error) {
             console.error("Error handling tokens:", error);
           }
@@ -161,7 +161,7 @@ export const Login = () => {
     };
 
     handleLogin();
-  }, [token, autoLoginCheck, router]);
+  }, [token, autoLoginCheck]);
 
   const isValidButton =
     infoData.id.value.length > 0 && infoData.password.value.length > 0;
