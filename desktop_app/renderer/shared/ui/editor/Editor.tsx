@@ -13,10 +13,9 @@ function Editor() {
 
   const quillRef = useRef(null);
 
-
   const modules = {
     toolbar: [
-      [{ header: "1" },{ font: [] }],
+      [{ header: ["1", "2", "body1", "body2"] }],
       [{ list: "ordered" }, { list: "bullet" }],
       ["bold", "italic", "underline", "strike", "blockquote"],
       ["link", "image"],
