@@ -136,6 +136,7 @@ export const Login = () => {
     const handleLogin = async () => {
       const socialAccessToken = searchParams.get("accessToken");
       const socialRefreshToken = searchParams.get("refreshToken");
+      console.log("socialAccessToken",socialAccessToken,socialRefreshToken)
       if (token) {
         if (socialAccessToken && socialRefreshToken) {
           try {

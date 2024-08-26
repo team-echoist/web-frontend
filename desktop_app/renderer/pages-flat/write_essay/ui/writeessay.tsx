@@ -1,21 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-// import { Editor } from "@/shared/ui/editor";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
+import TitleField from "./TitleField";
 
 const Editor = dynamic(
-  () => import('@/shared/ui/editor').then(mod => mod.Editor),
+  () => import("@/shared/ui/editor").then((mod) => mod.Editor),
   { ssr: false }
 );
 
 const Layout = styled.main`
-  margin-top: 100px;
+  margin-top: 32px;
+  width: 100vw;
 `;
 
 export const WriteEssay = () => {
+  const [title, setTitle] = useState("제목 없음");
+  const [value, setValue] = useState<string>("");
   return (
     <Layout>
-      <Editor />
+      <TitleField title={title} />
+      <Editor value={value} setValue={setValue} />
     </Layout>
   );
 };
