@@ -13,27 +13,34 @@ import ImageIcon from "@/shared/assets/img/editor/image_basic.webp";
 import ImageHover from "@/shared/assets/img/editor/image.webp";
 import TagIcon from "@/shared/assets/img/editor/tag_basic.webp";
 import TagHover from "@/shared/assets/img/editor/tag.webp";
-import SavedIcon from "@/shared/assets/img/editor/saved_basic.webp"
+import SavedIcon from "@/shared/assets/img/editor/saved_basic.webp";
 import styled from "styled-components";
+import NextBtn from "@/shared/assets/img/editor/next.svg";
+import Stroke from "@/shared/assets/img/editor/stroke.svg";
+import color from "@/shared/styles/color";
 
 const Container = styled.div`
   background: #1d1d1d !important;
   width: 100%;
   height: 50px;
+  display: flex;
+  position: relative;
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
+  }
 `;
 const Img = styled.img`
   width: 30px;
   height: 30px;
 `;
 const Button = styled.button`
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  outline: none;
-  cursor: pointer;
   width: 30px;
-  height: 30px;
+  height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
 `;
@@ -43,16 +50,38 @@ const IconDiv = styled.div`
   alignitems: center;
   padding-left: 26px;
 `;
+const SaveBtnDiv = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+  right: 30px;
+  top: 0px;
+`;
+const SaveBtn = styled.button`
+  white-space: nowrap;
+  color: ${color.white};
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+  height: 100% !important;
+  display: flex;
+  align-items: center;
+  margin-right: 12px !important;
+`;
 
 const CustomToolbar = ({ isModalOpen }: { isModalOpen: boolean }) => {
   const [buttonStates, setButtonStates] = useState({
     bold: false,
     underline: false,
     strike: false,
-    location:false,
-    tag:false,
-    image:false,
-    saved:false
+    location: false,
+    tag: false,
+    image: false,
+    saved: false,
   });
   const handleButtonClick = (button: keyof typeof buttonStates) => {
     setButtonStates((prevState) => ({
@@ -63,9 +92,7 @@ const CustomToolbar = ({ isModalOpen }: { isModalOpen: boolean }) => {
   return (
     <Container id="toolbar">
       <IconDiv>
-        <Button
-          className="ql-customFontSize"
-        >
+        <Button className="ql-customFontSize">
           <Img
             src={isModalOpen ? TextHover.src : TextIcon.src}
             alt="Font Size"
@@ -110,7 +137,7 @@ const CustomToolbar = ({ isModalOpen }: { isModalOpen: boolean }) => {
           onClick={() => handleButtonClick("location")}
         >
           <Img
-            src={buttonStates.location ? PlaceHover.src: PlaceIcon.src }
+            src={buttonStates.location ? PlaceHover.src : PlaceIcon.src}
             alt="location"
             className="customLocationButton"
           />
@@ -120,7 +147,7 @@ const CustomToolbar = ({ isModalOpen }: { isModalOpen: boolean }) => {
           onClick={() => handleButtonClick("tag")}
         >
           <Img
-            src={buttonStates.tag ? TagHover.src: TagIcon.src }
+            src={buttonStates.tag ? TagHover.src : TagIcon.src}
             alt="tag"
             className="customTagButton"
           />
@@ -130,14 +157,15 @@ const CustomToolbar = ({ isModalOpen }: { isModalOpen: boolean }) => {
           onClick={() => handleButtonClick("image")}
         >
           <Img
-            src={buttonStates.image ? ImageHover.src: ImageIcon.src }
+            src={buttonStates.image ? ImageHover.src : ImageIcon.src}
             alt="imageIcon"
             className="customImageButton"
           />
         </Button>
         <Button
           className="ql-custom-saved"
-          onClick={() => handleButtonClick("saved")}        >
+          onClick={() => handleButtonClick("saved")}
+        >
           <Img
             src={SavedIcon.src}
             alt="savedIcon"
@@ -145,6 +173,11 @@ const CustomToolbar = ({ isModalOpen }: { isModalOpen: boolean }) => {
           />
         </Button>
       </IconDiv>
+      <SaveBtnDiv>
+        <SaveBtn>저장</SaveBtn>
+        <Stroke />
+        <NextBtn />
+      </SaveBtnDiv>
     </Container>
   );
 };

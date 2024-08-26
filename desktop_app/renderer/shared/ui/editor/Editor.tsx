@@ -63,7 +63,6 @@ function Editor({
         quillEditor.format("size", size);
       }
     }
-    setIsModalOpen(false);
   };
   const handleCustomFontSizeClick = () => {
     setIsModalOpen(true);
@@ -72,6 +71,7 @@ function Editor({
     if (quillRef.current) {
       const quillEditor = quillRef.current.getEditor();
       quillEditor.format("bold", !quillEditor.getFormat().bold);
+      setIsModalOpen(false);
     }
   };
 
@@ -79,6 +79,7 @@ function Editor({
     if (quillRef.current) {
       const quillEditor = quillRef.current.getEditor();
       quillEditor.format("underline", !quillEditor.getFormat().underline);
+      setIsModalOpen(false);
     }
   };
 
@@ -86,6 +87,7 @@ function Editor({
     if (quillRef.current) {
       const quillEditor = quillRef.current.getEditor();
       quillEditor.format("strike", !quillEditor.getFormat().strike);
+      setIsModalOpen(false);
     }
   };
   const modules = useMemo(
