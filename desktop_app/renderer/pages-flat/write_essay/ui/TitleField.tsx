@@ -11,6 +11,7 @@ const Layout = styled.div`
   display: flex;
   align-items: flex-end;
   padding-right:18px;
+  padding-bottom:10px;
 `;
 const Button = styled.button<ButtonProps>`
   all: unset;
