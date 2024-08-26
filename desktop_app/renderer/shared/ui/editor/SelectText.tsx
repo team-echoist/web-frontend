@@ -8,6 +8,7 @@ const Layout = styled.div`
   height: 41px;
   position: absolute;
   top: 45px;
+  padding-left:16px;
 `;
 
 const Ul = styled.ul`
