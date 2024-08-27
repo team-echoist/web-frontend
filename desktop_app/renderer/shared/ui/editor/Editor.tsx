@@ -13,6 +13,7 @@ import CustomToolBar from "./CustomToolbar";
 
 const EditorDiv = styled.div`
   position: relative;
+
   .ql-snow .ql-editor strong {
     font-weight: bold !important;
   }
@@ -28,6 +29,7 @@ const EditorDiv = styled.div`
 
   .ql-editor {
     padding: 72px 147px;
+    overflow-y: auto;
   }
 
   .ql-editor.ql-blank::before {

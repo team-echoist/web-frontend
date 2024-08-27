@@ -1,5 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import BaseInput from "@/shared/ui/input/BaseInput";
+
 
 interface ButtonProps {
   isCancel: boolean;
@@ -10,8 +12,8 @@ const Layout = styled.div`
   height: 48px;
   display: flex;
   align-items: flex-end;
-  padding-right:18px;
-  padding-bottom:10px;
+  padding-right: 18px;
+  padding-bottom: 10px;
 `;
 const Button = styled.button<ButtonProps>`
   all: unset;
@@ -33,21 +35,23 @@ const Button = styled.button<ButtonProps>`
           color: #fff;
         `}
 `;
-const Input = styled.input``;
-const TitleDiv =styled.div`
-width:89.98%;
-height:100%;
-display: flex;
-align-items:flex-end;
-justify-content: center;
-padding: 10px 20px;
-`
+
+const TitleDiv = styled.div`
+  width: 89.98%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 10px 20px;
+`;
 
 function TitleField({ title }: { title: string }) {
   return (
     <Layout>
       <Button isCancel={true}>취소</Button>
-      <TitleDiv>{title}</TitleDiv>
+      <TitleDiv>
+      <BaseInput value={title} placeholder="제목을 입력해 주세요"/>
+      </TitleDiv>
       <Button isCancel={false}>완료</Button>
     </Layout>
   );
