@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, KeyboardEvent } from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 
@@ -13,6 +13,8 @@ interface InputProps {
   size?: "small" | "middle" | "large";
   placeholder?: string;
   value?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onKeyPress?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const Input = styled.input<{
@@ -31,7 +33,8 @@ const Input = styled.input<{
   font-style: normal;
   font-weight: 400;
   line-height: 170%;
-  color: ${({ value }) => (Number(value?.length) > 0 ? color.white : "#686868")};
+  color: ${({ value }) =>
+    Number(value?.length) > 0 ? color.white : "#686868"};
   ::placeholder {
     color: #686868;
   }
@@ -42,10 +45,19 @@ const BaseInput: React.FC<InputProps> = ({
   size = "middle",
   placeholder,
   value,
+  onChange,
+  onKeyPress,
   ...props
 }) => {
   return (
-    <Input size={size} placeholder={placeholder} value={value} {...props} />
+    <Input
+      size={size}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      onKeyDown={onKeyPress}
+      {...props}
+    />
   );
 };
 

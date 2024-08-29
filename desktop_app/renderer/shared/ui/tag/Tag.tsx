@@ -9,20 +9,28 @@ const Layout = styled.div`
   padding: 2px 12px;
   justify-content: center;
   align-items: center;
-  gap: 3px;
+  gap: 8px;
   height: 32px;
   width: auto;
   min-width: 78px;
+  position: relative;
   svg{
   cursor: pointer;
   }
 `;
 
-function Tag() {
+
+
+function Tag({ value, onClose }: { value: string; onClose: () => void }) {
+  const coordinatePattern = /^-?\d{1,3}\.\d+˚[NS] -?\d{1,3}\.\d+˚[EW]$/;
+  const isCoordinate = (value: string): boolean => {
+    return coordinatePattern.test(value);
+  };
+
   return (
     <Layout>
-      깨달음
-      <CloseBtn />
+      {value}
+      {!isCoordinate(value) && <CloseBtn onClick={onClose} />}
     </Layout>
   );
 }

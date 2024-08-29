@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import TagIcon from "@/shared/assets/img/tag_icon.svg";
 import LocationIcon from "@/shared/assets/img/point_location_icon.webp";
@@ -32,15 +32,15 @@ const BtnDiv = styled.div`
   position: absolute;
   right: 0;
 `;
-const TagDiv =styled.div`
-width: 100%;
-height:60px;
-overflow-x:auto;
-position:absolute;
-top:-55px;
-display:flex;
-gap:4px;
-`
+const TagDiv = styled.div`
+  width: 100%;
+  height: 60px;
+  overflow-x: auto;
+  position: absolute;
+  top: -55px;
+  display: flex;
+  gap: 4px;
+`;
 
 interface MapperValue {
   img: React.ReactNode;
@@ -49,6 +49,10 @@ interface MapperValue {
 }
 
 function TagField({ activeTag }: { activeTag: string }) {
+  const [tagValues, setTagValues] = useState<string[]>([]);
+  const [locationValues, setLocationValues] = useState<string[]>(["37.948˚N 126.329˚E"]);
+  const [inputValue, setInputValue] = useState<string>("");
+
   const mapper: Record<string, MapperValue> = {
     tag: {
       img: <TagIcon></TagIcon>,
@@ -65,18 +69,72 @@ function TagField({ activeTag }: { activeTag: string }) {
   const activeValue =
     activeTag && mapper[activeTag] ? mapper[activeTag] : undefined;
 
-    // 버튼 클릭하면 tag인지 location 인지 판단한다
-    // 태그일경우 모든 인덱스의 앞에 #을 붙여서 반환
-    // 장소일경우 좌표가 있을경우 좌표라는 키값으로 따로 변수에 담아야됨
+  // 버튼 클릭하면 tag인지 location 인지 판단한다
+  // 태그일경우 모든 인덱스의 앞에 #을 붙여서 반환
+  // 장소일경우 좌표가 있을경우 좌표라는 키값으로 따로 변수에 담아야됨
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === " " || e.key === "Enter") {
+      e.preventDefault();
+
+      if (inputValue.trim() !== "") {
+        if (activeTag === "tag") {
+          setTagValues((prev) => {
+            if (prev.length < 5) {
+              return [...prev, `# ${inputValue.trim()}`];
+            }
+            return prev;
+          });
+        } else if (activeTag === "location") {
+          setLocationValues((prev) => {
+            if (prev.length === 1) {
+              return [...prev, inputValue.trim()];
+            } 
+            return prev;
+          });
+        }
+        setInputValue("");
+      }
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const removeTag = (index: number) => {
+    if (activeTag === "tag") {
+      setTagValues(prev => prev.filter((_, i) => i !== index));
+    } else if (activeTag === "location") {
+      setLocationValues(prev => prev.filter((_, i) => i !== index));
+    }
+  };
+
   return (
     <Layout>
+      <TagDiv>
+        {(activeTag === "tag"
+          ? tagValues
+          : activeTag === "location"
+          ? locationValues
+          : []
+        ).map((value, index) => (
+          <React.Fragment key={`${activeTag}-${index}`}>
+            <Tag value={value} onClose={() => removeTag(index)}/>
+          </React.Fragment>
+        ))}
+      </TagDiv>
       {/* <TagChip></TagChip> */}
       {activeValue ? (
         <>
-        <TagDiv><Tag></Tag></TagDiv>
           <ImageDiv>{activeValue.img}</ImageDiv>
           <InputDiv>
-            <BaseInput placeholder={activeValue.placeholder}></BaseInput>
+            <BaseInput
+              value={inputValue}
+              placeholder={activeValue.placeholder}
+              onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
+            />
           </InputDiv>
           <BtnDiv>
             <BaseButton>{activeValue.btnText}</BaseButton>
