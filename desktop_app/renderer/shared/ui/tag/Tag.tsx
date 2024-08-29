@@ -13,8 +13,8 @@ const Layout = styled.div`
   height: 32px;
   width: auto;
   min-width: 78px;
-  svg {
-    cursor: pointer;
+  svg{
+  cursor: pointer;
   }
 `;
 

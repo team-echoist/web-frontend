@@ -73,7 +73,15 @@ const SaveBtn = styled.button`
   margin-right: 12px !important;
 `;
 
-const CustomToolbar = ({ isModalOpen }: { isModalOpen: boolean }) => {
+const CustomToolbar = ({
+  isModalOpen,
+  tagName,
+  tagHandler,
+}: {
+  isModalOpen: boolean;
+  tagName: string;
+  tagHandler: (name: string) => void;
+}) => {
   const [buttonStates, setButtonStates] = useState({
     bold: false,
     underline: false,
@@ -89,6 +97,7 @@ const CustomToolbar = ({ isModalOpen }: { isModalOpen: boolean }) => {
       [button]: !prevState[button],
     }));
   };
+  console.log("tag",tagName)
   return (
     <Container id="toolbar">
       <IconDiv>
@@ -134,20 +143,26 @@ const CustomToolbar = ({ isModalOpen }: { isModalOpen: boolean }) => {
         </Button>
         <Button
           className="ql-custom-location"
-          onClick={() => handleButtonClick("location")}
+          onClick={() => {
+            // handleButtonClick("location");
+            tagHandler("location");
+          }}
         >
           <Img
-            src={buttonStates.location ? PlaceHover.src : PlaceIcon.src}
+            src={tagName ==="location"? PlaceHover.src : PlaceIcon.src}
             alt="location"
             className="customLocationButton"
           />
         </Button>
         <Button
           className="ql-custom-tag"
-          onClick={() => handleButtonClick("tag")}
+          onClick={() => {
+            // handleButtonClick("tag");
+            tagHandler("tag");
+          }}
         >
           <Img
-            src={buttonStates.tag ? TagHover.src : TagIcon.src}
+            src={tagName ==="tag"? TagHover.src : TagIcon.src}
             alt="tag"
             className="customTagButton"
           />

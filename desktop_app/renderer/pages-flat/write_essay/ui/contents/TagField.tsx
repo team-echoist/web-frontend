@@ -5,9 +5,11 @@ import LocationIcon from "@/shared/assets/img/point_location_icon.webp";
 import Image from "next/image";
 import BaseInput from "@/shared/ui/input/BaseInput";
 import { BaseButton } from "@/shared/ui/button";
+import { Tag } from "@/shared/ui/tag";
+import TagChip from "./TagChip";
 
 const Layout = styled.div`
-  width: 75.38%;
+  width: 80%;
   height: 60px;
   border-top: 1px rgba(104, 104, 104, 0.1);
   background: #121212;
@@ -30,6 +32,15 @@ const BtnDiv = styled.div`
   position: absolute;
   right: 0;
 `;
+const TagDiv =styled.div`
+width: 100%;
+height:60px;
+overflow-x:auto;
+position:absolute;
+top:-55px;
+display:flex;
+gap:4px;
+`
 
 interface MapperValue {
   img: React.ReactNode;
@@ -53,10 +64,16 @@ function TagField({ activeTag }: { activeTag: string }) {
 
   const activeValue =
     activeTag && mapper[activeTag] ? mapper[activeTag] : undefined;
+
+    // 버튼 클릭하면 tag인지 location 인지 판단한다
+    // 태그일경우 모든 인덱스의 앞에 #을 붙여서 반환
+    // 장소일경우 좌표가 있을경우 좌표라는 키값으로 따로 변수에 담아야됨
   return (
     <Layout>
+      {/* <TagChip></TagChip> */}
       {activeValue ? (
         <>
+        <TagDiv><Tag></Tag></TagDiv>
           <ImageDiv>{activeValue.img}</ImageDiv>
           <InputDiv>
             <BaseInput placeholder={activeValue.placeholder}></BaseInput>

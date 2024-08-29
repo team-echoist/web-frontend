@@ -46,13 +46,26 @@ const EditorDiv = styled.div`
     border: none !important;
   }
 `;
+interface TagValue {
+  active: string;
+  tag: {
+    values: string[];
+  };
+  location: {
+    values: string[];
+  };
+}
 
 function Editor({
   value,
   setValue,
+  tagValue,
+  setTagValue,
 }: {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
+  tagValue: TagValue;
+  setTagValue: Dispatch<SetStateAction<TagValue>>;
 }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -106,7 +119,7 @@ function Editor({
     }),
     []
   );
-  const formats = useMemo(() => ["bold", "underline", "strike","size"], []);
+  const formats = useMemo(() => ["bold", "underline", "strike", "size"], []);
 
   useEffect(() => {
     const quillEditor = quillRef.current?.getEditor();
@@ -134,9 +147,16 @@ function Editor({
 
   const sizeOptions = ["small", "default", "large", "huge"];
 
+  const tagHandler = (name: string) => {
+    setTagValue((prevState: TagValue) => ({
+      ...prevState,
+      active: name === "tag" || name === "location" ? name : prevState.active,
+    }));
+  };
+
   return (
     <EditorDiv>
-      <CustomToolBar isModalOpen={isModalOpen}/>
+      <CustomToolBar isModalOpen={isModalOpen} tagName={tagValue.active} tagHandler={tagHandler}/>
       <ReactQuill
         ref={quillRef}
         value={value}

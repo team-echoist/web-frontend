@@ -33,23 +33,25 @@ const EditorContainer = styled.div<{ isBottomFieldVisible: boolean }>`
 export const WriteEssay = () => {
   const [title, setTitle] = useState("제목 없음");
   const [value, setValue] = useState<string>("");
-  const [bottomValue,setBottomValue] = useState({
-    active:"tag",
-    tag:{
-      values:[],
+  const [bottomValue, setBottomValue] = useState({
+    active: "",
+    tag: {
+      values: [] as string[],
     },
-    location:{
-      values:[],
+    location: {
+      values: [] as string[],
     },
-  })
-  const [isBottomFieldVisible, setIsBottomFieldVisible] = useState(true);
+  });
+  const isBottomFieldVisible =
+    bottomValue.active === "tag" || bottomValue.active === "location";
+
   return (
     <Layout>
       <TitleField title={title} />
       <EditorContainer isBottomFieldVisible={isBottomFieldVisible}>
-        <Editor value={value} setValue={setValue} />
+        <Editor value={value} setValue={setValue} tagValue={bottomValue} setTagValue={setBottomValue}/>
       </EditorContainer>
-      <BottomField bottomValue={bottomValue}/>
+      {isBottomFieldVisible && <BottomField bottomValue={bottomValue} />}
     </Layout>
   );
 };
