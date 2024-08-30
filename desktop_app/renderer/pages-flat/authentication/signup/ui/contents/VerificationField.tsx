@@ -4,6 +4,9 @@ import color from "@/shared/styles/color";
 import { SmallInput } from "@/shared/ui/input";
 import { registerUser } from "../../api";
 import { useRouter } from "next/navigation";
+import { getUserInfo } from "@/shared/api";
+import { useStore } from "@/shared/store";
+import { fetchData } from "@/shared/api/fetchData";
 
 const RectangleDiv = styled.div`
   width: 100%;
@@ -86,6 +89,9 @@ function VerificationField() {
   const [inputValues, setInputValues] = useState<string[]>(Array(6).fill(""));
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [deviceId, setDeviceId] = useState("");
+  const [fcmToken, setFcmToken] = useState("");
+  const setUser = useStore((state) => state.setUser);
   const router = useRouter();
 
   const handleChange =
@@ -94,6 +100,35 @@ function VerificationField() {
       newInputValues[index] = e.target.value;
       setInputValues(newInputValues);
     };
+  const handleUserInfo = async () => {
+    const userData = await getUserInfo();
+    if (userData) {
+      setUser(userData);
+      const body = {
+        uid: deviceId,
+        fcmToken: fcmToken,
+      };
+      try {
+        await fetchData("support/devices/register", "post", body);
+        router.push("/web/termsofuse")
+      } catch (err) {
+        console.log("err", err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleDeviceInfo = (data: string) => {
+      setDeviceId(data);
+    };
+
+    window.Electron?.requestDeviceInfo();
+    window.Electron?.onDeviceInfo(handleDeviceInfo);
+    window.Electron?.getFCMToken("getFCMToken", (_: any, token: string) => {
+      setFcmToken(token);
+    });
+  }, []);
+
   useEffect(() => {
     const isComplete = inputValues.every((value) => value.length === 1);
     if (isComplete) {
@@ -103,7 +138,7 @@ function VerificationField() {
           if (statusCode === 201) {
             setHasError(false);
             setErrorMessage("");
-            router.push("/web/main");
+            await handleUserInfo()
           } else {
             setHasError(true);
             setErrorMessage("인증번호를 잘못 입력하셨습니다.");
