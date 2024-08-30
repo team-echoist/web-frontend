@@ -6,31 +6,38 @@ const AxiosInstance = axios.create({
 });
 
 AxiosInstance.interceptors.request.use((config) => {
-  const token = Cookies.get("token");
-  if (token) {
-    config.headers.Authorization = `${token}`;
+  let accessToken =  Cookies.get("accessToken") ;
+  let refreshToken = Cookies.get("refreshToken");
+  if (refreshToken) {
+    config.headers["x-refresh-token"] = refreshToken;
+  }
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
   return config;
 });
 
-// 응답 인터셉터: 서버로부터의 모든 응답 후에 실행
 AxiosInstance.interceptors.response.use(
   (response) => {
-    const newToken = response.headers["Authorization"];
-    if (newToken) {
-      const tokenValue = newToken.split(" ")[1];
-      Cookies.set("token", tokenValue, { secure: true,  sameSite: "Strict" });
+    const newAccessToken = response.headers["x-access-token"];
+    if (newAccessToken) {
+        Cookies.set("accessToken", newAccessToken, {
+          expires: 7,
+          secure: true,
+          sameSite: "Strict",
+        });
     }
     return response;
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      Cookies.remove("token"); 
-      window.location.href = "/authentication/sign-in"; 
+      Cookies.remove("refreshToken");
+      Cookies.remove("accessToken");
+      window.location.href = "/web/login";
     }
     return Promise.reject(error);
   }
 );
 
-
 export default AxiosInstance;
+
