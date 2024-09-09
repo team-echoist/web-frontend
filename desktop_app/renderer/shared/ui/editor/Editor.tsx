@@ -150,7 +150,7 @@ function Editor({
   const tagHandler = (name: string) => {
     setTagValue((prevState: TagValue) => ({
       ...prevState,
-      active: name === "tag" || name === "location" ? name : prevState.active,
+      active: prevState.active === name ? "" : name, 
     }));
   };
 

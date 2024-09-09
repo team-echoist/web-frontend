@@ -97,7 +97,7 @@ const CustomToolbar = ({
       [button]: !prevState[button],
     }));
   };
-  console.log("tag",tagName)
+
   return (
     <Container id="toolbar">
       <IconDiv>
@@ -157,7 +157,6 @@ const CustomToolbar = ({
         <Button
           className="ql-custom-tag"
           onClick={() => {
-            // handleButtonClick("tag");
             tagHandler("tag");
           }}
         >
