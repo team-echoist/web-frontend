@@ -46,6 +46,17 @@ const EditorDiv = styled.div`
     border: none !important;
   }
 `;
+
+const sizeMap = {
+  small: "10px",
+  default: "13px", 
+  large: "18px",
+  huge: "32px",
+};
+
+const SizeStyle = Quill.import("attributors/style/size");
+SizeStyle.whitelist = Object.values(sizeMap);
+Quill.register(SizeStyle, true);
 interface TagValue {
   active: string;
   tag: {
@@ -71,11 +82,11 @@ function Editor({
 
   const quillRef = useRef<ReactQuill>(null);
 
-  const applyFontSize = (size: string) => {
+  const applyFontSize = (size: keyof typeof sizeMap) => {
     if (quillRef.current) {
       const quillEditor = quillRef.current.getEditor();
       if (quillEditor) {
-        quillEditor.format("size", size);
+        quillEditor.format("size", sizeMap[size]);
       }
     }
   };
@@ -153,7 +164,7 @@ function Editor({
       active: prevState.active === name ? "" : name, 
     }));
   };
-
+  console.log("value",value)
   return (
     <EditorDiv>
       <CustomToolBar isModalOpen={isModalOpen} tagName={tagValue.active} tagHandler={tagHandler}/>

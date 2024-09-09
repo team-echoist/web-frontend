@@ -3,6 +3,7 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import TitleField from "./contents/TitleField";
 import BottomField from "./contents/BottomField";
+import { fetchData } from "@/shared/api/fetchData";
 
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
@@ -45,11 +46,42 @@ export const WriteEssay = () => {
   const isBottomFieldVisible =
     bottomValue.active === "tag" || bottomValue.active === "location";
 
+  const test = async () => {
+    const body = {
+      title: "web-test3",
+      content: `<html lang="ko">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Linkedout</title>
+                </head>
+                <body>
+                ${value}
+                </body>
+                </html>`,
+      linkedOutGauge: 0,
+      thumbnail: "",
+      status: "published",
+      latitude: 0,
+      longitude: 0,
+      location: "서울",
+      tags: ["test"],
+    };
+    const { status } = await fetchData("essays", "post", body);
+    console.log(status);
+  };
+
   return (
     <Layout>
       <TitleField title={title} />
+      {/* <button onClick={test}>test</button> */}
       <EditorContainer isBottomFieldVisible={isBottomFieldVisible}>
-        <Editor value={value} setValue={setValue} tagValue={bottomValue} setTagValue={setBottomValue}/>
+        <Editor
+          value={value}
+          setValue={setValue}
+          tagValue={bottomValue}
+          setTagValue={setBottomValue}
+        />
       </EditorContainer>
       {isBottomFieldVisible && <BottomField bottomValue={bottomValue} />}
     </Layout>
