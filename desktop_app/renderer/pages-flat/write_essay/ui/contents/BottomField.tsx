@@ -8,6 +8,7 @@ const Layout = styled.div`
   height: 45.34vh;
   position: absolute;
   bottom: 0px;
+  z-index:10;
 `;
 
 interface optionType {

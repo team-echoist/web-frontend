@@ -37,9 +37,11 @@ const TagDiv = styled.div`
   height: 60px;
   overflow-x: auto;
   position: absolute;
-  top: -55px;
+  top: -70px;
   display: flex;
   gap: 4px;
+  background: #121212;
+  padding-top:10px;
 `;
 
 interface MapperValue {
