@@ -40,15 +40,14 @@ const Li = styled.li<{ isActive: boolean }>`
     color: #616fed;
   }
 `;
-
 interface SelectTextProps {
-  option: string[];
-  applyFontSize: (size: string) => void;
+  option: Array<"small" | "default" | "large" | "huge">;
+  applyFontSize: (size: "small" | "default" | "large" | "huge") => void;
 }
 
 function SelectText({ option, applyFontSize }: SelectTextProps) {
   const [activeItem, setActiveItem] = useState<string | null>(null);
-  const handleItemClick = (size: string) => {
+  const handleItemClick = (size: "small" | "default" | "large" | "huge") => {
     applyFontSize(size);
     setActiveItem(size);
   };

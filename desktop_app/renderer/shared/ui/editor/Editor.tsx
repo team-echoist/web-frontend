@@ -156,7 +156,7 @@ function Editor({
     }
   }, []);
 
-  const sizeOptions = ["small", "default", "large", "huge"];
+  const sizeOptions: Array<"small" | "default" | "large" | "huge"> = ["small", "default", "large", "huge"];
 
   const tagHandler = (name: string) => {
     setTagValue((prevState: TagValue) => ({
@@ -164,7 +164,7 @@ function Editor({
       active: prevState.active === name ? "" : name, 
     }));
   };
-  console.log("value",value)
+
   return (
     <EditorDiv>
       <CustomToolBar isModalOpen={isModalOpen} tagName={tagValue.active} tagHandler={tagHandler}/>
