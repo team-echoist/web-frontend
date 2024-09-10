@@ -43,6 +43,7 @@ export const WriteEssay = () => {
       values: [] as string[],
     },
   });
+  const [imageFile, setImageFile] = useState<File |string| null>(null); 
   const isBottomFieldVisible =
     bottomValue.active === "tag" || bottomValue.active === "location";
 
@@ -81,6 +82,7 @@ export const WriteEssay = () => {
           setValue={setValue}
           tagValue={bottomValue}
           setTagValue={setBottomValue}
+          setImageFile={setImageFile} 
         />
       </EditorContainer>
       {isBottomFieldVisible && <BottomField bottomValue={bottomValue} />}

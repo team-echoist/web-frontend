@@ -10,6 +10,8 @@ import ReactQuill, { Quill } from "react-quill";
 import styled from "styled-components";
 import SelectText from "./SelectText";
 import CustomToolBar from "./CustomToolbar";
+import Image from "next/image";
+import color from "@/shared/styles/color";
 
 const EditorDiv = styled.div`
   position: relative;
@@ -46,10 +48,32 @@ const EditorDiv = styled.div`
     border: none !important;
   }
 `;
+const ThumbnailContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 0px 147px;
+  position: relative;
+`;
+const ThumbnailEditBtn = styled.button`
+  width: 57px;
+  height: 32px;
+  border: none;
+  background: none;
+  padding: 0;
+  outline: none;
+  box-shadow: none;
+  position: absolute;
+  top: 35px;
+  right: 13%;
+  z-index: 1;
+  background-color: ${color.pointcolor};
+  color: ${color.white};
+  cursor: pointer;
+`;
 
 const sizeMap = {
   small: "10px",
-  default: "13px", 
+  default: "13px",
   large: "18px",
   huge: "32px",
 };
@@ -72,15 +96,36 @@ function Editor({
   setValue,
   tagValue,
   setTagValue,
+  setImageFile,
 }: {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   tagValue: TagValue;
   setTagValue: Dispatch<SetStateAction<TagValue>>;
+  setImageFile: Dispatch<SetStateAction<File | string | null>>;
 }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const quillRef = useRef<ReactQuill>(null);
+  const [thumbnailImage, setThumbnailImage] = useState<string | null>(null);
+  const [editorWidth, setEditorWidth] = useState<number>(0);
+
+  useEffect(() => {
+    const updateEditorWidth = () => {
+      if (quillRef.current) {
+        const editorContainer = quillRef.current.getEditor().root;
+        setEditorWidth(editorContainer.clientWidth);
+      }
+    };
+
+    updateEditorWidth();
+
+    window.addEventListener("resize", updateEditorWidth);
+
+    return () => {
+      window.removeEventListener("resize", updateEditorWidth);
+    };
+  }, []);
 
   const applyFontSize = (size: keyof typeof sizeMap) => {
     if (quillRef.current) {
@@ -90,6 +135,36 @@ function Editor({
       }
     }
   };
+  const handleImageUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      convertFileToBase64(file, (base64Url: string) => {
+        insertImageIntoEditor(base64Url);
+      });
+    }
+  };
+  const convertFileToBase64 = (
+    file: File,
+    callback: (base64Url: string) => void
+  ) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const base64Url = reader.result as string;
+      callback(base64Url);
+    };
+  };
+  const insertImageIntoEditor = (base64Url: string) => {
+    setThumbnailImage(base64Url);
+  };
+
   const handleCustomFontSizeClick = () => {
     setIsModalOpen(true);
   };
@@ -125,6 +200,7 @@ function Editor({
           "custom-bold": handleBoldClick,
           "custom-underline": handleUnderlineClick,
           "custom-strike": handleStrikeClick,
+          "custom-image": handleImageUploadClick,
         },
       },
     }),
@@ -156,18 +232,40 @@ function Editor({
     }
   }, []);
 
-  const sizeOptions: Array<"small" | "default" | "large" | "huge"> = ["small", "default", "large", "huge"];
+  const sizeOptions: Array<"small" | "default" | "large" | "huge"> = [
+    "small",
+    "default",
+    "large",
+    "huge",
+  ];
 
   const tagHandler = (name: string) => {
     setTagValue((prevState: TagValue) => ({
       ...prevState,
-      active: prevState.active === name ? "" : name, 
+      active: prevState.active === name ? "" : name,
     }));
   };
-
   return (
     <EditorDiv>
-      <CustomToolBar isModalOpen={isModalOpen} tagName={tagValue.active} tagHandler={tagHandler}/>
+      <CustomToolBar
+        isModalOpen={isModalOpen}
+        tagName={tagValue.active}
+        tagHandler={tagHandler}
+      />
+      {thumbnailImage && (
+        <ThumbnailContainer>
+          <ThumbnailEditBtn onClick={handleImageUploadClick}>
+            변경
+          </ThumbnailEditBtn>
+          <Image
+            src={thumbnailImage}
+            alt="Thumbnail"
+            className="thumbnail"
+            width={editorWidth}
+            height={460}
+          />
+        </ThumbnailContainer>
+      )}
       <ReactQuill
         ref={quillRef}
         value={value}
@@ -175,6 +273,13 @@ function Editor({
         modules={modules}
         formats={formats}
         placeholder="내용을 입력하세요"
+      />
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        style={{ display: "none" }}
+        onChange={handleImageChange}
       />
       {isModalOpen && (
         <SelectText option={sizeOptions} applyFontSize={applyFontSize} />
