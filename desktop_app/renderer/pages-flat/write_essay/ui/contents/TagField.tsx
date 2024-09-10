@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TagIcon from "@/shared/assets/img/tag_icon.svg";
 import LocationIcon from "@/shared/assets/img/point_location_icon.webp";
@@ -7,6 +7,7 @@ import BaseInput from "@/shared/ui/input/BaseInput";
 import { BaseButton } from "@/shared/ui/button";
 import { Tag } from "@/shared/ui/tag";
 import TagChip from "./TagChip";
+
 
 const Layout = styled.div`
   width: 80%;
@@ -41,8 +42,16 @@ const TagDiv = styled.div`
   display: flex;
   gap: 4px;
   background: #121212;
-  padding-top:10px;
+  padding-top: 10px;
 `;
+
+
+interface locationType {
+  loaded: boolean;
+  coordinates?: { lat: number; lng: number };
+  error?: { code: number; message: string };
+}
+
 
 interface MapperValue {
   img: React.ReactNode;
@@ -52,8 +61,14 @@ interface MapperValue {
 
 function TagField({ activeTag }: { activeTag: string }) {
   const [tagValues, setTagValues] = useState<string[]>([]);
-  const [locationValues, setLocationValues] = useState<string[]>(["37.948˚N 126.329˚E"]);
+  const [locationValues, setLocationValues] = useState<string[]>([
+    "37.948˚N 126.329˚E",
+  ]);
   const [inputValue, setInputValue] = useState<string>("");
+  const [position, setPosition] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
 
   const mapper: Record<string, MapperValue> = {
     tag: {
@@ -91,7 +106,7 @@ function TagField({ activeTag }: { activeTag: string }) {
           setLocationValues((prev) => {
             if (prev.length === 1) {
               return [...prev, inputValue.trim()];
-            } 
+            }
             return prev;
           });
         }
@@ -106,9 +121,9 @@ function TagField({ activeTag }: { activeTag: string }) {
 
   const removeTag = (index: number) => {
     if (activeTag === "tag") {
-      setTagValues(prev => prev.filter((_, i) => i !== index));
+      setTagValues((prev) => prev.filter((_, i) => i !== index));
     } else if (activeTag === "location") {
-      setLocationValues(prev => prev.filter((_, i) => i !== index));
+      setLocationValues((prev) => prev.filter((_, i) => i !== index));
     }
   };
 
@@ -122,7 +137,7 @@ function TagField({ activeTag }: { activeTag: string }) {
           : []
         ).map((value, index) => (
           <React.Fragment key={`${activeTag}-${index}`}>
-            <Tag value={value} onClose={() => removeTag(index)}/>
+            <Tag value={value} onClose={() => removeTag(index)} />
           </React.Fragment>
         ))}
       </TagDiv>
