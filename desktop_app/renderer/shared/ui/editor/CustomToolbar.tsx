@@ -18,6 +18,7 @@ import styled from "styled-components";
 import NextBtn from "@/shared/assets/img/editor/next.svg";
 import Stroke from "@/shared/assets/img/editor/stroke.svg";
 import color from "@/shared/styles/color";
+import { useStore } from "@/shared/store";
 
 const Container = styled.div`
   background: #1d1d1d !important;
@@ -91,14 +92,20 @@ const CustomToolbar = ({
     image: false,
     saved: false,
   });
+  const user = useStore((state) => state.user);
   const handleButtonClick = (button: keyof typeof buttonStates) => {
     setButtonStates((prevState) => ({
       ...prevState,
       [button]: !prevState[button],
     }));
   };
+  const handleLocationClick = () => {
+    if (user?.locationConsent) {
+      tagHandler("location");
+    }
+  };
 
-  return (
+    return (
     <Container id="toolbar">
       <IconDiv>
         <Button className="ql-customFontSize">
@@ -145,7 +152,8 @@ const CustomToolbar = ({
           className="ql-custom-location"
           onClick={() => {
             // handleButtonClick("location");
-            tagHandler("location");
+            handleLocationClick();
+
           }}
         >
           <Img
