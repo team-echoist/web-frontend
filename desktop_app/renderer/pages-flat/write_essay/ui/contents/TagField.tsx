@@ -45,19 +45,12 @@ const TagDiv = styled.div`
   padding-top: 10px;
 `;
 
-interface locationType {
-  loaded: boolean;
-  coordinates?: { lat: number; lng: number };
-  error?: { code: number; message: string };
-}
-
 interface MapperValue {
   img: React.ReactNode;
   placeholder: string;
   btnText: string;
 }
 
-const libraries = ["places"];
 
 function TagField({ activeTag }: { activeTag: string }) {
   const [tagValues, setTagValues] = useState<string[]>([]);
