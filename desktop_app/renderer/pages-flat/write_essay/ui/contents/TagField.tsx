@@ -7,7 +7,7 @@ import BaseInput from "@/shared/ui/input/BaseInput";
 import { BaseButton } from "@/shared/ui/button";
 import { Tag } from "@/shared/ui/tag";
 import TagChip from "./TagChip";
-
+import { formatLatitudeLongitude } from "@/shared/lib/location";
 
 const Layout = styled.div`
   width: 80%;
@@ -45,13 +45,11 @@ const TagDiv = styled.div`
   padding-top: 10px;
 `;
 
-
 interface locationType {
   loaded: boolean;
   coordinates?: { lat: number; lng: number };
   error?: { code: number; message: string };
 }
-
 
 interface MapperValue {
   img: React.ReactNode;
@@ -59,16 +57,38 @@ interface MapperValue {
   btnText: string;
 }
 
+const libraries = ["places"];
+
 function TagField({ activeTag }: { activeTag: string }) {
   const [tagValues, setTagValues] = useState<string[]>([]);
-  const [locationValues, setLocationValues] = useState<string[]>([
-    "37.948˚N 126.329˚E",
-  ]);
+  const [locationValues, setLocationValues] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
-  const [position, setPosition] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const locationData = await window.Electron.getLocation();
+        if (locationData) {
+          const { formattedLat, formattedLng } = formatLatitudeLongitude(
+            locationData.latitude,
+            locationData.longitude
+          );
+          const parseLocation = `${formattedLat} ${formattedLng}`
+
+          setLocationValues((prevValues) => {
+            const updatedValues = [...prevValues]; 
+            updatedValues[0] = parseLocation; 
+            return updatedValues; 
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching location:', err);
+      } 
+    };
+
+    fetchLocation();
+  }, []);
+
 
   const mapper: Record<string, MapperValue> = {
     tag: {
