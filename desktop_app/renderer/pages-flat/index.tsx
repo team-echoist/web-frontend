@@ -2,9 +2,7 @@
 import { FindInfo } from "./findinfo";
 import { Login } from "./authentication";
 import { Mypage } from "./mypage";
-import { Register } from "./register";
 import { WriteEssay } from "./write_essay";
-import { NotFound } from "./notfound";
 import { SignUp } from "./authentication";
 import { Complete } from "./authentication";
 import { Main } from "./main";
@@ -12,11 +10,12 @@ import { withAuth } from "@/shared/lib/auth";
 import { TermsofUse } from "./authentication";
 import { Essay } from "./essay";
 import { Community } from "./community";
+import { UnfinishedWriting } from "./unfinished_writing";
 
 const ProtectedMain = withAuth(Main);
+const ProtectedUnfinishedWriting = withAuth(UnfinishedWriting);
 const ProtectedFindInfo = withAuth(FindInfo);
 const ProtectedMypage = withAuth(Mypage);
-const ProtectedRegister = withAuth(Register);
 const ProtectedWriteEssay = withAuth(WriteEssay);
 const ProtectedComplete = withAuth(Complete);
 const ProtectedEssay = withAuth(Essay);
@@ -79,12 +78,12 @@ const RenderView: React.FC<RenderViewProps> = ({ pageName }) => {
       return <ProtectedComplete />;
     case "mypage":
       return <ProtectedMypage />;
-    case "register":
-      return <ProtectedRegister />;
     case "write_essay":
       return <ProtectedWriteEssay />;
+    case "unfinished_writing":
+      return <ProtectedUnfinishedWriting />;
     default:
-      return <NotFound />;
+      return <ProtectedMain />;
   }
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import BaseInput from "@/shared/ui/input/BaseInput";
+import { PrevButton } from "@/shared/ui/button";
 
 
 interface ButtonProps {

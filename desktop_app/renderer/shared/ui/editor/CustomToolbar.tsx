@@ -19,6 +19,7 @@ import NextBtn from "@/shared/assets/img/editor/next.svg";
 import Stroke from "@/shared/assets/img/editor/stroke.svg";
 import color from "@/shared/styles/color";
 import { useStore } from "@/shared/store";
+import { useRouter } from "next/navigation";
 
 const Container = styled.div`
   background: #1d1d1d !important;
@@ -93,6 +94,7 @@ const CustomToolbar = ({
     saved: false,
   });
   const user = useStore((state) => state.user);
+  const router = useRouter();
   const handleButtonClick = (button: keyof typeof buttonStates) => {
     setButtonStates((prevState) => ({
       ...prevState,
@@ -105,7 +107,7 @@ const CustomToolbar = ({
     }
   };
 
-    return (
+  return (
     <Container id="toolbar">
       <IconDiv>
         <Button className="ql-customFontSize">
@@ -153,11 +155,10 @@ const CustomToolbar = ({
           onClick={() => {
             // handleButtonClick("location");
             handleLocationClick();
-
           }}
         >
           <Img
-            src={tagName ==="location"? PlaceHover.src : PlaceIcon.src}
+            src={tagName === "location" ? PlaceHover.src : PlaceIcon.src}
             alt="location"
             className="customLocationButton"
           />
@@ -169,7 +170,7 @@ const CustomToolbar = ({
           }}
         >
           <Img
-            src={tagName ==="tag"? TagHover.src : TagIcon.src}
+            src={tagName === "tag" ? TagHover.src : TagIcon.src}
             alt="tag"
             className="customTagButton"
           />
@@ -186,7 +187,9 @@ const CustomToolbar = ({
         </Button>
         <Button
           className="ql-custom-saved"
-          onClick={() => handleButtonClick("saved")}
+          onClick={() => {
+            router.push("/web/unfinished_writing");
+          }}
         >
           <Img
             src={SavedIcon.src}
