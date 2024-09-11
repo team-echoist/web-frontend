@@ -59,7 +59,6 @@ export const WriteEssay = () => {
   return (
     <Layout>
       <TitleField title={title} />
-      {/* <button onClick={test}>test</button> */}
       <EditorContainer isBottomFieldVisible={isBottomFieldVisible}>
         <Editor
           value={value}
