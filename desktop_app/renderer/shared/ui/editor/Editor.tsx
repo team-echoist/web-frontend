@@ -82,7 +82,7 @@ const SizeStyle = Quill.import("attributors/style/size");
 SizeStyle.whitelist = Object.values(sizeMap);
 Quill.register(SizeStyle, true);
 interface TagValue {
-  active: string;
+  active:any;
   tag: {
     values: string[];
   };

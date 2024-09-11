@@ -30,17 +30,26 @@ const EditorContainer = styled.div<{ isBottomFieldVisible: boolean }>`
     overflow-y: auto;
   }
 `;
+interface BottomValue {
+  active: "tag" | "location";
+  tag: {
+    values: string[];
+  };
+  location: {
+    values: string[];
+  };
+}
 
 export const WriteEssay = () => {
   const [title, setTitle] = useState("제목 없음");
   const [value, setValue] = useState<string>("");
-  const [bottomValue, setBottomValue] = useState({
-    active: "",
+  const [bottomValue, setBottomValue] = useState<BottomValue>({
+    active: "tag",
     tag: {
-      values: [] as string[],
+      values: [],
     },
     location: {
-      values: [] as string[],
+      values: [],
     },
   });
   const [imageFile, setImageFile] = useState<File |string| null>(null); 

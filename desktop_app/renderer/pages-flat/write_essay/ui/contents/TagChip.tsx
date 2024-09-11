@@ -44,29 +44,75 @@ const Span = styled.span`
   font-weight: 400;
   line-height: 50px;
 `;
-const P =styled.p`
-color: #A8AEE4;
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 50px;
-`
+const P = styled.p`
+  color: #a8aee4;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 50px;
+`;
+const TagContainer = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+interface CompleteStatus {
+  tag: boolean;
+  location: boolean;
+}
 
-function TagChip() {
-  const imgMapper = {
+type HandleComplete = (tag: keyof CompleteStatus) => void;
+
+function TagChip({
+  activeTag,
+  tagValues,
+  locationValues,
+  handleComplete,
+}: {
+  activeTag: "tag" | "location";
+  tagValues: string[];
+  locationValues: string[];
+  handleComplete: HandleComplete;
+}) {
+  const imgMapper: Record<string, React.ReactNode> = {
     tag: <BigTag />,
     location: <BigLocation />,
   };
+
+  const items =
+    activeTag === "tag"
+      ? tagValues
+      : activeTag === "location"
+      ? locationValues
+      : [];
+
+  const reorderedItems =
+    activeTag === "location" && items.length > 0
+      ? [...items.slice(1), items[0]]
+      : items;
+
   return (
     <Layout>
-      <ImageDiv>
-        <BigTag />
-      </ImageDiv>
-      <TagDiv>
-        <Span>여름에 온 국중박</Span>
-      </TagDiv>
-      <Button>편집</Button>
+      <ImageDiv>{imgMapper[activeTag]}</ImageDiv>
+      <TagContainer>
+        {reorderedItems.map((value, index) => (
+          <TagDiv key={index}>
+            {activeTag === "location" && index === reorderedItems.length - 1 ? (
+              <P>{value}</P>
+            ) : (
+              <Span>{value}</Span>
+            )}
+          </TagDiv>
+        ))}
+      </TagContainer>
+
+      <Button
+        onClick={() => {
+          handleComplete(activeTag);
+        }}
+      >
+        편집
+      </Button>
     </Layout>
   );
 }

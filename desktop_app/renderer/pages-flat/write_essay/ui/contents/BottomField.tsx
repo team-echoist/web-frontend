@@ -13,7 +13,7 @@ const Layout = styled.div`
 
 interface optionType {
   bottomValue: {
-    active: string;
+    active: "tag" | "location";
     tag: {
       values: string[];
     };

@@ -50,12 +50,20 @@ interface MapperValue {
   placeholder: string;
   btnText: string;
 }
+interface CompleteStatus {
+  tag: boolean;
+  location: boolean;
+  [key: string]: boolean
+}
 
-
-function TagField({ activeTag }: { activeTag: string }) {
+function TagField({ activeTag }: { activeTag:  "tag" | "location" }) {
   const [tagValues, setTagValues] = useState<string[]>([]);
   const [locationValues, setLocationValues] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
+  const [isComplete, setComplete] = useState<CompleteStatus>({
+    tag: false,
+    location: false,
+  });
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -66,22 +74,21 @@ function TagField({ activeTag }: { activeTag: string }) {
             locationData.latitude,
             locationData.longitude
           );
-          const parseLocation = `${formattedLat} ${formattedLng}`
+          const parseLocation = `${formattedLat} ${formattedLng}`;
 
           setLocationValues((prevValues) => {
-            const updatedValues = [...prevValues]; 
-            updatedValues[0] = parseLocation; 
-            return updatedValues; 
+            const updatedValues = [...prevValues];
+            updatedValues[0] = parseLocation;
+            return updatedValues;
           });
         }
       } catch (err) {
-        console.error('Error fetching location:', err);
-      } 
+        console.error("Error fetching location:", err);
+      }
     };
 
     fetchLocation();
   }, []);
-
 
   const mapper: Record<string, MapperValue> = {
     tag: {
@@ -140,22 +147,39 @@ function TagField({ activeTag }: { activeTag: string }) {
     }
   };
 
+  const handleComplete = (tag: string) => {
+    setComplete((prevStatus) => ({
+      ...prevStatus,
+      [tag]: !prevStatus[tag],
+    }));
+  };
+
   return (
     <Layout>
-      <TagDiv>
-        {(activeTag === "tag"
-          ? tagValues
-          : activeTag === "location"
-          ? locationValues
-          : []
-        ).map((value, index) => (
-          <React.Fragment key={`${activeTag}-${index}`}>
-            <Tag value={value} onClose={() => removeTag(index)} />
-          </React.Fragment>
-        ))}
-      </TagDiv>
-      {/* <TagChip></TagChip> */}
-      {activeValue ? (
+      {!isComplete[activeTag as keyof CompleteStatus] && (
+        <TagDiv>
+          {(activeTag === "tag"
+            ? tagValues
+            : activeTag === "location"
+            ? locationValues
+            : []
+          ).map((value, index) => (
+            <React.Fragment key={`${activeTag}-${index}`}>
+              <Tag value={value} onClose={() => removeTag(index)} />
+            </React.Fragment>
+          ))}
+        </TagDiv>
+      )}
+      {isComplete[activeTag as keyof CompleteStatus] && (
+        <TagChip
+          activeTag={activeTag}
+          tagValues={tagValues}
+          locationValues={locationValues}
+          handleComplete={handleComplete}
+        />
+      )}
+
+      {activeValue && !isComplete[activeTag as keyof CompleteStatus] ? (
         <>
           <ImageDiv>{activeValue.img}</ImageDiv>
           <InputDiv>
@@ -167,7 +191,9 @@ function TagField({ activeTag }: { activeTag: string }) {
             />
           </InputDiv>
           <BtnDiv>
-            <BaseButton>{activeValue.btnText}</BaseButton>
+            <BaseButton onClick={() => handleComplete(activeTag)}>
+              {activeValue.btnText}
+            </BaseButton>
           </BtnDiv>
         </>
       ) : null}
