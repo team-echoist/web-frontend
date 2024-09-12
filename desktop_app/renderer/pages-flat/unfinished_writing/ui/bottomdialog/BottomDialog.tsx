@@ -22,10 +22,10 @@ function BottomDialog() {
           scale="large"
         ></Button>
       </ButtonDiv> */}
-      <Confirm
+      {/* <Confirm
         title1="모든 임시 저장 글이 사라집니다. "
         title2="삭제하시겠습니까?"
-      ></Confirm>
+      ></Confirm> */}
     </>
   );
 }
