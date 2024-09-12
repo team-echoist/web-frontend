@@ -13,25 +13,27 @@ const PrevBtn = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  position:fixed;
-  top:40px;
-  left:40px;
+  position: fixed;
+  top: 40px;
+  left: 40px;
   &:focus {
     outline: none;
   }
 `;
 
-function PrevButton() {
+function PrevButton({ path }: { path?: string }) {
   const router = useRouter();
 
   const handleClick = () => {
+    if (path) {
+      router.push(path);
+    }
     router.back();
   };
   return (
     <PrevBtn onClick={handleClick}>
       <PrevButtonImg />
     </PrevBtn>
-
   );
 }
 

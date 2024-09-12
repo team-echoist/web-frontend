@@ -38,6 +38,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-quill": "^2.0.0",
     "styled-components": "^6.1.11",
+    "uuid": "^10.0.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
@@ -54,6 +55,7 @@
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.14.10",
     "@types/testing-library__jest-dom": "^6.0.0",
+    "@types/uuid": "^10.0.0",
     "babel-jest": "^29.7.0",
     "babel-plugin-styled-components": "^2.1.4",
     "concurrently": "^8.2.2",

@@ -8,25 +8,28 @@ const Layout = styled.div`
   height: 45.34vh;
   position: absolute;
   bottom: 0px;
-  z-index:10;
+  z-index: 10;
 `;
 
-interface optionType {
-  bottomValue: {
-    active: "tag" | "location";
-    tag: {
-      values: string[];
-    };
-    location: {
-      values: string[];
-    };
+interface BottomValue {
+  active: "tag" | "location";
+  tag: {
+    values: string[];
+  };
+  location: {
+    values: string[];
   };
 }
 
-function BottomField({ bottomValue }: optionType) {
+interface optionType {
+  bottomValue: BottomValue;
+  setBottomValue: React.Dispatch<React.SetStateAction<BottomValue>>;
+}
+
+function BottomField({ bottomValue, setBottomValue }: optionType) {
   return (
     <Layout>
-      <TagField activeTag={bottomValue.active} />
+      <TagField activeTag={bottomValue.active} bottomValue={bottomValue} setBottomValue={setBottomValue}/>
     </Layout>
   );
 }

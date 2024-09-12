@@ -1,8 +1,7 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled, { css } from "styled-components";
 import BaseInput from "@/shared/ui/input/BaseInput";
 import { PrevButton } from "@/shared/ui/button";
-
 
 interface ButtonProps {
   isCancel: boolean;
@@ -45,13 +44,21 @@ const TitleDiv = styled.div`
   justify-content: center;
   padding: 10px 20px;
 `;
+interface TitleFieldProps {
+  title: string;
+  setTitle: Dispatch<SetStateAction<string>>;
+}
 
-function TitleField({ title }: { title: string }) {
+function TitleField({ title, setTitle }: TitleFieldProps) {
   return (
     <Layout>
       <Button isCancel={true}>취소</Button>
       <TitleDiv>
-      <BaseInput value={title} placeholder="제목을 입력해 주세요"/>
+        <BaseInput
+          value={title}
+          placeholder="제목을 입력해 주세요"
+          onChange={(e) => setTitle(e.target.value)}
+        />
       </TitleDiv>
       <Button isCancel={false}>완료</Button>
     </Layout>

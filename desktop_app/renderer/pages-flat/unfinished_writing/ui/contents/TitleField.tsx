@@ -2,6 +2,7 @@ import React from "react";
 import { PrevButton } from "@/shared/ui/button";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
+import { useRouter } from "next/router";
 
 const Layout = styled.div`
   width: 100vw;
@@ -36,9 +37,14 @@ const Button = styled.button`
   cursor: pointer;
 `;
 function TitleField() {
+  const router = useRouter();
+  const { query } = router;
+  const id = query.id as string | undefined;
+  const path = id ? `/web/write_essay?id=${id}` : "/web/write_essay";
+  console.log("query: " + query.id);
   return (
     <Layout>
-      <PrevButton />
+      <PrevButton path={path} />
       <Title>쓰다 만 글</Title>
       <Button>편집</Button>
     </Layout>

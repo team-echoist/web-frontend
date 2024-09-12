@@ -53,12 +53,24 @@ interface MapperValue {
 interface CompleteStatus {
   tag: boolean;
   location: boolean;
-  [key: string]: boolean
+  [key: string]: boolean;
+}
+interface BottomValue {
+  active: "tag" | "location";
+  tag: {
+    values: string[];
+  };
+  location: {
+    values: string[];
+  };
 }
 
-function TagField({ activeTag }: { activeTag:  "tag" | "location" }) {
-  const [tagValues, setTagValues] = useState<string[]>([]);
-  const [locationValues, setLocationValues] = useState<string[]>([]);
+interface OptionType {
+  bottomValue: BottomValue;
+  setBottomValue: React.Dispatch<React.SetStateAction<BottomValue>>;
+  activeTag: "tag" | "location";
+}
+function TagField({ activeTag, bottomValue, setBottomValue }: OptionType) {
   const [inputValue, setInputValue] = useState<string>("");
   const [isComplete, setComplete] = useState<CompleteStatus>({
     tag: false,
@@ -76,11 +88,13 @@ function TagField({ activeTag }: { activeTag:  "tag" | "location" }) {
           );
           const parseLocation = `${formattedLat} ${formattedLng}`;
 
-          setLocationValues((prevValues) => {
-            const updatedValues = [...prevValues];
-            updatedValues[0] = parseLocation;
-            return updatedValues;
-          });
+          setBottomValue((prev) => ({
+            ...prev,
+            location: {
+              ...prev.location,
+              values: [parseLocation, ...prev.location.values.slice(1)],
+            },
+          }));
         }
       } catch (err) {
         console.error("Error fetching location:", err);
@@ -116,19 +130,32 @@ function TagField({ activeTag }: { activeTag:  "tag" | "location" }) {
 
       if (inputValue.trim() !== "") {
         if (activeTag === "tag") {
-          setTagValues((prev) => {
-            if (prev.length < 5) {
-              return [...prev, `# ${inputValue.trim()}`];
+          setBottomValue((prev) => {
+            if (prev.tag.values.length < 5) {
+              return {
+                ...prev,
+                tag: {
+                  ...prev.tag,
+                  values: [...prev.tag.values, `# ${inputValue.trim()}`],
+                },
+              };
             }
             return prev;
           });
         } else if (activeTag === "location") {
-          setLocationValues((prev) => {
-            if (prev.length === 1) {
-              return [...prev, inputValue.trim()];
-            }
-            return prev;
-          });
+          setBottomValue((prev) => ({
+            ...prev,
+            location: {
+              ...prev.location,
+              values:
+                prev.location.values.length === 2
+                  ? [
+                      prev.location.values[0],
+                      inputValue.trim(),       
+                    ]
+                  : [prev.location.values[0], inputValue.trim()]
+            },
+          }));
         }
         setInputValue("");
       }
@@ -141,9 +168,21 @@ function TagField({ activeTag }: { activeTag:  "tag" | "location" }) {
 
   const removeTag = (index: number) => {
     if (activeTag === "tag") {
-      setTagValues((prev) => prev.filter((_, i) => i !== index));
+      setBottomValue((prev) => ({
+        ...prev,
+        tag: {
+          ...prev.tag,
+          values: prev.tag.values.filter((_, i) => i !== index),
+        },
+      }));
     } else if (activeTag === "location") {
-      setLocationValues((prev) => prev.filter((_, i) => i !== index));
+      setBottomValue((prev) => ({
+        ...prev,
+        location: {
+          ...prev.location,
+          values: prev.location.values.filter((_, i) => i !== index),
+        },
+      }));
     }
   };
 
@@ -159,9 +198,9 @@ function TagField({ activeTag }: { activeTag:  "tag" | "location" }) {
       {!isComplete[activeTag as keyof CompleteStatus] && (
         <TagDiv>
           {(activeTag === "tag"
-            ? tagValues
+            ? bottomValue?.tag?.values
             : activeTag === "location"
-            ? locationValues
+            ? bottomValue?.location?.values
             : []
           ).map((value, index) => (
             <React.Fragment key={`${activeTag}-${index}`}>
@@ -173,8 +212,8 @@ function TagField({ activeTag }: { activeTag:  "tag" | "location" }) {
       {isComplete[activeTag as keyof CompleteStatus] && (
         <TagChip
           activeTag={activeTag}
-          tagValues={tagValues}
-          locationValues={locationValues}
+          tagValues={bottomValue?.tag?.values}
+          locationValues={bottomValue?.location?.values}
           handleComplete={handleComplete}
         />
       )}

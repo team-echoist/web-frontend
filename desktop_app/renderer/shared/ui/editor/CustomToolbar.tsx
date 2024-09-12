@@ -79,10 +79,12 @@ const CustomToolbar = ({
   isModalOpen,
   tagName,
   tagHandler,
+  id,
 }: {
   isModalOpen: boolean;
   tagName: string;
   tagHandler: (name: string) => void;
+  id: string;
 }) => {
   const [buttonStates, setButtonStates] = useState({
     bold: false,
@@ -188,7 +190,7 @@ const CustomToolbar = ({
         <Button
           className="ql-custom-saved"
           onClick={() => {
-            router.push("/web/unfinished_writing");
+            router.push(`/web/unfinished_writing?id=${id}`);
           }}
         >
           <Img

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TitleField from "./contents/TitleField";
 import styled from "styled-components";
 import ContentLayout from "./contentlayout/ContentLayout";
@@ -23,6 +23,14 @@ const LayoutWrapper = styled.div`
 `;
 
 function UnfinishedWriting() {
+  const [essayData, setEssayData] = useState(null);
+  useEffect(() => {
+    const storedEssayData = localStorage.getItem("essayData");
+    if (storedEssayData) {
+      setEssayData(JSON.parse(storedEssayData));
+    }
+  }, []);
+  console.log("essayData",essayData)
   return (
     <Container>
       <TitleField />
