@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const OuterContainer = styled.div`
-  height: 100vh; /* 부모 컨테이너에 뷰포트 전체 높이 적용 */
+  height: 85vh; 
   display: flex;
   flex-direction: column;
 `;
