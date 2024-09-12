@@ -26,8 +26,8 @@ const ConfirmDialog = styled.div`
   left: 50%;
   bottom: 50px;
   transform: translateX(-50%);
-  padding-left:27px;
-  padding-right:27px;
+  padding-left: 27px;
+  padding-right: 27px;
 `;
 const TopRactangle = styled.div`
   width: 40px;
@@ -51,7 +51,7 @@ const TitleDiv = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  gap:5px;
+  gap: 5px;
   margin-top: 32px;
 `;
 const P = styled.p`
@@ -67,11 +67,17 @@ const P = styled.p`
 const ButtonDiv = styled.div`
   width: 100%;
   display: flex;
-  gap:18px;
-  margin-top:33px;
+  gap: 18px;
+  margin-top: 33px;
 `;
+interface ConfirmProps {
+  title1?: string;
+  title2?: string;
+  onCancel?: () => void;
+  onDelete?: () => void;
+}
 
-function Confirm({ title1, title2 }: { title1?: string; title2?: string }) {
+function Confirm({ title1, title2, onCancel, onDelete }: ConfirmProps) {
   return (
     <Layout>
       <ConfirmDialog>
@@ -83,8 +89,20 @@ function Confirm({ title1, title2 }: { title1?: string; title2?: string }) {
           <P>{title2}</P>
         </TitleDiv>
         <ButtonDiv>
-          <Button text="취소" style="square" type="disable" scale="large" />
-          <Button text="전체 삭제" style="square" type="red" scale="large" />
+          <Button
+            text="취소"
+            style="square"
+            type="disable"
+            scale="large"
+            onClick={onCancel}
+          />
+          <Button
+            text="전체 삭제"
+            style="square"
+            type="red"
+            scale="large"
+            onClick={onDelete}
+          />
         </ButtonDiv>
       </ConfirmDialog>
     </Layout>

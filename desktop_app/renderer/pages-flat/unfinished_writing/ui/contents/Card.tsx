@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Check from "@/shared/ui/check/check";
+import { formatDateToFullKorean } from "@/shared/lib/date";
 
 const Layout = styled.div`
   border-bottom: 1px solid rgba(104, 104, 104, 0.1);
@@ -60,19 +61,54 @@ const CheckboxDiv = styled.div`
   justify-content: center;
   align-items: center;
 `;
-function Card() {
-  const [check, setCheck] = useState(false);
+function Card({
+  title,
+  date,
+  isCurrent = false,
+  isChecked,
+  id,
+  handleCheckChange,
+  isEdit,
+}: {
+  title: string;
+  date: string;
+  isCurrent?: boolean;
+  isChecked?: boolean;
+  id: string;
+  handleCheckChange?: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => void;
+  isEdit?: boolean;
+}) {
+  const [check, setCheck] = useState(isChecked || false);
+  const handleCheckClick = () => {
+    const newChecked = !check;
+    setCheck(newChecked);
+
+    if (handleCheckChange) {
+      handleCheckChange(
+        {
+          target: { checked: newChecked },
+        } as React.ChangeEvent<HTMLInputElement>,
+        id
+      );
+    }
+  };
   return (
     <Layout>
       <TitleDiv>
         <Title>
-          제목 없는 글<Chip>작성중</Chip>
+          {title}
+          {isCurrent && <Chip>작성중</Chip>}
         </Title>
-        <Date>2024.05.19</Date>
+        <Date>{formatDateToFullKorean(date)}</Date>
       </TitleDiv>
-      <CheckboxDiv>
-        <Check check={check} setCheck={setCheck} type="circle"></Check>
-      </CheckboxDiv>
+      {!isCurrent && isEdit ? (
+        <CheckboxDiv>
+          <Check check={check} setCheck={handleCheckClick} type="circle" />
+        </CheckboxDiv>
+      ) : null}
     </Layout>
   );
 }

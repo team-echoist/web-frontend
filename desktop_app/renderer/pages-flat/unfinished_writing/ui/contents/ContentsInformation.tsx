@@ -5,12 +5,10 @@ import { BaseButton } from "@/shared/ui/button";
 
 const Layout = styled.div`
   display: flex;
-  padding: 15px 28px;
+  padding: 15px 40px;
   align-items: center;
   gap: 689px;
   border-bottom: 1px solid rgba(104, 104, 104, 0.1);
-  border-right: 1px solid rgba(104, 104, 104, 0.1);
-  border-left: 1px solid rgba(104, 104, 104, 0.1);
 `;
 
 const Information = styled.p`
@@ -31,14 +29,22 @@ const Quentity = styled.data`
   margin-left: 5px;
 `;
 
-function ContentsInformation() {
+interface ContentsInformationProps {
+  totalLength: number;
+  handleCheckAll: () => void;
+}
+
+function ContentsInformation({
+  totalLength,
+  handleCheckAll,
+}: ContentsInformationProps) {
   return (
     <Layout>
       <Information>
         전체
-        <Quentity>8</Quentity>개
+        <Quentity>{totalLength}</Quentity>개
       </Information>
-      <BaseButton>전체 삭제</BaseButton>
+      <BaseButton onClick={handleCheckAll}>전체 삭제</BaseButton>
     </Layout>
   );
 }

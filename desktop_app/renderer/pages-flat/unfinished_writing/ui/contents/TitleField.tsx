@@ -36,17 +36,23 @@ const Button = styled.button`
   right: 18px;
   cursor: pointer;
 `;
-function TitleField() {
+function TitleField({
+  handleEdit,
+  isEdit,
+}: {
+  handleEdit: () => void;
+  isEdit: boolean;
+}) {
   const router = useRouter();
   const { query } = router;
   const id = query.id as string | undefined;
   const path = id ? `/web/write_essay?id=${id}` : "/web/write_essay";
-  console.log("query: " + query.id);
+
   return (
     <Layout>
       <PrevButton path={path} />
       <Title>쓰다 만 글</Title>
-      <Button>편집</Button>
+      <Button onClick={handleEdit}>{isEdit ? "완료" : "편집"}</Button>
     </Layout>
   );
 }

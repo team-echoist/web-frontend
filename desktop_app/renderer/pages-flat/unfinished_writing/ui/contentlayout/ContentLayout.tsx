@@ -8,8 +8,6 @@ const OuterContainer = styled.div`
 `;
 
 const Layout = styled.main`
-  border-right: 1px solid rgba(104, 104, 104, 0.1);
-  border-left: 1px solid rgba(104, 104, 104, 0.1);
   display: flex;
   width: 900px;
   flex-direction: column;

@@ -20,30 +20,127 @@ const LayoutWrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  border-right: 1px solid rgba(104, 104, 104, 0.1);
+  border-left: 1px solid rgba(104, 104, 104, 0.1);
 `;
-
+export interface Essay {
+  id: string;
+  title: string;
+  timestamp: string;
+  checked: boolean;
+}
 function UnfinishedWriting() {
-  const [essayData, setEssayData] = useState(null);
+  const [essayData, setEssayData] = useState<Essay[] | null>(null);
+  const [currentEssay, setCurrentEssay] = useState<Essay | null>(null);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isCheckDelete, setIsCheckDelete] = useState(false);
+
   useEffect(() => {
-    const storedEssayData = localStorage.getItem("essayData");
+    const storedEssayData = JSON.parse(
+      localStorage.getItem("essayData") || "[]"
+    );
+    const currentEssayId = localStorage.getItem("currentEssayId");
     if (storedEssayData) {
-      setEssayData(JSON.parse(storedEssayData));
+      const currentData = storedEssayData.find(
+        (item: any) => item.id === currentEssayId
+      );
+      setCurrentEssay(currentData);
+      const prevData = storedEssayData
+        .filter((item: Essay) => item.id !== currentEssayId)
+        .map((item: Essay) => ({
+          ...item,
+          isChecked: false,
+        }));
+      setEssayData(prevData);
     }
   }, []);
-  console.log("essayData",essayData)
+
+  const handleCheckChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => {
+    const newChecked = e.target.checked;
+    setEssayData((prev) =>
+      prev
+        ? prev.map((item) =>
+            item.id === id ? { ...item, checked: newChecked } : item
+          )
+        : null
+    );
+  };
+  const handleCheckAll = () => {
+    setEssayData((prev) =>
+      prev ? prev.map((item) => ({ ...item, checked: true })) : null
+    );
+  };
+  const handleEdit = () => {
+    setIsEdit(!isEdit);
+  };
+
+  const handleDelete = () => {
+    const updatedEssayData = essayData?.filter((item) => !item.checked) || [];
+    setEssayData(updatedEssayData);
+    localStorage.setItem("essayData", JSON.stringify(updatedEssayData));
+  };
+  const handleDeleteCancle = () => {
+    setIsCheckDelete(false);
+  };
+
+  const handleCheckDelete = () =>{
+    setIsEdit(false);
+    setIsCheckDelete(true);
+  }
+
+  const countCheckedItems = () => {
+    const checkedItems = essayData?.filter((item) => item.checked) || [];
+
+    return checkedItems.length;
+  };
+  
+  const numberOfCheckedItems = countCheckedItems();
+
   return (
     <Container>
-      <TitleField />
-
+      <TitleField handleEdit={handleEdit} isEdit={isEdit} />
       <LayoutContatiner>
         <LayoutWrapper>
-          <ContentsInformation />
+          <Card
+            title={currentEssay?.title ?? "제목 없음"}
+            date={currentEssay?.timestamp ?? "날짜 없음"}
+            isCurrent={true}
+            id={currentEssay?.id ?? ""}
+          />
+          {isEdit && (
+            <ContentsInformation
+              totalLength={essayData ? essayData.length : 0}
+              handleCheckAll={handleCheckAll}
+            />
+          )}
+
           <ContentLayout>
-            <Card></Card>
+            {essayData?.map((item) => (
+              <Card
+                id={item.id}
+                key={item.title}
+                title={item.title}
+                date={item.timestamp}
+                isCurrent={false}
+                isChecked={item.checked}
+                handleCheckChange={handleCheckChange}
+                isEdit={isEdit}
+              />
+            ))}
           </ContentLayout>
         </LayoutWrapper>
       </LayoutContatiner>
-      <BottomDialog></BottomDialog>
+      <BottomDialog
+        isEdit={isEdit}
+        onDelete={handleDelete}
+        onCancel={handleDeleteCancle}
+        isCheckDelete={isCheckDelete}
+        handleCheckDelete={handleCheckDelete}
+        numberOfCheckedItems={numberOfCheckedItems}
+      />
     </Container>
   );
 }

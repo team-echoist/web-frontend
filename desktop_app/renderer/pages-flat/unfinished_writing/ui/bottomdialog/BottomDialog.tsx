@@ -10,22 +10,47 @@ const ButtonDiv = styled.div`
   left: 35%;
 `;
 
-function BottomDialog() {
+function BottomDialog({
+  isEdit,
+  onDelete,
+  onCancel,
+  isCheckDelete,
+  handleCheckDelete,
+  numberOfCheckedItems,
+}: {
+  isEdit: boolean;
+  onDelete: () => void;
+  onCancel: () => void;
+  isCheckDelete: boolean;
+  handleCheckDelete: () => void;
+  numberOfCheckedItems: number;
+}) {
   // disable일때 아닐때, confirm창나올때
   return (
     <>
-      {/* <ButtonDiv>
-        <Button
-          text="총 2개 삭제"
-          type="point"
-          style="square"
-          scale="large"
-        ></Button>
-      </ButtonDiv> */}
-      {/* <Confirm
-        title1="모든 임시 저장 글이 사라집니다. "
-        title2="삭제하시겠습니까?"
-      ></Confirm> */}
+      {isEdit && (
+        <ButtonDiv>
+          <Button
+            text={`총 ${numberOfCheckedItems}개 삭제`}
+            type={numberOfCheckedItems === 0 ? "disable" : "point"}
+            style="square"
+            scale="large"
+            onClick={() => {
+              if (numberOfCheckedItems > 0) {
+                handleCheckDelete();
+              }
+            }}
+          />
+        </ButtonDiv>
+      )}
+      {isCheckDelete && (
+        <Confirm
+          title1="임시 저장 글이 사라집니다. "
+          title2="삭제하시겠습니까?"
+          onDelete={onDelete}
+          onCancel={onCancel}
+        />
+      )}
     </>
   );
 }
