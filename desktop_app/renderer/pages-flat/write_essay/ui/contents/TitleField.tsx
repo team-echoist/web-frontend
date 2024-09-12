@@ -47,12 +47,15 @@ const TitleDiv = styled.div`
 interface TitleFieldProps {
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
+  handlecancle: () => void;
 }
 
-function TitleField({ title, setTitle }: TitleFieldProps) {
+function TitleField({ title, setTitle, handlecancle }: TitleFieldProps) {
   return (
     <Layout>
-      <Button isCancel={true}>취소</Button>
+      <Button isCancel={true} onClick={handlecancle}>
+        취소
+      </Button>
       <TitleDiv>
         <BaseInput
           value={title}

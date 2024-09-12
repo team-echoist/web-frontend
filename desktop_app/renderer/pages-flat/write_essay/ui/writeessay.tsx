@@ -6,6 +6,7 @@ import BottomField from "./contents/BottomField";
 import { fetchData } from "@/shared/api/fetchData";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
+import { RoundConfirm } from "@/shared/ui/modal";
 
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
@@ -60,25 +61,30 @@ export const WriteEssay = () => {
     bottomValue.active === "tag" || bottomValue.active === "location";
   const router = useRouter();
   const queryId = router.query.id as string | undefined;
-
+  const [isCancel, setIsCancel] = useState(false);
 
   useEffect(() => {
+    const processEssayData = (id: string) => {
+      const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
+      const entry = storedData.find((item: any) => item.id === id);
+  
+      if (entry) {
+        setTitle(entry.title);
+        setValue(entry.value);
+        setBottomValue(entry.bottomValue);
+      }
+    };
+  
     if (queryId) {
+      processEssayData(queryId);
+      localStorage.setItem("currentEssayId", queryId);
+    } else {
       const savedId = localStorage.getItem("currentEssayId");
       if (savedId) {
-        const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
-        const entry = storedData.find((item: any) => item.id === savedId);
-
-        if (entry) {
-          setTitle(entry.title);
-          setValue(entry.value);
-          setBottomValue(entry.bottomValue);
-        }
-      }
-      else {
-        localStorage.setItem("currentEssayId", queryId);
+        processEssayData(savedId);
       }
     }
+  
   }, [queryId]);
 
   useEffect(() => {
@@ -87,34 +93,32 @@ export const WriteEssay = () => {
     }
   }, [id]);
 
+  const saveToLocalStorage = () => {
+    const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
+
+    const existingEntryIndex = storedData.findIndex(
+      (item: any) => item.id === id
+    );
+
+    const newData = {
+      id,
+      title,
+      value,
+      bottomValue,
+      timestamp: new Date().toISOString(),
+    };
+
+    if (existingEntryIndex > -1) {
+      storedData[existingEntryIndex] = { ...newData };
+    } else {
+      storedData.push(newData);
+    }
+
+    localStorage.setItem("essayData", JSON.stringify(storedData));
+  };
+
   useEffect(() => {
     if (id) {
-      const saveToLocalStorage = () => {
-        const storedData = JSON.parse(
-          localStorage.getItem("essayData") || "[]"
-        );
-
-        const existingEntryIndex = storedData.findIndex(
-          (item: any) => item.id === defaultId
-        );
-
-        const newData = {
-          id,
-          title,
-          value,
-          bottomValue,
-          timestamp: new Date().toISOString(),
-        };
-
-        if (existingEntryIndex > -1) {
-          storedData[existingEntryIndex] = { ...newData };
-        } else {
-          storedData.push(newData);
-        }
-
-        localStorage.setItem("essayData", JSON.stringify(storedData));
-      };
-
       saveToLocalStorage();
 
       const interval = setInterval(saveToLocalStorage, 30000);
@@ -123,9 +127,31 @@ export const WriteEssay = () => {
     }
   }, [id, title, value, bottomValue]);
 
+  const handlecancle = () => {
+    setIsCancel(!isCancel);
+  };
+  const handleSave = () =>{
+    saveToLocalStorage();
+    router.push("/web/main")
+  }
+
   return (
     <Layout>
-      <TitleField title={title} setTitle={setTitle}/>
+      {isCancel && (
+        <RoundConfirm
+          title="지금 취소하면 모든 내용이 삭제됩니다."
+          cancelText="작성취소"
+          saveText="임시저장"
+          onCancle={handlecancle}
+          onSave={handleSave}
+        />
+      )}
+
+      <TitleField
+        title={title}
+        setTitle={setTitle}
+        handlecancle={handlecancle}
+      />
       <EditorContainer isBottomFieldVisible={isBottomFieldVisible}>
         <Editor
           value={value}
@@ -136,7 +162,12 @@ export const WriteEssay = () => {
           id={id}
         />
       </EditorContainer>
-      {isBottomFieldVisible && <BottomField bottomValue={bottomValue} setBottomValue={setBottomValue}/>}
+      {isBottomFieldVisible && (
+        <BottomField
+          bottomValue={bottomValue}
+          setBottomValue={setBottomValue}
+        />
+      )}
     </Layout>
   );
 };

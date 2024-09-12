@@ -6,6 +6,7 @@ import Card from "./contents/Card";
 import ContentsInformation from "./contents/ContentsInformation";
 import BottomDialog from "./bottomdialog/BottomDialog";
 
+
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -34,6 +35,7 @@ function UnfinishedWriting() {
   const [currentEssay, setCurrentEssay] = useState<Essay | null>(null);
   const [isEdit, setIsEdit] = useState(false);
   const [isCheckDelete, setIsCheckDelete] = useState(false);
+
 
   useEffect(() => {
     const storedEssayData = JSON.parse(
@@ -86,17 +88,17 @@ function UnfinishedWriting() {
     setIsCheckDelete(false);
   };
 
-  const handleCheckDelete = () =>{
+  const handleCheckDelete = () => {
     setIsEdit(false);
     setIsCheckDelete(true);
-  }
+  };
 
   const countCheckedItems = () => {
     const checkedItems = essayData?.filter((item) => item.checked) || [];
 
     return checkedItems.length;
   };
-  
+
   const numberOfCheckedItems = countCheckedItems();
 
   return (

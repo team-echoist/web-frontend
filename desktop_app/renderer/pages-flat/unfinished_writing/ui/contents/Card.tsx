@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Check from "@/shared/ui/check/check";
 import { formatDateToFullKorean } from "@/shared/lib/date";
+import { useRouter } from "next/navigation";
 
 const Layout = styled.div`
   border-bottom: 1px solid rgba(104, 104, 104, 0.1);
   width: 100%;
   display: flex;
+  cursor: pointer;
 `;
 const Title = styled.p`
   color: #fff;
@@ -82,6 +84,8 @@ function Card({
   isEdit?: boolean;
 }) {
   const [check, setCheck] = useState(isChecked || false);
+  const router = useRouter();
+
   const handleCheckClick = () => {
     const newChecked = !check;
     setCheck(newChecked);
@@ -95,8 +99,14 @@ function Card({
       );
     }
   };
+
+  const navigateWritePage = () => {
+    console.log("id",id)
+    router.push(`/web/write_essay?id=${id}`);
+  };
+
   return (
-    <Layout>
+    <Layout onClick={navigateWritePage}>
       <TitleDiv>
         <Title>
           {title}
