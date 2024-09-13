@@ -7,6 +7,7 @@ import { fetchData } from "@/shared/api/fetchData";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
 import { RoundConfirm } from "@/shared/ui/modal";
+import FinishedEssay from "./finishedessaycontents/FinishedEssay";
 
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
@@ -51,6 +52,7 @@ export interface Essay {
 }
 const defaultId = uuidv4();
 export const WriteEssay = () => {
+  const router = useRouter();
   const [title, setTitle] = useState("제목 없음");
   const [value, setValue] = useState<string>("");
   const [bottomValue, setBottomValue] = useState<BottomValue>({
@@ -64,11 +66,11 @@ export const WriteEssay = () => {
   });
   const [imageFile, setImageFile] = useState<File | string | null>(null);
   const [id, setId] = useState<string>(defaultId);
+  const [isCancel, setIsCancel] = useState(false);
+  const [step, setStep] = useState("write");
+  const currentId = localStorage.getItem("currentEssayId");
   const isBottomFieldVisible =
     bottomValue.active === "tag" || bottomValue.active === "location";
-  const router = useRouter();
-  const [isCancel, setIsCancel] = useState(false);
-  const currentId = localStorage.getItem("currentEssayId");
 
   useEffect(() => {
     const processEssayData = (id: string) => {
@@ -127,18 +129,58 @@ export const WriteEssay = () => {
 
   const handlecancle = () => {
     const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
-    let deleteSaveData = storedData.filter((item:Essay) => item.id !== currentId)
+    let deleteSaveData = storedData.filter(
+      (item: Essay) => item.id !== currentId
+    );
     localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
     localStorage.setItem("currentEssayId", "");
     router.push("/web/main");
   };
+
   const handleSave = () => {
     localStorage.setItem("currentEssayId", "");
     router.push("/web/main");
   };
- const handlenavigateBack = () =>{
-  setIsCancel(!isCancel)
- }
+
+  const handlenavigateBack = () => {
+    if (step === "write") {
+      setIsCancel(!isCancel);
+    } else {
+      setStep("write");
+    }
+  };
+
+  const handleStep = () => {
+    if (step === "write") {
+      setStep("finish");
+    }
+    if (step === "finish") {
+      setStep("write");
+    }
+  };
+  const renderEditor = () => (
+    <>
+      <EditorContainer isBottomFieldVisible={isBottomFieldVisible}>
+        <Editor
+          value={value}
+          setValue={setValue}
+          tagValue={bottomValue}
+          setTagValue={setBottomValue}
+          setImageFile={setImageFile}
+        />
+      </EditorContainer>
+      {isBottomFieldVisible && (
+        <BottomField
+          bottomValue={bottomValue}
+          setBottomValue={setBottomValue}
+        />
+      )}
+    </>
+  );
+
+  const renderFinishedEssay = () => (
+    <FinishedEssay title={title} desc={value} tag={bottomValue?.tag.values}/>
+  );
 
   return (
     <Layout>
@@ -158,22 +200,11 @@ export const WriteEssay = () => {
         title={title}
         setTitle={setTitle}
         handlenavigateBack={handlenavigateBack}
+        step={step}
+        handleStep={handleStep}
       />
-      <EditorContainer isBottomFieldVisible={isBottomFieldVisible}>
-        <Editor
-          value={value}
-          setValue={setValue}
-          tagValue={bottomValue}
-          setTagValue={setBottomValue}
-          setImageFile={setImageFile}
-        />
-      </EditorContainer>
-      {isBottomFieldVisible && (
-        <BottomField
-          bottomValue={bottomValue}
-          setBottomValue={setBottomValue}
-        />
-      )}
+      {/* 본문 에디터 또는 완성된 글 */}
+      {step === "write" ? renderEditor() : renderFinishedEssay()}
     </Layout>
   );
 };

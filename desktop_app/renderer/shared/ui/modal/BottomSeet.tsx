@@ -2,8 +2,12 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 
-const Dialog = styled.div`
-  width: 442px;
+interface DialogProps {
+  size?: string;
+}
+
+const Dialog = styled.div<DialogProps>`
+  width: ${(props) => (props.size === "large" ? "700px" : "442px")};
   height: 359px;
   flex-shrink: 0;
   filter: drop-shadow(0.1px 0.1px 1px rgba(255, 255, 255, 0.1));
@@ -21,13 +25,14 @@ const Dialog = styled.div`
 interface BottomSheetProps {
   children: ReactNode;
   isOpen: boolean;
+  size?: string;
 }
 
-function BottomSeet({ children, isOpen }: BottomSheetProps) {
+function BottomSeet({ children, isOpen, size }: BottomSheetProps) {
   if (!isOpen) {
     return null;
   }
-  return <Dialog>{children}</Dialog>;
+  return <Dialog size={size}>{children}</Dialog>;
 }
 
 export default BottomSeet;

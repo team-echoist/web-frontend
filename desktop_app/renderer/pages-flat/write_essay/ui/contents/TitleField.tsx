@@ -5,6 +5,7 @@ import { PrevButton } from "@/shared/ui/button";
 
 interface ButtonProps {
   isCancel: boolean;
+  isDelete: boolean;
 }
 
 const Layout = styled.div`
@@ -26,10 +27,14 @@ const Button = styled.button<ButtonProps>`
   padding: 10px 20px;
   border-radius: 4px;
   white-space: nowrap;
-  ${({ isCancel }) =>
+  ${({ isCancel, isDelete }) =>
     isCancel
       ? css`
           color: #686868;
+        `
+      : isDelete
+      ? css`
+          color: #c13535;
         `
       : css`
           color: #fff;
@@ -48,22 +53,43 @@ interface TitleFieldProps {
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
   handlenavigateBack: () => void;
+  step: string;
+  handleStep: () => void;
 }
 
-function TitleField({ title, setTitle, handlenavigateBack }: TitleFieldProps) {
+function TitleField({
+  title,
+  setTitle,
+  handlenavigateBack,
+  step,
+  handleStep,
+}: TitleFieldProps) {
   return (
     <Layout>
-      <Button isCancel={true} onClick={handlenavigateBack}>
-        취소
-      </Button>
+      {step === "write" ? (
+        <Button isCancel={true} isDelete={false} onClick={handlenavigateBack}>
+          취소
+        </Button>
+      ) : (
+        <PrevButton />
+      )}
+
       <TitleDiv>
-        <BaseInput
-          value={title}
-          placeholder="제목을 입력해 주세요"
-          onChange={(e) => setTitle(e.target.value)}
-        />
+        {step === "write" && (
+          <BaseInput
+            value={title}
+            placeholder="제목을 입력해 주세요"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        )}
       </TitleDiv>
-      <Button isCancel={false}>완료</Button>
+      <Button
+        isCancel={false}
+        isDelete={step === "finish"}
+        onClick={handleStep}
+      >
+        {step === "write" ? "완료" : "삭제"}
+      </Button>
     </Layout>
   );
 }
