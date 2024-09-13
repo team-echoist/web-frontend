@@ -104,7 +104,6 @@ export const WriteEssay = () => {
   const saveToLocalStorage = () => {
     const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
     const id = localStorage.getItem("currentEssayId");
-    console.log("currentId", id);
     const existingEntryIndex = storedData.findIndex(
       (item: any) => item.id === id
     );
