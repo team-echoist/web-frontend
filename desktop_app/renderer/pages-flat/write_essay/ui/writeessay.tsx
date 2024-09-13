@@ -67,7 +67,6 @@ export const WriteEssay = () => {
   const isBottomFieldVisible =
     bottomValue.active === "tag" || bottomValue.active === "location";
   const router = useRouter();
-  const queryId = router.query.id as string | undefined;
   const [isCancel, setIsCancel] = useState(false);
   const currentId = localStorage.getItem("currentEssayId");
 
