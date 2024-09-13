@@ -5,7 +5,7 @@ import ContentLayout from "./contentlayout/ContentLayout";
 import Card from "./contents/Card";
 import ContentsInformation from "./contents/ContentsInformation";
 import BottomDialog from "./bottomdialog/BottomDialog";
-
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   width: 100%;

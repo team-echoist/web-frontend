@@ -18,7 +18,7 @@ const Layout = styled.div`
 
 const Confirm = styled.div`
   width: 350px;
-  height: 200px;
+  // height: 200px;
   flex-shrink: 0;
   border-radius: 20px;
   background: #191919;
@@ -69,20 +69,40 @@ const SaveBtn = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  border-bottom: 1px solid rgba(104, 104, 104, 0.1);
+`;
+const Button = styled.button`
+  all: unset;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  height: 64.97px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 `;
 
 function RoundConfirm({
   title,
   cancelText,
   saveText,
+  text,
   onCancle,
-  onSave
+  onSave,
+  onClick,
 }: {
   title: string;
   cancelText: string;
   saveText: string;
-  onCancle:()=>void;
-  onSave:()=>void;
+  text?: string;
+  onCancle: () => void;
+  onSave: () => void;
+  onClick?: () => void;
 }) {
   return (
     <Layout>
@@ -90,6 +110,7 @@ function RoundConfirm({
         <Title>{title}</Title>
         <CancelBtn onClick={onCancle}>{cancelText}</CancelBtn>
         <SaveBtn onClick={onSave}>{saveText}</SaveBtn>
+        {text && <Button onClick={onClick}>{text}</Button>}
       </Confirm>
     </Layout>
   );

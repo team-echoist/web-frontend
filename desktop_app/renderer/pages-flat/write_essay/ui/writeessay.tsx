@@ -42,6 +42,13 @@ interface BottomValue {
     values: string[];
   };
 }
+
+export interface Essay {
+  id: string;
+  title: string;
+  timestamp: string;
+  checked: boolean;
+}
 const defaultId = uuidv4();
 export const WriteEssay = () => {
   const [title, setTitle] = useState("제목 없음");
@@ -62,40 +69,43 @@ export const WriteEssay = () => {
   const router = useRouter();
   const queryId = router.query.id as string | undefined;
   const [isCancel, setIsCancel] = useState(false);
+  const currentId = localStorage.getItem("currentEssayId");
 
   useEffect(() => {
     const processEssayData = (id: string) => {
       const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
-      const entry = storedData.find((item: any) => item.id === id);
-  
+      const entry = storedData.find((item: Essay) => item.id === id);
       if (entry) {
         setTitle(entry.title);
         setValue(entry.value);
         setBottomValue(entry.bottomValue);
       }
     };
-  
-    if (queryId) {
-      processEssayData(queryId);
-      localStorage.setItem("currentEssayId", queryId);
-    } else {
-      const savedId = localStorage.getItem("currentEssayId");
-      if (savedId) {
-        processEssayData(savedId);
-      }
+    if (currentId) {
+      processEssayData(currentId);
+      localStorage.setItem("currentEssayId", currentId);
     }
-  
-  }, [queryId]);
+  }, []);
 
   useEffect(() => {
     if (id) {
-      localStorage.setItem("currentEssayId", id);
+      const currentId = localStorage.getItem("currentEssayId");
+      if (!currentId) {
+        localStorage.setItem("currentEssayId", id);
+      }
     }
   }, [id]);
 
+  useEffect(() => {
+    saveToLocalStorage();
+    const interval = setInterval(saveToLocalStorage, 30000);
+    return () => clearInterval(interval);
+  }, [title, value, bottomValue]);
+
   const saveToLocalStorage = () => {
     const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
-
+    const id = localStorage.getItem("currentEssayId");
+    console.log("currentId", id);
     const existingEntryIndex = storedData.findIndex(
       (item: any) => item.id === id
     );
@@ -117,22 +127,20 @@ export const WriteEssay = () => {
     localStorage.setItem("essayData", JSON.stringify(storedData));
   };
 
-  useEffect(() => {
-    if (id) {
-      saveToLocalStorage();
-
-      const interval = setInterval(saveToLocalStorage, 30000);
-
-      return () => clearInterval(interval);
-    }
-  }, [id, title, value, bottomValue]);
-
   const handlecancle = () => {
     setIsCancel(!isCancel);
   };
-  const handleSave = () =>{
-    saveToLocalStorage();
-    router.push("/web/main")
+  const handleSave = () => {
+    localStorage.setItem("currentEssayId", "");
+    router.push("/web/main");
+  };
+  const navigateMain = () =>{
+    const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
+    console.log("currentId",currentId)
+    let deleteSaveData = storedData.filter((item:Essay) => item.id !== currentId)
+    localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
+    localStorage.setItem("currentEssayId", "");
+    router.push("/web/main");
   }
 
   return (
@@ -141,9 +149,11 @@ export const WriteEssay = () => {
         <RoundConfirm
           title="지금 취소하면 모든 내용이 삭제됩니다."
           cancelText="작성취소"
-          saveText="임시저장"
+          saveText="임시저장후 메인으로 가기"
+          text="메인으로 가기"
           onCancle={handlecancle}
           onSave={handleSave}
+          onClick={navigateMain}
         />
       )}
 
@@ -159,7 +169,6 @@ export const WriteEssay = () => {
           tagValue={bottomValue}
           setTagValue={setBottomValue}
           setImageFile={setImageFile}
-          id={id}
         />
       </EditorContainer>
       {isBottomFieldVisible && (

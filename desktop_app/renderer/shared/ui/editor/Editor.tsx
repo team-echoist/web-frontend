@@ -97,14 +97,12 @@ function Editor({
   tagValue,
   setTagValue,
   setImageFile,
-  id
 }: {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   tagValue: TagValue;
   setTagValue: Dispatch<SetStateAction<TagValue>>;
   setImageFile: Dispatch<SetStateAction<File | string | null>>;
-  id:string
 }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -253,7 +251,6 @@ function Editor({
         isModalOpen={isModalOpen}
         tagName={tagValue.active}
         tagHandler={tagHandler}
-        id={id}
       />
       {thumbnailImage && (
         <ThumbnailContainer>

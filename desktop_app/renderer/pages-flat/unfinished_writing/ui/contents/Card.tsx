@@ -101,8 +101,8 @@ function Card({
   };
 
   const navigateWritePage = () => {
-    console.log("id",id)
-    router.push(`/web/write_essay?id=${id}`);
+    localStorage.setItem("currentEssayId", id);
+    router.push(`/web/write_essay`);
   };
 
   return (
