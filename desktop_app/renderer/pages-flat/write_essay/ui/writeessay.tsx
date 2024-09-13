@@ -128,39 +128,38 @@ export const WriteEssay = () => {
   };
 
   const handlecancle = () => {
-    setIsCancel(!isCancel);
+    const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
+    let deleteSaveData = storedData.filter((item:Essay) => item.id !== currentId)
+    localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
+    localStorage.setItem("currentEssayId", "");
+    router.push("/web/main");
   };
   const handleSave = () => {
     localStorage.setItem("currentEssayId", "");
     router.push("/web/main");
   };
-  const navigateMain = () =>{
-    const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
-    console.log("currentId",currentId)
-    let deleteSaveData = storedData.filter((item:Essay) => item.id !== currentId)
-    localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
-    localStorage.setItem("currentEssayId", "");
-    router.push("/web/main");
-  }
+ const handlenavigateBack = () =>{
+  setIsCancel(!isCancel)
+ }
 
   return (
     <Layout>
       {isCancel && (
         <RoundConfirm
           title="지금 취소하면 모든 내용이 삭제됩니다."
-          cancelText="작성취소"
+          cancelText="작성취소후 메인으로 가기"
           saveText="임시저장후 메인으로 가기"
-          text="메인으로 가기"
+          text="취소"
           onCancle={handlecancle}
           onSave={handleSave}
-          onClick={navigateMain}
+          onClick={handlenavigateBack}
         />
       )}
 
       <TitleField
         title={title}
         setTitle={setTitle}
-        handlecancle={handlecancle}
+        handlenavigateBack={handlenavigateBack}
       />
       <EditorContainer isBottomFieldVisible={isBottomFieldVisible}>
         <Editor
