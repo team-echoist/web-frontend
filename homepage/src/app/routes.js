@@ -28,11 +28,11 @@ const routes = [
     route: "/",
     component: <PremiumPage />,
   },
-  {
-    key: "newsLetter",
-    route: "/",
-    component: <NewsLetterPage />,
-  },
+  // {
+  //   key: "newsLetter",
+  //   route: "/",
+  //   component: <NewsLetterPage />,
+  // },
   // 약관 페이지
   {
     key: "terms",
