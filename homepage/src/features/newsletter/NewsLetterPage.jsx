@@ -1,5 +1,5 @@
-const NewsLetterPage = () => {
-    return (<>NewsLetterPage</>)
+const NewsletterPage = () => {
+    return (<>NewsletterPage</>)
 }
 
-export default NewsLetterPage
+export default NewsletterPage;

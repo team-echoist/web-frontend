@@ -27,7 +27,7 @@ const Header = () => {
                     Premium
                 </Link>
                 <Link to="/newsletter" className={linkClasses("/newsletter")}>
-                    NewsLetter
+                    Newsletter
                 </Link>
             </div>
             <p className="w-[143px] h-[46px] rounded-2xl bg-white text-[#121212] flex justify-center items-center">

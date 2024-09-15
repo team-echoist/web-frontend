@@ -6,7 +6,7 @@ import MainPage from "../features/main/MainPage";
 import AboutPage from "../features/about/AboutPage";
 import LearnPage from "../features/learn/LearnPage";
 import PremiumPage from "../features/premium/PremiumPage";
-import NewsLetterPage from "../features/newsletter/NewsLetterPage";
+import NewsLetterPage from "../features/newsletter/newsletterPage";
 
 const routes = [
   {
@@ -16,22 +16,22 @@ const routes = [
   },
   {
     key: "about",
-    route: "/",
+    route: "/about",
     component: <AboutPage />,
   },
   {
     key: "learn",
-    route: "/",
+    route: "/learn",
     component: <LearnPage />,
   },
   {
     key: "premium",
-    route: "/",
+    route: "/premium",
     component: <PremiumPage />,
   },
   {
     key: "newsletter",
-    route: "/",
+    route: "/newsletter",
     component: <NewsLetterPage />,
   },
   // 약관 페이지
