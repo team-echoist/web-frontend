@@ -1,5 +1,5 @@
 const NewsLetterPage = () => {
-  return <section className="bg-red-900">뉴스레터</section>;
-};
+    return (<>NewsLetterPage</>)
+}
 
-export default NewsLetterPage;
+export default NewsLetterPage
