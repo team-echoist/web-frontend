@@ -60,11 +60,12 @@ const SaveBtnDiv = styled.div`
   position: absolute;
   right: 30px;
   top: 0px;
-  &:hover {
-    color: ${color.pointcolor};
-  }
 `;
 const SaveBtn = styled.button`
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
   white-space: nowrap;
   color: ${color.white};
   font-family: Pretendard;
@@ -76,6 +77,9 @@ const SaveBtn = styled.button`
   display: flex;
   align-items: center;
   margin-right: 12px !important;
+  &:hover {
+    color: ${color.pointcolor};
+  }
 `;
 
 const CustomToolbar = ({
