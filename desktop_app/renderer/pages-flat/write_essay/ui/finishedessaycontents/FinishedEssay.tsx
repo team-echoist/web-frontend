@@ -52,7 +52,9 @@ function FinishedEssay({
       const storedEssayData = essayData.find((item: any) => {
         return item.id === currentEssayId && item.imageSrc;
       });
-      setThumbnailImage(storedEssayData.imageSrc);
+      if (storedEssayData?.imageSrc) {
+        setThumbnailImage(storedEssayData?.imageSrc);
+      }
     }
   }, []);
   return (

@@ -60,6 +60,9 @@ const SaveBtnDiv = styled.div`
   position: absolute;
   right: 30px;
   top: 0px;
+  &:hover {
+    color: ${color.pointcolor};
+  }
 `;
 const SaveBtn = styled.button`
   white-space: nowrap;
@@ -198,11 +201,11 @@ const CustomToolbar = ({
           />
         </Button>
       </IconDiv>
-      <SaveBtnDiv>
+      {/* <SaveBtnDiv>
         <SaveBtn>저장</SaveBtn>
         <Stroke />
         <NextBtn />
-      </SaveBtnDiv>
+      </SaveBtnDiv> */}
     </Container>
   );
 };

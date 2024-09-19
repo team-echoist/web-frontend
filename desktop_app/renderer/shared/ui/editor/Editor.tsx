@@ -13,6 +13,7 @@ import CustomToolBar from "./CustomToolbar";
 import Image from "next/image";
 import color from "@/shared/styles/color";
 
+
 const EditorDiv = styled.div`
   position: relative;
 
@@ -110,6 +111,7 @@ function Editor({
   const [thumbnailImage, setThumbnailImage] = useState<string | null>(null);
   const [editorWidth, setEditorWidth] = useState<number>(0);
 
+
   useEffect(() => {
     const currentEssayId = localStorage.getItem("currentEssayId");
     if (currentEssayId) {
@@ -122,6 +124,7 @@ function Editor({
       }
     }
   }, []);
+
   useEffect(() => {
     const updateEditorWidth = () => {
       if (quillRef.current) {
@@ -216,6 +219,7 @@ function Editor({
       setIsModalOpen(false);
     }
   };
+
   const modules = useMemo(
     () => ({
       toolbar: {
