@@ -12,7 +12,8 @@ import SelectText from "./SelectText";
 import CustomToolBar from "./CustomToolbar";
 import Image from "next/image";
 import color from "@/shared/styles/color";
-
+import { GeneralToast } from "../toast";
+import { MiniToast } from "../toast";
 
 const EditorDiv = styled.div`
   position: relative;
@@ -110,7 +111,8 @@ function Editor({
   const quillRef = useRef<ReactQuill>(null);
   const [thumbnailImage, setThumbnailImage] = useState<string | null>(null);
   const [editorWidth, setEditorWidth] = useState<number>(0);
-
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [isMiniModalOpen, setIsMiniModalOpen] = useState(false);
 
   useEffect(() => {
     const currentEssayId = localStorage.getItem("currentEssayId");
@@ -141,6 +143,15 @@ function Editor({
       window.removeEventListener("resize", updateEditorWidth);
     };
   }, []);
+
+  const handleSave = () => {
+    // 현재 로직상 타이핑을 칠때마다 저장되고 있지만, 사용자에게 저장되었음을 나타내주기 위하여 알림 토스트 세팅
+    setIsMiniModalOpen(true);
+
+    setTimeout(() => {
+      setIsMiniModalOpen(false);
+    }, 3000);
+  };
 
   const applyFontSize = (size: keyof typeof sizeMap) => {
     if (quillRef.current) {
@@ -276,10 +287,21 @@ function Editor({
   };
   return (
     <EditorDiv>
+      <MiniToast
+        isShowToast={isMiniModalOpen}
+        setIsShowToast={setIsMiniModalOpen}
+        title="임시 저장이 완료되었습니다."
+      />
+      <GeneralToast
+        title="저장이 완료되었습니다."
+        isShowToast={isShowModal}
+        setIsShowToast={setIsModalOpen}
+      />
       <CustomToolBar
         isModalOpen={isModalOpen}
         tagName={tagValue.active}
         tagHandler={tagHandler}
+        handleSave={handleSave}
       />
       {thumbnailImage && (
         <ThumbnailContainer>
@@ -316,5 +338,4 @@ function Editor({
   );
 }
 
-const MemoizedEditor = React.memo(Editor);
-export default MemoizedEditor;
+export default Editor;

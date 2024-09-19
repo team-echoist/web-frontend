@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { RoundConfirm } from "@/shared/ui/modal";
 import FinishedEssay from "./finishedessaycontents/FinishedEssay";
 
+
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
   { ssr: false }

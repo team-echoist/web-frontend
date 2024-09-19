@@ -82,10 +82,12 @@ const CustomToolbar = ({
   isModalOpen,
   tagName,
   tagHandler,
+  handleSave,
 }: {
   isModalOpen: boolean;
   tagName: string;
   tagHandler: (name: string) => void;
+  handleSave: () => void;
 }) => {
   const [buttonStates, setButtonStates] = useState({
     bold: false,
@@ -201,11 +203,11 @@ const CustomToolbar = ({
           />
         </Button>
       </IconDiv>
-      {/* <SaveBtnDiv>
-        <SaveBtn>저장</SaveBtn>
+      <SaveBtnDiv>
+        <SaveBtn onClick={handleSave}>저장</SaveBtn>
         <Stroke />
         <NextBtn />
-      </SaveBtnDiv> */}
+      </SaveBtnDiv>
     </Container>
   );
 };
