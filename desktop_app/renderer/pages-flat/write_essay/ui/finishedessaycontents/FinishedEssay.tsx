@@ -3,6 +3,7 @@ import styled from "styled-components";
 import color from "@/shared/styles/color";
 import BottomSheet from "./BottomSheet";
 import Image from "next/image";
+import { useStore } from "@/shared/store";
 
 const Layout = styled.div`
   padding: 72px 147px;
@@ -34,6 +35,24 @@ const Desc = styled.p`
   font-weight: 400;
   line-height: 170%;
 `;
+const UserName = styled.p`
+  color: #686868;
+  text-align: right;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+`;
+const DateTime = styled.time`
+  color: #686868;
+  text-align: right;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+`;
 
 function FinishedEssay({
   title,
@@ -45,6 +64,19 @@ function FinishedEssay({
   tag: string[];
 }) {
   const [thumbnailImage, setThumbnailImage] = useState(null);
+  const user = useStore((state) => state.user);
+  const [currentDateTime, setCurrentDateTime] = useState("");
+
+  useEffect(() => {
+    const now = new Date();
+    const formattedDateTime = `${now.getFullYear()}년 ${String(
+      now.getMonth() + 1
+    ).padStart(2, "0")}월 ${String(now.getDate()).padStart(2, "0")}일 ${String(
+      now.getHours()
+    ).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+    setCurrentDateTime(formattedDateTime);
+  }, []);
+
   useEffect(() => {
     const currentEssayId = localStorage.getItem("currentEssayId");
     if (currentEssayId) {
@@ -72,6 +104,8 @@ function FinishedEssay({
       <BottomSheet tag={tag}></BottomSheet>
       <Title>{title}</Title>
       <Desc dangerouslySetInnerHTML={{ __html: desc }} />
+      <UserName>{user?.nickname}</UserName>
+      <DateTime>{currentDateTime}</DateTime>
     </Layout>
   );
 }
