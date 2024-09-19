@@ -91,8 +91,19 @@ export const WriteEssay = () => {
   useEffect(() => {
     if (id) {
       const currentId = localStorage.getItem("currentEssayId");
+      const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
+
+      const existingEssayIndex = essayData.findIndex(
+        (item: any) => item.id === id
+      );
       if (!currentId) {
-        localStorage.setItem("currentEssayId", id);
+        if (existingEssayIndex > -1) {
+          const newId = uuidv4();
+          essayData[existingEssayIndex].id = newId;
+          localStorage.setItem("essayData", JSON.stringify(essayData));
+        } else {
+          localStorage.setItem("currentEssayId", id);
+        }
       }
     }
   }, [id]);
@@ -110,11 +121,17 @@ export const WriteEssay = () => {
       (item: any) => item.id === id
     );
 
+    const existingImageSrc =
+      existingEntryIndex > -1 && storedData[existingEntryIndex].imageSrc
+        ? storedData[existingEntryIndex].imageSrc
+        : "";
+
     const newData = {
       id,
       title,
       value,
       bottomValue,
+      imageSrc: existingImageSrc,
       timestamp: new Date().toISOString(),
     };
 
@@ -179,7 +196,7 @@ export const WriteEssay = () => {
   );
 
   const renderFinishedEssay = () => (
-    <FinishedEssay title={title} desc={value} tag={bottomValue?.tag.values}/>
+    <FinishedEssay title={title} desc={value} tag={bottomValue?.tag.values} />
   );
 
   return (

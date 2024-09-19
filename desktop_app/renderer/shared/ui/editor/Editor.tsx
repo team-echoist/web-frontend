@@ -82,7 +82,7 @@ const SizeStyle = Quill.import("attributors/style/size");
 SizeStyle.whitelist = Object.values(sizeMap);
 Quill.register(SizeStyle, true);
 interface TagValue {
-  active:any;
+  active: any;
   tag: {
     values: string[];
   };
@@ -110,6 +110,18 @@ function Editor({
   const [thumbnailImage, setThumbnailImage] = useState<string | null>(null);
   const [editorWidth, setEditorWidth] = useState<number>(0);
 
+  useEffect(() => {
+    const currentEssayId = localStorage.getItem("currentEssayId");
+    if (currentEssayId) {
+      const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
+      const storedEssayData = essayData.find((item: any) => {
+        return item.id === currentEssayId && item.imageSrc;
+      });
+      if (storedEssayData?.imageSrc) {
+        setThumbnailImage(storedEssayData.imageSrc);
+      }
+    }
+  }, []);
   useEffect(() => {
     const updateEditorWidth = () => {
       if (quillRef.current) {
@@ -159,6 +171,19 @@ function Editor({
     reader.onloadend = () => {
       const base64Url = reader.result as string;
       callback(base64Url);
+      const currentEssayId = localStorage.getItem("currentEssayId");
+
+      if (currentEssayId) {
+        const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
+
+        const updatedEssayData = essayData.map((essay: any) => {
+          if (essay.id === currentEssayId) {
+            return { ...essay, imageSrc: base64Url };
+          }
+          return essay;
+        });
+        localStorage.setItem("essayData", JSON.stringify(updatedEssayData));
+      }
     };
   };
   const insertImageIntoEditor = (base64Url: string) => {
@@ -260,7 +285,6 @@ function Editor({
           <Image
             src={thumbnailImage}
             alt="Thumbnail"
-            className="thumbnail"
             width={editorWidth}
             height={460}
           />

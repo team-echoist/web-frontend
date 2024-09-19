@@ -86,6 +86,7 @@ function UnfinishedWriting() {
   };
   const handleDeleteCancle = () => {
     setIsCheckDelete(false);
+    setIsEdit(false);
   };
 
   const handleCheckDelete = () => {

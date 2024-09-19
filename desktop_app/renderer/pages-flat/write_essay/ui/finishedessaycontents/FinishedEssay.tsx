@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 import BottomSheet from "./BottomSheet";
+import Image from "next/image";
 
 const Layout = styled.div`
   padding: 72px 147px;
   display: flex;
   flex-direction: column;
 `;
-
+const ThumbnailContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+`;
 const Title = styled.p`
   color: ${color.white};
   font-family: Pretendard;
@@ -37,11 +44,32 @@ function FinishedEssay({
   desc: string;
   tag: string[];
 }) {
+  const [thumbnailImage, setThumbnailImage] = useState(null);
+  useEffect(() => {
+    const currentEssayId = localStorage.getItem("currentEssayId");
+    if (currentEssayId) {
+      const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
+      const storedEssayData = essayData.find((item: any) => {
+        return item.id === currentEssayId && item.imageSrc;
+      });
+      setThumbnailImage(storedEssayData.imageSrc);
+    }
+  }, []);
   return (
     <Layout>
+      <ThumbnailContainer>
+        {thumbnailImage && (
+          <Image
+            src={thumbnailImage}
+            alt="Thumbnail"
+            width={1200}
+            height={460}
+          />
+        )}
+      </ThumbnailContainer>
       <BottomSheet tag={tag}></BottomSheet>
       <Title>{title}</Title>
-      <Desc>{desc}</Desc>
+      <Desc dangerouslySetInnerHTML={{ __html: desc }} />
     </Layout>
   );
 }
