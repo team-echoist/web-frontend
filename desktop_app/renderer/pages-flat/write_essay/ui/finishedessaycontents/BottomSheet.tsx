@@ -67,18 +67,40 @@ const LoopDiv = styled.div`
 `;
 const LoopWrapper = styled.div`
   display: flex;
+  justify-content: flex-end;
   border: 3px solid blue;
   width: 80%;
   height: 100%;
   position: relative;
 `;
-const LoopStyled = styled(Loop)<{ isStage?: boolean }>`
+const LoopStyled = styled(Loop)<{
+  isStage?: boolean;
+  isMoving?: boolean;
+  id: number;
+}>`
   position: absolute;
   width: 72.273px;
   height: 60px;
   transition: left 0.5s ease, transform 0.5s ease;
   cursor: ${({ isStage }) => (isStage ? "pointer" : "default")};
+
+  @keyframes moveAnimation {
+    from {
+      transform: translate(-80%, -50%);
+    }
+    to {
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  ${({ isMoving, id }) =>
+    isMoving && id !== 3
+      ? `
+      animation: moveAnimation 0.5s ease;
+    `
+      : ""}
 `;
+
 const Strong = styled.strong`
   color: ${color.white};
   font-family: Pretendard;
@@ -113,6 +135,7 @@ const TiedLoop = styled.div<{ isFull?: boolean }>`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  position:relative;
 `;
 
 const LooseLoop = styled.div<{ isFull?: boolean }>`
@@ -120,14 +143,16 @@ const LooseLoop = styled.div<{ isFull?: boolean }>`
   width: ${(props) => (props.isFull ? "40%" : "30%")};
   height: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
+  position:relative;
 `;
 interface Loop {
   id: number;
   loose: string;
   tied: string;
   default: string;
+  isMoving: boolean;
 }
 
 function BottomSheet({ tag }: { tag: string[] }) {
@@ -135,14 +160,14 @@ function BottomSheet({ tag }: { tag: string[] }) {
   const [isSliding, setIsSliding] = useState("step1");
   const [leftPosition, setLeftPosition] = useState("60%");
   const [tiedLoops, setTiedLoops] = useState<Loop[]>([
-    { id: 1, default: "40%", loose: "48%", tied: "px" },
-    { id: 2, default: "48%", loose: "56%", tied: "px" },
-    { id: 3, default: "56%", loose: "64%", tied: "px" },
-    { id: 4, default: "64%", loose: "68%", tied: "px" },
-    { id: 5, default: "72%", loose: "80%", tied: "px" },
+    { id: 1, default: "44%", loose: "30%", tied: "px", isMoving: false },
+    { id: 2, default: "53%", loose: "43%", tied: "px", isMoving: false },
+    { id: 3, default: "62%", loose: "56%", tied: "px", isMoving: false },
+    { id: 4, default: "71%", loose: "68%", tied: "px", isMoving: false },
+    { id: 5, default: "80%", loose: "30%", tied: "px", isMoving: false },
   ]);
   const [looseLoops, setLooseLoops] = useState<Loop[]>([]);
-  const [looseLoopWidth, setLooseLoopWidth] = useState(30);
+  const [looseLoopWidth, setLooseLoopWidth] = useState(20);
 
   const handleModalOpen = () => {
     setIsOpen(false);
@@ -170,21 +195,22 @@ function BottomSheet({ tag }: { tag: string[] }) {
   };
 
   const handleLoopClick = (loopId: number) => {
+    const loopToAdd = tiedLoops.find((item: Loop) => item.id === loopId);
+  
     setTiedLoops((prevTiedLoops: Loop[]) =>
       prevTiedLoops.filter((item: Loop) => loopId !== item.id)
     );
   
-    setLooseLoops((prevLooseLoops: Loop[]) => {
-      const loopToAdd = tiedLoops.find((item: Loop) => item.id === loopId);
-      if (loopToAdd) {
-        const newLooseLoops = [...prevLooseLoops, loopToAdd];
-  
-        setLooseLoopWidth((prevWidth) => Math.min(prevWidth + 10, 100)); 
-  
-        return newLooseLoops;
-      }
-      return prevLooseLoops;
+    setLooseLoopWidth((prev) => {
+      return prev === 20 ? 40 : prev + 10; 
     });
+  
+    if (loopToAdd) {
+      setLooseLoops((prevLooseLoops: Loop[]) => [
+        ...prevLooseLoops,
+        { ...loopToAdd, isMoving: true },
+      ]);
+    }
   };
   const stepOneRenderer = () => {
     return (
@@ -197,96 +223,45 @@ function BottomSheet({ tag }: { tag: string[] }) {
         </TitleDiv>
         <LoopDiv>
           <LoopWrapper>
-            <TiedLoop isFull={looseLoops.length > 0}>
+            <TiedLoop
+              isFull={looseLoops.length > 0}
+              style={{ width: `${100 - looseLoopWidth}%` }}
+            >
               {tiedLoops.map((item) => {
-                console.log("Debugging item:", item);
                 return (
                   <LoopStyled
-                    key={item.id + item.default}
+                    key={item.id}
                     isClicked={true}
+                    isMoving={item.isMoving}
+                    id={item.id}
                     style={{
                       top: "50%",
                       left: item.default,
                       transform: `translate(-50%, -50%)`,
                     }}
-                    onClick={()=>handleLoopClick(item.id)}
+                    onClick={() => handleLoopClick(item.id)}
                   />
                 );
               })}
             </TiedLoop>
             <LooseLoop style={{ width: `${looseLoopWidth}%` }}>
               {looseLoops.map((item) => {
-                console.log("Debugging item111:", item);
                 return (
                   <LoopStyled
-                    key={item.id + item.default}
+                    key={item.id}
                     isClicked={true}
+                    isMoving={item.isMoving}
+                    id={item.id}
                     style={{
                       top: "50%",
                       left: item.loose,
-                      transform: `translate(-50%, -50%) ${
-                        isSliding === "step5" ? "translateX(20%)" : ""
-                      }`,
+                      transform: `translate(-50%, -50%)`,
                     }}
-                    onClick={()=>handleLoopClick(item.id)}
+                    onClick={() => handleLoopClick(item.id)}
                   />
                 );
               })}
             </LooseLoop>
-            {/* <TiedLoop>
-              <LoopStyled
-                isStage={isSliding === "step5"}
-                style={{
-                  top: "50%",
-                  left: "40%",
-                  transform: `translate(-50%, -50%) ${
-                    isSliding === "step5" ? "translateX(20%)" : ""
-                  }`,
-                }}
-              />
-              <LoopStyled
-                isStage={isSliding === "step4"}
-                style={{
-                  top: "50%",
-                  left: "45%",
-                  transform: `translate(-50%, -50%) ${
-                    isSliding === "step4" ? "translateX(20%)" : ""
-                  }`,
-                }}
-              />
-              <LoopStyled
-                isStage={isSliding === "step3"}
-                style={{
-                  top: "50%",
-                  left: "50%",
-                  transform: `translate(-50%, -50%) ${
-                    isSliding === "step3" ? "translateX(20%)" : ""
-                  }`,
-                }}
-              />
-              <LoopStyled
-                isStage={isSliding === "step2"}
-                style={{
-                  top: "50%",
-                  left: "55%",
-                  transform: `translate(-50%, -50%) ${
-                    isSliding === "step2" ? "translateX(20%)" : ""
-                  }`,
-                }}
-              />
-              <LoopStyled
-                isStage={isSliding === "step1"}
-                style={{
-                  top: "50%",
-                  left: leftPosition,
-                  transform: `translate(-50%, -50%) ${
-                    isSliding === "step1" ? "translateX(20%)" : ""
-                  }`,
-                }}
-                onClick={handleLoopClick}
-              />
-            </TiedLoop>
-            <LooseLoop></LooseLoop> */}
           </LoopWrapper>
           <NextBtn>
             <NextBtnImg alt="Next" />
