@@ -4,6 +4,7 @@ import { BottomSeet } from "@/shared/ui/modal";
 import color from "@/shared/styles/color";
 import Loop from "@/shared/assets/img/loop.svg";
 import NextBtnImg from "@/shared/assets/img/next_Icon.svg";
+import { changeGroupChain, changeSingleChain } from "../../utils/changeChain";
 
 const Layout = styled.div`
   position: fixed;
@@ -135,7 +136,7 @@ const TiedLoop = styled.div<{ isFull?: boolean }>`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  position:relative;
+  position: relative;
 `;
 
 const LooseLoop = styled.div<{ isFull?: boolean }>`
@@ -145,7 +146,7 @@ const LooseLoop = styled.div<{ isFull?: boolean }>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  position:relative;
+  position: relative;
 `;
 interface Loop {
   id: number;
@@ -166,8 +167,6 @@ function BottomSheet({ tag }: { tag: string[] }) {
     { id: 4, default: "71%", loose: "68%", tied: "px", isMoving: false },
     { id: 5, default: "80%", loose: "30%", tied: "px", isMoving: false },
   ]);
-  const [looseLoops, setLooseLoops] = useState<Loop[]>([]);
-  const [looseLoopWidth, setLooseLoopWidth] = useState(20);
 
   const handleModalOpen = () => {
     setIsOpen(false);
@@ -177,41 +176,6 @@ function BottomSheet({ tag }: { tag: string[] }) {
     e.stopPropagation();
   };
 
-  const handleSlide = (step: string) => {
-    const steps = ["step1", "step2", "step3", "step4", "step5"];
-
-    const currentIndex = steps.indexOf(isSliding || step);
-
-    let newIndex = steps.indexOf(step);
-    if (currentIndex < newIndex) {
-      newIndex = Math.min(steps.length - 1, currentIndex + 1);
-    } else if (currentIndex > newIndex) {
-      newIndex = Math.max(0, currentIndex - 1);
-    }
-
-    setTimeout(() => {
-      setIsSliding(steps[newIndex]);
-    }, 500);
-  };
-
-  const handleLoopClick = (loopId: number) => {
-    const loopToAdd = tiedLoops.find((item: Loop) => item.id === loopId);
-  
-    setTiedLoops((prevTiedLoops: Loop[]) =>
-      prevTiedLoops.filter((item: Loop) => loopId !== item.id)
-    );
-  
-    setLooseLoopWidth((prev) => {
-      return prev === 20 ? 40 : prev + 10; 
-    });
-  
-    if (loopToAdd) {
-      setLooseLoops((prevLooseLoops: Loop[]) => [
-        ...prevLooseLoops,
-        { ...loopToAdd, isMoving: true },
-      ]);
-    }
-  };
   const stepOneRenderer = () => {
     return (
       <>
@@ -223,45 +187,8 @@ function BottomSheet({ tag }: { tag: string[] }) {
         </TitleDiv>
         <LoopDiv>
           <LoopWrapper>
-            <TiedLoop
-              isFull={looseLoops.length > 0}
-              style={{ width: `${100 - looseLoopWidth}%` }}
-            >
-              {tiedLoops.map((item) => {
-                return (
-                  <LoopStyled
-                    key={item.id}
-                    isClicked={true}
-                    isMoving={item.isMoving}
-                    id={item.id}
-                    style={{
-                      top: "50%",
-                      left: item.default,
-                      transform: `translate(-50%, -50%)`,
-                    }}
-                    onClick={() => handleLoopClick(item.id)}
-                  />
-                );
-              })}
-            </TiedLoop>
-            <LooseLoop style={{ width: `${looseLoopWidth}%` }}>
-              {looseLoops.map((item) => {
-                return (
-                  <LoopStyled
-                    key={item.id}
-                    isClicked={true}
-                    isMoving={item.isMoving}
-                    id={item.id}
-                    style={{
-                      top: "50%",
-                      left: item.loose,
-                      transform: `translate(-50%, -50%)`,
-                    }}
-                    onClick={() => handleLoopClick(item.id)}
-                  />
-                );
-              })}
-            </LooseLoop>
+            <TiedLoop></TiedLoop>
+            <LooseLoop></LooseLoop>
           </LoopWrapper>
           <NextBtn>
             <NextBtnImg alt="Next" />
