@@ -6,18 +6,14 @@ import Loop from "@/shared/assets/img/loop.svg";
 import NextBtnImg from "@/shared/assets/img/next_Icon.svg";
 import { changeGroupChain, changeSingleChain } from "../../utils/changeChain";
 
-const Layout = styled.div`
+const Layout = styled.div<{ isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  background: ${(props) => (props.isOpen ? "rgba(0, 0, 0, 0.8)" : "")};
+  z-index: ${(props) => (props.isOpen ? "999" : "")};
 `;
 const Wrapper = styled.div``;
 
@@ -48,6 +44,10 @@ const P = styled.p`
 const TitleDiv = styled.div`
   margin-top: 50px;
 `;
+const StepTwoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const TagDiv = styled.div`
   width: 100%;
@@ -72,33 +72,6 @@ const LoopWrapper = styled.div`
   width: 80%;
   height: 100%;
   position: relative;
-`;
-const LoopStyled = styled(Loop)<{
-  isStage?: boolean;
-  isMoving?: boolean;
-  id: number;
-}>`
-  position: absolute;
-  width: 72.273px;
-  height: 60px;
-  transition: left 0.5s ease, transform 0.5s ease;
-  cursor: ${({ isStage }) => (isStage ? "pointer" : "default")};
-
-  @keyframes moveAnimation {
-    from {
-      transform: translate(-80%, -50%);
-    }
-    to {
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  ${({ isMoving, id }) =>
-    isMoving && id !== 3
-      ? `
-      animation: moveAnimation 0.5s ease;
-    `
-      : ""}
 `;
 
 const Strong = styled.strong`
@@ -145,6 +118,12 @@ const ChainDiv = styled.div<{ isReversing?: boolean }>`
 `;
 
 const GroupChainDiv = styled.div``;
+const StepTwoWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+`;
 
 const SingleChainDiv = styled.div``;
 interface Loop {
@@ -157,43 +136,44 @@ interface Loop {
 
 function BottomSheet({ tag }: { tag: string[] }) {
   const [isOpen, setIsOpen] = useState(true);
-  const [step, setStep] = useState("zero");
+  const [chainStep, setChainStep] = useState("zero");
   const [isReversing, setIsReversing] = useState(false);
+  const [step, setStep] = useState(1);
 
   const handleModalOpen = () => {
-    setIsOpen(false);
+    setIsOpen(!isOpen);
   };
 
   const handleDialogClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
-  const handleStep = () => {
-    const stepArr = ["zero", "one", "two", "three", "four"];
-    const currentInx = stepArr.findIndex((s) => s === step);
+  const handleChainStep = () => {
+    const chainStepArr = ["zero", "one", "two", "three", "four"];
+    const currentIndex = chainStepArr.findIndex((s) => s === chainStep);
 
     let nextStep;
 
     if (isReversing) {
-      if (currentInx === 0) {
+      if (currentIndex === 0) {
         setIsReversing(false);
-        nextStep = stepArr[currentInx + 1];
+        nextStep = chainStepArr[currentIndex + 1];
       } else {
-        if (currentInx === 1) {
+        if (currentIndex === 1) {
           setIsReversing(false);
         }
-        nextStep = stepArr[currentInx - 1];
+        nextStep = chainStepArr[currentIndex - 1];
       }
     } else {
-      if (currentInx === stepArr.length - 1) {
+      if (currentIndex === chainStepArr.length - 1) {
         // 마지막인덱스일때 뒤집어준다.
         setIsReversing(true);
-        nextStep = stepArr[currentInx - 1];
+        nextStep = chainStepArr[currentIndex - 1];
       } else {
-        nextStep = stepArr[currentInx + 1];
+        nextStep = chainStepArr[currentIndex + 1];
       }
     }
 
-    setStep(nextStep);
+    setChainStep(nextStep);
   };
 
   const stepOneRenderer = () => {
@@ -208,15 +188,19 @@ function BottomSheet({ tag }: { tag: string[] }) {
         <LoopDiv>
           <LoopWrapper>
             <ChainDiv isReversing={isReversing}>
-              <GroupChainDiv onClick={isReversing ? undefined : handleStep}>
-                {changeGroupChain(step)}
+              <GroupChainDiv
+                onClick={isReversing ? undefined : handleChainStep}
+              >
+                {changeGroupChain(chainStep)}
               </GroupChainDiv>
-              <SingleChainDiv onClick={isReversing ? handleStep : undefined}>
-                {changeSingleChain(step)}
+              <SingleChainDiv
+                onClick={isReversing ? handleChainStep : undefined}
+              >
+                {changeSingleChain(chainStep)}
               </SingleChainDiv>
             </ChainDiv>
           </LoopWrapper>
-          <NextBtn>
+          <NextBtn onClick={stepHandler}>
             <NextBtnImg alt="Next" />
           </NextBtn>
         </LoopDiv>
@@ -231,27 +215,38 @@ function BottomSheet({ tag }: { tag: string[] }) {
 
   const stepTwoRenderer = () => {
     return (
-      <>
-        <PrevBtn>
-          <NextBtnImg className="prev-btn" alt="Prev" />
-        </PrevBtn>
-      </>
+      <StepTwoContainer>
+        <TitleDiv>
+          <P>이 글을 어떻게 할까요?</P>
+        </TitleDiv>
+        <StepTwoWrapper>
+          <PrevBtn>
+            <NextBtnImg className="prev-btn" alt="Prev" onClick={stepHandler} />
+          </PrevBtn>
+        </StepTwoWrapper>
+      </StepTwoContainer>
     );
+  };
+  const stepHandler = () => {
+    if (step === 1) {
+      setStep(2);
+    }
+    if (step === 2) {
+      setStep(1);
+    }
   };
 
   return (
-    isOpen && (
-      <Layout onClick={handleModalOpen}>
-        <BottomSeet isOpen={true} size="large">
-          <Wrapper onClick={handleDialogClick}>
-            <TopNavigatorDiv>
-              <NavigatorChip onClick={handleModalOpen}></NavigatorChip>
-            </TopNavigatorDiv>
-            {stepOneRenderer()}
-          </Wrapper>
-        </BottomSeet>
-      </Layout>
-    )
+    <Layout isOpen={isOpen}>
+      <BottomSeet isOpen={isOpen} size="large">
+        <Wrapper onClick={handleDialogClick}>
+          <TopNavigatorDiv>
+            <NavigatorChip onClick={handleModalOpen}></NavigatorChip>
+          </TopNavigatorDiv>
+          {step === 2 ? stepTwoRenderer() : stepOneRenderer()}
+        </Wrapper>
+      </BottomSeet>
+    </Layout>
   );
 }
 

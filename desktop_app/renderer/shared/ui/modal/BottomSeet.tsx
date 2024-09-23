@@ -4,6 +4,7 @@ import color from "@/shared/styles/color";
 
 interface DialogProps {
   size?: string;
+  isVisible?: boolean;
 }
 
 const Dialog = styled.div<DialogProps>`
@@ -14,7 +15,8 @@ const Dialog = styled.div<DialogProps>`
   position: fixed;
   left: 50%;
   bottom: 0;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(${(props) => (props.isVisible ? "0" : "80%")});
+  transition: transform 0.5s ease; 
   border: none;
   margin: 0;
   border-radius: 20px 20px 0px 0px;
@@ -29,10 +31,7 @@ interface BottomSheetProps {
 }
 
 function BottomSeet({ children, isOpen, size }: BottomSheetProps) {
-  if (!isOpen) {
-    return null;
-  }
-  return <Dialog size={size}>{children}</Dialog>;
+  return <Dialog size={size} isVisible={isOpen}>{children}</Dialog>;
 }
 
 export default BottomSeet;
