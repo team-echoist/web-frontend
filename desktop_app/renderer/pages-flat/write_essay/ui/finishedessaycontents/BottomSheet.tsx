@@ -14,7 +14,7 @@ const Layout = styled.div<{ isOpen: boolean }>`
   width: 100%;
   height: 100%;
   background: ${(props) => (props.isOpen ? "rgba(0, 0, 0, 0.8)" : "")};
-  z-index: ${(props) => (props.isOpen ? "999" : "")};
+  z-index: ${(props) => (props.isOpen ? "999" : "0")};
 `;
 const Wrapper = styled.div``;
 

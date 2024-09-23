@@ -16,6 +16,7 @@ const PrevBtn = styled.button`
   position: fixed;
   top: 40px;
   left: 40px;
+  z-index:1;
   &:focus {
     outline: none;
   }
