@@ -69,7 +69,6 @@ const LoopDiv = styled.div`
 const LoopWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  border: 3px solid blue;
   width: 80%;
   height: 100%;
   position: relative;
@@ -129,25 +128,25 @@ const PrevBtn = styled.button`
   }
 `;
 
-const TiedLoop = styled.div<{ isFull?: boolean }>`
-  border: 3px solid blue;
-  width: ${(props) => (props.isFull ? "60%" : "70%")};
+const ChainDiv = styled.div<{ isReversing?: boolean }>`
+  width: 100%;
   height: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   position: relative;
+  .forward-click-able {
+    cursor: ${({ isReversing }) => (isReversing ? "default" : "pointer")};
+  }
+
+  .reverse-click-able {
+    cursor: ${({ isReversing }) => (isReversing ? "pointer" : "default")};
+  }
 `;
 
-const LooseLoop = styled.div<{ isFull?: boolean }>`
-  border: 3px solid red;
-  width: ${(props) => (props.isFull ? "40%" : "30%")};
-  height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-`;
+const GroupChainDiv = styled.div``;
+
+const SingleChainDiv = styled.div``;
 interface Loop {
   id: number;
   loose: string;
@@ -158,15 +157,8 @@ interface Loop {
 
 function BottomSheet({ tag }: { tag: string[] }) {
   const [isOpen, setIsOpen] = useState(true);
-  const [isSliding, setIsSliding] = useState("step1");
-  const [leftPosition, setLeftPosition] = useState("60%");
-  const [tiedLoops, setTiedLoops] = useState<Loop[]>([
-    { id: 1, default: "44%", loose: "30%", tied: "px", isMoving: false },
-    { id: 2, default: "53%", loose: "43%", tied: "px", isMoving: false },
-    { id: 3, default: "62%", loose: "56%", tied: "px", isMoving: false },
-    { id: 4, default: "71%", loose: "68%", tied: "px", isMoving: false },
-    { id: 5, default: "80%", loose: "30%", tied: "px", isMoving: false },
-  ]);
+  const [step, setStep] = useState("zero");
+  const [isReversing, setIsReversing] = useState(false);
 
   const handleModalOpen = () => {
     setIsOpen(false);
@@ -174,6 +166,34 @@ function BottomSheet({ tag }: { tag: string[] }) {
 
   const handleDialogClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+  };
+  const handleStep = () => {
+    const stepArr = ["zero", "one", "two", "three", "four"];
+    const currentInx = stepArr.findIndex((s) => s === step);
+
+    let nextStep;
+
+    if (isReversing) {
+      if (currentInx === 0) {
+        setIsReversing(false);
+        nextStep = stepArr[currentInx + 1];
+      } else {
+        if (currentInx === 1) {
+          setIsReversing(false);
+        }
+        nextStep = stepArr[currentInx - 1];
+      }
+    } else {
+      if (currentInx === stepArr.length - 1) {
+        // 마지막인덱스일때 뒤집어준다.
+        setIsReversing(true);
+        nextStep = stepArr[currentInx - 1];
+      } else {
+        nextStep = stepArr[currentInx + 1];
+      }
+    }
+
+    setStep(nextStep);
   };
 
   const stepOneRenderer = () => {
@@ -187,8 +207,14 @@ function BottomSheet({ tag }: { tag: string[] }) {
         </TitleDiv>
         <LoopDiv>
           <LoopWrapper>
-            <TiedLoop></TiedLoop>
-            <LooseLoop></LooseLoop>
+            <ChainDiv isReversing={isReversing}>
+              <GroupChainDiv onClick={isReversing ? undefined : handleStep}>
+                {changeGroupChain(step)}
+              </GroupChainDiv>
+              <SingleChainDiv onClick={isReversing ? handleStep : undefined}>
+                {changeSingleChain(step)}
+              </SingleChainDiv>
+            </ChainDiv>
           </LoopWrapper>
           <NextBtn>
             <NextBtnImg alt="Next" />
