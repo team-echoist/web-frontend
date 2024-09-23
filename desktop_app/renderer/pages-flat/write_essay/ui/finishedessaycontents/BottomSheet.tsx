@@ -5,6 +5,7 @@ import color from "@/shared/styles/color";
 import Loop from "@/shared/assets/img/loop.svg";
 import NextBtnImg from "@/shared/assets/img/next_Icon.svg";
 import { changeGroupChain, changeSingleChain } from "../../utils/changeChain";
+import { useRouter } from "next/navigation";
 
 const Layout = styled.div<{ isOpen: boolean }>`
   position: fixed;
@@ -139,6 +140,7 @@ function BottomSheet({ tag }: { tag: string[] }) {
   const [chainStep, setChainStep] = useState("zero");
   const [isReversing, setIsReversing] = useState(false);
   const [step, setStep] = useState(1);
+  const router = useRouter();
 
   const handleModalOpen = () => {
     setIsOpen(!isOpen);
@@ -213,6 +215,11 @@ function BottomSheet({ tag }: { tag: string[] }) {
     );
   };
 
+  const navigateEssayDetails = () => {
+    router.push(`essay_details?id=id&type=published`);
+    // ui생기면 분기처리 private/published/linkedout
+  };
+
   const stepTwoRenderer = () => {
     return (
       <StepTwoContainer>
@@ -220,6 +227,7 @@ function BottomSheet({ tag }: { tag: string[] }) {
           <P>이 글을 어떻게 할까요?</P>
         </TitleDiv>
         <StepTwoWrapper>
+          <button onClick={navigateEssayDetails}>임시 버튼</button>
           <PrevBtn>
             <NextBtnImg className="prev-btn" alt="Prev" onClick={stepHandler} />
           </PrevBtn>

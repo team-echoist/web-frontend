@@ -11,6 +11,7 @@ import { TermsofUse } from "./authentication";
 import { Essay } from "./essay";
 import { Community } from "./community";
 import { UnfinishedWriting } from "./unfinished_writing";
+import { EssayDetail } from "./essay_detail";
 
 const ProtectedMain = withAuth(Main);
 const ProtectedUnfinishedWriting = withAuth(UnfinishedWriting);
@@ -80,6 +81,8 @@ const RenderView: React.FC<RenderViewProps> = ({ pageName }) => {
       return <ProtectedMypage />;
     case "write_essay":
       return <ProtectedWriteEssay />;
+    case "essay_details":
+      return <EssayDetail />;
     case "unfinished_writing":
       return <ProtectedUnfinishedWriting />;
     default:
