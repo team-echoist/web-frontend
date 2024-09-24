@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
 import { RoundConfirm } from "@/shared/ui/modal";
 import FinishedEssay from "./finishedessaycontents/FinishedEssay";
+import { base64ToFile } from "../utils/parsingbase64";
 
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
@@ -64,7 +65,7 @@ export const WriteEssay = () => {
       values: [],
     },
   });
-  const [imageFile, setImageFile] = useState<File | string | null>(null);
+  const [imageSrc, setImageSrc] = useState(null);
   const [id, setId] = useState<string>(defaultId);
   const [isCancel, setIsCancel] = useState(false);
   const [step, setStep] = useState("write");
@@ -80,6 +81,7 @@ export const WriteEssay = () => {
         setTitle(entry.title);
         setValue(entry.value);
         setBottomValue(entry.bottomValue);
+        setImageSrc(entry.imageSrc);
       }
     };
     if (currentId) {
@@ -106,7 +108,7 @@ export const WriteEssay = () => {
         }
       }
     }
-  }, [id,step]);
+  }, [id, step]);
 
   useEffect(() => {
     saveToLocalStorage();
@@ -151,15 +153,14 @@ export const WriteEssay = () => {
     );
     localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
     localStorage.setItem("currentEssayId", "");
-    if(step === "finish"){
+    if (step === "finish") {
       setIsCancel(!isCancel);
       setStep("write");
       setTitle("제목 없음");
       setValue("");
-    }else{
+    } else {
       router.push("/web/main");
     }
-  
   };
 
   const handleSave = () => {
@@ -192,7 +193,6 @@ export const WriteEssay = () => {
           setValue={setValue}
           tagValue={bottomValue}
           setTagValue={setBottomValue}
-          setImageFile={setImageFile}
         />
       </EditorContainer>
       {isBottomFieldVisible && (
@@ -205,7 +205,13 @@ export const WriteEssay = () => {
   );
 
   const renderFinishedEssay = () => (
-    <FinishedEssay title={title} desc={value} tag={bottomValue?.tag.values} />
+    <FinishedEssay
+      title={title}
+      desc={value}
+      tag={bottomValue?.tag.values}
+      location={bottomValue?.location.values}
+      imageFile={imageSrc ? base64ToFile(imageSrc, "thumbnail image") : null}
+    />
   );
 
   return (

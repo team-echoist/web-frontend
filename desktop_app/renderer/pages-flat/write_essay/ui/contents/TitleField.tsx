@@ -44,11 +44,15 @@ const Button = styled.button<ButtonProps>`
 
 const TitleDiv = styled.div`
   width: 89.98%;
+  input {
+    width: 100%;
+  }
   height: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   padding: 10px 20px;
+  position: relative;
 `;
 interface TitleFieldProps {
   title: string;
@@ -81,6 +85,7 @@ function TitleField({
             value={title}
             placeholder="제목을 입력해 주세요"
             onChange={(e) => setTitle(e.target.value)}
+            isTextCenter ={true}
           />
         )}
       </TitleDiv>

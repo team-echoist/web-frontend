@@ -15,11 +15,13 @@ interface InputProps {
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyPress?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  isTextCenter?:boolean;
 }
 
 const Input = styled.input<{
   size: "small" | "middle" | "large";
   value?: string;
+  isTextCenter: boolean;
 }>`
   background: none;
   border: none;
@@ -29,15 +31,17 @@ const Input = styled.input<{
   box-shadow: none;
   width: 100%;
   font-family: Pretendard;
-  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 170%;
+  text-align: ${({ isTextCenter }) => (isTextCenter ? "center" : "left")}; 
   color: ${({ value }) =>
     Number(value?.length) > 0 ? color.white : "#686868"};
+
   ::placeholder {
     color: #686868;
   }
+
   ${({ size }) => sizeMapper[size]}
 `;
 
@@ -47,6 +51,7 @@ const BaseInput: React.FC<InputProps> = ({
   value,
   onChange,
   onKeyPress,
+  isTextCenter=false,
   ...props
 }) => {
   return (
@@ -56,6 +61,7 @@ const BaseInput: React.FC<InputProps> = ({
       value={value}
       onChange={onChange}
       onKeyDown={onKeyPress}
+      isTextCenter={isTextCenter}
       {...props}
     />
   );

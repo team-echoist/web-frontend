@@ -98,13 +98,11 @@ function Editor({
   setValue,
   tagValue,
   setTagValue,
-  setImageFile,
 }: {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   tagValue: TagValue;
   setTagValue: Dispatch<SetStateAction<TagValue>>;
-  setImageFile: Dispatch<SetStateAction<File | string | null>>;
 }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -170,8 +168,9 @@ function Editor({
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file);
+
       convertFileToBase64(file, (base64Url: string) => {
+        setThumbnailImage(base64Url);
         insertImageIntoEditor(base64Url);
       });
     }

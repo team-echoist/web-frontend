@@ -78,7 +78,7 @@ const SaveBtn = styled.button`
   align-items: center;
   margin-right: 12px !important;
   &:hover {
-    color: ${color.pointcolor};
+    color: ${color.pointcolor} !important;
   }
 `;
 

@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { BottomSeet } from "@/shared/ui/modal";
 import color from "@/shared/styles/color";
-import Loop from "@/shared/assets/img/loop.svg";
 import NextBtnImg from "@/shared/assets/img/next_Icon.svg";
 import { changeGroupChain, changeSingleChain } from "../../utils/changeChain";
 import { useRouter } from "next/navigation";
-
+import Savebtn from "@/shared/assets/img/button/button_save.webp";
+import PublishBtn from "@/shared/assets/img/button/button_publish.webp";
+import LinkedoutBtn from "@/shared/assets/img/button/button_linkedout.webp";
+import Image from "next/image";
+import { submitEssay } from "../../api";
 
 const Layout = styled.div<{ isOpen: boolean }>`
   position: fixed;
@@ -125,23 +128,47 @@ const StepTwoWrapper = styled.div`
   display: flex;
   position: relative;
   justify-content: center;
+  margin-top: 31px;
+  img {
+    cursor: pointer;
+  }
 `;
 
 const SingleChainDiv = styled.div``;
-interface Loop {
-  id: number;
-  loose: string;
-  tied: string;
-  default: string;
-  isMoving: boolean;
-}
 
-function BottomSheet({ tag }: { tag: string[] }) {
+const BtnDiv = styled.div`
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+`;
+export interface Essay {
+  id: string;
+  title: string;
+  timestamp: string;
+  checked: boolean;
+}
+function BottomSheet({
+  tag,
+  title,
+  desc,
+  location,
+  imageFile,
+}: {
+  tag: string[];
+  title: String;
+  desc: string;
+  location: string[];
+  imageFile: File | string | null;
+}) {
   const [isOpen, setIsOpen] = useState(true);
   const [chainStep, setChainStep] = useState("zero");
   const [isReversing, setIsReversing] = useState(false);
   const [step, setStep] = useState(1);
   const router = useRouter();
+  const currentId = localStorage.getItem("currentEssayId");
 
   const handleModalOpen = () => {
     setIsOpen(!isOpen);
@@ -216,10 +243,51 @@ function BottomSheet({ tag }: { tag: string[] }) {
     );
   };
 
-  const navigateEssayDetails = () => {
-    router.push(`essay_details?id=id&type=published`);
-    // router.push(`essay_details`);
-    // ui생기면 분기처리 private/published/linkedout
+  const handleSaveEssay = async (e: React.MouseEvent<HTMLElement>) => {
+    const { id } = e.currentTarget.dataset;
+    try {
+      if (title.length === 0 || desc.length === 0) {
+        alert("입력란을 확인해 주세요.");
+        return;
+      }
+
+      const formData = new FormData();
+
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+
+      const body = {
+        title: String(title),
+        content: String(desc),
+        status: String(id),
+        tags: tag,
+        location: "",
+        thumbnail: "",
+      };
+
+      if (location.length > 0) {
+        const tempLocation = location[0];
+        if (tempLocation) {
+          const numbersOnly = tempLocation.match(/[\d.]+/g)?.join(", ");
+          body.location = String(numbersOnly);
+        }
+      }
+
+      const { data, status } = await submitEssay(formData, body);
+
+      if (status === 201) {
+        const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
+        let deleteSaveData = storedData.filter(
+          (item: Essay) => item.id !== currentId
+        );
+        localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
+        localStorage.setItem("currentEssayId", "");
+        router.push(`essay_details?id=${data.id}&type=${id}`);
+      }
+    } catch (err) {
+      console.log("err", err);
+    }
   };
 
   const stepTwoRenderer = () => {
@@ -229,10 +297,35 @@ function BottomSheet({ tag }: { tag: string[] }) {
           <P>이 글을 어떻게 할까요?</P>
         </TitleDiv>
         <StepTwoWrapper>
-          <button onClick={navigateEssayDetails}>임시 버튼</button>
           <PrevBtn>
             <NextBtnImg className="prev-btn" alt="Prev" onClick={stepHandler} />
           </PrevBtn>
+          <BtnDiv>
+            <Image
+              src={Savebtn.src}
+              width={340}
+              height={60}
+              alt="save_btn"
+              data-id="private"
+              onClick={(e) => handleSaveEssay(e)}
+            />
+            <Image
+              src={PublishBtn.src}
+              width={340}
+              height={60}
+              alt="publish_btn"
+              data-id="published"
+              onClick={(e) => handleSaveEssay(e)}
+            />
+            <Image
+              src={LinkedoutBtn.src}
+              width={340}
+              height={60}
+              alt="linkedout_btn"
+              data-id="linkedout"
+              onClick={(e) => handleSaveEssay(e)}
+            />
+          </BtnDiv>
         </StepTwoWrapper>
       </StepTwoContainer>
     );

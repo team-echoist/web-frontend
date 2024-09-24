@@ -8,6 +8,7 @@ import { BaseButton } from "@/shared/ui/button";
 import { Tag } from "@/shared/ui/tag";
 import TagChip from "./TagChip";
 import { formatLatitudeLongitude } from "@/shared/lib/location";
+import { useStore } from "@/shared/store";
 
 const Layout = styled.div`
   width: 80%;
@@ -76,12 +77,14 @@ function TagField({ activeTag, bottomValue, setBottomValue }: OptionType) {
     tag: false,
     location: false,
   });
+  const user = useStore((state) => state.user);
+
 
   useEffect(() => {
     const fetchLocation = async () => {
       try {
         const locationData = await window.Electron.getLocation();
-        if (locationData) {
+        if (locationData && user?.locationConsent) {
           const { formattedLat, formattedLng } = formatLatitudeLongitude(
             locationData.latitude,
             locationData.longitude
@@ -102,7 +105,7 @@ function TagField({ activeTag, bottomValue, setBottomValue }: OptionType) {
     };
 
     fetchLocation();
-  }, []);
+  }, [user]);
 
   const mapper: Record<string, MapperValue> = {
     tag: {
@@ -149,11 +152,8 @@ function TagField({ activeTag, bottomValue, setBottomValue }: OptionType) {
               ...prev.location,
               values:
                 prev.location.values.length === 2
-                  ? [
-                      prev.location.values[0],
-                      inputValue.trim(),       
-                    ]
-                  : [prev.location.values[0], inputValue.trim()]
+                  ? [prev.location.values[0], inputValue.trim()]
+                  : [prev.location.values[0], inputValue.trim()],
             },
           }));
         }

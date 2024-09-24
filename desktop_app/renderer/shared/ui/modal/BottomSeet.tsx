@@ -9,7 +9,7 @@ interface DialogProps {
 
 const Dialog = styled.div<DialogProps>`
   width: ${(props) => (props.size === "large" ? "700px" : "442px")};
-  height: 359px;
+  height:  ${(props) => (props.size === "large" ? "400px" : "359px")};
   flex-shrink: 0;
   filter: drop-shadow(0.1px 0.1px 1px rgba(255, 255, 255, 0.1));
   position: fixed;
