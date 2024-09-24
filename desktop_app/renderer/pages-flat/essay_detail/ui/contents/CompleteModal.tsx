@@ -173,14 +173,17 @@ function CompleteModal() {
   }
   console.log("searchParams", searchParams.get("type"));
   //  private/published/linkedout/reported
+  if(!modalType){
+    return null
+  }
   return (
     <GeneralModal isOpen={isOpen} isBackgroundVisible={true}>
       <ChildrenDiv>
-        <ImgDiv>{mapper["reported"].img}</ImgDiv>
+        <ImgDiv>{mapper["published"].img}</ImgDiv>
         <ContentsDiv>
-          <TitleDiv>{mapper["reported"].title}</TitleDiv>
+          <TitleDiv>{mapper["published"].title}</TitleDiv>
           <DescDiv>
-            <P>{mapper["reported"].desc}</P>
+            <P>{mapper["published"].desc}</P>
           </DescDiv>
         </ContentsDiv>
         <BtnDiv>

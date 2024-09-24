@@ -7,6 +7,7 @@ import NextBtnImg from "@/shared/assets/img/next_Icon.svg";
 import { changeGroupChain, changeSingleChain } from "../../utils/changeChain";
 import { useRouter } from "next/navigation";
 
+
 const Layout = styled.div<{ isOpen: boolean }>`
   position: fixed;
   top: 0;
@@ -217,6 +218,7 @@ function BottomSheet({ tag }: { tag: string[] }) {
 
   const navigateEssayDetails = () => {
     router.push(`essay_details?id=id&type=published`);
+    // router.push(`essay_details`);
     // ui생기면 분기처리 private/published/linkedout
   };
 

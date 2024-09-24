@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import color from "@/shared/styles/color";
-import Logo from "@/shared/assets/img/login_logo.webp"
-import Image from "next/image";
+import Subtract from "@/shared/assets/img/subtract.svg";
 
 interface ModalProps {
   isOpen: boolean;
@@ -24,14 +22,15 @@ const ModalOverlay = styled.div<{ isOpen: boolean }>`
   z-index: 1000;
 `;
 
-const ModalContainer = styled.div`
-  background-color: #1d1d1d;
-  background-size: cover; 
+const ModalContainer = styled.div<{ isBackgroundVisible: boolean }>`
+  background-color: ${({ isBackgroundVisible }) =>
+    isBackgroundVisible ? "none" : "#1d1d1d"};
   border-radius: 10px;
   padding: 20px;
   width: 340px;
   height: 325px;
   max-width: 90%;
+  position: relative;
 `;
 const GeneralModal: React.FC<ModalProps> = ({
   isOpen,
@@ -39,11 +38,25 @@ const GeneralModal: React.FC<ModalProps> = ({
   children,
   isBackgroundVisible = false,
 }) => {
+  console.log("isBackgroundVisible", isBackgroundVisible);
   return (
     <ModalOverlay isOpen={isOpen} onClick={onClose}>
       <ModalContainer
         onClick={(e) => e.stopPropagation()}
+        isBackgroundVisible={isBackgroundVisible}
       >
+        {isBackgroundVisible && (
+          <Subtract
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "380px",
+              height: "365px",
+              zIndex: -1,
+            }}
+          />
+        )}
         {children}
       </ModalContainer>
     </ModalOverlay>
