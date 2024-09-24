@@ -27,7 +27,7 @@ const Button = styled.button<ButtonProps>`
   padding: 10px 20px;
   border-radius: 4px;
   white-space: nowrap;
-  z-index:1;
+  z-index: 1;
   ${({ isCancel, isDelete }) =>
     isCancel
       ? css`

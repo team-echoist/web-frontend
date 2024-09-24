@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import { RoundConfirm } from "@/shared/ui/modal";
 import FinishedEssay from "./finishedessaycontents/FinishedEssay";
 
-
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
   { ssr: false }
@@ -107,7 +106,7 @@ export const WriteEssay = () => {
         }
       }
     }
-  }, [id]);
+  }, [id,step]);
 
   useEffect(() => {
     saveToLocalStorage();
@@ -152,7 +151,15 @@ export const WriteEssay = () => {
     );
     localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
     localStorage.setItem("currentEssayId", "");
-    router.push("/web/main");
+    if(step === "finish"){
+      setIsCancel(!isCancel);
+      setStep("write");
+      setTitle("제목 없음");
+      setValue("");
+    }else{
+      router.push("/web/main");
+    }
+  
   };
 
   const handleSave = () => {
@@ -173,7 +180,8 @@ export const WriteEssay = () => {
       setStep("finish");
     }
     if (step === "finish") {
-      setStep("write");
+      setIsCancel(!isCancel);
+      // setStep("write");
     }
   };
   const renderEditor = () => (
@@ -202,18 +210,34 @@ export const WriteEssay = () => {
 
   return (
     <Layout>
-      {isCancel && (
-        <RoundConfirm
-          title="지금 취소하면 모든 내용이 삭제됩니다."
-          cancelText="작성취소후 메인으로 가기"
-          saveText="임시저장후 메인으로 가기"
-          text="취소"
-          onCancle={handlecancle}
-          onSave={handleSave}
-          onClick={handlenavigateBack}
-        />
-      )}
-
+      {isCancel &&
+        (step === "write" ? (
+          <RoundConfirm
+            title="지금 취소하면 모든 내용이 삭제됩니다."
+            firstText="작성취소후 메인으로 가기"
+            secondText="임시저장후 메인으로 가기"
+            text="취소"
+            onFirstFunc={handlecancle}
+            onSecondFunc={handleSave}
+            onThirdFunc={handlenavigateBack}
+          />
+        ) : step === "finish" ? (
+          <RoundConfirm
+            title={
+              <>
+                삭제된 글은 복구할 수 없습니다. <br />
+                삭제하시겠습니까?
+              </>
+            }
+            firstText="삭제하기"
+            secondText="취소"
+            onFirstFunc={handlecancle}
+            onSecondFunc={() => {
+              setIsCancel(!isCancel);
+            }}
+            right="30px"
+          />
+        ) : null)}
       <TitleField
         title={title}
         setTitle={setTitle}

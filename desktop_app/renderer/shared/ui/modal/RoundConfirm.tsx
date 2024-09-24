@@ -16,7 +16,7 @@ const Layout = styled.div`
   flex-direction: column;
 `;
 
-const Confirm = styled.div`
+const Confirm = styled.div<{ right?: string }>`
   width: 350px;
   // height: 200px;
   flex-shrink: 0;
@@ -25,7 +25,7 @@ const Confirm = styled.div`
   z-index: 500;
   position: fixed;
   top: 144px;
-  left: 30px;
+  ${(props) => (props.right ? `right: ${props.right};` : "left: 30px;")}
   display: flex;
   flex-direction: column;
 `;
@@ -89,28 +89,30 @@ const Button = styled.button`
 
 function RoundConfirm({
   title,
-  cancelText,
-  saveText,
+  firstText,
+  secondText,
   text,
-  onCancle,
-  onSave,
-  onClick,
+  onFirstFunc,
+  onSecondFunc,
+  onThirdFunc,
+  right,
 }: {
-  title: string;
-  cancelText: string;
-  saveText: string;
-  text?: string;
-  onCancle: () => void;
-  onSave: () => void;
-  onClick?: () => void;
+  title: React.ReactNode;
+  firstText: React.ReactNode;
+  secondText: React.ReactNode;
+  text?: React.ReactNode;
+  onFirstFunc: () => void;
+  onSecondFunc: () => void;
+  onThirdFunc?: () => void;
+  right?: string;
 }) {
   return (
     <Layout>
-      <Confirm>
+      <Confirm right={right}>
         <Title>{title}</Title>
-        <CancelBtn onClick={onCancle}>{cancelText}</CancelBtn>
-        <SaveBtn onClick={onSave}>{saveText}</SaveBtn>
-        {text && <Button onClick={onClick}>{text}</Button>}
+        <CancelBtn onClick={onFirstFunc}>{firstText}</CancelBtn>
+        <SaveBtn onClick={onSecondFunc}>{secondText}</SaveBtn>
+        {text && <Button onClick={onThirdFunc}>{text}</Button>}
       </Confirm>
     </Layout>
   );
