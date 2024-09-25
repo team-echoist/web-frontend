@@ -65,7 +65,7 @@ const CloseButtonDiv = styled.div`
 
 interface GeneralToastProps {
   title: string;
-  desc: string;
+  desc?: string;
   isShowToast: boolean;
   setIsShowToast: Dispatch<SetStateAction<boolean>>;
   positionTop?:string,

@@ -192,6 +192,9 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+.ql-snow .ql-editor strong {    
+    font-weight: bold !important;
+}
 `;
 
 export default GlobalStyleComponent;

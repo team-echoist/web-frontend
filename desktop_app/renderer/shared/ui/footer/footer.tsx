@@ -15,6 +15,7 @@ const Container = styled.footer<{ isModalOpen: boolean }>`
   width: ${({ isModalOpen }) =>
     isModalOpen ? "calc(100vw - 390px)" : "100vw"};
   height: 77px;
+  padding-bottom:20px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
@@ -36,21 +37,21 @@ const Wrapper = styled.div`
 
 interface IconMap {
   home: React.ReactElement;
-  essay: React.ReactElement;
+  myessay: React.ReactElement;
   community: React.ReactElement;
   mypage: React.ReactElement;
 }
 
 const disableIcon: IconMap = {
   home: <HomeDisableIcon />,
-  essay: <EssayDisableIcon />,
+  myessay: <EssayDisableIcon />,
   community: <CommunityDisableIcon />,
   mypage: <MypageDisableIcon />,
 };
 
 const focusIcon: IconMap = {
   home: <HomeFocusIcon />,
-  essay: <EssayFocusIcon />,
+  myessay: <EssayFocusIcon />,
   community: <CommunityFocusIcon />,
   mypage: <MypageFocusIcon />,
 };
@@ -58,15 +59,15 @@ const focusIcon: IconMap = {
 interface FooterProps {
   focusedKey: keyof IconMap;
   onIconClick: (key: keyof IconMap) => void;
-  isModalOpen: boolean;
+  isModalOpen?: boolean;
 }
 
 export const Footer = ({
   focusedKey,
   onIconClick,
-  isModalOpen,
+  isModalOpen=false,
 }: FooterProps) => {
-  const icons = ["home", "essay", "community", "mypage"].map((key) => {
+  const icons = ["home", "myessay", "community", "mypage"].map((key) => {
     const isFocused = focusedKey === key;
     const IconComponent = isFocused
       ? focusIcon[key as keyof IconMap]

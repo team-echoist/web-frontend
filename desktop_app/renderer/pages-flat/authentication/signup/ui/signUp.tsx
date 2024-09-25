@@ -118,9 +118,12 @@ function SignUP() {
         setIsShowToast={hasError ? setHasError : setIsVerificationOpen}
         positionTop={hasError ? "" : "45.4vh"}
       />
-      <BottomSeet isOpen={isVerificationOpen}>
-        <VerificationField />
-      </BottomSeet>
+      {isVerificationOpen && (
+        <BottomSeet isOpen={isVerificationOpen}>
+          <VerificationField />
+        </BottomSeet>
+      )}
+
       <PrevButton />
       <TextField
         title="이메일로 가입하기"
