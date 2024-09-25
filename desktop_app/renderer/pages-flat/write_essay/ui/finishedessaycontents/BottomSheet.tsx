@@ -283,10 +283,11 @@ function BottomSheet({
         );
         localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
         localStorage.setItem("currentEssayId", "");
-        router.push(`essay_details?id=${data.id}&type=${id}`);
+        router.push(`/web/essay_details?id=${data.id}&type=${id}`);
       }
     } catch (err) {
       console.log("err", err);
+      alert("게시물 등록에 실패했습니다.");
     }
   };
 

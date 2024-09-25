@@ -76,7 +76,7 @@ function TitleField({
           취소
         </Button>
       ) : (
-        <PrevButton />
+        <PrevButton onClick={handleStep}/>
       )}
 
       <TitleDiv>

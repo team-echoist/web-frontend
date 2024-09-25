@@ -16,13 +16,19 @@ const PrevBtn = styled.button`
   position: fixed;
   top: 40px;
   left: 40px;
-  z-index:1;
+  z-index: 1;
   &:focus {
     outline: none;
   }
 `;
 
-function PrevButton({ path }: { path?: string }) {
+function PrevButton({
+  path,
+  onClick,
+}: {
+  path?: string;
+  onClick?: () => void;
+}) {
   const router = useRouter();
 
   const handleClick = () => {
@@ -32,7 +38,7 @@ function PrevButton({ path }: { path?: string }) {
     router.back();
   };
   return (
-    <PrevBtn onClick={handleClick}>
+    <PrevBtn onClick={onClick ? onClick : handleClick}>
       <PrevButtonImg />
     </PrevBtn>
   );

@@ -76,7 +76,7 @@ const BtnDiv = styled.div`
 `;
 function CompleteModal() {
   const searchParams = useSearchParams();
-  let modalType = searchParams.get("type");
+  let modalType =  searchParams.get("type") as keyof typeof mapper;
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -171,7 +171,7 @@ function CompleteModal() {
   const handleModalOpen = () => {
     setIsOpen(false)
   }
-  console.log("searchParams", searchParams.get("type"));
+  console.log("searchParams", searchParams.get("id"));
   //  private/published/linkedout/reported
   if(!modalType){
     return null
@@ -179,11 +179,11 @@ function CompleteModal() {
   return (
     <GeneralModal isOpen={isOpen} isBackgroundVisible={true}>
       <ChildrenDiv>
-        <ImgDiv>{mapper["published"].img}</ImgDiv>
+        <ImgDiv>{mapper[modalType].img}</ImgDiv>
         <ContentsDiv>
-          <TitleDiv>{mapper["published"].title}</TitleDiv>
+          <TitleDiv>{mapper[modalType].title}</TitleDiv>
           <DescDiv>
-            <P>{mapper["published"].desc}</P>
+            <P>{mapper[modalType].desc}</P>
           </DescDiv>
         </ContentsDiv>
         <BtnDiv>
