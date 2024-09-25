@@ -25,7 +25,7 @@ const RenderAlarm = ({ list, length, setAlarmList }: RenderAlarmProps) => {
   );
 };
 
-function Index({ isModalOpen, handleAlarmButtonClick }: AlarmModalProps) {
+function ActiveAlramList({ isModalOpen, handleAlarmButtonClick }: AlarmModalProps) {
   const [alarmList, setAlarmList] = useState<Alert[]>([]);
   const [page, setPage] = useState(1);
   const [totalAlertPage, setTotalAlertPage] = useState<number | null>(null);
@@ -78,4 +78,4 @@ function Index({ isModalOpen, handleAlarmButtonClick }: AlarmModalProps) {
   );
 }
 
-export default Index;
+export default ActiveAlramList;
