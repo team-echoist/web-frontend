@@ -171,7 +171,6 @@ function CompleteModal() {
   const handleModalOpen = () => {
     setIsOpen(false)
   }
-  console.log("searchParams", searchParams.get("id"));
   //  private/published/linkedout/reported
   if(!modalType){
     return null

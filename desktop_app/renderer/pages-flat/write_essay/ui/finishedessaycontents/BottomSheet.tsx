@@ -245,6 +245,7 @@ function BottomSheet({
 
   const handleSaveEssay = async (e: React.MouseEvent<HTMLElement>) => {
     const { id } = e.currentTarget.dataset;
+    const pageType = id === "private" ? "private" : "public";
     try {
       if (title.length === 0 || desc.length === 0) {
         alert("입력란을 확인해 주세요.");
@@ -277,13 +278,17 @@ function BottomSheet({
       const { data, status } = await submitEssay(formData, body);
 
       if (status === 201) {
-        const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
+        const storedData = JSON.parse(
+          localStorage.getItem("essayData") || "[]"
+        );
         let deleteSaveData = storedData.filter(
           (item: Essay) => item.id !== currentId
         );
         localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
         localStorage.setItem("currentEssayId", "");
-        router.push(`/web/essay_details?id=${data.id}&type=${id}`);
+        router.push(
+          `/web/essay_details?id=${data.id}&type=${id}&pageType=${pageType}`
+        );
       }
     } catch (err) {
       console.log("err", err);
