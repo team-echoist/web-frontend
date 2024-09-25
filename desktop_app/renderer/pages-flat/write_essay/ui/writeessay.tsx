@@ -250,6 +250,7 @@ export const WriteEssay = () => {
         handlenavigateBack={handlenavigateBack}
         step={step}
         handleStep={handleStep}
+        setStep={setStep}
       />
       {/* 본문 에디터 또는 완성된 글 */}
       {step === "write" ? renderEditor() : renderFinishedEssay()}

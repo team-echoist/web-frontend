@@ -60,6 +60,7 @@ interface TitleFieldProps {
   handlenavigateBack: () => void;
   step: string;
   handleStep: () => void;
+  setStep: Dispatch<SetStateAction<string>>;
 }
 
 function TitleField({
@@ -68,6 +69,7 @@ function TitleField({
   handlenavigateBack,
   step,
   handleStep,
+  setStep
 }: TitleFieldProps) {
   return (
     <Layout>
@@ -76,7 +78,7 @@ function TitleField({
           취소
         </Button>
       ) : (
-        <PrevButton onClick={handleStep}/>
+        <PrevButton onClick={()=>{setStep("write")}}/>
       )}
 
       <TitleDiv>
