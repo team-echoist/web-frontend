@@ -26,7 +26,6 @@ const Button = styled.button`
   cursor: pointer;
 `;
 const IndicatorDiv = styled.div`
-  border: 3px solid red;
   width: 100%;
   height: 100px;
 `;
