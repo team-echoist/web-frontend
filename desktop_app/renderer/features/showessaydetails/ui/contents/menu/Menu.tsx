@@ -5,12 +5,13 @@ import { BlackMiniModal } from "@/shared/ui/modal";
 import EditIcon from "@/shared/assets/img/modal_icon/pen.svg";
 import PublishIcon from "@/shared/assets/img/modal_icon/publish.svg";
 import LinkedoutIcon from "@/shared/assets/img/modal_icon/linkedout.svg";
-import StoryIcon from "@/shared/assets/img/modal_icon/check.svg";
+import CheckIcon from "@/shared/assets/img/modal_icon/check.svg";
 import DeleteIcon from "@/shared/assets/img/modal_icon/delete.svg";
 import ReportIcon from "@/shared/assets/img/modal_icon/report.svg";
 import color from "@/shared/styles/color";
 import { BottomSeet } from "@/shared/ui/modal";
 import { ColorToast } from "@/shared/ui/toast";
+import { Button } from "@/shared/ui/button";
 
 const MenuIconDiv = styled.div`
   position: fixed;
@@ -54,6 +55,50 @@ const ToastContainer = styled.div`
   background: rgba(0, 0, 0, 0.8);
   z-index: 999;
 `;
+const BottomSheetTitle = styled.h1`
+  width: 100%;
+  height: 87px;
+  color: ${color.white};
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const BottomSheetItemDiv = styled.div`
+  display: flex;
+  padding: 20px 50px;
+  justify-content: space-between;
+  align-items: center;
+  svg {
+    cursor: pointer;
+  }
+`;
+const Span = styled.span`
+  color: ${color.white};
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+`;
+const BottomSheetItemContainer = styled.div`
+  max-height: 210px;
+  overflow-y: auto;
+`;
+const BtnDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  padding-top: 32px;
+`;
+
 function Menu({
   handleZoomIn,
   handleZoomOut,
@@ -69,17 +114,62 @@ function Menu({
   const handleMenuOpen = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  const bottomSheetModal = () => {
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
+  const toastRenderer = () => {
+    // 스토리 없을때
     return (
-      <BottomSeet isOpen={true} size="large">
-        dfasdf
-      </BottomSeet>
+      <ToastContainer>
+        <ToastDiv>
+          <ColorToast text="아직 만들어진 스토리가 없습니다." />
+        </ToastDiv>
+      </ToastContainer>
+    );
+  };
+  const BottomSheetHandler = () => {
+    setIsBottomSheetOpen(!isBottomSheetOpen);
+  };
+  const bottomSheetModal = () => {
+    // 스토리 있을때
+    return (
+      <ToastContainer>
+        <BottomSeet
+          isOpen={isBottomSheetOpen}
+          size="large"
+          isCloseModified={true}
+          onClose={BottomSheetHandler}
+        >
+          <BottomSheetTitle>
+            이 글을 어떤 스토리로 추가/변경 할까요?
+          </BottomSheetTitle>
+          <BottomSheetItemContainer>
+            <BottomSheetItemDiv>
+              <Span>돌연한 출발</Span>
+              <CheckIcon />
+            </BottomSheetItemDiv>
+            <BottomSheetItemDiv>
+              <Span>돌연한 출발</Span>
+              <CheckIcon />
+            </BottomSheetItemDiv>
+            <BottomSheetItemDiv>
+              <Span>돌연한 출발</Span>
+              <CheckIcon />
+            </BottomSheetItemDiv>
+          </BottomSheetItemContainer>
+          <BtnDiv>
+            <Button text="스토리에서 삭제" type="disable" scale="small" />
+            {/* 체크를 클릭했을때 스토리에 해당 아티클이있다면 활성화, 아니면 disalbe */}
+            <Button text="추가/변경" scale="small" />
+            {/* 체크를 클릭했을때 스토리에 해당 아티클이없다면 활성화, 아니면 disalbe */}
+          </BtnDiv>
+        </BottomSeet>
+      </ToastContainer>
     );
   };
   const privateRenderer = () => {
     return (
       <>
-        {bottomSheetModal()}
+        {isBottomSheetOpen && bottomSheetModal()}
         <ModalItem isStory={false}>
           <span>수정</span>
           <IconDiv>
@@ -101,7 +191,7 @@ function Menu({
         <ModalItem isStory={true}>
           <span>스토리 선택</span>
           <IconDiv>
-            <StoryIcon />
+            <CheckIcon onClick={BottomSheetHandler} />
           </IconDiv>
         </ModalItem>
         <ModalItem isStory={false} isRed={true}>
@@ -125,15 +215,7 @@ function Menu({
       </>
     );
   };
-  const toastRenderer = () => {
-    return (
-      <ToastContainer>
-        <ToastDiv>
-          <ColorToast text="아직 만들어진 스토리가 없습니다." />
-        </ToastDiv>
-      </ToastContainer>
-    );
-  };
+
   return (
     <>
       {isMenuOpen && (
