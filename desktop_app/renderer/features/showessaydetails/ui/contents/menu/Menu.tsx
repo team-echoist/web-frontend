@@ -10,6 +10,7 @@ import DeleteIcon from "@/shared/assets/img/modal_icon/delete.svg";
 import ReportIcon from "@/shared/assets/img/modal_icon/report.svg";
 import color from "@/shared/styles/color";
 import { BottomSeet } from "@/shared/ui/modal";
+import { ColorToast } from "@/shared/ui/toast";
 
 const MenuIconDiv = styled.div`
   position: fixed;
@@ -38,7 +39,21 @@ const IconDiv = styled.div`
     cursor: pointer;
   }
 `;
-
+const ToastDiv = styled.div`
+  position: fixed;
+  bottom: 135px;
+  left: 35%;
+  z-index: 50;
+`;
+const ToastContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+`;
 function Menu({
   handleZoomIn,
   handleZoomOut,
@@ -110,6 +125,15 @@ function Menu({
       </>
     );
   };
+  const toastRenderer = () => {
+    return (
+      <ToastContainer>
+        <ToastDiv>
+          <ColorToast text="아직 만들어진 스토리가 없습니다." />
+        </ToastDiv>
+      </ToastContainer>
+    );
+  };
   return (
     <>
       {isMenuOpen && (
@@ -121,7 +145,7 @@ function Menu({
           {pageType === "public" ? publicRenderer() : privateRenderer()}
         </BlackMiniModal>
       )}
-
+      {/* {toastRenderer()} */}
       <MenuIconDiv onClick={handleMenuOpen}>
         <SpotMenuIcon alt="menu_icon" />
       </MenuIconDiv>
