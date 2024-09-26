@@ -4,3 +4,4 @@ export { default as BottomSeet } from "./BottomSeet";
 export { default as RoundConfirm } from "./RoundConfirm";
 export { default as Confirm } from "./Confirm";
 export { default as GeneralModal } from "./GeneralModal";
+export { default as BlackMiniModal } from "./BlackMiniModal";
