@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
 import { RoundConfirm } from "@/shared/ui/modal";
 import FinishedEssay from "./finishedessaycontents/FinishedEssay";
-import { base64ToFile } from "../utils/parsingbase64";
+import { base64ToFile } from "../lib/parsingbase64";
 
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { BottomSeet } from "@/shared/ui/modal";
 import color from "@/shared/styles/color";
 import NextBtnImg from "@/shared/assets/img/next_Icon.svg";
-import { changeGroupChain, changeSingleChain } from "../../utils/changeChain";
+import { changeGroupChain, changeSingleChain } from "../../lib/changeChain";
 import { useRouter } from "next/navigation";
 import Savebtn from "@/shared/assets/img/button/button_save.webp";
 import PublishBtn from "@/shared/assets/img/button/button_publish.webp";

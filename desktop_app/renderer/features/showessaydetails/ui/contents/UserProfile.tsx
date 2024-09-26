@@ -123,10 +123,11 @@ function UserProfile({
             width={60}
             height={60}
           ></Image>
-          <ProfileName>
+
+        </ProfileImgDiv>
+        <ProfileName>
             {splitedUserName[0]} <Strong>아무개</Strong>
           </ProfileName>
-        </ProfileImgDiv>
       </ProfileDiv>
       <SubscribeBtn>구독하기</SubscribeBtn>
     </Layout>
