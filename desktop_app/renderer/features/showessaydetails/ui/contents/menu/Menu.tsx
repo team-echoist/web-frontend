@@ -9,6 +9,7 @@ import StoryIcon from "@/shared/assets/img/modal_icon/check.svg";
 import DeleteIcon from "@/shared/assets/img/modal_icon/delete.svg";
 import ReportIcon from "@/shared/assets/img/modal_icon/report.svg";
 import color from "@/shared/styles/color";
+import { BottomSeet } from "@/shared/ui/modal";
 
 const MenuIconDiv = styled.div`
   position: fixed;
@@ -53,9 +54,17 @@ function Menu({
   const handleMenuOpen = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  const bottomSheetModal = () => {
+    return (
+      <BottomSeet isOpen={true} size="large">
+        dfasdf
+      </BottomSeet>
+    );
+  };
   const privateRenderer = () => {
     return (
       <>
+        {bottomSheetModal()}
         <ModalItem isStory={false}>
           <span>수정</span>
           <IconDiv>

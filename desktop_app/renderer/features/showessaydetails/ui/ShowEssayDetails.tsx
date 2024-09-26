@@ -9,6 +9,7 @@ import UnFoldedContents from "./contents/unfoldedcontens/UnFoldedContents";
 import Foldedcontents from "./contents/foldedcontents/Foldedcontents";
 import Menu from "./contents/menu/Menu";
 
+
 const Container = styled.main<{ scale: number }>`
   width: 99vw;
   min-height: 60vh;

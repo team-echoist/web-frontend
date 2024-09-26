@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { PostCard } from "@/shared/ui/card";
 import TempThumbnail from "@/shared/assets/img/도시.jpg";
+import { IndicatorBar } from "@/shared/ui/indicator";
 
 const Layout = styled.div`
   padding: 20px 147px;
@@ -28,6 +29,9 @@ const Button = styled.button`
 const IndicatorDiv = styled.div`
   width: 100%;
   height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const NoneContentsDiv = styled.div`
   width: 100%;
@@ -77,7 +81,9 @@ function UnFoldedContents({ pageType }: { pageType: string }) {
         time="2024-09-26T01:23:30.954Z"
       />
       {/* 인디케이터 자리 */}
-      <IndicatorDiv></IndicatorDiv>
+      <IndicatorDiv>
+        <IndicatorBar step="step1"></IndicatorBar>
+      </IndicatorDiv>
     </Layout>
   );
 }
