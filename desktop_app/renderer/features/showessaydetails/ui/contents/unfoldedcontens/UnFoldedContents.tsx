@@ -25,13 +25,36 @@ const Button = styled.button`
   letter-spacing: 0.16px;
   cursor: pointer;
 `;
-const IndicatorDiv =styled.div`
- border:3px solid red;
- width:100%;
- height:100px;
-`
+const IndicatorDiv = styled.div`
+  border: 3px solid red;
+  width: 100%;
+  height: 100px;
+`;
+const NoneContentsDiv = styled.div`
+  width: 100%;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const P = styled.div`
+  color: #424242;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
 
 function UnFoldedContents({ pageType }: { pageType: string }) {
+    const NoneContents = () =>{
+        return(
+            <NoneContentsDiv>
+            <P>아직 발행된 글이 없습니다..</P>
+          </NoneContentsDiv>
+        )
+    }
   return (
     <Layout>
       <Button>{pageType === "private" ? "이전 글" : "다른 글"}</Button>
