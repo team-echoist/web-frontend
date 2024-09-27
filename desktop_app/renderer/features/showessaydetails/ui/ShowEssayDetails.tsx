@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PrevButton } from "@/shared/ui/button";
 import { Article } from "@/shared/ui/article";
 import styled from "styled-components";
@@ -8,7 +8,8 @@ import UserProfile from "./contents/UserProfile";
 import UnFoldedContents from "./contents/unfoldedcontens/UnFoldedContents";
 import Foldedcontents from "./contents/foldedcontents/Foldedcontents";
 import Menu from "./contents/menu/Menu";
-
+import { getEssayDetail } from "../api";
+import { Essay, AnotherEssay } from "@/shared/types";
 
 const Container = styled.main<{ scale: number }>`
   width: 99vw;
@@ -36,12 +37,40 @@ const Divider = styled.div`
   margin-left: 147px;
 `;
 
-function ShowEssayDetails({ pageType }: { pageType: string }) {
+function ShowEssayDetails({
+  pageType,
+  essayId,
+  storyId,
+}: {
+  pageType: string;
+  essayId: number;
+  storyId?: number;
+}) {
   const [scale, setScale] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [isFolded, setIsFolded] = useState(false);
-  const tempDesc = `<p>예상치 못한 실패, 좌절, 엉뚱한 결과를 의도하는 사람은 거의 없을 것이다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 예상치 못한 실패, 좌절, 엉뚱한 결과를 의도하는 사람은 거의 없을 것이다. </p><p><br></p><p><br></p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. </p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 </p><p><br></p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고,</p>`;
+  const [essay, setEssay] = useState<Essay | null>(null);
+  const [prevId, setPrevId] = useState(0);
 
+
+  useEffect(() => {
+    getEssayData();
+  }, [pageType, essayId, storyId]);
+
+  const getEssayData = async () => {
+    try {
+      const { data } = await getEssayDetail(
+        pageType,
+        essayId,
+        storyId ? storyId : null
+      );
+      setEssay(data.essay);
+      setPrevId(data?.anotherEssays?.essays[0]?.id);
+      console.log("data", data);
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
   const handleEssaySize = () => {
     setIsFolded(!isFolded);
   };
@@ -70,7 +99,7 @@ function ShowEssayDetails({ pageType }: { pageType: string }) {
           <UserProfile userName="꾸르륵" profileImage={TempThumbnail.src} />
         )}
         <Divider />
-        <UnFoldedContents pageType={pageType}></UnFoldedContents>
+        <UnFoldedContents pageType={pageType} prevId={prevId} />
       </>
     );
   };
@@ -80,30 +109,34 @@ function ShowEssayDetails({ pageType }: { pageType: string }) {
   return (
     <Container scale={scale}>
       <PrevButton />
-        <Menu
-          handleZoomIn={handleZoomIn}
-          handleZoomOut={handleZoomOut}
-          scale={scale}
-          pageType={pageType}
-        />
+      <Menu
+        handleZoomIn={handleZoomIn}
+        handleZoomOut={handleZoomOut}
+        scale={scale}
+        pageType={pageType}
+      />
       <ArticleLayout
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       >
         <Article
-          title="커뮤니티 랜덤 글 제목"
-          desc={tempDesc}
-          date="2024-09-25T04:05:30.597Z"
-          userName="아무개"
-          imgUrl={TempThumbnail.src}
+          title={essay?.title ?? "제목 없음"}
+          desc={essay?.content ?? "내용 없음"}
+          date={essay?.updatedDate ?? "2024-09-27T15:18:00.164+09:00"}
+          userName={essay?.author?.nickname ?? "링크드아웃아무개"}
+          imgUrl={essay?.thumbnail}
           isShowBookmark={true}
         />
         {!isFolded && (
           <TagDiv>
-            <ColorLessTag text="#깨달음" />
-            <ColorLessTag text="#놀라움" />
-            <ColorLessTag text="#새로움" />
+            {essay?.tags.map((item) => {
+              return (
+                <>
+                  <ColorLessTag key={item.id} text={item.name} />
+                </>
+              );
+            })}
           </TagDiv>
         )}
       </ArticleLayout>

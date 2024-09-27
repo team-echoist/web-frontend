@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { PostCard } from "@/shared/ui/card";
 import TempThumbnail from "@/shared/assets/img/도시.jpg";
 import { IndicatorBar } from "@/shared/ui/indicator";
+import { Essay } from "@/shared/types";
+import { useRouter } from "next/navigation";
+import { getEssays } from "@/features/showessaydetails/api";
 
 const Layout = styled.div`
   padding: 20px 147px;
@@ -32,13 +35,13 @@ const IndicatorDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  svg{
-   cursor: pointer;
+  svg {
+    cursor: pointer;
   }
   svg:hover {
-  background-color: #0A0A0A;
-  border-radius:50px;
-  padding:10px 10px;
+    background-color: #0a0a0a;
+    border-radius: 50px;
+    padding: 10px 10px;
   }
 `;
 const NoneContentsDiv = styled.div`
@@ -58,7 +61,28 @@ const P = styled.div`
   line-height: normal;
 `;
 
-function UnFoldedContents({ pageType }: { pageType: string }) {
+function UnFoldedContents({
+  pageType,
+  prevId,
+}: {
+  pageType: string;
+  prevId: number;
+}) {
+  const router = useRouter();
+
+  useEffect(() => {
+    getEssayList();
+  }, []);
+
+  const getEssayList = async () => {
+    try{
+      const { data } = await getEssays(1, 4, pageType);
+      console.log("list",data)
+    }catch(err){
+      console.log(err)
+    }
+   
+  };
   const NoneContents = () => {
     return (
       <NoneContentsDiv>
@@ -66,9 +90,16 @@ function UnFoldedContents({ pageType }: { pageType: string }) {
       </NoneContentsDiv>
     );
   };
+  const navigateAnotherEssay = () => {
+    if (prevId) {
+      router.push(`/web/essay_details?id=${prevId}&pageType=${pageType}`);
+    }
+  };
   return (
     <Layout>
-      <Button>{pageType === "private" ? "이전 글" : "다른 글"}</Button>
+      <Button onClick={navigateAnotherEssay}>
+        {pageType === "private" ? "이전 글" : "다른 글"}
+      </Button>
       <PostCard
         writer="구칠이 아무개"
         title="랜덤글1"

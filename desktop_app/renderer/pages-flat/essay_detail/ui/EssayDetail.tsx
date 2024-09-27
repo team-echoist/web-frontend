@@ -7,10 +7,17 @@ import { useSearchParams } from "next/navigation";
 function EssayDetail() {
   const searchParams = useSearchParams();
   const pageType = searchParams.get("pageType");
+  const essayId = searchParams.get("id");
+  const storyId =searchParams.get("storyId");
+  console.log("essayId",essayId)
   return (
     <>
       <CompleteModal />
-      <ShowEssayDetails pageType={pageType ?? "publuc"} />
+      <ShowEssayDetails
+        pageType={pageType ?? "publuc"}
+        essayId={essayId ? Number(essayId) : 2643}
+        storyId={Number(storyId)}
+      />
     </>
   );
 }

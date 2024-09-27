@@ -24,9 +24,11 @@ AxiosInstance.interceptors.request.use((config) => {
 
 AxiosInstance.interceptors.response.use(
   (response) => {
+    console.log(" response.headers", response.headers)
     const newAccessToken = response.headers["x-access-token"];
     if (newAccessToken) {
       if (sessionStorage.getItem("refreshToken")) {
+
         sessionStorage.setItem("accessToken", newAccessToken);
       } else {
         Cookies.set("accessToken", newAccessToken, {
@@ -51,3 +53,5 @@ AxiosInstance.interceptors.response.use(
 );
 
 export default AxiosInstance;
+
+
