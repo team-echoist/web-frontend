@@ -74,9 +74,7 @@ const BottomSheetItemDiv = styled.div`
   padding: 20px 50px;
   justify-content: space-between;
   align-items: center;
-  svg {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 const Span = styled.span`
   color: ${color.white};
@@ -146,6 +144,7 @@ function Menu({
             <BottomSheetItemDiv>
               <Span>돌연한 출발</Span>
               <CheckIcon />
+              {/* 체크아이콘은 클릭했을때 생김 */}
             </BottomSheetItemDiv>
             <BottomSheetItemDiv>
               <Span>돌연한 출발</Span>

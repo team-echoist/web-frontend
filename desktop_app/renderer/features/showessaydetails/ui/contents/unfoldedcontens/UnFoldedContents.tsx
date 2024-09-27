@@ -32,6 +32,14 @@ const IndicatorDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  svg{
+   cursor: pointer;
+  }
+  svg:hover {
+  background-color: #0A0A0A;
+  border-radius:50px;
+  padding:10px 10px;
+  }
 `;
 const NoneContentsDiv = styled.div`
   width: 100%;
@@ -51,13 +59,13 @@ const P = styled.div`
 `;
 
 function UnFoldedContents({ pageType }: { pageType: string }) {
-    const NoneContents = () =>{
-        return(
-            <NoneContentsDiv>
-            <P>아직 발행된 글이 없습니다..</P>
-          </NoneContentsDiv>
-        )
-    }
+  const NoneContents = () => {
+    return (
+      <NoneContentsDiv>
+        <P>아직 발행된 글이 없습니다..</P>
+      </NoneContentsDiv>
+    );
+  };
   return (
     <Layout>
       <Button>{pageType === "private" ? "이전 글" : "다른 글"}</Button>
