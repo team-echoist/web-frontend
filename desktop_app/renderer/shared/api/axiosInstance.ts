@@ -41,14 +41,14 @@ AxiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response && error.response.status === 401) {
-      Cookies.remove("refreshToken");
-      Cookies.remove("accessToken");
-      sessionStorage.removeItem("accessToken");
-      sessionStorage.removeItem("refreshToken");
-      window.location.href = "/web/login";
-    }
-    return Promise.reject(error);
+    // if (error.response && error.response.status === 401) {
+    //   Cookies.remove("refreshToken");
+    //   Cookies.remove("accessToken");
+    //   sessionStorage.removeItem("accessToken");
+    //   sessionStorage.removeItem("refreshToken");
+    //   window.location.href = "/web/login";
+    // }
+    // return Promise.reject(error);
   }
 );
 
