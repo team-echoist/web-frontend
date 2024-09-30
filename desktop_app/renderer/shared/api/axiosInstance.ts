@@ -8,9 +8,7 @@ const accessTokenExpiry = new Date(new Date().getTime() + 30 * 60 * 1000);
 AxiosInstance.interceptors.request.use((config) => {
   let accessToken = sessionStorage.getItem("accessToken");
   let refreshToken = sessionStorage.getItem("refreshToken");
-  const newAccessToken = config.headers["x-access-token"];
 
-  console.log("newAccessToken",newAccessToken)
   if (!accessToken && !refreshToken) {
     accessToken = Cookies.get("accessToken") || null;
     refreshToken = Cookies.get("refreshToken") || null;
@@ -50,7 +48,6 @@ AxiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       const refreshToken =
         Cookies.get("refreshToken") || sessionStorage.getItem("refreshToken");
-        console.log()
       if (refreshToken) {
         // originalRequest.headers["x-refresh-token"] = refreshToken;
         const newResponse = await AxiosInstance(originalRequest);
