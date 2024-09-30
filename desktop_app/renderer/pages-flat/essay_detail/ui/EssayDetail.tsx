@@ -14,7 +14,7 @@ function EssayDetail() {
     <>
       <CompleteModal />
       <ShowEssayDetails
-        pageType={pageType ?? "publuc"}
+        pageType={pageType ?? "public"}
         essayId={essayId ? Number(essayId) : 2643}
         storyId={Number(storyId)}
       />
