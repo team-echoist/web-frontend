@@ -24,6 +24,7 @@ AxiosInstance.interceptors.request.use((config) => {
 
 AxiosInstance.interceptors.response.use(
   (response) => {
+    console.log("response",response)
     const newAccessToken = response.headers["x-access-token"];
     if (newAccessToken) {
       if (sessionStorage.getItem("refreshToken")) {
