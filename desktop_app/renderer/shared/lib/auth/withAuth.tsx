@@ -4,16 +4,16 @@ import Cookies from 'js-cookie';
 
 const withAuth = <P extends object>(WrappedComponent: ComponentType<P>): ComponentType<P> => {
   const AuthComponent = (props: P) => {
-    // const router = useRouter();
+    const router = useRouter();
 
-    // useEffect(() => {
-    //   const accessToken = Cookies.get('accessToken') || sessionStorage.getItem('accessToken');
-    //   const refreshToken = Cookies.get('refreshToken') || sessionStorage.getItem('refreshToken');
+    useEffect(() => {
+      const accessToken = Cookies.get('accessToken') || sessionStorage.getItem('accessToken');
+      const refreshToken = Cookies.get('refreshToken') || sessionStorage.getItem('refreshToken');
 
-    //   if (!accessToken || !refreshToken) {
-    //     router.push('/web/login');
-    //   }
-    // }, [router]);
+      if (!accessToken || !refreshToken) {
+        router.push('/web/login');
+      }
+    }, [router]);
 
     return <WrappedComponent {...props} />;
   };

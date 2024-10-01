@@ -31,7 +31,7 @@ export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
       const accessTokenExpiry = calculateExpiryDate(30); 
       if (autoLoginCheck) {
         Cookies.set("accessToken", accessToken, {
-          expires: accessTokenExpiry,
+          expires: 1,
           secure: true,
           sameSite: "Strict",
         });
