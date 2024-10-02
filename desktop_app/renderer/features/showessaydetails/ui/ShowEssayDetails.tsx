@@ -16,6 +16,7 @@ const Container = styled.main<{ scale: number }>`
   min-height: 60vh;
   overflow-y: auto;
   zoom: ${({ scale }) => scale};
+  overflow-x:hidden;
 `;
 const ArticleLayout = styled.div`
   width: 100%;

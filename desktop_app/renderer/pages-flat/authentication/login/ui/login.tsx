@@ -144,7 +144,7 @@ export const Login = () => {
             const accessTokenExpiry = calculateExpiryDate(30);
 
             Cookies.set("accessToken", socialAccessToken, {
-              expires: accessTokenExpiry,
+              expires: 1,
               secure: true,
               sameSite: "Strict",
             });
