@@ -6,14 +6,14 @@ const withAuth = <P extends object>(WrappedComponent: ComponentType<P>): Compone
   const AuthComponent = (props: P) => {
     const router = useRouter();
 
-    // useEffect(() => {
-    //   const accessToken = Cookies.get('accessToken') || sessionStorage.getItem('accessToken');
-    //   const refreshToken = Cookies.get('refreshToken') || sessionStorage.getItem('refreshToken');
+    useEffect(() => {
+      const accessToken = Cookies.get('accessToken') || sessionStorage.getItem('accessToken');
+      const refreshToken = Cookies.get('refreshToken') || sessionStorage.getItem('refreshToken');
 
-    //   if (!accessToken || !refreshToken) {
-    //     router.push('/web/login');
-    //   }
-    // }, [router]);
+      if (!accessToken || !refreshToken) {
+        router.push('/web/login');
+      }
+    }, [router]);
 
     return <WrappedComponent {...props} />;
   };

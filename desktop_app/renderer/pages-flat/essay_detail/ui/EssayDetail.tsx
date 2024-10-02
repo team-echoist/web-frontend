@@ -9,7 +9,6 @@ function EssayDetail() {
   const pageType = searchParams.get("pageType");
   const essayId = searchParams.get("id");
   const storyId =searchParams.get("storyId");
-  console.log("essayId",essayId)
   return (
     <>
       <CompleteModal />
