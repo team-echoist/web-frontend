@@ -65,7 +65,6 @@ export const getRandomEssays = async () => {
         params,
       }
     );
-    console.log("data",data)
     return { data: data.essays };
 
   } catch (err) {
