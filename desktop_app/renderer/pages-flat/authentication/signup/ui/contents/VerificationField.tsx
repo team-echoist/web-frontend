@@ -74,6 +74,7 @@ const Button = styled.button`
   font-weight: 400;
   line-height: 170%;
   text-decoration-line: underline;
+  cursor: pointer;
 `;
 const ErrorMsg = styled.output`
   color: #e43446;
@@ -85,7 +86,7 @@ const ErrorMsg = styled.output`
   padding-left: 31px;
   margin-top: 7px;
 `;
-function VerificationField() {
+function VerificationField({ onRetry }: { onRetry: (type?: string) => void }) {
   const [inputValues, setInputValues] = useState<string[]>(Array(6).fill(""));
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -110,7 +111,7 @@ function VerificationField() {
       };
       try {
         await fetchData("support/devices/register", "post", body);
-        router.push("/web/termsofuse")
+        router.push("/web/termsofuse");
       } catch (err) {
         console.log("err", err);
       }
@@ -138,7 +139,7 @@ function VerificationField() {
           if (statusCode === 201) {
             setHasError(false);
             setErrorMessage("");
-            await handleUserInfo()
+            await handleUserInfo();
           } else {
             setHasError(true);
             setErrorMessage("인증번호를 잘못 입력하셨습니다.");
@@ -149,11 +150,15 @@ function VerificationField() {
             "서버와의 연결에 문제가 발생했습니다. 다시 시도해 주세요."
           );
         }
-      }, 2000);
+      }, 1000);
 
       return () => clearTimeout(timer);
     }
   }, [inputValues]);
+  const onRetryHandler = () => {
+    setInputValues(Array(6).fill(""));
+    onRetry("retry");
+  };
   return (
     <>
       <RectangleDiv>
@@ -175,7 +180,7 @@ function VerificationField() {
       <ErrorMsg>{errorMessage}</ErrorMsg>
       <RetryDiv>
         <H2>인증번호를 못 받으셨나요?</H2>
-        <Button>인증번호 재전송</Button>
+        <Button onClick={() => onRetryHandler()}>인증번호 재전송</Button>
       </RetryDiv>
     </>
   );

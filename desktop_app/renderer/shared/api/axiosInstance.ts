@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 const AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
-const accessTokenExpiry = new Date(new Date().getTime() + 30 * 60 * 1000);
+
 AxiosInstance.interceptors.request.use((config) => {
   let accessToken = sessionStorage.getItem("accessToken");
   let refreshToken = sessionStorage.getItem("refreshToken");
