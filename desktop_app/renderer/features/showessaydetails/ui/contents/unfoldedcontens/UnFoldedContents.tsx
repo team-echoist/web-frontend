@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { PostCard } from "@/shared/ui/card";
 import TempThumbnail from "@/shared/assets/img/도시.jpg";
@@ -6,6 +6,9 @@ import { IndicatorBar } from "@/shared/ui/indicator";
 import { Essay } from "@/shared/types";
 import { useRouter } from "next/navigation";
 import { getEssays } from "@/features/showessaydetails/api";
+import { FewIndicatorBar } from "@/shared/ui/indicator";
+import NextIcon from "@/shared/assets/img/indicator/next.svg";
+import { getRandomEssays } from "@/features/showessaydetails/api";
 
 const Layout = styled.div`
   padding: 20px 147px;
@@ -35,13 +38,14 @@ const IndicatorDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  svg {
+
+  .indicator {
     cursor: pointer;
+    padding: 10px 10px;
   }
-  svg:hover {
+  .indicator:hover {
     background-color: #0a0a0a;
     border-radius: 50px;
-    padding: 10px 10px;
   }
 `;
 const NoneContentsDiv = styled.div`
@@ -60,28 +64,82 @@ const P = styled.div`
   font-weight: 400;
   line-height: normal;
 `;
-
+const NextBtn = styled.button`
+  border: none;
+  background: none;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  // gap: 4px;
+  align-items: center;
+  color: #686868;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  &:hover {
+    border-bottom: 1px solid #313131;
+  }
+`;
+const IndicatorWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+`;
 function UnFoldedContents({
   pageType,
   prevId,
+  storyId,
 }: {
   pageType: string;
   prevId: number;
+  storyId?: number;
 }) {
   const router = useRouter();
+  const [essays, setEssay] = useState<Essay[]>([]);
+  const [totalPage, setTotalPage] = useState(1);
+  const [page, setPage] = useState(1);
+  const [step, setStep] = useState("step1");
+  const [isIncreasing, setIsIncreasing] = useState(true);
 
-  useEffect(() => {
-    getEssayList();
-  }, []);
-
-  const getEssayList = async () => {
-    try{
-      const { data } = await getEssays(1, 4, pageType);
-      console.log("list",data)
-    }catch(err){
-      console.log(err)
+  const getStepFromPage = () => {
+    switch (true) {
+      case page === 1:
+        return "step1";
+      case page === 2:
+        return "step2";
+      case page === 3:
+        return "step3";
+      case page >= 4:
+        return "step4";
+      default:
+        return "step1";
     }
-   
+  };
+  useEffect(() => {
+    setStep(getStepFromPage());
+    getEssayList();
+  }, [page]);
+  // private일때 api
+  const getEssayList = async () => {
+    try {
+      if (pageType === "public") {
+        const { data } = await getRandomEssays();
+        setEssay(data);
+        setTotalPage(4);
+      } else {
+        const { data, totalPage } = await getEssays(page, 4, pageType);
+        setEssay(data);
+        setTotalPage(totalPage);
+      }
+
+      await getRandomEssays();
+    } catch (err) {
+      console.log(err);
+    }
   };
   const NoneContents = () => {
     return (
@@ -90,38 +148,81 @@ function UnFoldedContents({
       </NoneContentsDiv>
     );
   };
-  const navigateAnotherEssay = () => {
-    if (prevId) {
-      router.push(`/web/essay_details?id=${prevId}&pageType=${pageType}`);
+  const navigateToEssay = (id?: number) => {
+    const essayId = id || prevId;
+    if (essayId) {
+      router.push(`/web/essay_details?id=${essayId}&pageType=${pageType}`);
+    }
+  };
+
+  const handlePageChange = () => {
+    if (isIncreasing) {
+      // 페이지가 증가할때
+      if (page < totalPage) {
+        setPage((prevPage) => prevPage + 1);
+      } else if (page === totalPage) {
+        setIsIncreasing(false);
+        setPage((prevPage) => prevPage - 1);
+      }
+    } else {
+      if (page > 1) {
+        setPage((prevPage) => prevPage - 1);
+      } else if (page === 1) {
+        setIsIncreasing(true);
+        setPage((prevPage) => prevPage + 1);
+      }
+    }
+  };
+
+  const IndicatorRenderer = () => {
+    switch (true) {
+      case totalPage >= 4 && pageType === "private":
+        return (
+          <IndicatorWrapper>
+            <IndicatorBar step={step} onClick={handlePageChange} />
+            {/* 페이지가 3까지는 step3 4이상이면 무조건 step4 */}
+            {page > 4 && (
+              <NextBtn onClick={handlePageChange}>
+                다음 <NextIcon />
+              </NextBtn>
+            )}
+          </IndicatorWrapper>
+        );
+      // 이로직은 디자인 다시 검토중
+      case totalPage < 4 && pageType === "private":
+        return (
+          <FewIndicatorBar totalpage={totalPage} onClick={handlePageChange} />
+        );
+      case pageType === "public":
+        return <IndicatorBar step={step} onClick={handlePageChange} />;
+      default:
+        return null;
     }
   };
   return (
     <Layout>
-      <Button onClick={navigateAnotherEssay}>
+      <Button onClick={() => navigateToEssay()}>
         {pageType === "private" ? "이전 글" : "다른 글"}
       </Button>
-      <PostCard
-        writer="구칠이 아무개"
-        title="랜덤글1"
-        desc="<p>예상치 못한 실패, 좌절, 엉뚱한 결과를 의도하는 사람은 거의 없을 것이다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 예상치 못한 실패, 좌절, 엉뚱한 결과를 의도하는 사람은 거의 없을 것이다. </p><p><br></p><p><br></p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. </p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 </p><p><br></p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고,</p>"
-        time="2024-09-26T01:23:30.954Z"
-        imgUrl={TempThumbnail.src}
-      />
-      <PostCard
-        writer="구칠이 아무개"
-        title="랜덤글1"
-        desc="<p>예상치 못한 실패, 좌절, 엉뚱한 결과를 의도하는 사람은 거의 없을 것이다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 예상치 못한 실패, 좌절, 엉뚱한 결과를 의도하는 사람은 거의 없을 것이다. </p><p><br></p><p><br></p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. </p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 </p><p><br></p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고,</p>"
-        time="2024-09-26T01:23:30.954Z"
-      />
-      <PostCard
-        writer="구칠이 아무개"
-        title="랜덤글1"
-        desc="<p>예상치 못한 실패, 좌절, 엉뚱한 결과를 의도하는 사람은 거의 없을 것이다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 예상치 못한 실패, 좌절, 엉뚱한 결과를 의도하는 사람은 거의 없을 것이다. </p><p><br></p><p><br></p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. </p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 </p><p><br></p><p>적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과 세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는 것, 바로 그것이다. 그러나 이런 바람은 그야말로 '뜻밖'이어야 가능한 것이기 때문에 애초에 그걸 원한다는 것은 불가능하다. 적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지 못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고,</p>"
-        time="2024-09-26T01:23:30.954Z"
-      />
+      {essays.length === 0 ? (
+        <NoneContents />
+      ) : (
+        essays.map((item) => (
+          <PostCard
+            key={item.id}
+            writer={item.author.nickname}
+            title={item.title}
+            desc={item.content}
+            time={item.createdDate}
+            imgUrl={item.thumbnail}
+            onClick={() => navigateToEssay(item.id)}
+          />
+        ))
+      )}
       {/* 인디케이터 자리 */}
       <IndicatorDiv>
-        <IndicatorBar step="step1"></IndicatorBar>
+        {/*  토탈페이지가 4개 이상이고, pageType이 private일때만 인디케이터바 & 다음 public일땐 인디케이터바만 */}
+        {IndicatorRenderer()}
       </IndicatorDiv>
     </Layout>
   );

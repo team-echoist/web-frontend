@@ -26,7 +26,16 @@ const BookmarkDiv = styled.div`
   padding-left: 30px;
 `;
 
-function Foldedcontents({ isBookmark }: { isBookmark: boolean }) {
+function Foldedcontents({
+  isBookmark,
+  prevId,
+  nextId,
+}: {
+  isBookmark: boolean;
+  prevId: number;
+  nextId: number;
+}) {
+  // 이전 에세이 버튼 이후 에세이 버튼 로직 세팅
   return (
     <Layout>
       <BookmarkDiv>

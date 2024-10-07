@@ -16,7 +16,7 @@ const Container = styled.main<{ scale: number }>`
   min-height: 60vh;
   overflow-y: auto;
   zoom: ${({ scale }) => scale};
-  overflow-x:hidden;
+  overflow-x: hidden;
 `;
 const ArticleLayout = styled.div`
   width: 100%;
@@ -52,7 +52,7 @@ function ShowEssayDetails({
   const [isFolded, setIsFolded] = useState(false);
   const [essay, setEssay] = useState<Essay | null>(null);
   const [prevId, setPrevId] = useState(0);
-
+  const [nextId, setNextId] = useState(0);
 
   useEffect(() => {
     getEssayData();
@@ -67,6 +67,7 @@ function ShowEssayDetails({
       );
       setEssay(data.essay);
       setPrevId(data?.anotherEssays?.essays[0]?.id);
+      setNextId(data?.anotherEssays?.essays[0]?.id | 0);
       console.log("data", data);
     } catch (err) {
       console.log("err", err);
@@ -91,7 +92,9 @@ function ShowEssayDetails({
     setIsDragging(false);
   };
   const FoldedContentsRenderer = () => {
-    return <Foldedcontents isBookmark={false} />;
+    return (
+      <Foldedcontents isBookmark={false} prevId={prevId} nextId={nextId} />
+    );
   };
   const unFoldedContentsRenderer = () => {
     return (
@@ -100,7 +103,7 @@ function ShowEssayDetails({
           <UserProfile userName="꾸르륵" profileImage={TempThumbnail.src} />
         )}
         <Divider />
-        <UnFoldedContents pageType={pageType} prevId={prevId} />
+        <UnFoldedContents pageType={pageType} prevId={prevId} storyId={storyId}/>
       </>
     );
   };

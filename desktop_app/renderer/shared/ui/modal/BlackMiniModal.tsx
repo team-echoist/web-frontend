@@ -25,6 +25,9 @@ const ScaleAdjustDiv = styled.div`
   align-items: center;
   gap: 32px;
   border-bottom:1px solid #1A1A1A;
+  svg{
+   cursor: pointer;
+  }
 `;
 const Span = styled.span`
   color: ${color.white};

@@ -79,6 +79,7 @@ export const createWindow = (
     autoHideMenuBar: true,
     icon: appIcon,
     frame: false,
+    resizable: false,
     backgroundColor: "#101012",
     webPreferences: {
       nodeIntegration: false,
