@@ -38,7 +38,6 @@ const GeneralModal: React.FC<ModalProps> = ({
   children,
   isBackgroundVisible = false,
 }) => {
-  console.log("isBackgroundVisible", isBackgroundVisible);
   return (
     <ModalOverlay isOpen={isOpen} onClick={onClose}>
       <ModalContainer

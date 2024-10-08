@@ -111,7 +111,7 @@ function FinishedEssay({
       }
     }
   }, []);
-  console.log("imageFile", imageFile);
+
   return (
     <Layout>
       <ThumbnailContainer>

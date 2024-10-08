@@ -9,10 +9,12 @@ function EssayDetail() {
   const pageType = searchParams.get("pageType");
   const essayId = searchParams.get("id");
   const storyId =searchParams.get("storyId");
+  const completedType = searchParams.get("type");
+  console.log("searchParams",searchParams.get("type"))
 
   return (
     <>
-      <CompleteModal />
+      <CompleteModal completedType={completedType?completedType:null}/>
       <ShowEssayDetails
         pageType={pageType ?? "public"}
         essayId={essayId ? Number(essayId) : 2643}

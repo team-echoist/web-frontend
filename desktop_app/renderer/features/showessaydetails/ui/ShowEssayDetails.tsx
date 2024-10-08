@@ -78,11 +78,7 @@ function ShowEssayDetails({
           <UserProfile userName="꾸르륵" profileImage={TempThumbnail.src} />
         )}
         <Divider />
-        <Contents
-          pageType={pageType}
-          prevId={prevId}
-          storyId={storyId}
-        />
+        <Contents pageType={pageType} prevId={prevId} storyId={storyId} />
       </>
     );
   };

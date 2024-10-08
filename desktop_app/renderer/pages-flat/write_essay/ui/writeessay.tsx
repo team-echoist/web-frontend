@@ -79,7 +79,7 @@ export const WriteEssay = () => {
   const editorType = searchParams.get("editorType");
 
   useEffect(() => {
-    if (editorType !=="edit") {
+    if (editorType !== "edit") {
       // 일반 글쓰기 모드 일때
       const processEssayData = (id: string) => {
         const storedData = JSON.parse(
@@ -127,7 +127,7 @@ export const WriteEssay = () => {
   };
 
   useEffect(() => {
-    if (editorType!=="edit") {
+    if (editorType !== "edit") {
       // 일반 글쓰기 모드 일때 현재의 에세이 id를 가져와서 기존 저장된 에세이에 해당하는 id가 없으면 내용 추가하는 로직
       if (id) {
         const currentId = localStorage.getItem("currentEssayId");
@@ -149,7 +149,7 @@ export const WriteEssay = () => {
   }, [id, step]);
 
   useEffect(() => {
-    if (editorType!=="edit") {
+    if (editorType !== "edit") {
       // 일반 글쓰기 모드일때 로컬스트리지에 저장하는 로직
       saveToLocalStorage();
       const interval = setInterval(saveToLocalStorage, 30000);
@@ -165,11 +165,11 @@ export const WriteEssay = () => {
     );
 
     const existingImageSrc =
-    existingEntryIndex > -1 && storedData[existingEntryIndex].imageSrc
-      ? storedData[existingEntryIndex].imageSrc
-      : imageSrc && imageSrc.length > 0
-      ? imageSrc
-      : "";
+      existingEntryIndex > -1 && storedData[existingEntryIndex].imageSrc
+        ? storedData[existingEntryIndex].imageSrc
+        : imageSrc && imageSrc.length > 0
+        ? imageSrc
+        : "";
 
     const newData = {
       id,
@@ -191,7 +191,7 @@ export const WriteEssay = () => {
 
   const handlecancle = () => {
     const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
-    if (editorType!=="edit") {
+    if (editorType !== "edit") {
       let deleteSaveData = storedData.filter(
         (item: Essay) => item.id !== currentId
       );
@@ -257,7 +257,7 @@ export const WriteEssay = () => {
       desc={value}
       tag={bottomValue?.tag.values}
       location={bottomValue?.location.values}
-      imageFile={imageSrc ?? base64ToFile(imageSrc, "thumbnail image")}
+      imageFile={imageSrc ? base64ToFile(imageSrc, "thumbnail image") : null}
       essayId={essayId || null}
       editorType={editorType || null}
       pageType={pageType}
