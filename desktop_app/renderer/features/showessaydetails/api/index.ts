@@ -8,28 +8,6 @@ interface dataType {
   totalPage: number;
 }
 
-export const getEssayDetail = async (
-  pageType: string,
-  essayId: number,
-  storyId: number | null
-) => {
-  try {
-    const params = {
-      pageType: pageType,
-      ...(storyId && { storyId: storyId }),
-    };
-    const { data: detailData, status: detailStatus } = await fetchData<any>(
-      `essays/${essayId}`,
-      "get",
-      null,
-      { params }
-    );
-    return { data: detailData, status: detailStatus };
-  } catch (err) {
-    return { data: [], status: 500 };
-  }
-};
-
 export const getEssays = async (
   page: number,
   limit: number,

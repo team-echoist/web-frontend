@@ -8,7 +8,7 @@ import UserProfile from "./contents/UserProfile";
 import UnFoldedContents from "./contents/unfoldedcontens/UnFoldedContents";
 import Foldedcontents from "./contents/foldedcontents/Foldedcontents";
 import Menu from "./contents/menu/Menu";
-import { getEssayDetail } from "../api";
+import { getEssayDetail } from "@/shared/api";
 import { Essay, AnotherEssay } from "@/shared/types";
 
 const Container = styled.main<{ scale: number }>`
@@ -61,17 +61,19 @@ function ShowEssayDetails({
   const [isBookMark, setIsBookMark] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
-      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight;
-  
+      const isAtBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight;
+
       if (isAtBottom) {
         setIsFolded(false);
       } else if (window.scrollY === 0) {
         setIsFolded(true);
       }
     };
-    
+
     window.addEventListener("scroll", handleScroll);
-  
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -87,10 +89,10 @@ function ShowEssayDetails({
         essayId,
         storyId ? storyId : null
       );
-      setEssay(data.essay);
-      setPrevId(data?.anotherEssays?.essays[0]?.id);
-      setNextId(data?.anotherEssays?.essays[0]?.id | 0);
-      setIsBookMark(data?.isBookmarked);
+      setEssay(data?.essay || null);
+      setPrevId(data?.anotherEssays?.essays[0]?.id || 0);
+      setNextId(data?.anotherEssays?.essays[1]?.id || 0);
+      setIsBookMark(data?.essay?.isBookmarked || false);
     } catch (err) {
       console.log("err", err);
     }

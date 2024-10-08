@@ -78,50 +78,58 @@ export const WriteEssay = () => {
   const essayId = searchParams.get("essayId");
   const editorType = searchParams.get("editorType");
 
-  console.log("test",pageType,essayId,editorType)
+  console.log("test", pageType, essayId, editorType);
 
   useEffect(() => {
-    const processEssayData = (id: string) => {
-      const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
-      const entry = storedData.find((item: Essay) => item.id === id);
-      if (entry) {
-        setTitle(entry.title);
-        setValue(entry.value);
-        setBottomValue(entry.bottomValue);
-        setImageSrc(entry.imageSrc);
+    if (!editorType) {
+      const processEssayData = (id: string) => {
+        const storedData = JSON.parse(
+          localStorage.getItem("essayData") || "[]"
+        );
+        const entry = storedData.find((item: Essay) => item.id === id);
+        if (entry) {
+          setTitle(entry.title);
+          setValue(entry.value);
+          setBottomValue(entry.bottomValue);
+          setImageSrc(entry.imageSrc);
+        }
+      };
+      if (currentId) {
+        processEssayData(currentId);
+        localStorage.setItem("currentEssayId", currentId);
       }
-    };
-    if (currentId) {
-      processEssayData(currentId);
-      localStorage.setItem("currentEssayId", currentId);
     }
-  }, []);
+  }, [editorType]);
 
   useEffect(() => {
-    if (id) {
-      const currentId = localStorage.getItem("currentEssayId");
-      const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
+    if (!editorType) {
+      if (id) {
+        const currentId = localStorage.getItem("currentEssayId");
+        const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
 
-      const existingEssayIndex = essayData.findIndex(
-        (item: any) => item.id === id
-      );
-      if (!currentId) {
-        if (existingEssayIndex > -1) {
-          const newId = uuidv4();
-          essayData[existingEssayIndex].id = newId;
-          localStorage.setItem("essayData", JSON.stringify(essayData));
-        } else {
-          localStorage.setItem("currentEssayId", id);
+        const existingEssayIndex = essayData.findIndex(
+          (item: any) => item.id === id
+        );
+        if (!currentId) {
+          if (existingEssayIndex > -1) {
+            const newId = uuidv4();
+            essayData[existingEssayIndex].id = newId;
+            localStorage.setItem("essayData", JSON.stringify(essayData));
+          } else {
+            localStorage.setItem("currentEssayId", id);
+          }
         }
       }
     }
-  }, [id, step]);
+  }, [id, step, editorType]);
 
   useEffect(() => {
-    saveToLocalStorage();
-    const interval = setInterval(saveToLocalStorage, 30000);
-    return () => clearInterval(interval);
-  }, [title, value, bottomValue]);
+    if (!editorType) {
+      saveToLocalStorage();
+      const interval = setInterval(saveToLocalStorage, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [title, value, bottomValue, editorType]);
 
   const saveToLocalStorage = () => {
     const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
