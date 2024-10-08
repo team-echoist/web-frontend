@@ -12,7 +12,7 @@ const Header = () => {
     const linkClasses = (path) => `mx-[51px] p-2 ${activePath === path ? "text-[#919191]" : "text-white"}`;
 
     return (
-        <nav className="flex text-white justify-between items-center text-[20px] ">
+        <nav className="flex bg-black text-white justify-between items-center text-[20px] ">
             <Link to="/">
                 <img src="/images/logo.svg" alt="로고" width={154} height={63.179} />
             </Link>
