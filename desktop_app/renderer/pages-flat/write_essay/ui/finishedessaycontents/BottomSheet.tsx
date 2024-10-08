@@ -10,6 +10,7 @@ import PublishBtn from "@/shared/assets/img/button/button_publish.webp";
 import LinkedoutBtn from "@/shared/assets/img/button/button_linkedout.webp";
 import Image from "next/image";
 import { submitEssay } from "../../api";
+import { updateEssayDetail } from "@/shared/api/essay";
 
 const Layout = styled.div<{ isOpen: boolean }>`
   position: fixed;
@@ -156,12 +157,18 @@ function BottomSheet({
   desc,
   location,
   imageFile,
+  essayId,
+  editorType,
+  pageType,
 }: {
   tag: string[];
   title: String;
   desc: string;
   location: string[];
   imageFile: File | string | null;
+  essayId: string | null;
+  editorType: string | null;
+  pageType: string | null;
 }) {
   const [isOpen, setIsOpen] = useState(true);
   const [chainStep, setChainStep] = useState("zero");
@@ -295,7 +302,50 @@ function BottomSheet({
       alert("게시물 등록에 실패했습니다.");
     }
   };
+  const updateSavedEssay = async (e: React.MouseEvent<HTMLElement>) => {
+    const { id } = e.currentTarget.dataset;
+    try {
+      const body = {
+        title: String(title),
+        content: String(desc),
+        status: String(pageType),
+        tags: tag,
+        location: "",
+        thumbnail: "",
+      };
+      if (location.length > 0) {
+        const tempLocation = location[0];
+        if (tempLocation) {
+          const numbersOnly = tempLocation.match(/[\d.]+/g)?.join(", ");
+          body.location = String(numbersOnly);
+        }
+      }
+      const formData = new FormData();
 
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+      const { data, status } = await updateEssayDetail(
+        formData,
+        body,
+        Number(essayId)
+      );
+      if (status === 201) {
+        router.push(
+          `/web/essay_details?id=${essayId}&type=${id}&pageType=${pageType}`
+        );
+      }
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+  const saveOrUpdateEssay = (e: React.MouseEvent<HTMLElement>) => {
+    if (editorType === "edit") {
+      handleSaveEssay(e);
+    } else {
+      updateSavedEssay(e);
+    }
+  };
   const stepTwoRenderer = () => {
     return (
       <StepTwoContainer>
@@ -313,7 +363,7 @@ function BottomSheet({
               height={60}
               alt="save_btn"
               data-id="private"
-              onClick={(e) => handleSaveEssay(e)}
+              onClick={saveOrUpdateEssay}
             />
             <Image
               src={PublishBtn.src}
@@ -321,7 +371,7 @@ function BottomSheet({
               height={60}
               alt="publish_btn"
               data-id="published"
-              onClick={(e) => handleSaveEssay(e)}
+              onClick={saveOrUpdateEssay}
             />
             <Image
               src={LinkedoutBtn.src}
@@ -329,7 +379,7 @@ function BottomSheet({
               height={60}
               alt="linkedout_btn"
               data-id="linkedout"
-              onClick={(e) => handleSaveEssay(e)}
+              onClick={saveOrUpdateEssay}
             />
           </BtnDiv>
         </StepTwoWrapper>

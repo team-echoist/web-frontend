@@ -204,7 +204,7 @@ function Editor({
   };
 
   const handleCustomFontSizeClick = () => {
-    setIsModalOpen(true);
+    setIsModalOpen(!isModalOpen);
   };
   const handleBoldClick = () => {
     if (quillRef.current) {
@@ -235,7 +235,7 @@ function Editor({
       toolbar: {
         container: "#toolbar",
         handlers: {
-          customFontSize: handleCustomFontSizeClick,
+          // customFontSize: handleCustomFontSizeClick,
           "custom-bold": handleBoldClick,
           "custom-underline": handleUnderlineClick,
           "custom-strike": handleStrikeClick,
@@ -301,6 +301,7 @@ function Editor({
         tagName={tagValue.active}
         tagHandler={tagHandler}
         handleSave={handleSave}
+        handleCustomFontSizeClick={handleCustomFontSizeClick}
       />
       {thumbnailImage && (
         <ThumbnailContainer>

@@ -5,7 +5,17 @@ interface dataType {
   essay: Essay;
   anotherEssays: { essays: Essay[] };
 }
-
+interface bodyType {
+  title: string;
+  content: string;
+  status: string;
+  tags: string[];
+  location: string;
+  thumbnail?: string;
+}
+type ImageResponse = {
+  imageUrl: string;
+};
 export const getEssayDetail = async (
   pageType: string,
   essayId: number,
@@ -22,6 +32,27 @@ export const getEssayDetail = async (
       });
     return { data: detailData, status: detailStatus };
   } catch (err) {
+    return { data: null, status: 500 };
+  }
+};
+
+export const updateEssayDetail = async (
+  formData: FormData,
+  body: bodyType,
+  essayId: number
+) => {
+  try {
+    if (formData && Object.keys(formData).length > 0) {
+      const { data: imageData, status: imageStatus } =
+        await fetchData<ImageResponse>("essays/images", "post", formData);
+      if (imageStatus === 201) {
+        body.thumbnail = imageData.imageUrl;
+      }
+    }
+    const { data, status } = await fetchData(`essays/${essayId}`, "get");
+    return { data, status };
+  } catch (err) {
+    console.log("err", err);
     return { data: null, status: 500 };
   }
 };

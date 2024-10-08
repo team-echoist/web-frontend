@@ -3,13 +3,13 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import TitleField from "./contents/TitleField";
 import BottomField from "./contents/BottomField";
-import { fetchData } from "@/shared/api/fetchData";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
 import { RoundConfirm } from "@/shared/ui/modal";
 import FinishedEssay from "./finishedessaycontents/FinishedEssay";
 import { base64ToFile } from "../lib/parsingbase64";
 import { useSearchParams } from "next/navigation";
+import { getEssayDetail } from "@/shared/api";
 
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
@@ -66,7 +66,7 @@ export const WriteEssay = () => {
       values: [],
     },
   });
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [id, setId] = useState<string>(defaultId);
   const [isCancel, setIsCancel] = useState(false);
   const [step, setStep] = useState("write");
@@ -78,10 +78,11 @@ export const WriteEssay = () => {
   const essayId = searchParams.get("essayId");
   const editorType = searchParams.get("editorType");
 
-  console.log("test", pageType, essayId, editorType);
+  console.log("test", pageType, essayId, !editorType);
 
   useEffect(() => {
     if (!editorType) {
+      // 일반 글쓰기 모드 일때
       const processEssayData = (id: string) => {
         const storedData = JSON.parse(
           localStorage.getItem("essayData") || "[]"
@@ -98,11 +99,37 @@ export const WriteEssay = () => {
         processEssayData(currentId);
         localStorage.setItem("currentEssayId", currentId);
       }
+    } else {
+      getExistEssayDetail();
     }
   }, [editorType]);
 
+  const getExistEssayDetail = async () => {
+    try {
+      const { data } = await getEssayDetail(
+        pageType || "public",
+        Number(essayId) || 0,
+        null
+      );
+      setTitle(data?.essay?.title ?? "");
+      setValue(data?.essay?.content ?? "");
+      setBottomValue((prev) => ({
+        ...prev,
+        tag: {
+          ...prev.tag,
+          values: data?.essay.tags.map((tag) => tag.name) || [],
+        },
+      }));
+      setImageSrc(data?.essay?.thumbnail ?? null);
+      console.log("data", data);
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
   useEffect(() => {
     if (!editorType) {
+      // 일반 글쓰기 모드 일때 현재의 에세이 id를 가져와서 기존 저장된 에세이에 해당하는 id가 없으면 내용 추가하는 로직
       if (id) {
         const currentId = localStorage.getItem("currentEssayId");
         const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
@@ -125,6 +152,7 @@ export const WriteEssay = () => {
 
   useEffect(() => {
     if (!editorType) {
+      // 일반 글쓰기 모드일때 로컬스트리지에 저장하는 로직
       saveToLocalStorage();
       const interval = setInterval(saveToLocalStorage, 30000);
       return () => clearInterval(interval);
@@ -226,6 +254,9 @@ export const WriteEssay = () => {
       tag={bottomValue?.tag.values}
       location={bottomValue?.location.values}
       imageFile={imageSrc ? base64ToFile(imageSrc, "thumbnail image") : null}
+      essayId={essayId || null}
+      editorType={editorType || null}
+      pageType={pageType}
     />
   );
 

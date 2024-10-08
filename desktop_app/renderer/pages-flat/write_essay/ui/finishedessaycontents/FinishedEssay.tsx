@@ -5,7 +5,6 @@ import BottomSheet from "./BottomSheet";
 import Image from "next/image";
 import { useStore } from "@/shared/store";
 
-
 const Layout = styled.div`
   padding: 72px 147px;
   display: flex;
@@ -60,13 +59,19 @@ function FinishedEssay({
   desc,
   tag,
   location,
-  imageFile
+  imageFile,
+  essayId,
+  editorType,
+  pageType
 }: {
   title: string;
   desc: string;
   tag: string[];
-  location:string[];
-  imageFile:File | string | null
+  location: string[];
+  imageFile: File | string | null;
+  essayId: string | null;
+  editorType: string | null;
+  pageType:string|null
 }) {
   const [thumbnailImage, setThumbnailImage] = useState(null);
   const user = useStore((state) => state.user);
@@ -106,7 +111,16 @@ function FinishedEssay({
           />
         )}
       </ThumbnailContainer>
-      <BottomSheet tag={tag} title={title} desc={desc} location={location} imageFile={imageFile}/>
+      <BottomSheet
+        tag={tag}
+        title={title}
+        desc={desc}
+        location={location}
+        imageFile={imageFile}
+        essayId={essayId}
+        editorType={editorType}
+        pageType={pageType}
+      />
       <Title>{title}</Title>
       <Desc dangerouslySetInnerHTML={{ __html: desc }} />
       <UserName>{user?.nickname}</UserName>
