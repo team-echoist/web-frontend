@@ -12,6 +12,9 @@ const Layout = styled.div`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  position:fixed;
+  z-index:500;
+  bottom:0;
 `;
 const BtnDiv = styled.div`
   display: flex;

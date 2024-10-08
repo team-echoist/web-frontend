@@ -12,6 +12,7 @@ import color from "@/shared/styles/color";
 import { BottomSeet } from "@/shared/ui/modal";
 import { ColorToast } from "@/shared/ui/toast";
 import { Button } from "@/shared/ui/button";
+import { useRouter } from "next/router";
 
 const MenuIconDiv = styled.div`
   position: fixed;
@@ -27,7 +28,7 @@ const ModalItem = styled.div<{ isStory?: boolean; isRed?: boolean }>`
     isStory ? color.pointcolor : isRed ? color.red : color.white};
   align-items: center;
   border-bottom: 1px solid #1a1a1a;
-
+  cursor: pointer;
   span {
     width: 100px;
   }
@@ -102,17 +103,20 @@ function Menu({
   handleZoomOut,
   scale,
   pageType,
+  essayId,
 }: {
   handleZoomIn: () => void;
   handleZoomOut: () => void;
   scale: number;
   pageType: string;
+  essayId: number;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMenuOpen = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const router = useRouter();
 
   const toastRenderer = () => {
     // 스토리 없을때
@@ -165,13 +169,19 @@ function Menu({
       </ToastContainer>
     );
   };
+
+  const navigateToEditor = () => {
+    router.push(
+      `/web/write_essay?pageType=${pageType}&editorType=edit&essayId=${essayId}`
+    );
+  };
   const privateRenderer = () => {
     return (
       <>
         {isBottomSheetOpen && bottomSheetModal()}
-        <ModalItem isStory={false}>
+        <ModalItem isStory={false} onClick={navigateToEditor}>
           <span>수정</span>
-          <IconDiv>
+          <IconDiv >
             <EditIcon />
           </IconDiv>
         </ModalItem>

@@ -81,7 +81,9 @@ function Article({
   userName,
   date,
   imgUrl,
-  isShowBookmark = false,
+  handleBookmarkClick,
+  isBookMark,
+  isShowBookmark=false
 }: {
   title: string;
   desc: string;
@@ -89,12 +91,10 @@ function Article({
   date: string;
   imgUrl?: string;
   isShowBookmark?: boolean;
+  handleBookmarkClick:()=>void;
+  isBookMark: boolean;
 }) {
-  const [isBookMark, setIsBookMark] = useState(false);
 
-  const handleBookmarkClick = () => {
-    setIsBookMark(!isBookMark);
-  };
   const BookmarkRenderer = () => {
     return isBookMark ? (
       <PointBookMark onClick={handleBookmarkClick} />
@@ -111,9 +111,8 @@ function Article({
       </ImageDiv>
       <H1>
         <TitleDiv>{title}</TitleDiv>
-        {isShowBookmark ? (
-          <BookmarkDiv>{BookmarkRenderer()}</BookmarkDiv>
-        ) : null}
+        {isShowBookmark&&<BookmarkDiv>{BookmarkRenderer()}</BookmarkDiv>}
+        
       </H1>
       <Desc dangerouslySetInnerHTML={{ __html: desc }} />
       <UserName>{userName}</UserName>

@@ -22,7 +22,6 @@ const ArticleLayout = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
 `;
 const TagDiv = styled.div`
   display: flex;
@@ -38,6 +37,13 @@ const Divider = styled.div`
   margin-left: 147px;
 `;
 
+const TransitionWrapper = styled.div<{ isFolded: boolean }>`
+  transition: all 0.3s ease-in-out;
+  opacity: ${({ isFolded }) => (isFolded ? 1 : 0)};
+  transform: ${({ isFolded }) =>
+    isFolded ? "translateY(0)" : "translateY(-20px)"};
+`;
+
 function ShowEssayDetails({
   pageType,
   essayId,
@@ -48,12 +54,28 @@ function ShowEssayDetails({
   storyId?: number;
 }) {
   const [scale, setScale] = useState(1);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isFolded, setIsFolded] = useState(false);
+  const [isFolded, setIsFolded] = useState(true);
   const [essay, setEssay] = useState<Essay | null>(null);
   const [prevId, setPrevId] = useState(0);
   const [nextId, setNextId] = useState(0);
-
+  const [isBookMark, setIsBookMark] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight;
+  
+      if (isAtBottom) {
+        setIsFolded(false);
+      } else if (window.scrollY === 0) {
+        setIsFolded(true);
+      }
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+  
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   useEffect(() => {
     getEssayData();
   }, [pageType, essayId, storyId]);
@@ -68,7 +90,7 @@ function ShowEssayDetails({
       setEssay(data.essay);
       setPrevId(data?.anotherEssays?.essays[0]?.id);
       setNextId(data?.anotherEssays?.essays[0]?.id | 0);
-      console.log("data", data);
+      setIsBookMark(data?.isBookmarked);
     } catch (err) {
       console.log("err", err);
     }
@@ -77,20 +99,6 @@ function ShowEssayDetails({
     setIsFolded(!isFolded);
   };
 
-  const handleMouseDown = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseMove = () => {
-    setIsDragging(true);
-  };
-
-  const handleMouseUp = () => {
-    if (!isDragging) {
-      handleEssaySize();
-    }
-    setIsDragging(false);
-  };
   const FoldedContentsRenderer = () => {
     return (
       <Foldedcontents isBookmark={false} prevId={prevId} nextId={nextId} />
@@ -103,13 +111,20 @@ function ShowEssayDetails({
           <UserProfile userName="꾸르륵" profileImage={TempThumbnail.src} />
         )}
         <Divider />
-        <UnFoldedContents pageType={pageType} prevId={prevId} storyId={storyId}/>
+        <UnFoldedContents
+          pageType={pageType}
+          prevId={prevId}
+          storyId={storyId}
+        />
       </>
     );
   };
 
   const handleZoomIn = () => setScale(scale + 0.1);
   const handleZoomOut = () => setScale(scale - 0.1);
+  const handleBookmarkClick = () => {
+    setIsBookMark(!isBookMark);
+  };
   return (
     <Container scale={scale}>
       <PrevButton />
@@ -118,19 +133,18 @@ function ShowEssayDetails({
         handleZoomOut={handleZoomOut}
         scale={scale}
         pageType={pageType}
+        essayId={essayId}
       />
-      <ArticleLayout
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-      >
+      <ArticleLayout>
         <Article
           title={essay?.title ?? "제목 없음"}
           desc={essay?.content ?? "내용 없음"}
           date={essay?.updatedDate ?? "2024-09-27T15:18:00.164+09:00"}
           userName={essay?.author?.nickname ?? "링크드아웃아무개"}
           imgUrl={essay?.thumbnail}
-          isShowBookmark={true}
+          handleBookmarkClick={handleBookmarkClick}
+          isBookMark={isBookMark}
+          isShowBookmark={!isFolded}
         />
         {!isFolded && (
           <TagDiv>
@@ -144,7 +158,9 @@ function ShowEssayDetails({
           </TagDiv>
         )}
       </ArticleLayout>
-      {isFolded ? FoldedContentsRenderer() : unFoldedContentsRenderer()}
+      <TransitionWrapper isFolded={isFolded}>
+        {isFolded ? FoldedContentsRenderer() : unFoldedContentsRenderer()}
+      </TransitionWrapper>
     </Container>
   );
 }

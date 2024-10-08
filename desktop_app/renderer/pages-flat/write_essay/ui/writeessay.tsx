@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { RoundConfirm } from "@/shared/ui/modal";
 import FinishedEssay from "./finishedessaycontents/FinishedEssay";
 import { base64ToFile } from "../lib/parsingbase64";
+import { useSearchParams } from "next/navigation";
 
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
@@ -72,6 +73,12 @@ export const WriteEssay = () => {
   const currentId = localStorage.getItem("currentEssayId");
   const isBottomFieldVisible =
     bottomValue.active === "tag" || bottomValue.active === "location";
+  const searchParams = useSearchParams();
+  const pageType = searchParams.get("pageType");
+  const essayId = searchParams.get("essayId");
+  const editorType = searchParams.get("editorType");
+
+  console.log("test",pageType,essayId,editorType)
 
   useEffect(() => {
     const processEssayData = (id: string) => {
