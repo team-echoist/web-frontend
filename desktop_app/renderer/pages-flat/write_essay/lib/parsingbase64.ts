@@ -14,7 +14,6 @@ const blobToFile = (blob: Blob, fileName: string): File => {
 };
 
 export const base64ToFile = (base64: any, fileName: string): File => {
-  console.log("test",base64)
   const mimeType = base64.match(/data:(.*?);base64/)?.[1] || "";
 
   try {
