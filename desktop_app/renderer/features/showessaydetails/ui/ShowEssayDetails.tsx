@@ -5,8 +5,7 @@ import styled from "styled-components";
 import TempThumbnail from "@/shared/assets/img/도시.jpg";
 import { ColorLessTag } from "@/shared/ui/tag";
 import UserProfile from "./contents/UserProfile";
-import UnFoldedContents from "./contents/unfoldedcontens/UnFoldedContents";
-import Foldedcontents from "./contents/foldedcontents/Foldedcontents";
+import Contents from "./contents/Contents";
 import Menu from "./contents/menu/Menu";
 import { getEssayDetail } from "@/shared/api";
 import { Essay, AnotherEssay } from "@/shared/types";
@@ -37,13 +36,6 @@ const Divider = styled.div`
   margin-left: 147px;
 `;
 
-const TransitionWrapper = styled.div<{ isFolded: boolean }>`
-  transition: all 0.3s ease-in-out;
-  opacity: ${({ isFolded }) => (isFolded ? 1 : 0)};
-  transform: ${({ isFolded }) =>
-    isFolded ? "translateY(0)" : "translateY(-20px)"};
-`;
-
 function ShowEssayDetails({
   pageType,
   essayId,
@@ -54,30 +46,11 @@ function ShowEssayDetails({
   storyId?: number;
 }) {
   const [scale, setScale] = useState(1);
-  const [isFolded, setIsFolded] = useState(true);
   const [essay, setEssay] = useState<Essay | null>(null);
   const [prevId, setPrevId] = useState(0);
   const [nextId, setNextId] = useState(0);
   const [isBookMark, setIsBookMark] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      const isAtBottom =
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight;
 
-      if (isAtBottom) {
-        setIsFolded(false);
-      } else if (window.scrollY === 0) {
-        setIsFolded(true);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
   useEffect(() => {
     getEssayData();
   }, [pageType, essayId, storyId]);
@@ -97,23 +70,15 @@ function ShowEssayDetails({
       console.log("err", err);
     }
   };
-  const handleEssaySize = () => {
-    setIsFolded(!isFolded);
-  };
 
-  const FoldedContentsRenderer = () => {
-    return (
-      <Foldedcontents isBookmark={false} prevId={prevId} nextId={nextId} />
-    );
-  };
-  const unFoldedContentsRenderer = () => {
+  const contentsRenderer = () => {
     return (
       <>
         {pageType === "public" && (
           <UserProfile userName="꾸르륵" profileImage={TempThumbnail.src} />
         )}
         <Divider />
-        <UnFoldedContents
+        <Contents
           pageType={pageType}
           prevId={prevId}
           storyId={storyId}
@@ -146,23 +111,19 @@ function ShowEssayDetails({
           imgUrl={essay?.thumbnail}
           handleBookmarkClick={handleBookmarkClick}
           isBookMark={isBookMark}
-          isShowBookmark={!isFolded}
+          isShowBookmark={false}
         />
-        {!isFolded && (
-          <TagDiv>
-            {essay?.tags.map((item) => {
-              return (
-                <>
-                  <ColorLessTag key={item.id} text={item.name} />
-                </>
-              );
-            })}
-          </TagDiv>
-        )}
+        <TagDiv>
+          {essay?.tags.map((item) => {
+            return (
+              <>
+                <ColorLessTag key={item.id} text={item.name} />
+              </>
+            );
+          })}
+        </TagDiv>
       </ArticleLayout>
-      <TransitionWrapper isFolded={isFolded}>
-        {isFolded ? FoldedContentsRenderer() : unFoldedContentsRenderer()}
-      </TransitionWrapper>
+      {contentsRenderer()}
     </Container>
   );
 }

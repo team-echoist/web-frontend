@@ -89,7 +89,7 @@ const IndicatorWrapper = styled.div`
   justify-content: space-between;
   gap: 10px;
 `;
-function UnFoldedContents({
+function Contents({
   pageType,
   prevId,
   storyId,
@@ -228,4 +228,4 @@ function UnFoldedContents({
   );
 }
 
-export default UnFoldedContents;
+export default Contents;
