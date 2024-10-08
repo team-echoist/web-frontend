@@ -65,6 +65,8 @@ function FinishedEssay({
   editorType,
   pageType,
   setImageSrc,
+  isTagSave,
+  isLocationSave
 }: {
   title: string;
   desc: string;
@@ -75,6 +77,8 @@ function FinishedEssay({
   editorType: string | null;
   pageType: string | null;
   setImageSrc: Dispatch<SetStateAction<any>>;
+  isTagSave:boolean;
+  isLocationSave:boolean;
 }) {
   const [thumbnailImage, setThumbnailImage] = useState<any>(null);
   const user = useStore((state) => state.user);
@@ -133,6 +137,8 @@ function FinishedEssay({
         essayId={essayId}
         editorType={editorType}
         pageType={pageType}
+        isTagSave={isTagSave}
+        isLocationSave={isLocationSave}
       />
       <Title>{title}</Title>
       <Desc dangerouslySetInnerHTML={{ __html: desc }} />

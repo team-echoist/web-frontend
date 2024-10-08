@@ -24,12 +24,25 @@ interface BottomValue {
 interface optionType {
   bottomValue: BottomValue;
   setBottomValue: React.Dispatch<React.SetStateAction<BottomValue>>;
+  setIsTagSave: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLocationSave: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function BottomField({ bottomValue, setBottomValue }: optionType) {
+function BottomField({
+  bottomValue,
+  setBottomValue,
+  setIsTagSave,
+  setIsLocationSave
+}: optionType) {
   return (
     <Layout>
-      <TagField activeTag={bottomValue.active} bottomValue={bottomValue} setBottomValue={setBottomValue}/>
+      <TagField
+        activeTag={bottomValue.active}
+        bottomValue={bottomValue}
+        setBottomValue={setBottomValue}
+        setIsTagSave={setIsTagSave}
+        setIsLocationSave={setIsLocationSave}
+      />
     </Layout>
   );
 }

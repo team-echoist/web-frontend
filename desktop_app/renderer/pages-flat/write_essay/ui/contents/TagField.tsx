@@ -70,15 +70,22 @@ interface OptionType {
   bottomValue: BottomValue;
   setBottomValue: React.Dispatch<React.SetStateAction<BottomValue>>;
   activeTag: "tag" | "location";
+  setIsTagSave: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLocationSave: React.Dispatch<React.SetStateAction<boolean>>;
 }
-function TagField({ activeTag, bottomValue, setBottomValue }: OptionType) {
+function TagField({
+  activeTag,
+  bottomValue,
+  setBottomValue,
+  setIsTagSave,
+  setIsLocationSave,
+}: OptionType) {
   const [inputValue, setInputValue] = useState<string>("");
   const [isComplete, setComplete] = useState<CompleteStatus>({
     tag: false,
     location: false,
   });
   const user = useStore((state) => state.user);
-
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -187,6 +194,12 @@ function TagField({ activeTag, bottomValue, setBottomValue }: OptionType) {
   };
 
   const handleComplete = (tag: string) => {
+    if (tag === "tag") {
+      setIsTagSave(true);
+    }
+    if (tag === "location") {
+      setIsLocationSave(true);
+    }
     setComplete((prevStatus) => ({
       ...prevStatus,
       [tag]: !prevStatus[tag],

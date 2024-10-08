@@ -77,6 +77,8 @@ export const WriteEssay = () => {
   const pageType = searchParams.get("pageType");
   const essayId = searchParams.get("essayId");
   const editorType = searchParams.get("editorType");
+  const [isTagSave, setIsTagSave] = useState(false);
+  const [isLocationSave, setIsLocationSave] = useState(false);
 
   useEffect(() => {
     if (editorType !== "edit") {
@@ -246,6 +248,8 @@ export const WriteEssay = () => {
         <BottomField
           bottomValue={bottomValue}
           setBottomValue={setBottomValue}
+          setIsTagSave={setIsTagSave}
+          setIsLocationSave={setIsLocationSave}
         />
       )}
     </>
@@ -262,6 +266,8 @@ export const WriteEssay = () => {
       editorType={editorType || null}
       pageType={pageType}
       setImageSrc={setImageSrc}
+      isTagSave={isTagSave}
+      isLocationSave={isLocationSave}
     />
   );
 

@@ -151,6 +151,14 @@ export interface Essay {
   timestamp: string;
   checked: boolean;
 }
+interface bodyType {
+  title: string;
+  content: string;
+  status: string;
+  tags: string[];
+  location?: string;
+  thumbnail?: string;
+}
 function BottomSheet({
   tag,
   title,
@@ -160,6 +168,8 @@ function BottomSheet({
   essayId,
   editorType,
   pageType,
+  isTagSave,
+  isLocationSave,
 }: {
   tag: string[];
   title: String;
@@ -169,6 +179,8 @@ function BottomSheet({
   essayId: string | null;
   editorType: string | null;
   pageType: string | null;
+  isTagSave: boolean;
+  isLocationSave: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(true);
   const [chainStep, setChainStep] = useState("zero");
@@ -241,11 +253,13 @@ function BottomSheet({
             <NextBtnImg alt="Next" />
           </NextBtn>
         </LoopDiv>
-        <TagDiv>
-          {tag.map((item) => (
-            <P>{item}</P>
-          ))}
-        </TagDiv>
+        {isTagSave && (
+          <TagDiv>
+            {tag.map((item) => (
+              <P>{item}</P>
+            ))}
+          </TagDiv>
+        )}
       </>
     );
   };
@@ -253,7 +267,6 @@ function BottomSheet({
   const handleSaveEssay = async (e: React.MouseEvent<HTMLElement>) => {
     const { id } = e.currentTarget.dataset;
     const pageType = id === "private" ? "private" : "public";
-    console.log("뭐야");
     try {
       if (title.length === 0 || desc.length === 0) {
         alert("입력란을 확인해 주세요.");
@@ -266,21 +279,25 @@ function BottomSheet({
         formData.append("image", imageFile);
       }
 
-      const body = {
+      const body: bodyType = {
         title: String(title),
         content: String(desc),
         status: String(id),
-        tags: tag,
+        tags: isTagSave ? tag : [],
         location: "",
         thumbnail: "",
       };
 
       if (location.length > 0) {
         const tempLocation = location[0];
-        if (tempLocation) {
+        if (tempLocation && isLocationSave) {
           const numbersOnly = tempLocation.match(/[\d.]+/g)?.join(", ");
           body.location = String(numbersOnly);
+        } else {
+          delete body?.location;
         }
+      } else {
+        delete body?.location;
       }
 
       const { data, status } = await submitEssay(formData, body);
@@ -294,6 +311,7 @@ function BottomSheet({
         );
         localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
         localStorage.setItem("currentEssayId", "");
+        localStorage.setItem("tempThumbnail", "");
         router.push(
           `/web/essay_details?id=${data.id}&type=${id}&pageType=${pageType}`
         );
@@ -305,29 +323,31 @@ function BottomSheet({
   };
   const updateSavedEssay = async (e: React.MouseEvent<HTMLElement>) => {
     const { id } = e.currentTarget.dataset;
-    console.log("updateSavedEssay");
     try {
-      const body = {
+      const body: bodyType = {
         title: String(title),
         content: String(desc),
         status: String(pageType),
-        tags: tag,
+        tags: isTagSave ? tag : [],
         location: "",
         thumbnail: "",
       };
       if (location.length > 0) {
         const tempLocation = location[0];
-        if (tempLocation) {
+        if (tempLocation && isLocationSave) {
           const numbersOnly = tempLocation.match(/[\d.]+/g)?.join(", ");
           body.location = String(numbersOnly);
+        } else {
+          delete body?.location;
         }
+      } else {
+        delete body?.location;
       }
       const formData = new FormData();
-      console.log("왜없니",imageFile)
       if (imageFile) {
         formData.append("image", imageFile);
       }
-      const { data, status } = await updateEssayDetail(
+      const { status } = await updateEssayDetail(
         formData,
         body,
         Number(essayId)
@@ -342,7 +362,7 @@ function BottomSheet({
       console.log("err", err);
     }
   };
-  console.log("editorType", editorType);
+
   const saveOrUpdateEssay = (e: React.MouseEvent<HTMLElement>) => {
     if (editorType === "edit") {
       updateSavedEssay(e);

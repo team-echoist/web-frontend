@@ -10,7 +10,6 @@ function EssayDetail() {
   const essayId = searchParams.get("id");
   const storyId =searchParams.get("storyId");
   const completedType = searchParams.get("type");
-  console.log("searchParams",searchParams.get("type"))
 
   return (
     <>

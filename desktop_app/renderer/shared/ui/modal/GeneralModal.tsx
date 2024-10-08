@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Subtract from "@/shared/assets/img/subtract.svg";
+import Subtract from "@/shared/assets/img/modalImage.webp";
+import Image from "next/image";
 
 interface ModalProps {
   isOpen: boolean;
@@ -45,16 +46,22 @@ const GeneralModal: React.FC<ModalProps> = ({
         isBackgroundVisible={isBackgroundVisible}
       >
         {isBackgroundVisible && (
-          <Subtract
+          <div
             style={{
               position: "absolute",
               top: 0,
               left: 0,
-              width: "380px",
-              height: "365px",
+              width: "100%",
+              height: "100%",
               zIndex: -1,
             }}
-          />
+          >
+            <Image
+              alt="modal_background"
+              src={Subtract.src}
+              fill 
+            />
+          </div>
         )}
         {children}
       </ModalContainer>

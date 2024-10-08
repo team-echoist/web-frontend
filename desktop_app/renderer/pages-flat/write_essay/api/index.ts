@@ -5,7 +5,7 @@ interface bodyType {
   content: string;
   status: string;
   tags: string[];
-  location: string;
+  location?: string;
   thumbnail?: string;
 }
 type ImageResponse = {
