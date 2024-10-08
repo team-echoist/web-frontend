@@ -70,7 +70,7 @@ export const WriteEssay = () => {
   const [id, setId] = useState<string>(defaultId);
   const [isCancel, setIsCancel] = useState(false);
   const [step, setStep] = useState("write");
-  const currentId = localStorage.getItem("currentEssayId");
+  let currentId = localStorage.getItem("currentEssayId");
   const isBottomFieldVisible =
     bottomValue.active === "tag" || bottomValue.active === "location";
   const searchParams = useSearchParams();
@@ -78,7 +78,6 @@ export const WriteEssay = () => {
   const essayId = searchParams.get("essayId");
   const editorType = searchParams.get("editorType");
 
-  console.log("test", pageType, essayId, !editorType);
 
   useEffect(() => {
     if (!editorType) {
@@ -121,6 +120,7 @@ export const WriteEssay = () => {
         },
       }));
       setImageSrc(data?.essay?.thumbnail ?? null);
+      localStorage.setItem("tempThumbnail", data?.essay?.thumbnail ?? "");
       console.log("data", data);
     } catch (err) {
       console.log("err", err);
@@ -190,12 +190,14 @@ export const WriteEssay = () => {
   };
 
   const handlecancle = () => {
+    currentId = essayId ? essayId : currentId;
     const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
     let deleteSaveData = storedData.filter(
       (item: Essay) => item.id !== currentId
     );
     localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
     localStorage.setItem("currentEssayId", "");
+    localStorage.setItem("tempThumbnail", "");
     if (step === "finish") {
       setIsCancel(!isCancel);
       setStep("write");
@@ -236,6 +238,7 @@ export const WriteEssay = () => {
           setValue={setValue}
           tagValue={bottomValue}
           setTagValue={setBottomValue}
+          editorType={editorType ?? ""}
         />
       </EditorContainer>
       {isBottomFieldVisible && (
@@ -253,10 +256,11 @@ export const WriteEssay = () => {
       desc={value}
       tag={bottomValue?.tag.values}
       location={bottomValue?.location.values}
-      imageFile={imageSrc ? base64ToFile(imageSrc, "thumbnail image") : null}
+      imageFile={imageSrc ?? base64ToFile(imageSrc, "thumbnail image")}
       essayId={essayId || null}
       editorType={editorType || null}
       pageType={pageType}
+      setImageSrc={setImageSrc}
     />
   );
 
@@ -297,6 +301,7 @@ export const WriteEssay = () => {
         step={step}
         handleStep={handleStep}
         setStep={setStep}
+        editorType={editorType ?? null}
       />
       {/* 본문 에디터 또는 완성된 글 */}
       {step === "write" ? renderEditor() : renderFinishedEssay()}

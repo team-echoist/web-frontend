@@ -17,11 +17,20 @@ export const submitEssay = async (
   body: bodyType
 ): Promise<any> => {
   try {
-    if (formData && Object.keys(formData).length > 0) {
-      const { data: imageData, status: imageStatus } =
-        await fetchData<ImageResponse>("essays/images", "post", formData);
-      if (imageStatus === 201) {
-        body.thumbnail = imageData.imageUrl;
+    if (formData) {
+      const formDataEmpty = Array.from(formData.entries()).reduce(
+        (acc, [key, value]) => {
+          return false;
+        },
+        true
+      );
+
+      if (!formDataEmpty) {
+        const { data: imageData, status: imageStatus } =
+          await fetchData<ImageResponse>("essays/images", "post", formData);
+        if (imageStatus === 201) {
+          body.thumbnail = imageData.imageUrl;
+        }
       }
     }
     const { data, status } = await fetchData("essays", "post", body);

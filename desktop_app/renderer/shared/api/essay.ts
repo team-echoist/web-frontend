@@ -42,14 +42,23 @@ export const updateEssayDetail = async (
   essayId: number
 ) => {
   try {
-    if (formData && Object.keys(formData).length > 0) {
-      const { data: imageData, status: imageStatus } =
-        await fetchData<ImageResponse>("essays/images", "post", formData);
-      if (imageStatus === 201) {
-        body.thumbnail = imageData.imageUrl;
+    if (formData) {
+      const formDataEmpty = Array.from(formData.entries()).reduce(
+        (acc, [key, value]) => {
+          return false;
+        },
+        true
+      );
+
+      if (!formDataEmpty) {
+        const { data: imageData, status: imageStatus } =
+          await fetchData<ImageResponse>("essays/images", "post", formData);
+        if (imageStatus === 201) {
+          body.thumbnail = imageData.imageUrl;
+        }
       }
     }
-    const { data, status } = await fetchData(`essays/${essayId}`, "get");
+    const { data, status } = await fetchData(`essays/${essayId}`, "put",body);
     return { data, status };
   } catch (err) {
     console.log("err", err);

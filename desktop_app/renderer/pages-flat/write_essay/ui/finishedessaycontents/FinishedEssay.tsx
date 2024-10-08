@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 import BottomSheet from "./BottomSheet";
 import Image from "next/image";
 import { useStore } from "@/shared/store";
+import { base64ToFile } from "../../lib/parsingbase64";
 
 const Layout = styled.div`
   padding: 72px 147px;
@@ -62,18 +63,20 @@ function FinishedEssay({
   imageFile,
   essayId,
   editorType,
-  pageType
+  pageType,
+  setImageSrc,
 }: {
   title: string;
   desc: string;
   tag: string[];
   location: string[];
-  imageFile: File | string | null;
+  imageFile: string | File | null;
   essayId: string | null;
   editorType: string | null;
-  pageType:string|null
+  pageType: string | null;
+  setImageSrc: Dispatch<SetStateAction<any>>;
 }) {
-  const [thumbnailImage, setThumbnailImage] = useState(null);
+  const [thumbnailImage, setThumbnailImage] = useState<any>(null);
   const user = useStore((state) => state.user);
   const [currentDateTime, setCurrentDateTime] = useState("");
 
@@ -88,17 +91,27 @@ function FinishedEssay({
   }, []);
 
   useEffect(() => {
-    const currentEssayId = localStorage.getItem("currentEssayId");
-    if (currentEssayId) {
-      const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
-      const storedEssayData = essayData.find((item: any) => {
-        return item.id === currentEssayId && item.imageSrc;
-      });
-      if (storedEssayData?.imageSrc) {
-        setThumbnailImage(storedEssayData?.imageSrc);
+    if (!editorType) {
+      const currentEssayId = localStorage.getItem("currentEssayId");
+      if (currentEssayId) {
+        const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
+        const storedEssayData = essayData.find((item: any) => {
+          return item.id === currentEssayId && item.imageSrc;
+        });
+        if (storedEssayData?.imageSrc) {
+          setThumbnailImage(storedEssayData?.imageSrc);
+        }
+      }
+    } else {
+      const tempThumbnail = localStorage.getItem("tempThumbnail");
+      if (tempThumbnail) {
+        setThumbnailImage(tempThumbnail ?? null);
+        let tempImage = base64ToFile(tempThumbnail, "thumbnail image");
+        setImageSrc(tempImage);
       }
     }
   }, []);
+  console.log("imageFile", imageFile);
   return (
     <Layout>
       <ThumbnailContainer>

@@ -253,6 +253,7 @@ function BottomSheet({
   const handleSaveEssay = async (e: React.MouseEvent<HTMLElement>) => {
     const { id } = e.currentTarget.dataset;
     const pageType = id === "private" ? "private" : "public";
+    console.log("뭐야");
     try {
       if (title.length === 0 || desc.length === 0) {
         alert("입력란을 확인해 주세요.");
@@ -304,6 +305,7 @@ function BottomSheet({
   };
   const updateSavedEssay = async (e: React.MouseEvent<HTMLElement>) => {
     const { id } = e.currentTarget.dataset;
+    console.log("updateSavedEssay");
     try {
       const body = {
         title: String(title),
@@ -321,7 +323,7 @@ function BottomSheet({
         }
       }
       const formData = new FormData();
-
+      console.log("왜없니",imageFile)
       if (imageFile) {
         formData.append("image", imageFile);
       }
@@ -330,7 +332,8 @@ function BottomSheet({
         body,
         Number(essayId)
       );
-      if (status === 201) {
+      if (status === 200) {
+        localStorage.setItem("tempThumbnail", "");
         router.push(
           `/web/essay_details?id=${essayId}&type=${id}&pageType=${pageType}`
         );
@@ -339,11 +342,12 @@ function BottomSheet({
       console.log("err", err);
     }
   };
+  console.log("editorType", editorType);
   const saveOrUpdateEssay = (e: React.MouseEvent<HTMLElement>) => {
     if (editorType === "edit") {
-      handleSaveEssay(e);
-    } else {
       updateSavedEssay(e);
+    } else {
+      handleSaveEssay(e);
     }
   };
   const stepTwoRenderer = () => {

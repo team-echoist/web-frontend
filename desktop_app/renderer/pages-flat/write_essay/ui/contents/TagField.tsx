@@ -134,7 +134,7 @@ function TagField({ activeTag, bottomValue, setBottomValue }: OptionType) {
       if (inputValue.trim() !== "") {
         if (activeTag === "tag") {
           setBottomValue((prev) => {
-            if (prev.tag.values.length < 5) {
+            if (prev.tag.values.length < 4) {
               return {
                 ...prev,
                 tag: {

@@ -13,7 +13,7 @@ const base64ToBlob = (base64: string, mimeType: string) => {
     return new File([blob], fileName, { type: blob.type });
   };
   
- export const base64ToFile = (base64: string, fileName: string): File => {
+ export const base64ToFile = (base64: any, fileName: string): File => {
     const mimeType = base64.match(/data:(.*?);base64/)?.[1] || '';
     const blob = base64ToBlob(base64, mimeType); 
     return blobToFile(blob, fileName); 
