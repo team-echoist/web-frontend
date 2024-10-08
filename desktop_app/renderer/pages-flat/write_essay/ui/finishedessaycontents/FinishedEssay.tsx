@@ -5,6 +5,7 @@ import BottomSheet from "./BottomSheet";
 import Image from "next/image";
 import { useStore } from "@/shared/store";
 import { base64ToFile } from "../../lib/parsingbase64";
+import { isBase64 } from "../../lib/checkBase64";
 
 const Layout = styled.div`
   padding: 72px 147px;
@@ -110,8 +111,10 @@ function FinishedEssay({
       const tempThumbnail = localStorage.getItem("tempThumbnail");
       if (tempThumbnail) {
         setThumbnailImage(tempThumbnail ?? null);
-        let tempImage = base64ToFile(tempThumbnail, "thumbnail image");
-        setImageSrc(tempImage);
+        if(isBase64(tempThumbnail)){
+          let tempImage = base64ToFile(tempThumbnail, "thumbnail image");
+          setImageSrc(tempImage);
+        }
       }
     }
   }, []);

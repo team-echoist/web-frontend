@@ -10,6 +10,7 @@ import FinishedEssay from "./finishedessaycontents/FinishedEssay";
 import { base64ToFile } from "../lib/parsingbase64";
 import { useSearchParams } from "next/navigation";
 import { getEssayDetail } from "@/shared/api";
+import { isBase64 } from "../lib/checkBase64";
 
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
@@ -122,6 +123,12 @@ export const WriteEssay = () => {
       }));
       setImageSrc(data?.essay?.thumbnail ?? null);
       localStorage.setItem("tempThumbnail", data?.essay?.thumbnail ?? "");
+      if((data?.essay?.tags ?? []).length > 0) {
+        setIsTagSave(true)
+      }
+      if((data?.essay?.location ?? "").length > 0) {
+        setIsLocationSave(true)
+      }
       console.log("data", data);
     } catch (err) {
       console.log("err", err);
@@ -250,6 +257,8 @@ export const WriteEssay = () => {
           setBottomValue={setBottomValue}
           setIsTagSave={setIsTagSave}
           setIsLocationSave={setIsLocationSave}
+          isTagSave={isTagSave}
+          isLocationSave={isLocationSave}
         />
       )}
     </>
@@ -261,7 +270,9 @@ export const WriteEssay = () => {
       desc={value}
       tag={bottomValue?.tag.values}
       location={bottomValue?.location.values}
-      imageFile={imageSrc ? base64ToFile(imageSrc, "thumbnail image") : null}
+      imageFile={isBase64(imageSrc) 
+        ? base64ToFile(imageSrc, "thumbnail image") 
+        : imageSrc || null}
       essayId={essayId || null}
       editorType={editorType || null}
       pageType={pageType}

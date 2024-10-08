@@ -285,7 +285,6 @@ function BottomSheet({
         status: String(id),
         tags: isTagSave ? tag : [],
         location: "",
-        thumbnail: "",
       };
 
       if (location.length > 0) {
@@ -330,7 +329,6 @@ function BottomSheet({
         status: String(pageType),
         tags: isTagSave ? tag : [],
         location: "",
-        thumbnail: "",
       };
       if (location.length > 0) {
         const tempLocation = location[0];
@@ -344,7 +342,7 @@ function BottomSheet({
         delete body?.location;
       }
       const formData = new FormData();
-      if (imageFile) {
+      if (imageFile instanceof File) {
         formData.append("image", imageFile);
       }
       const { status } = await updateEssayDetail(

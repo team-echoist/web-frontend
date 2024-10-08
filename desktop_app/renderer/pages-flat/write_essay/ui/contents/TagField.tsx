@@ -72,6 +72,8 @@ interface OptionType {
   activeTag: "tag" | "location";
   setIsTagSave: React.Dispatch<React.SetStateAction<boolean>>;
   setIsLocationSave: React.Dispatch<React.SetStateAction<boolean>>;
+  isTagSave: boolean;
+  isLocationSave: boolean;
 }
 function TagField({
   activeTag,
@@ -79,6 +81,8 @@ function TagField({
   setBottomValue,
   setIsTagSave,
   setIsLocationSave,
+  isTagSave,
+  isLocationSave,
 }: OptionType) {
   const [inputValue, setInputValue] = useState<string>("");
   const [isComplete, setComplete] = useState<CompleteStatus>({
@@ -86,6 +90,21 @@ function TagField({
     location: false,
   });
   const user = useStore((state) => state.user);
+
+  useEffect(() => {
+    if (isTagSave) {
+      setComplete((prev) => ({
+        ...prev,
+        tag: true,
+      }));
+    }
+    if (isLocationSave) {
+      setComplete((prev) => ({
+        ...prev,
+        location: true,
+      }));
+    }
+  }, [isTagSave, isLocationSave]);
 
   useEffect(() => {
     const fetchLocation = async () => {
