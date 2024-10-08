@@ -78,9 +78,8 @@ export const WriteEssay = () => {
   const essayId = searchParams.get("essayId");
   const editorType = searchParams.get("editorType");
 
-
   useEffect(() => {
-    if (!editorType) {
+    if (editorType !=="edit") {
       // 일반 글쓰기 모드 일때
       const processEssayData = (id: string) => {
         const storedData = JSON.parse(
@@ -101,7 +100,7 @@ export const WriteEssay = () => {
     } else {
       getExistEssayDetail();
     }
-  }, [editorType]);
+  }, []);
 
   const getExistEssayDetail = async () => {
     try {
@@ -128,12 +127,11 @@ export const WriteEssay = () => {
   };
 
   useEffect(() => {
-    if (!editorType) {
+    if (editorType!=="edit") {
       // 일반 글쓰기 모드 일때 현재의 에세이 id를 가져와서 기존 저장된 에세이에 해당하는 id가 없으면 내용 추가하는 로직
       if (id) {
         const currentId = localStorage.getItem("currentEssayId");
         const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
-
         const existingEssayIndex = essayData.findIndex(
           (item: any) => item.id === id
         );
@@ -148,16 +146,16 @@ export const WriteEssay = () => {
         }
       }
     }
-  }, [id, step, editorType]);
+  }, [id, step]);
 
   useEffect(() => {
-    if (!editorType) {
+    if (editorType!=="edit") {
       // 일반 글쓰기 모드일때 로컬스트리지에 저장하는 로직
       saveToLocalStorage();
       const interval = setInterval(saveToLocalStorage, 30000);
       return () => clearInterval(interval);
     }
-  }, [title, value, bottomValue, editorType]);
+  }, [title, value, bottomValue]);
 
   const saveToLocalStorage = () => {
     const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
@@ -167,9 +165,11 @@ export const WriteEssay = () => {
     );
 
     const existingImageSrc =
-      existingEntryIndex > -1 && storedData[existingEntryIndex].imageSrc
-        ? storedData[existingEntryIndex].imageSrc
-        : "";
+    existingEntryIndex > -1 && storedData[existingEntryIndex].imageSrc
+      ? storedData[existingEntryIndex].imageSrc
+      : imageSrc && imageSrc.length > 0
+      ? imageSrc
+      : "";
 
     const newData = {
       id,
@@ -190,12 +190,13 @@ export const WriteEssay = () => {
   };
 
   const handlecancle = () => {
-    currentId = essayId ? essayId : currentId;
     const storedData = JSON.parse(localStorage.getItem("essayData") || "[]");
-    let deleteSaveData = storedData.filter(
-      (item: Essay) => item.id !== currentId
-    );
-    localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
+    if (editorType!=="edit") {
+      let deleteSaveData = storedData.filter(
+        (item: Essay) => item.id !== currentId
+      );
+      localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
+    }
     localStorage.setItem("currentEssayId", "");
     localStorage.setItem("tempThumbnail", "");
     if (step === "finish") {
