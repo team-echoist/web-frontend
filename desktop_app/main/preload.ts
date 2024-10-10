@@ -28,7 +28,8 @@ contextBridge.exposeInMainWorld("Electron", {
   },
 });
 
-const senderId = 710166131124; // Replace 'yourSenderID' with your actual sender ID
+const senderId = process.env.SENDER_ID;
+
 ipcRenderer.send(START_NOTIFICATION_SERVICE, senderId);
 
 // Listen for service successfully started
