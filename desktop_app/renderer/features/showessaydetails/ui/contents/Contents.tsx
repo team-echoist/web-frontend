@@ -9,6 +9,7 @@ import { getEssays } from "@/features/showessaydetails/api";
 import { FewIndicatorBar } from "@/shared/ui/indicator";
 import NextIcon from "@/shared/assets/img/indicator/next.svg";
 import { getRandomEssays } from "@/features/showessaydetails/api";
+import { Pagination } from "@/shared/ui/pagination";
 
 const Layout = styled.div`
   padding: 20px 147px;
@@ -129,14 +130,11 @@ function Contents({
       if (pageType === "public") {
         const { data } = await getRandomEssays();
         setEssay(data);
-        setTotalPage(4);
       } else {
         const { data, totalPage } = await getEssays(page, 4, pageType);
         setEssay(data);
         setTotalPage(totalPage);
       }
-
-      await getRandomEssays();
     } catch (err) {
       console.log(err);
     }
@@ -155,7 +153,7 @@ function Contents({
     }
   };
 
-  const handlePageChange = () => {
+  const handleIndicatorPageChange = () => {
     if (isIncreasing) {
       // 페이지가 증가할때
       if (page < totalPage) {
@@ -173,32 +171,22 @@ function Contents({
       }
     }
   };
-
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
   const IndicatorRenderer = () => {
     switch (true) {
-      case totalPage >= 4 && pageType === "private":
+      case pageType === "private":
         return (
-          <IndicatorWrapper>
-            <IndicatorBar step={step} onClick={handlePageChange} />
-            {/* 페이지가 3까지는 step3 4이상이면 무조건 step4 */}
-            {page > 4 && (
-              <NextBtn onClick={handlePageChange}>
-                다음 <NextIcon />
-              </NextBtn>
-            )}
-          </IndicatorWrapper>
-        );
-      // 이로직은 디자인 다시 검토중
-      case totalPage < 4 && pageType === "private":
-        return (
-          <FewIndicatorBar totalpage={totalPage} onClick={handlePageChange} />
+          <Pagination totalPages={totalPage} onPageChange={handlePageChange} />
         );
       case pageType === "public":
-        return <IndicatorBar step={step} onClick={handlePageChange} />;
+        return <IndicatorBar step={step} onClick={handleIndicatorPageChange} />;
       default:
         return null;
     }
   };
+
   return (
     <Layout>
       <Button onClick={() => navigateToEssay()}>
@@ -221,7 +209,7 @@ function Contents({
       )}
       {/* 인디케이터 자리 */}
       <IndicatorDiv>
-        {/*  토탈페이지가 4개 이상이고, pageType이 private일때만 인디케이터바 & 다음 public일땐 인디케이터바만 */}
+        {/*  pageType이 private일때만 페이지네이션  public일땐 인디케이터바만 */}
         {IndicatorRenderer()}
       </IndicatorDiv>
     </Layout>
