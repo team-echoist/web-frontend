@@ -138,6 +138,7 @@ window.addEventListener('DOMContentLoaded', () => {
       maxButton.style.display = 'block';
     }
   });
+
 });
 
 const handler = {
