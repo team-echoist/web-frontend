@@ -9,6 +9,7 @@ import Contents from "./contents/Contents";
 import Menu from "./contents/menu/Menu";
 import { getEssayDetail } from "@/shared/api";
 import { Essay, AnotherEssay } from "@/shared/types";
+import { ScrollTop } from "@/shared/ui/scroll";
 
 const Container = styled.main<{ scale: number }>`
   width: 99vw;
@@ -90,6 +91,7 @@ function ShowEssayDetails({
   };
   return (
     <Container scale={scale}>
+      <ScrollTop />
       <PrevButton />
       <Menu
         handleZoomIn={handleZoomIn}

@@ -89,7 +89,7 @@ export const createWindow = (
     },
   });
 
-
+  
   let machineId = machineIdSync();
 
   ipcMain.on('request-device-info', (event) => {
@@ -141,6 +141,7 @@ ipcMain.on("maximize-window", (event) => {
     win?.maximize();
   }
 });
+
 
 ipcMain.on("restore-window", (event) => {
   const win = BrowserWindow.fromWebContents(event.sender);

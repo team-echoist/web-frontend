@@ -121,7 +121,8 @@ function Contents({
     }
   };
   useEffect(() => {
-    setStep(getStepFromPage());
+    const newStep = getStepFromPage(); 
+    setStep(newStep);
     getEssayList();
   }, [page]);
   // private일때 api
@@ -130,6 +131,7 @@ function Contents({
       if (pageType === "public") {
         const { data } = await getRandomEssays();
         setEssay(data);
+        setTotalPage(4);
       } else {
         const { data, totalPage } = await getEssays(page, 4, pageType);
         setEssay(data);
