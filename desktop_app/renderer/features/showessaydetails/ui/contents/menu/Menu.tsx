@@ -91,7 +91,8 @@ const Span = styled.span`
   line-height: 150%;
 `;
 const BottomSheetItemContainer = styled.div`
-  max-height: 210px;
+  min-height: 180px;
+  max-height: 180px;
   overflow-y: auto;
 `;
 const BtnDiv = styled.div`
@@ -117,13 +118,12 @@ function Menu({
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMenuOpen = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     setIsMenuOpen(!isMenuOpen);
   };
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [story, setStory] = useState<storyType[]>([]);
   const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -133,70 +133,56 @@ function Menu({
   const getStoryList = async () => {
     try {
       const { data } = await getStories();
-      setStory(data);
+      setStory([
+        {
+          id: 0,
+          name: "string",
+          createdDate: "2024-10-11T05:50:48.125Z",
+          essaysCount: 0,
+        },
+      ]);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // const ToastRenderer = () => {
-  //   // 스토리 없을때
-  //   return isToastVisible ? (
-  //     <ToastDiv>
-  //       <ColorToast
-  //         text="아직 만들어진 스토리가 없습니다."
-  //         onClose={() => {
-  //           setIsToastVisible(false);
-  //         }}
-  //         isShowToast={isToastVisible}
-  //       />
-  //     </ToastDiv>
-  //   ) : null;
-  // };
-
   const BottomSheetHandler = () => {
     setIsBottomSheetOpen(!isBottomSheetOpen);
+    if (story.length === 0) {
+      setShowToast(true);
+    }
   };
   const bottomSheetModal = () => {
-    const isStoryExist = story.length > 0;
     // 스토리 있을때
     return (
       <>
-        {isStoryExist && (
-          <ToastContainer>
-            <BottomSeet
-              isOpen={isBottomSheetOpen}
-              size="large"
-              isCloseModified={true}
-              onClose={BottomSheetHandler}
-            >
-              <BottomSheetTitle>
-                이 글을 어떤 스토리로 추가/변경 할까요?
-              </BottomSheetTitle>
-              <BottomSheetItemContainer>
+        <ToastContainer>
+          <BottomSeet
+            isOpen={isBottomSheetOpen}
+            size="large"
+            isCloseModified={true}
+            onClose={BottomSheetHandler}
+          >
+            <BottomSheetTitle>
+              이 글을 어떤 스토리로 추가/변경 할까요?
+            </BottomSheetTitle>
+            <BottomSheetItemContainer>
+              {story.map((item) => (
                 <BottomSheetItemDiv>
-                  <Span>돌연한 출발</Span>
+                  <Span>{item.name}</Span>
                   <CheckIcon />
                   {/* 체크아이콘은 클릭했을때 생김 */}
                 </BottomSheetItemDiv>
-                <BottomSheetItemDiv>
-                  <Span>돌연한 출발</Span>
-                  <CheckIcon />
-                </BottomSheetItemDiv>
-                <BottomSheetItemDiv>
-                  <Span>돌연한 출발</Span>
-                  <CheckIcon />
-                </BottomSheetItemDiv>
-              </BottomSheetItemContainer>
-              <BtnDiv>
-                <Button text="스토리에서 삭제" type="disable" scale="small" />
-                {/* 체크를 클릭했을때 스토리에 해당 아티클이있다면 활성화, 아니면 disalbe */}
-                <Button text="추가/변경" scale="small" />
-                {/* 체크를 클릭했을때 스토리에 해당 아티클이없다면 활성화, 아니면 disalbe */}
-              </BtnDiv>
-            </BottomSeet>
-          </ToastContainer>
-        )}
+              ))}
+            </BottomSheetItemContainer>
+            <BtnDiv>
+              <Button text="스토리에서 삭제" type="disable" scale="small" />
+              {/* 체크를 클릭했을때 스토리에 해당 아티클이있다면 활성화, 아니면 disalbe */}
+              <Button text="추가/변경" scale="small" />
+              {/* 체크를 클릭했을때 스토리에 해당 아티클이없다면 활성화, 아니면 disalbe */}
+            </BtnDiv>
+          </BottomSeet>
+        </ToastContainer>
       </>
     );
   };
@@ -221,10 +207,10 @@ function Menu({
       console.log("err", err);
     }
   };
-  const privateRenderer = () => {
+  const PrivateRenderer = () => {
     return (
       <>
-        {isBottomSheetOpen && bottomSheetModal()}
+        {isBottomSheetOpen && story.length > 0 ? bottomSheetModal() : null}
         <ModalItem isStory={false} onClick={navigateToEditor}>
           <span>수정</span>
           <IconDiv>
@@ -266,15 +252,6 @@ function Menu({
       </>
     );
   };
-  const showToastMessage = (message: string) => {
-    setToastMessage(message);
-    setShowToast(true);
-
-    setTimeout(() => {
-      setShowToast(false);
-      setToastMessage("");
-    }, 3000);
-  };
 
   const publicRenderer = () => {
     return (
@@ -288,21 +265,33 @@ function Menu({
       </>
     );
   };
-  console.log("isMenuOpen", isMenuOpen);
   return (
     <>
+      <ToastDiv>
+        <ColorToast
+          text="아직 만들어진 스토리가 없습니다."
+          onClose={() => {
+            setShowToast(false);
+          }}
+          isShowToast={showToast}
+        />
+      </ToastDiv>
       {isMenuOpen && (
         <BlackMiniModal
           handleZoomIn={handleZoomIn}
           handleZoomOut={handleZoomOut}
           scale={scale}
-          onClose={()=>setIsMenuOpen(false)}
+          onClose={() => setIsMenuOpen(false)}
         >
-          {pageType === "public" ? publicRenderer() : privateRenderer()}
+          {pageType === "public" ? (
+            publicRenderer()
+          ) : (
+            <PrivateRenderer></PrivateRenderer>
+          )}
         </BlackMiniModal>
       )}
       {/* {toastRenderer()} */}
-      <MenuIconDiv onClick={(e)=>handleMenuOpen(e)}>
+      <MenuIconDiv onClick={(e) => handleMenuOpen(e)}>
         <SpotMenuIcon alt="menu_icon" />
       </MenuIconDiv>
     </>
