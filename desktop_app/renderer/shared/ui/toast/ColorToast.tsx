@@ -6,7 +6,6 @@ const Layout = styled.dialog<{ type: string }>`
   display: flex;
   width: 360px;
   height: 53px;
-  padding: 16px 18px 16px 20px;
   justify-content: center;
   align-items: center;
   gap: 71px;

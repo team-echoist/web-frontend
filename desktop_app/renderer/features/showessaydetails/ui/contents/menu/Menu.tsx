@@ -13,6 +13,7 @@ import { BottomSeet } from "@/shared/ui/modal";
 import { ColorToast } from "@/shared/ui/toast";
 import { Button } from "@/shared/ui/button";
 import { useRouter } from "next/router";
+import { updateEssayDetail } from "@/shared/api/essay";
 
 const MenuIconDiv = styled.div`
   position: fixed;
@@ -20,7 +21,8 @@ const MenuIconDiv = styled.div`
   right: 30px;
   cursor: pointer;
 `;
-const ModalItem = styled.div<{ isStory?: boolean; isRed?: boolean }>`
+const ModalItem = styled.button<{ isStory?: boolean; isRed?: boolean }>`
+  all: unset;
   padding: 12px 20px;
   display: flex;
   justify-content: space-between;
@@ -175,32 +177,55 @@ function Menu({
       `/web/write_essay?pageType=${pageType}&editorType=edit&essayId=${essayId}`
     );
   };
+  const updateEssayDetails = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const target = e.currentTarget as HTMLButtonElement;
+    const id = target.dataset.id;
+    try {
+      const { status } = await updateEssayDetail(null, { status: id }, essayId);
+      if (status === 200) {
+        router.push(
+          `/web/essay_details?id=${essayId}&type=${id}&pageType=${pageType}`
+        );
+      }
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
   const privateRenderer = () => {
     return (
       <>
         {isBottomSheetOpen && bottomSheetModal()}
         <ModalItem isStory={false} onClick={navigateToEditor}>
           <span>수정</span>
-          <IconDiv >
+          <IconDiv>
             <EditIcon />
           </IconDiv>
         </ModalItem>
-        <ModalItem isStory={false}>
+        <ModalItem
+          isStory={false}
+          data-id="published"
+          onClick={(e) => updateEssayDetails(e)}
+        >
           <span>발행</span>
           <IconDiv>
             <PublishIcon />
           </IconDiv>
         </ModalItem>
-        <ModalItem isStory={false}>
+        <ModalItem
+          isStory={false}
+          data-id="linkedout"
+          onClick={(e) => updateEssayDetails(e)}
+        >
           <span>Linked-out</span>
           <IconDiv>
             <LinkedoutIcon />
           </IconDiv>
         </ModalItem>
-        <ModalItem isStory={true}>
+        <ModalItem isStory={true} onClick={BottomSheetHandler}>
           <span>스토리 선택</span>
           <IconDiv>
-            <CheckIcon onClick={BottomSheetHandler} />
+            <CheckIcon />
           </IconDiv>
         </ModalItem>
         <ModalItem isStory={false} isRed={true}>
@@ -232,6 +257,7 @@ function Menu({
           handleZoomIn={handleZoomIn}
           handleZoomOut={handleZoomOut}
           scale={scale}
+          onClose={() => handleMenuOpen()}
         >
           {pageType === "public" ? publicRenderer() : privateRenderer()}
         </BlackMiniModal>

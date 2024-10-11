@@ -94,10 +94,12 @@ function Contents({
   pageType,
   prevId,
   storyId,
+  essayId
 }: {
   pageType: string;
   prevId: number;
   storyId?: number;
+  essayId:number
 }) {
   const router = useRouter();
   const [essays, setEssay] = useState<Essay[]>([]);
@@ -121,7 +123,10 @@ function Contents({
     }
   };
   useEffect(() => {
-    const newStep = getStepFromPage(); 
+    getEssayList();
+  }, [essayId,pageType]);
+  useEffect(() => {
+    const newStep = getStepFromPage();
     setStep(newStep);
     getEssayList();
   }, [page]);

@@ -79,7 +79,7 @@ function CompleteModal({ completedType }: { completedType: string | null }) {
   const searchParams = useSearchParams();
   let modalType = searchParams.get("type") as keyof typeof mapper;
   const [isOpen, setIsOpen] = useState(false);
-  const router =useRouter()
+  const router =useRouter();
 
   useEffect(() => {
     if (modalType) {
@@ -170,6 +170,7 @@ function CompleteModal({ completedType }: { completedType: string | null }) {
       ),
     },
   };
+  console.log("modalType",modalType)
   const handleModalOpen = () => {
     setIsOpen(false);
     if(completedType ==="linkedout"){

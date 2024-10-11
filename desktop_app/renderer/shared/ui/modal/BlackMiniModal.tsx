@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import MinusBtn from "@/shared/assets/img/button/minus_button.svg";
 import MinusDisableBtn from "@/shared/assets/img/button/minus_disable_button.svg";
@@ -24,9 +24,9 @@ const ScaleAdjustDiv = styled.div`
   justify-content: center;
   align-items: center;
   gap: 32px;
-  border-bottom:1px solid #1A1A1A;
-  svg{
-   cursor: pointer;
+  border-bottom: 1px solid #1a1a1a;
+  svg {
+    cursor: pointer;
   }
 `;
 const Span = styled.span`
@@ -43,12 +43,28 @@ function BlackMiniModal({
   handleZoomOut,
   scale,
   children,
+  onClose,
 }: {
   handleZoomIn: () => void;
   handleZoomOut: () => void;
   scale: number;
   children: React.ReactNode;
+  onClose: () => void;
 }) {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const handleClickOutside = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const scaleBtnController = (status: string) => {
     let minusBtn =
       scale === 1 ? <MinusDisableBtn /> : <MinusBtn onClick={handleZoomOut} />;
@@ -58,7 +74,7 @@ function BlackMiniModal({
     return status === "minus" ? minusBtn : plusBtn;
   };
   return (
-    <Layout>
+    <Layout ref={modalRef}>
       <ScaleAdjustDiv>
         {scaleBtnController("minus")}
         <Span>가</Span>

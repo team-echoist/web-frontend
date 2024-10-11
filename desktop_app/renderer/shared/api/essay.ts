@@ -6,10 +6,10 @@ interface dataType {
   anotherEssays: { essays: Essay[] };
 }
 interface bodyType {
-  title: string;
-  content: string;
-  status: string;
-  tags: string[];
+  title?: string;
+  content?: string;
+  status?: string;
+  tags?: string[];
   location?: string;
   thumbnail?: string;
 }
@@ -37,7 +37,7 @@ export const getEssayDetail = async (
 };
 
 export const updateEssayDetail = async (
-  formData: FormData,
+  formData: FormData|null,
   body: bodyType,
   essayId: number
 ) => {

@@ -77,6 +77,8 @@ export const createWindow = (
     ...state,
     ...options,
     autoHideMenuBar: true,
+    minWidth: 1200,
+    minHeight: 700,
     icon: appIcon,
     frame: false,
     backgroundColor: "#101012",

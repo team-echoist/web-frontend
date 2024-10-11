@@ -11,6 +11,7 @@ import LinkedoutBtn from "@/shared/assets/img/button/button_linkedout.webp";
 import Image from "next/image";
 import { submitEssay } from "../../api";
 import { updateEssayDetail } from "@/shared/api/essay";
+import { ColorToast } from "@/shared/ui/toast";
 
 const Layout = styled.div<{ isOpen: boolean }>`
   position: fixed;
@@ -145,6 +146,7 @@ const BtnDiv = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
+
 export interface Essay {
   id: string;
   title: string;
@@ -188,6 +190,8 @@ function BottomSheet({
   const [step, setStep] = useState(1);
   const router = useRouter();
   const currentId = localStorage.getItem("currentEssayId");
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const handleModalOpen = () => {
     setIsOpen(!isOpen);
@@ -269,7 +273,7 @@ function BottomSheet({
     const pageType = id === "private" ? "private" : "public";
     try {
       if (title.length === 0 || desc.length === 0) {
-        alert("입력란을 확인해 주세요.");
+        showToastMessage("입력란을 확인해 주세요.");
         return;
       }
 
@@ -314,10 +318,12 @@ function BottomSheet({
         router.push(
           `/web/essay_details?id=${data.id}&type=${id}&pageType=${pageType}`
         );
+      } else {
+        showToastMessage("게시물 등록에 실패했습니다.");
       }
     } catch (err) {
       console.log("err", err);
-      alert("게시물 등록에 실패했습니다.");
+      showToastMessage("게시물 등록에 실패했습니다.");
     }
   };
   const updateSavedEssay = async (e: React.MouseEvent<HTMLElement>) => {
@@ -359,6 +365,16 @@ function BottomSheet({
     } catch (err) {
       console.log("err", err);
     }
+  };
+
+  const showToastMessage = (message: string) => {
+    setToastMessage(message);
+    setShowToast(true);
+
+    setTimeout(() => {
+      setShowToast(false);
+      setToastMessage("");
+    }, 3000);
   };
 
   const saveOrUpdateEssay = (e: React.MouseEvent<HTMLElement>) => {
@@ -419,6 +435,7 @@ function BottomSheet({
 
   return (
     <Layout isOpen={isOpen}>
+      {showToast && <ColorToast type="alert" text={toastMessage} />}
       <BottomSeet isOpen={isOpen} size="large">
         <Wrapper onClick={handleDialogClick}>
           <TopNavigatorDiv>
