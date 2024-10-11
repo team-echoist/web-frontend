@@ -130,30 +130,23 @@ function Menu({
 
   useEffect(() => {
     getStoryList();
-  }, []);
+  }, [includedStory]);
 
   const getStoryList = async () => {
     try {
       const { data } = await getStories();
-      if(includedStory){
-        const updatedStories = data.map((story) => ({
-          ...story,
-          isIncluded: story.id === includedStory.id, 
-        }));  
-      }
-      setStories([
-        {
-          id: 0,
-          name: "string",
-          createdDate: "2024-10-11T05:50:48.125Z",
-          essaysCount: 0,
-        },
-      ]);
+      const updatedStories = data.map((story) => ({
+        ...story,
+        isIncluded: includedStory ? story.id === includedStory.id : false,
+      }));
+  
+      setStories(updatedStories);
+
     } catch (err) {
       console.log(err);
     }
   };
-
+ 
 
   const BottomSheetHandler = () => {
     setIsBottomSheetOpen(!isBottomSheetOpen);
