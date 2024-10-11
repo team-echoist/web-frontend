@@ -125,6 +125,7 @@ function Contents({
   useEffect(() => {
     getEssayList();
   }, [essayId,pageType]);
+  
   useEffect(() => {
     const newStep = getStepFromPage();
     setStep(newStep);

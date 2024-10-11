@@ -72,18 +72,6 @@ function ShowEssayDetails({
     }
   };
 
-  const contentsRenderer = () => {
-    return (
-      <>
-        {pageType === "public" && (
-          <UserProfile userName="꾸르륵" profileImage={TempThumbnail.src} />
-        )}
-        <Divider />
-        <Contents pageType={pageType} prevId={prevId} storyId={storyId} essayId={essayId}/>
-      </>
-    );
-  };
-
   const handleZoomIn = () => setScale(scale + 0.1);
   const handleZoomOut = () => setScale(scale - 0.1);
   const handleBookmarkClick = () => {
@@ -121,7 +109,16 @@ function ShowEssayDetails({
           })}
         </TagDiv>
       </ArticleLayout>
-      {contentsRenderer()}
+      {pageType === "public" && (
+        <UserProfile userName="꾸르륵" profileImage={TempThumbnail.src} />
+      )}
+      <Divider />
+      <Contents
+        pageType={pageType}
+        prevId={prevId}
+        storyId={storyId}
+        essayId={essayId}
+      />
     </Container>
   );
 }

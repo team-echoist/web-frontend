@@ -185,7 +185,7 @@ function Menu({
       const { status } = await updateEssayDetail(null, { status: id }, essayId);
       if (status === 200) {
         router.push(
-          `/web/essay_details?id=${essayId}&type=${id}&pageType=${pageType}`
+          `/web/essay_details?id=${essayId}&type=${id}&pageType=public`
         );
       }
     } catch (err) {
