@@ -68,13 +68,7 @@ function ShowEssayDetails({
       setPrevId(data?.anotherEssays?.essays[0]?.id || 0);
       setNextId(data?.anotherEssays?.essays[1]?.id || 0);
       setIsBookMark(data?.essay?.isBookmarked || false);
-      // setIncludedStory(data?.essay?.story||null)
-      setIncludedStory( {
-        id: 0,
-        name: "string",
-        createdDate: "2024-10-11T05:50:48.125Z",
-        essaysCount: 0,
-      },)
+      setIncludedStory(data?.essay?.story||null)
 
     } catch (err) {
       console.log("err", err);
