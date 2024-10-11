@@ -291,7 +291,7 @@ function Menu({
         </BlackMiniModal>
       )}
       {/* {toastRenderer()} */}
-      <MenuIconDiv onClick={(e) => handleMenuOpen(e)}>
+      <MenuIconDiv onClick={(e) => handleMenuOpen(e)} id="not-include">
         <SpotMenuIcon alt="menu_icon" />
       </MenuIconDiv>
     </>

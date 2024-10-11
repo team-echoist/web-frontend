@@ -52,8 +52,16 @@ function BlackMiniModal({
   onClose: () => void;
 }) {
   const modalRef = useRef<HTMLDivElement>(null);
+ 
   const handleClickOutside = (event: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+    const clickedElement = event.target as HTMLElement;
+
+    const isNotIncludeElement = document.querySelector("#not-include");
+    if (
+      modalRef.current &&
+      !modalRef.current.contains(clickedElement) &&
+      !isNotIncludeElement?.contains(clickedElement)
+    ) {
       onClose();
     }
   };
