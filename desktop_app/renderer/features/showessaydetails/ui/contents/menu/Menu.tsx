@@ -15,7 +15,7 @@ import { Button } from "@/shared/ui/button";
 import { useRouter } from "next/router";
 import { updateEssayDetail } from "@/shared/api/essay";
 import { getStories } from "@/shared/api";
-import { storyType } from "@/shared/types";
+import { Story } from "@/shared/types";
 
 const MenuIconDiv = styled.div`
   position: fixed;
@@ -109,12 +109,14 @@ function Menu({
   scale,
   pageType,
   essayId,
+  includedStory
 }: {
   handleZoomIn: () => void;
   handleZoomOut: () => void;
   scale: number;
   pageType: string;
   essayId: number;
+  includedStory:Story |null
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMenuOpen = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -122,7 +124,7 @@ function Menu({
     setIsMenuOpen(!isMenuOpen);
   };
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [stories, setStories] = useState<storyType[]>([]);
+  const [stories, setStories] = useState<Story[]>([]);
   const [showToast, setShowToast] = useState(false);
   const router = useRouter();
 

@@ -8,7 +8,7 @@ import UserProfile from "./contents/UserProfile";
 import Contents from "./contents/Contents";
 import Menu from "./contents/menu/Menu";
 import { getEssayDetail } from "@/shared/api";
-import { Essay, AnotherEssay } from "@/shared/types";
+import { Essay, Story } from "@/shared/types";
 import { ScrollTop } from "@/shared/ui/scroll";
 
 const Container = styled.main<{ scale: number }>`
@@ -51,6 +51,7 @@ function ShowEssayDetails({
   const [prevId, setPrevId] = useState(0);
   const [nextId, setNextId] = useState(0);
   const [isBookMark, setIsBookMark] = useState(false);
+  const [includedStory,setIncludedStory] =useState<Story|null>(null)
 
   useEffect(() => {
     getEssayData();
@@ -67,6 +68,7 @@ function ShowEssayDetails({
       setPrevId(data?.anotherEssays?.essays[0]?.id || 0);
       setNextId(data?.anotherEssays?.essays[1]?.id || 0);
       setIsBookMark(data?.essay?.isBookmarked || false);
+      setIncludedStory(data?.essay?.story||null)
     } catch (err) {
       console.log("err", err);
     }
@@ -87,6 +89,7 @@ function ShowEssayDetails({
         scale={scale}
         pageType={pageType}
         essayId={essayId}
+        includedStory={includedStory}
       />
       <ArticleLayout>
         <Article
