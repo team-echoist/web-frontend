@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SpotMenuIcon from "@/shared/assets/img/spotmenuicon.svg";
 import { BlackMiniModal } from "@/shared/ui/modal";
@@ -14,6 +14,8 @@ import { ColorToast } from "@/shared/ui/toast";
 import { Button } from "@/shared/ui/button";
 import { useRouter } from "next/router";
 import { updateEssayDetail } from "@/shared/api/essay";
+import { getStories } from "@/shared/api";
+import { storyType } from "@/shared/types";
 
 const MenuIconDiv = styled.div`
   position: fixed;
@@ -114,61 +116,88 @@ function Menu({
   essayId: number;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const handleMenuOpen = () => {
+  const handleMenuOpen = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation(); 
     setIsMenuOpen(!isMenuOpen);
   };
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [story, setStory] = useState<storyType[]>([]);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const router = useRouter();
 
-  const toastRenderer = () => {
-    // 스토리 없을때
-    return (
-      <ToastContainer>
-        <ToastDiv>
-          <ColorToast text="아직 만들어진 스토리가 없습니다." />
-        </ToastDiv>
-      </ToastContainer>
-    );
+  useEffect(() => {
+    getStoryList();
+  }, []);
+
+  const getStoryList = async () => {
+    try {
+      const { data } = await getStories();
+      setStory(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  // const ToastRenderer = () => {
+  //   // 스토리 없을때
+  //   return isToastVisible ? (
+  //     <ToastDiv>
+  //       <ColorToast
+  //         text="아직 만들어진 스토리가 없습니다."
+  //         onClose={() => {
+  //           setIsToastVisible(false);
+  //         }}
+  //         isShowToast={isToastVisible}
+  //       />
+  //     </ToastDiv>
+  //   ) : null;
+  // };
+
   const BottomSheetHandler = () => {
     setIsBottomSheetOpen(!isBottomSheetOpen);
   };
   const bottomSheetModal = () => {
+    const isStoryExist = story.length > 0;
     // 스토리 있을때
     return (
-      <ToastContainer>
-        <BottomSeet
-          isOpen={isBottomSheetOpen}
-          size="large"
-          isCloseModified={true}
-          onClose={BottomSheetHandler}
-        >
-          <BottomSheetTitle>
-            이 글을 어떤 스토리로 추가/변경 할까요?
-          </BottomSheetTitle>
-          <BottomSheetItemContainer>
-            <BottomSheetItemDiv>
-              <Span>돌연한 출발</Span>
-              <CheckIcon />
-              {/* 체크아이콘은 클릭했을때 생김 */}
-            </BottomSheetItemDiv>
-            <BottomSheetItemDiv>
-              <Span>돌연한 출발</Span>
-              <CheckIcon />
-            </BottomSheetItemDiv>
-            <BottomSheetItemDiv>
-              <Span>돌연한 출발</Span>
-              <CheckIcon />
-            </BottomSheetItemDiv>
-          </BottomSheetItemContainer>
-          <BtnDiv>
-            <Button text="스토리에서 삭제" type="disable" scale="small" />
-            {/* 체크를 클릭했을때 스토리에 해당 아티클이있다면 활성화, 아니면 disalbe */}
-            <Button text="추가/변경" scale="small" />
-            {/* 체크를 클릭했을때 스토리에 해당 아티클이없다면 활성화, 아니면 disalbe */}
-          </BtnDiv>
-        </BottomSeet>
-      </ToastContainer>
+      <>
+        {isStoryExist && (
+          <ToastContainer>
+            <BottomSeet
+              isOpen={isBottomSheetOpen}
+              size="large"
+              isCloseModified={true}
+              onClose={BottomSheetHandler}
+            >
+              <BottomSheetTitle>
+                이 글을 어떤 스토리로 추가/변경 할까요?
+              </BottomSheetTitle>
+              <BottomSheetItemContainer>
+                <BottomSheetItemDiv>
+                  <Span>돌연한 출발</Span>
+                  <CheckIcon />
+                  {/* 체크아이콘은 클릭했을때 생김 */}
+                </BottomSheetItemDiv>
+                <BottomSheetItemDiv>
+                  <Span>돌연한 출발</Span>
+                  <CheckIcon />
+                </BottomSheetItemDiv>
+                <BottomSheetItemDiv>
+                  <Span>돌연한 출발</Span>
+                  <CheckIcon />
+                </BottomSheetItemDiv>
+              </BottomSheetItemContainer>
+              <BtnDiv>
+                <Button text="스토리에서 삭제" type="disable" scale="small" />
+                {/* 체크를 클릭했을때 스토리에 해당 아티클이있다면 활성화, 아니면 disalbe */}
+                <Button text="추가/변경" scale="small" />
+                {/* 체크를 클릭했을때 스토리에 해당 아티클이없다면 활성화, 아니면 disalbe */}
+              </BtnDiv>
+            </BottomSeet>
+          </ToastContainer>
+        )}
+      </>
     );
   };
 
@@ -237,6 +266,16 @@ function Menu({
       </>
     );
   };
+  const showToastMessage = (message: string) => {
+    setToastMessage(message);
+    setShowToast(true);
+
+    setTimeout(() => {
+      setShowToast(false);
+      setToastMessage("");
+    }, 3000);
+  };
+
   const publicRenderer = () => {
     return (
       <>
@@ -249,7 +288,7 @@ function Menu({
       </>
     );
   };
-
+  console.log("isMenuOpen", isMenuOpen);
   return (
     <>
       {isMenuOpen && (
@@ -257,13 +296,13 @@ function Menu({
           handleZoomIn={handleZoomIn}
           handleZoomOut={handleZoomOut}
           scale={scale}
-          onClose={() => handleMenuOpen()}
+          onClose={()=>setIsMenuOpen(false)}
         >
           {pageType === "public" ? publicRenderer() : privateRenderer()}
         </BlackMiniModal>
       )}
       {/* {toastRenderer()} */}
-      <MenuIconDiv onClick={handleMenuOpen}>
+      <MenuIconDiv onClick={(e)=>handleMenuOpen(e)}>
         <SpotMenuIcon alt="menu_icon" />
       </MenuIconDiv>
     </>

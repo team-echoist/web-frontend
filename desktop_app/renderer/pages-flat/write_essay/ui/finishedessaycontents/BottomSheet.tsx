@@ -435,7 +435,7 @@ function BottomSheet({
 
   return (
     <Layout isOpen={isOpen}>
-      {showToast && <ColorToast type="alert" text={toastMessage} />}
+      <ColorToast type="alert" text={toastMessage} onClose={()=>setShowToast(false)} isShowToast={showToast}/>
       <BottomSeet isOpen={isOpen} size="large">
         <Wrapper onClick={handleDialogClick}>
           <TopNavigatorDiv>

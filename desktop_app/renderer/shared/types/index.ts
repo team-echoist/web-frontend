@@ -2,3 +2,4 @@
 export * from './btnType';
 export * from "./listType"
 export * from "./essayType"
+export * from "./storyType"
