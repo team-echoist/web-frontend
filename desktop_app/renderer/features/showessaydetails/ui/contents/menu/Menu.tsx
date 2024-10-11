@@ -122,7 +122,7 @@ function Menu({
     setIsMenuOpen(!isMenuOpen);
   };
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [story, setStory] = useState<storyType[]>([]);
+  const [stories, setStories] = useState<storyType[]>([]);
   const [showToast, setShowToast] = useState(false);
   const router = useRouter();
 
@@ -133,7 +133,7 @@ function Menu({
   const getStoryList = async () => {
     try {
       const { data } = await getStories();
-      setStory([
+      setStories([
         {
           id: 0,
           name: "string",
@@ -148,7 +148,7 @@ function Menu({
 
   const BottomSheetHandler = () => {
     setIsBottomSheetOpen(!isBottomSheetOpen);
-    if (story.length === 0) {
+    if (stories.length === 0) {
       setShowToast(true);
     }
   };
@@ -167,7 +167,7 @@ function Menu({
               이 글을 어떤 스토리로 추가/변경 할까요?
             </BottomSheetTitle>
             <BottomSheetItemContainer>
-              {story.map((item) => (
+              {stories.map((item) => (
                 <BottomSheetItemDiv>
                   <Span>{item.name}</Span>
                   <CheckIcon />
@@ -210,7 +210,7 @@ function Menu({
   const PrivateRenderer = () => {
     return (
       <>
-        {isBottomSheetOpen && story.length > 0 ? bottomSheetModal() : null}
+        {isBottomSheetOpen && stories.length > 0 ? bottomSheetModal() : null}
         <ModalItem isStory={false} onClick={navigateToEditor}>
           <span>수정</span>
           <IconDiv>
