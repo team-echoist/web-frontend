@@ -135,6 +135,12 @@ function Menu({
   const getStoryList = async () => {
     try {
       const { data } = await getStories();
+      if(includedStory){
+        const updatedStories = data.map((story) => ({
+          ...story,
+          isIncluded: story.id === includedStory.id, 
+        }));  
+      }
       setStories([
         {
           id: 0,
@@ -147,6 +153,7 @@ function Menu({
       console.log(err);
     }
   };
+
 
   const BottomSheetHandler = () => {
     setIsBottomSheetOpen(!isBottomSheetOpen);
