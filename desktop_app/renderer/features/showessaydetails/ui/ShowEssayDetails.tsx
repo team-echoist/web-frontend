@@ -101,7 +101,7 @@ function ShowEssayDetails({
           imgUrl={essay?.thumbnail}
           handleBookmarkClick={handleBookmarkClick}
           isBookMark={isBookMark}
-          isShowBookmark={false}
+          isShowBookmark={true}
         />
         <TagDiv>
           {essay?.tags.map((item) => {
