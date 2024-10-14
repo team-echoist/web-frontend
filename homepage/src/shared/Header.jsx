@@ -9,12 +9,12 @@ const Header = () => {
         setActivePath(location.pathname);
     }, [location.pathname]);
 
-    const linkClasses = (path) => `mx-[51px] p-2 ${activePath === path ? "text-[#919191]" : "text-white"}`;
+    const linkClasses = (path) => `mx-[51px] my-[52px] p-2 font-normal ${activePath === path ? "text-white" : "text-[#919191]"}`;
 
     return (
-        <nav className="flex bg-black text-white justify-between items-center text-[20px] ">
+        <nav className="flex bg-[#0F0F0F] justify-between items-center text-[20px] text-[#919191] px-10 font-normal">
             <Link to="/">
-                <img src="/images/logo.svg" alt="로고" width={154} height={63.179} />
+                <img src="/images/logo.svg" alt="로고" width={154} height={63.179} className="py-[19.744px]" />
             </Link>
             <div>
                 <Link to="/about" className={linkClasses("/about")}>
@@ -30,7 +30,7 @@ const Header = () => {
                     Newsletter
                 </Link>
             </div>
-            <p className="w-[143px] h-[46px] rounded-2xl bg-white text-[#121212] flex justify-center items-center">
+            <p className="w-[143px] h-[46px] rounded-2xl bg-white text-[#121212] flex justify-center items-center font-normal">
                 Get the App
             </p>
         </nav>

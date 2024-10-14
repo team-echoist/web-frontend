@@ -3,7 +3,7 @@ import Header from "../../shared/Header";
 // 메인 페이지
 function MainPage() {
   return (
-    <main className="bg-[#121212] min-h-screen p-12 text-white">
+    <main className="bg-[#0F0F0F] min-h-screen text-white">
       <Header />
       <h1 className="text-white">다양한 나를 '링크드아웃'할 수 있는 글쓰기 공간</h1>
       <h3 className="text-white">A personal space where you can 'linked-out'various types of you.</h3>
