@@ -70,6 +70,7 @@ export interface Essay {
     name: string;
     createdDate: string;
     essaysCount: number;
+    isIncluded?: boolean;
   }
   
   export interface Review {

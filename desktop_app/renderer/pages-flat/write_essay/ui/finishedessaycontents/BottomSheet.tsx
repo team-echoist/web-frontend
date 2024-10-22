@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { BottomSeet } from "@/shared/ui/modal";
+import Modal  from "@/shared/ui/modal/BottomSheet";
 import color from "@/shared/styles/color";
 import NextBtnImg from "@/shared/assets/img/next_Icon.svg";
 import { changeGroupChain, changeSingleChain } from "../../lib/changeChain";
@@ -436,14 +436,14 @@ function BottomSheet({
   return (
     <Layout isOpen={isOpen}>
       <ColorToast type="alert" text={toastMessage} onClose={()=>setShowToast(false)} isShowToast={showToast}/>
-      <BottomSeet isOpen={isOpen} size="large">
+      <Modal isOpen={isOpen} size="large">
         <Wrapper onClick={handleDialogClick}>
           <TopNavigatorDiv>
             <NavigatorChip onClick={handleModalOpen}></NavigatorChip>
           </TopNavigatorDiv>
           {step === 2 ? stepTwoRenderer() : stepOneRenderer()}
         </Wrapper>
-      </BottomSeet>
+      </Modal>
     </Layout>
   );
 }

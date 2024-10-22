@@ -7,7 +7,7 @@ import { Button } from "@/shared/ui/button";
 import styled from "styled-components";
 import { submitSignupForm } from "../api";
 import { GeneralToast } from "@/shared/ui/toast";
-import { BottomSeet } from "@/shared/ui/modal";
+import { BottomSheet } from "@/shared/ui/modal";
 import VerificationField from "./contents/VerificationField";
 
 const ButtonLayout = styled.div`
@@ -118,9 +118,9 @@ function SignUP() {
         positionTop={hasError ? "" : "45.4vh"}
       />
       {isVerificationOpen && (
-        <BottomSeet isOpen={isVerificationOpen}>
+        <BottomSheet isOpen={isVerificationOpen}>
           <VerificationField onRetry ={onSubmit} />
-        </BottomSeet>
+        </BottomSheet>
       )}
 
       <PrevButton />

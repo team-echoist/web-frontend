@@ -80,6 +80,7 @@ function ShowEssayDetails({
   const handleBookmarkClick = () => {
     setIsBookMark(!isBookMark);
   };
+
   return (
     <Container scale={scale}>
       <ScrollTop />
