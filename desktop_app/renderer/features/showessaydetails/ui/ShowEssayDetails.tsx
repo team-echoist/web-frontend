@@ -11,8 +11,8 @@ import { getEssayDetail } from "@/shared/api";
 import { Essay, Story } from "@/shared/types";
 import { ScrollTop } from "@/shared/ui/scroll";
 import { addEssayBookMark, deleteEssayBookMark } from "@/shared/api/essay";
-
-
+import { ColorToast } from "@/shared/ui/toast";
+import { useStore } from "@/shared/store";
 
 const Container = styled.main<{ scale: number }>`
   width: 99vw;
@@ -39,6 +39,15 @@ const Divider = styled.div`
   height: 12px;
   margin-left: 147px;
 `;
+const ToastContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 35%;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 function ShowEssayDetails({
   pageType,
@@ -55,7 +64,10 @@ function ShowEssayDetails({
   const [nextId, setNextId] = useState(0);
   const [isBookMark, setIsBookMark] = useState(false);
   const [includedStory, setIncludedStory] = useState<Story | null>(null);
-
+  const [isShowToast, setIsShowToast] = useState(false);
+  const [toastText, setToastText] = useState("");
+  const [isError, setError] = useState(false);
+  const user = useStore((state) => state.user);
 
   useEffect(() => {
     getEssayData();
@@ -82,14 +94,28 @@ function ShowEssayDetails({
 
   const handleBookmarkClick = async () => {
     try {
+      const tempToastText = isBookMark
+        ? "해당 글의 저장이 해지 되었습니다."
+        : "해당 글이 저장됐습니다.";
       const { status } = isBookMark
         ? await deleteEssayBookMark(essayId)
         : await addEssayBookMark(essayId);
+
       if (status === 201 || status === 200) {
+        setIsShowToast(true);
         setIsBookMark(!isBookMark);
+        setToastText(tempToastText);
+      } else {
+        throw Error;
       }
     } catch (err) {
       console.log("err", err);
+      setIsShowToast(true);
+      setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
     }
   };
 
@@ -97,6 +123,17 @@ function ShowEssayDetails({
     <Container scale={scale}>
       <ScrollTop />
       <PrevButton />
+      <ToastContainer>
+        <ColorToast
+          text={toastText}
+          onClose={() => {
+            setIsShowToast(false);
+          }}
+          isShowToast={isShowToast}
+          type={isError ? "alert" : "normal"}
+        />
+      </ToastContainer>
+
       <Menu
         handleZoomIn={handleZoomIn}
         handleZoomOut={handleZoomOut}
@@ -104,7 +141,7 @@ function ShowEssayDetails({
         pageType={pageType}
         essayId={essayId}
         includedStory={includedStory}
-        userName={essay?.author?.nickname ||"꾸르륵"} 
+        userName={essay?.author?.nickname || "꾸르륵"}
       />
       <ArticleLayout>
         <Article
@@ -115,7 +152,11 @@ function ShowEssayDetails({
           imgUrl={essay?.thumbnail}
           handleBookmarkClick={handleBookmarkClick}
           isBookMark={isBookMark}
-          isShowBookmark={pageType === "public" ? true : false}
+          isShowBookmark={
+            pageType === "public" && user?.nickname !== essay?.author?.nickname
+              ? true
+              : false
+          }
         />
         <TagDiv>
           {essay?.tags.map((item) => {
@@ -128,7 +169,10 @@ function ShowEssayDetails({
         </TagDiv>
       </ArticleLayout>
       {pageType === "public" && (
-        <UserProfile userName={essay?.author?.nickname ||"꾸르륵"} profileImage={TempThumbnail.src} />
+        <UserProfile
+          userName={essay?.author?.nickname || "꾸르륵"}
+          profileImage={TempThumbnail.src}
+        />
       )}
       <Divider />
       <Contents
