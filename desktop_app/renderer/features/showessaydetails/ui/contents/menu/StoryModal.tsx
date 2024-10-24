@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SetStateAction, useState, Dispatch } from "react";
 import styled from "styled-components";
 import BottomSheet from "@/shared/ui/modal/BottomSheet";
 import color from "@/shared/styles/color";
@@ -6,7 +6,7 @@ import { Button } from "@/shared/ui/button";
 import { Story } from "@/shared/types";
 import CheckIcon from "@/shared/assets/img/modal_icon/check.svg";
 
-const ToastContainer = styled.div`
+const BackgroundContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -64,50 +64,61 @@ function StoryModal({
   isStoryChecked,
   deleteInculudedStory,
   addUpdateStory,
-  onClose
+  onClose,
 }: {
   stories: Story[];
   handleAddStory: (id: number) => void;
-  isStoryIncluded:boolean;
+  isStoryIncluded: boolean;
   isStoryChecked: boolean;
   deleteInculudedStory: () => void;
   addUpdateStory: () => void;
-  onClose:() =>void;
+  onClose: () => void;
 }) {
   return (
-    <ToastContainer>
-      <BottomSheet isOpen={true} size="large" isCloseModified={true} onClose={onClose} >
-        <BottomSheetTitle>
-          이 글을 어떤 스토리로 추가/변경 할까요?
-        </BottomSheetTitle>
-        <BottomSheetItemContainer>
-          {stories.map((item) => (
-            <BottomSheetItemDiv onClick={() => handleAddStory(item.id)}>
-              <Span>{item.name}</Span>
-              {item.isIncluded && <CheckIcon />}
+    <>
+        <BackgroundContainer>
+          <BottomSheet
+            isOpen={true}
+            size="large"
+            isCloseModified={true}
+            onClose={onClose}
+          >
+            <BottomSheetTitle>
+              이 글을 어떤 스토리로 추가/변경 할까요?
+            </BottomSheetTitle>
+            <BottomSheetItemContainer>
+              {stories.map((item) => (
+                <BottomSheetItemDiv onClick={() => handleAddStory(item.id)}>
+                  <Span>{item.name}</Span>
+                  {item.isIncluded && <CheckIcon />}
 
-              {/* 체크아이콘은 클릭했을때 생김 */}
-            </BottomSheetItemDiv>
-          ))}
-        </BottomSheetItemContainer>
-        <BtnDiv>
-          <Button
-            text="스토리에서 삭제"
-            type={isStoryIncluded ? "point" : "disable"}
-            scale="small"
-            onClick={deleteInculudedStory}
-          />
-          <Button
-            type={
-              isStoryChecked ? "point" : isStoryIncluded ? "disable" : "disable"
-            }
-            text="추가/변경"
-            scale="small"
-            onClick={addUpdateStory}
-          />
-        </BtnDiv>
-      </BottomSheet>
-    </ToastContainer>
+                  {/* 체크아이콘은 클릭했을때 생김 */}
+                </BottomSheetItemDiv>
+              ))}
+            </BottomSheetItemContainer>
+            <BtnDiv>
+              <Button
+                text="스토리에서 삭제"
+                type={isStoryIncluded ? "point" : "disable"}
+                scale="small"
+                onClick={deleteInculudedStory}
+              />
+              <Button
+                type={
+                  isStoryChecked
+                    ? "point"
+                    : isStoryIncluded
+                    ? "disable"
+                    : "disable"
+                }
+                text="추가/변경"
+                scale="small"
+                onClick={addUpdateStory}
+              />
+            </BtnDiv>
+          </BottomSheet>
+        </BackgroundContainer>
+    </>
   );
 }
 

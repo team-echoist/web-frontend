@@ -13,6 +13,7 @@ import { ColorToast } from "@/shared/ui/toast";
 import { useRouter } from "next/router";
 import { updateEssayDetail } from "@/shared/api/essay";
 import { getStories } from "@/shared/api";
+import { deleteEssay } from "@/features/showessaydetails/api";
 import { Story } from "@/shared/types";
 import DeleteModal from "./DeleteModal";
 import StoryModal from "./StoryModal";
@@ -72,30 +73,15 @@ function Menu({
     e.stopPropagation();
     setIsMenuOpen(!isMenuOpen);
   };
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
   const [stories, setStories] = useState<Story[]>([]);
   const [showToast, setShowToast] = useState(false);
   const [isStoryIncluded, setIsStoryIncluded] = useState(false);
   const [isStoryChecked, setIsStoryChecked] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(true);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [toastText, setToastText] = useState("");
+  const [isError,setIsError] =useState(false);
   const router = useRouter();
-
-  let tempStory = [
-    {
-      id: 1,
-      name: "test",
-      createdDate: "2024-10-22T11:52:05.052Z",
-      essaysCount: 1,
-      isIncluded: true,
-    },
-    {
-      id: 2,
-      name: "test",
-      createdDate: "2024-10-22T11:52:05.052Z",
-      essaysCount: 1,
-      isIncluded: false,
-    },
-  ];
 
   useEffect(() => {
     getStoryList();
@@ -118,16 +104,34 @@ function Menu({
         isIncluded: includedStory ? story.id === includedStory.id : false,
       }));
 
-      setStories(tempStory);
+      setStories(updatedStories);
     } catch (err) {
       console.log(err);
     }
   };
+  const handleEssayDelete = async () => {
+    try{
+      const {status} =await deleteEssay(essayId);
 
-  const BottomSheetHandler = () => {
-    setIsBottomSheetOpen(!isBottomSheetOpen);
+      if(status ===200){
+        setToastText("스토리 삭제에 성공했습니다.");
+        setShowToast(true);
+        setTimeout(()=>{
+          router.push("/web/main")
+        },2000)
+      }else{
+        setShowToast(true);
+        setToastText("스토리 삭제에 실패했습니다.");
+      }
+    }catch(err){
+      setToastText("스토리 삭제에 실패했습니다.");
+    }
+  };
+  const StroryModalHandler = () => {
+    setIsStoryModalOpen(!isStoryModalOpen);
     if (stories.length === 0) {
       setShowToast(true);
+      setToastText("아직 만들어진 스토리가 없습니다.");
     }
   };
   const handleAddStory = (id: number) => {
@@ -167,10 +171,10 @@ function Menu({
       console.log("err", err);
     }
   };
-  const PrivateRenderer = () => {
+  const privateRenderer = () => {
     return (
       <>
-        {isBottomSheetOpen && stories.length > 0 ? (
+        {stories.length > 0 && isStoryModalOpen ? (
           <StoryModal
             stories={stories}
             handleAddStory={handleAddStory}
@@ -178,7 +182,7 @@ function Menu({
             isStoryIncluded={isStoryIncluded}
             deleteInculudedStory={deleteInculudedStory}
             addUpdateStory={addUpdateStory}
-            onClose={BottomSheetHandler}
+            onClose={StroryModalHandler}
           />
         ) : null}
         <ModalItem isStory={false} onClick={navigateToEditor}>
@@ -207,7 +211,7 @@ function Menu({
             <LinkedoutIcon />
           </IconDiv>
         </ModalItem>
-        <ModalItem isStory={true} onClick={BottomSheetHandler}>
+        <ModalItem isStory={true} onClick={StroryModalHandler}>
           <span>스토리 선택</span>
           <IconDiv>
             <CheckIcon />
@@ -245,16 +249,18 @@ function Menu({
     <>
       <ToastDiv>
         <ColorToast
-          text="아직 만들어진 스토리가 없습니다."
+          text={toastText}
           onClose={() => {
             setShowToast(false);
           }}
           isShowToast={showToast}
+          type={isError?"alert":"normal"}
         />
       </ToastDiv>
       <DeleteModal
         isDeleteModalOpen={isDeleteModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}
+        handleEssayDelete={handleEssayDelete}
       />
       {isMenuOpen && (
         <BlackMiniModal
@@ -263,14 +269,9 @@ function Menu({
           scale={scale}
           onClose={() => setIsMenuOpen(false)}
         >
-          {pageType === "public" ? (
-            publicRenderer()
-          ) : (
-            <PrivateRenderer></PrivateRenderer>
-          )}
+          {pageType === "public" ? publicRenderer() : privateRenderer()}
         </BlackMiniModal>
       )}
-      {/* {toastRenderer()} */}
       <MenuIconDiv onClick={(e) => handleMenuOpen(e)} id="not-include">
         <SpotMenuIcon alt="menu_icon" />
       </MenuIconDiv>

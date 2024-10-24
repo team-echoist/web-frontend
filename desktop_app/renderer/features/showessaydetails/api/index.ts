@@ -44,8 +44,16 @@ export const getRandomEssays = async () => {
       }
     );
     return { data: data.essays };
-
   } catch (err) {
     return { data: [] };
+  }
+};
+
+export const deleteEssay = async (id: number) => {
+  try {
+    const { status } = await fetchData<any>(`essays/${id}`, "delete");
+    return { status: status };
+  } catch (err) {
+    return { status: 500 };
   }
 };

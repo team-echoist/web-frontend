@@ -4,7 +4,7 @@ import styled from "styled-components";
 import color from "@/shared/styles/color";
 import { Button } from "@/shared/ui/button";
 
-const ToastContainer = styled.div`
+const BackgroundContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -34,9 +34,11 @@ const BtnDiv = styled.div`
 function DeleteModal({
   isDeleteModalOpen,
   setIsDeleteModalOpen,
+  handleEssayDelete
 }: {
   isDeleteModalOpen: boolean;
   setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleEssayDelete:()=>void;
 }) {
   const BottomSheetHandler = () => {
     setIsDeleteModalOpen(!isDeleteModalOpen);
@@ -44,7 +46,7 @@ function DeleteModal({
   return (
     <>
       {isDeleteModalOpen && (
-        <ToastContainer>
+        <BackgroundContainer>
           <BottomSheet
             isOpen={isDeleteModalOpen}
             size="middle"
@@ -57,10 +59,13 @@ function DeleteModal({
             </ModalTextDiv>
             <BtnDiv>
               <Button text="취소" scale="small" onClick={BottomSheetHandler} />
-              <Button text="확인" scale="small" />
+              <Button text="확인" scale="small" onClick={()=>{
+                BottomSheetHandler();
+                handleEssayDelete();
+              }}/>
             </BtnDiv>
           </BottomSheet>
-        </ToastContainer>
+        </BackgroundContainer>
       )}
     </>
   );
