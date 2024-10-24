@@ -9,13 +9,15 @@ interface DialogProps {
 
 const Dialog = styled.div<DialogProps>`
   width: ${(props) =>
-    props.size === "large"
+    props.size === "large" || props.size === "max"
       ? "700px"
       : props.size === "middle"
       ? "672px"
       : "442px"};
   height: ${(props) =>
-    props.size === "large"
+    props.size === "max"
+      ? "658px"
+      : props.size === "large"
       ? "400px"
       : props.size === "middle"
       ? "260px"

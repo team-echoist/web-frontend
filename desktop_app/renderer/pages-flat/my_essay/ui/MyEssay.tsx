@@ -10,7 +10,7 @@ function MyEssay() {
       <button
         style={{ width: "300px", height: "300px" }}
         onClick={() => {
-          router.push("essay_details?id=2643&pageType=private");
+          router.push("essay_details?id=2674&pageType=public");
         }}
       >
         테스트용

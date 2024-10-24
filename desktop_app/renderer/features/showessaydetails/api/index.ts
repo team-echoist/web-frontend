@@ -57,3 +57,4 @@ export const deleteEssay = async (id: number) => {
     return { status: 500 };
   }
 };
+

@@ -37,7 +37,7 @@ export const getEssayDetail = async (
 };
 
 export const updateEssayDetail = async (
-  formData: FormData|null,
+  formData: FormData | null,
   body: bodyType,
   essayId: number
 ) => {
@@ -58,10 +58,31 @@ export const updateEssayDetail = async (
         }
       }
     }
-    const { data, status } = await fetchData(`essays/${essayId}`, "put",body);
+    const { data, status } = await fetchData(`essays/${essayId}`, "put", body);
     return { data, status };
   } catch (err) {
     console.log("err", err);
     return { data: null, status: 500 };
+  }
+};
+
+export const addEssayBookMark = async (id: number) => {
+  try {
+    const { status } = await fetchData(`bookmarks/${id}`, "post");
+    return { status: status };
+  } catch (err) {
+    return { status: 500 };
+  }
+};
+
+export const deleteEssayBookMark = async (id: number) => {
+  try {
+    const body = {
+      essayIds: [id],
+    };
+    const { status } = await fetchData(`bookmarks`, "put", body);
+    return { status: status };
+  } catch (err) {
+    return { status: 500 };
   }
 };

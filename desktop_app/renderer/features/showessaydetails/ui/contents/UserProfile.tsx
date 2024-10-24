@@ -3,13 +3,14 @@ import styled from "styled-components";
 import DefaultProfileImg from "@/shared/assets/img/default_profile.webp";
 import Image from "next/image";
 import color from "@/shared/styles/color";
+import { useStore } from "@/shared/store";
 
 const Layout = styled.div`
   width: 80%;
   height: 100px;
   padding: 20px 147px;
   margin-bottom: 64px;
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
 `;
@@ -73,24 +74,6 @@ const SubscribeBtn = styled.button`
   cursor: pointer;
 `;
 
-const SubscribedBtn = styled.button`
-  border: none;
-  padding: 0;
-  margin: 0;
-  width: 87px;
-  height: 38px;
-  flex-shrink: 0;
-  color: ${color.pointcolor};
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%;
-  background: #1d1d1d;
-  cursor: pointer;
-`;
-
 function splitByKeyword(str: string, keyword: string) {
   if (str.includes(keyword)) {
     const [firstPart] = str.split(keyword);
@@ -107,6 +90,7 @@ function UserProfile({
   profileImage: string;
 }) {
   const [splitedUserName, setSplitedUserName] = useState<string[]>([]);
+  const user = useStore((state) => state.user);
 
   useEffect(() => {
     const splitedStringArr = splitByKeyword(userName, "아무개");
@@ -123,13 +107,12 @@ function UserProfile({
             width={60}
             height={60}
           ></Image>
-
         </ProfileImgDiv>
         <ProfileName>
-            {splitedUserName[0]} <Strong>아무개</Strong>
-          </ProfileName>
+          {splitedUserName[0]} <Strong>아무개</Strong>
+        </ProfileName>
       </ProfileDiv>
-      <SubscribeBtn>구독하기</SubscribeBtn>
+      {user?.nickname !== userName && <SubscribeBtn>구독하기</SubscribeBtn>}
     </Layout>
   );
 }

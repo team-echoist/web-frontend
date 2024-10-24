@@ -73,7 +73,9 @@ const TitleDiv = styled.div`
   flex: 1;
 `;
 
-const BookmarkDiv = styled.div``;
+const BookmarkDiv = styled.div`
+ cursor: pointer;
+`;
 
 function Article({
   title,

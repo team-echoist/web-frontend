@@ -17,6 +17,8 @@ import { deleteEssay } from "@/features/showessaydetails/api";
 import { Story } from "@/shared/types";
 import DeleteModal from "./DeleteModal";
 import StoryModal from "./StoryModal";
+import { useStore } from "@/shared/store";
+import ReportModal from "./ReportModal";
 
 const MenuIconDiv = styled.div`
   position: fixed;
@@ -60,6 +62,7 @@ function Menu({
   pageType,
   essayId,
   includedStory,
+  userName,
 }: {
   handleZoomIn: () => void;
   handleZoomOut: () => void;
@@ -67,6 +70,7 @@ function Menu({
   pageType: string;
   essayId: number;
   includedStory: Story | null;
+  userName: string;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMenuOpen = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -80,7 +84,8 @@ function Menu({
   const [isStoryChecked, setIsStoryChecked] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [toastText, setToastText] = useState("");
-  const [isError,setIsError] =useState(false);
+  const [isError, setIsError] = useState(false);
+  const user = useStore((state) => state.user);
   const router = useRouter();
 
   useEffect(() => {
@@ -110,21 +115,25 @@ function Menu({
     }
   };
   const handleEssayDelete = async () => {
-    try{
-      const {status} =await deleteEssay(essayId);
+    try {
+      const { status } = await deleteEssay(essayId);
 
-      if(status ===200){
+      if (status === 200) {
         setToastText("스토리 삭제에 성공했습니다.");
         setShowToast(true);
-        setTimeout(()=>{
-          router.push("/web/main")
-        },2000)
-      }else{
+        setTimeout(() => {
+          router.push("/web/main");
+        }, 2000);
+      } else {
         setShowToast(true);
         setToastText("스토리 삭제에 실패했습니다.");
       }
-    }catch(err){
+    } catch (err) {
+      setIsError(true);
       setToastText("스토리 삭제에 실패했습니다.");
+      setTimeout(()=>{
+        setIsError(false);
+      },3000)
     }
   };
   const StroryModalHandler = () => {
@@ -236,17 +245,20 @@ function Menu({
   const publicRenderer = () => {
     return (
       <>
-        <ModalItem isStory={false} isRed={true}>
-          <span>신고하기</span>
-          <IconDiv>
-            <ReportIcon />
-          </IconDiv>
-        </ModalItem>
+        {userName !== user?.nickname && (
+          <ModalItem isStory={false} isRed={true}>
+            <span>신고하기</span>
+            <IconDiv>
+              <ReportIcon />
+            </IconDiv>
+          </ModalItem>
+        )}
       </>
     );
   };
   return (
     <>
+      <ReportModal />
       <ToastDiv>
         <ColorToast
           text={toastText}
@@ -254,7 +266,7 @@ function Menu({
             setShowToast(false);
           }}
           isShowToast={showToast}
-          type={isError?"alert":"normal"}
+          type={isError ? "alert" : "normal"}
         />
       </ToastDiv>
       <DeleteModal

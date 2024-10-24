@@ -10,6 +10,9 @@ import Menu from "./contents/menu/Menu";
 import { getEssayDetail } from "@/shared/api";
 import { Essay, Story } from "@/shared/types";
 import { ScrollTop } from "@/shared/ui/scroll";
+import { addEssayBookMark, deleteEssayBookMark } from "@/shared/api/essay";
+
+
 
 const Container = styled.main<{ scale: number }>`
   width: 99vw;
@@ -51,7 +54,8 @@ function ShowEssayDetails({
   const [prevId, setPrevId] = useState(0);
   const [nextId, setNextId] = useState(0);
   const [isBookMark, setIsBookMark] = useState(false);
-  const [includedStory,setIncludedStory] =useState<Story|null>(null)
+  const [includedStory, setIncludedStory] = useState<Story | null>(null);
+
 
   useEffect(() => {
     getEssayData();
@@ -68,17 +72,25 @@ function ShowEssayDetails({
       setPrevId(data?.anotherEssays?.essays[0]?.id || 0);
       setNextId(data?.anotherEssays?.essays[1]?.id || 0);
       setIsBookMark(data?.essay?.isBookmarked || false);
-      setIncludedStory(data?.essay?.story||null)
-
+      setIncludedStory(data?.essay?.story || null);
     } catch (err) {
       console.log("err", err);
     }
   };
-
   const handleZoomIn = () => setScale(scale + 0.1);
   const handleZoomOut = () => setScale(scale - 0.1);
-  const handleBookmarkClick = () => {
-    setIsBookMark(!isBookMark);
+
+  const handleBookmarkClick = async () => {
+    try {
+      const { status } = isBookMark
+        ? await deleteEssayBookMark(essayId)
+        : await addEssayBookMark(essayId);
+      if (status === 201 || status === 200) {
+        setIsBookMark(!isBookMark);
+      }
+    } catch (err) {
+      console.log("err", err);
+    }
   };
 
   return (
@@ -92,6 +104,7 @@ function ShowEssayDetails({
         pageType={pageType}
         essayId={essayId}
         includedStory={includedStory}
+        userName={essay?.author?.nickname ||"꾸르륵"} 
       />
       <ArticleLayout>
         <Article
@@ -102,7 +115,7 @@ function ShowEssayDetails({
           imgUrl={essay?.thumbnail}
           handleBookmarkClick={handleBookmarkClick}
           isBookMark={isBookMark}
-          isShowBookmark={true}
+          isShowBookmark={pageType === "public" ? true : false}
         />
         <TagDiv>
           {essay?.tags.map((item) => {
@@ -115,7 +128,7 @@ function ShowEssayDetails({
         </TagDiv>
       </ArticleLayout>
       {pageType === "public" && (
-        <UserProfile userName="꾸르륵" profileImage={TempThumbnail.src} />
+        <UserProfile userName={essay?.author?.nickname ||"꾸르륵"} profileImage={TempThumbnail.src} />
       )}
       <Divider />
       <Contents
