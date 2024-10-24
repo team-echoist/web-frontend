@@ -16,7 +16,7 @@ const Dialog = styled.div<DialogProps>`
       : "442px"};
   height: ${(props) =>
     props.size === "max"
-      ? "658px"
+      ? "718px"
       : props.size === "large"
       ? "400px"
       : props.size === "middle"
