@@ -60,8 +60,6 @@ function ShowEssayDetails({
 }) {
   const [scale, setScale] = useState(1);
   const [essay, setEssay] = useState<Essay | null>(null);
-  const [prevId, setPrevId] = useState(0);
-  const [nextId, setNextId] = useState(0);
   const [isBookMark, setIsBookMark] = useState(false);
   const [includedStory, setIncludedStory] = useState<Story | null>(null);
   const [isShowToast, setIsShowToast] = useState(false);
@@ -81,8 +79,6 @@ function ShowEssayDetails({
         storyId ? storyId : null
       );
       setEssay(data?.essay || null);
-      setPrevId(data?.anotherEssays?.essays[0]?.id || 0);
-      setNextId(data?.anotherEssays?.essays[1]?.id || 0);
       setIsBookMark(data?.essay?.isBookmarked || false);
       setIncludedStory(data?.essay?.story || null);
     } catch (err) {
@@ -122,7 +118,7 @@ function ShowEssayDetails({
   return (
     <Container scale={scale}>
       <ScrollTop />
-      <PrevButton />
+      <PrevButton path="/web/main"/>
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -177,7 +173,6 @@ function ShowEssayDetails({
       <Divider />
       <Contents
         pageType={pageType}
-        prevId={prevId}
         storyId={storyId}
         essayId={essayId}
       />

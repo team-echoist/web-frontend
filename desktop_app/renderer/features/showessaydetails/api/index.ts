@@ -58,3 +58,26 @@ export const deleteEssay = async (id: number) => {
   }
 };
 
+export const getNextEssay = async (
+  id: number,
+  pageType: string,
+  storyId?: number
+) => {
+  try {
+    const params = {
+      pageType: pageType,
+      ...(storyId && { storyId: storyId }),
+    };
+    const { data, status } = await fetchData<any>(
+      `essays/next/${id}`,
+      "get",
+      null,
+      {
+        params,
+      }
+    );
+    return { data: data.essay, status:status };
+  } catch (err) {
+    return { data: {}, status: 500 };
+  }
+};

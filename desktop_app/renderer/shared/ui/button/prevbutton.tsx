@@ -34,8 +34,9 @@ function PrevButton({
   const handleClick = () => {
     if (path) {
       router.push(path);
+    }else{
+      router.back();
     }
-    router.back();
   };
   return (
     <PrevBtn onClick={onClick ? onClick : handleClick}>

@@ -10,6 +10,7 @@ import { FewIndicatorBar } from "@/shared/ui/indicator";
 import NextIcon from "@/shared/assets/img/indicator/next.svg";
 import { getRandomEssays } from "@/features/showessaydetails/api";
 import { Pagination } from "@/shared/ui/pagination";
+import { getNextEssay } from "@/features/showessaydetails/api";
 
 const Layout = styled.div`
   padding: 20px 147px;
@@ -92,14 +93,12 @@ const IndicatorWrapper = styled.div`
 `;
 function Contents({
   pageType,
-  prevId,
   storyId,
-  essayId
+  essayId,
 }: {
   pageType: string;
-  prevId: number;
   storyId?: number;
-  essayId:number
+  essayId: number;
 }) {
   const router = useRouter();
   const [essays, setEssay] = useState<Essay[]>([]);
@@ -124,8 +123,8 @@ function Contents({
   };
   useEffect(() => {
     getEssayList();
-  }, [essayId,pageType]);
-  
+  }, [essayId, pageType]);
+
   useEffect(() => {
     const newStep = getStepFromPage();
     setStep(newStep);
@@ -147,6 +146,24 @@ function Contents({
       console.log(err);
     }
   };
+  const getNextData = async () => {
+    try {
+      const { data, status } = storyId
+        ? await getNextEssay(essayId, pageType, storyId)
+        : await getNextEssay(essayId, pageType);
+      if (status === 200) {
+        if (!storyId) {
+          router.push(`/web/essay_details?id=${data.id}&pageType=${pageType}`);
+        } else {
+          router.push(
+            `/web/essay_details?id=${data.id}&pageType=${pageType}&storyId=${storyId}`
+          );
+        }
+      }
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
   const NoneContents = () => {
     return (
       <NoneContentsDiv>
@@ -155,7 +172,7 @@ function Contents({
     );
   };
   const navigateToEssay = (id?: number) => {
-    const essayId = id || prevId;
+    const essayId = id || 0;
     if (essayId) {
       router.push(`/web/essay_details?id=${essayId}&pageType=${pageType}`);
     }
@@ -197,7 +214,7 @@ function Contents({
 
   return (
     <Layout>
-      <Button onClick={() => navigateToEssay()}>
+      <Button onClick={getNextData}>
         {pageType === "private" ? "이전 글" : "다른 글"}
       </Button>
       {essays.length === 0 ? (
