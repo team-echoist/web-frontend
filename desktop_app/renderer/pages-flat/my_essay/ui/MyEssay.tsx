@@ -1,5 +1,4 @@
 import React from "react";
-import ActiveFooter from "@/features/activeFooter/ui/activeFooter";
 import { useRouter } from "next/navigation";
 
 function MyEssay() {
@@ -15,9 +14,6 @@ function MyEssay() {
       >
         테스트용
       </button>
-      <div>
-        <ActiveFooter />
-      </div>
     </>
   );
 }

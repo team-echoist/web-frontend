@@ -5,9 +5,7 @@ import { AlarmButton } from "@/shared/ui/button";
 import WriteButtonSVG from "@/shared/assets/img/write_icon.svg";
 import HomeImg from "@/shared/assets/img/mainroom.webp";
 import Image from "next/image";
-import ActiveFooter from "@/features/activeFooter/ui/activeFooter";
 import { useRouter } from "next/navigation";
-import { AlarmModal } from "@/shared/ui/modal";
 import { ActiveAlarmList } from "@/features/activeAlarmModal";
 
 const StyledWriteButton = styled(WriteButtonSVG)`
@@ -65,7 +63,6 @@ export const Main = () => {
           <Image alt="home" src={HomeImg} fill />
         </HomeDiv>
       </Container>
-      <ActiveFooter isModalOpen={isModalOpen} />
     </>
   );
 };
