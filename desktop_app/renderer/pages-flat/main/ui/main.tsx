@@ -7,6 +7,7 @@ import HomeImg from "@/shared/assets/img/mainroom.webp";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ActiveAlarmList } from "@/features/activeAlarmModal";
+import { ActiveSideBar } from "@/features/activesidebar";
 
 const StyledWriteButton = styled(WriteButtonSVG)`
   position: absolute;
@@ -22,14 +23,14 @@ const Container = styled.main<{ isModalOpen: boolean }>`
   font-family: Arial, sans-serif;
   position: fixed;
   top: 32px;
-  left: 0;
+  left: 0px;
   transition: width 0.3s ease;
   overflow-x: hidden;
 `;
 
 const HomeDiv = styled.div`
   width: 100%;
-  height: 90vh;
+  height: 98vh;
   position: relative;
 `;
 export const Main = () => {
@@ -45,6 +46,7 @@ export const Main = () => {
   };
   return (
     <>
+      <ActiveSideBar />
       {isModalOpen && (
         <ActiveAlarmList
           isModalOpen={isModalOpen}
