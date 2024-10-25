@@ -19,6 +19,7 @@ import DeleteModal from "./DeleteModal";
 import StoryModal from "./StoryModal";
 import { useStore } from "@/shared/store";
 import ReportModal from "./ReportModal";
+import { reportEssay } from "@/shared/api/essay";
 
 const MenuIconDiv = styled.div`
   position: fixed;
@@ -86,6 +87,7 @@ function Menu({
   const [toastText, setToastText] = useState("");
   const [isError, setIsError] = useState(false);
   const user = useStore((state) => state.user);
+  const [isShowReport, setIsShowReport] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -114,6 +116,20 @@ function Menu({
       console.log(err);
     }
   };
+  const submitReport = async (reason: string) => {
+    try {
+      const { status } = await reportEssay(essayId, reason);
+      return status
+    } catch (err) {
+      // toast
+      setIsError(true);
+      setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+      setToastText("서버와의 연결이 불안정 합니다. 잠시후 다시 시도 해주세요.");
+      return 500
+    }
+  };
   const handleEssayDelete = async () => {
     try {
       const { status } = await deleteEssay(essayId);
@@ -131,18 +147,22 @@ function Menu({
     } catch (err) {
       setIsError(true);
       setToastText("스토리 삭제에 실패했습니다.");
-      setTimeout(()=>{
+      setTimeout(() => {
         setIsError(false);
-      },3000)
+      }, 3000);
     }
   };
-  const StroryModalHandler = () => {
-    setIsStoryModalOpen(!isStoryModalOpen);
+  const stroryModalHandler = () => {
+    setIsMenuOpen(false);
     if (stories.length === 0) {
       setShowToast(true);
       setToastText("아직 만들어진 스토리가 없습니다.");
     }
   };
+  const reportModalHandler = () => {
+    setIsShowReport(!isShowReport);
+  };
+
   const handleAddStory = (id: number) => {
     setIsStoryChecked(!isStoryChecked);
     const hasIncludedStory = stories.some((story) => story.isIncluded);
@@ -167,6 +187,7 @@ function Menu({
   };
   const updateEssayDetails = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setIsMenuOpen(false);
     const target = e.currentTarget as HTMLButtonElement;
     const id = target.dataset.id;
     try {
@@ -191,7 +212,7 @@ function Menu({
             isStoryIncluded={isStoryIncluded}
             deleteInculudedStory={deleteInculudedStory}
             addUpdateStory={addUpdateStory}
-            onClose={StroryModalHandler}
+            onClose={stroryModalHandler}
           />
         ) : null}
         <ModalItem isStory={false} onClick={navigateToEditor}>
@@ -220,7 +241,7 @@ function Menu({
             <LinkedoutIcon />
           </IconDiv>
         </ModalItem>
-        <ModalItem isStory={true} onClick={StroryModalHandler}>
+        <ModalItem isStory={true} onClick={stroryModalHandler}>
           <span>스토리 선택</span>
           <IconDiv>
             <CheckIcon />
@@ -230,6 +251,7 @@ function Menu({
           isStory={false}
           isRed={true}
           onClick={() => {
+            setIsMenuOpen(false);
             setIsDeleteModalOpen(!isDeleteModalOpen);
           }}
         >
@@ -246,7 +268,14 @@ function Menu({
     return (
       <>
         {userName !== user?.nickname && (
-          <ModalItem isStory={false} isRed={true}>
+          <ModalItem
+            isStory={false}
+            isRed={true}
+            onClick={() => {
+              setIsShowReport(!isShowReport);
+              setIsMenuOpen(false);
+            }}
+          >
             <span>신고하기</span>
             <IconDiv>
               <ReportIcon />
@@ -258,7 +287,9 @@ function Menu({
   };
   return (
     <>
-      <ReportModal />
+      {isShowReport && (
+        <ReportModal onClose={reportModalHandler} isShowModal={isShowReport} submitReport={submitReport} />
+      )}
       <ToastDiv>
         <ColorToast
           text={toastText}

@@ -64,7 +64,7 @@ const BtnDiv = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 30px;
-  position:fixed;
+  position: fixed;
   bottom: 0;
 `;
 const TextArea = styled.textarea`
@@ -97,7 +97,15 @@ const CheckboxContainer = styled.div`
   overflow-y: auto;
 `;
 
-function ReportModal() {
+function ReportModal({
+  onClose,
+  isShowModal,
+  submitReport,
+}: {
+  onClose: () => void;
+  isShowModal: boolean;
+  submitReport: (reason: string) => any;
+}) {
   const [reportData, setReportData] = useState([
     {
       title: "스팸/도배글",
@@ -144,7 +152,6 @@ function ReportModal() {
   const [etcChecked, setEtcChecked] = useState(false);
   const [etcText, setEtcText] = useState("");
   const [btnText, setBtnText] = useState("신고하기");
-  const router = useRouter();
 
   useEffect(() => {
     const isChecked = reportData.some((value) => value.checked === true);
@@ -163,12 +170,17 @@ function ReportModal() {
       )
     );
   };
-  const submitReport = () => {
+  const reportHandler = async () => {
+    const reason = reportData.filter((item) => item.checked === true)[0];
+    let reasonDesc = reason.title.includes("기타") ? etcText : reason.title;
+
     if (btnText.includes("신고하기")) {
-      // api 호출
-      setBtnText("확인");
+      const status = await submitReport(reasonDesc);
+      if (status === 201) {
+        setBtnText("확인");
+      }
     } else {
-      router.push("/web/main");
+      onClose();
     }
   };
   const reportRenderer = () => {
@@ -231,13 +243,18 @@ function ReportModal() {
   };
   return (
     <BackgroundContainer>
-      <BottomSheet isOpen={true} size="max" isCloseModified={true}>
+      <BottomSheet
+        isOpen={isShowModal}
+        size="max"
+        isCloseModified={true}
+        onClose={onClose}
+      >
         {reportRenderer()}
         <BtnDiv>
           <Button
             text={btnText}
             type={isBtnDisabled ? "disable" : "point"}
-            onClick={submitReport}
+            onClick={reportHandler}
           ></Button>
         </BtnDiv>
       </BottomSheet>

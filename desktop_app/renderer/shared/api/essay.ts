@@ -86,3 +86,15 @@ export const deleteEssayBookMark = async (id: number) => {
     return { status: 500 };
   }
 };
+
+export const reportEssay = async (id: number, reason: string) => {
+  try {
+    const body = {
+      reason: reason,
+    };
+    const { status } = await fetchData(`reports/${id}`, "post", body);
+    return { status: status };
+  } catch (err) {
+    return { status: 500 };
+  }
+};
