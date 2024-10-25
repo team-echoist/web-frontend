@@ -46,7 +46,7 @@ export const Main = () => {
   };
   return (
     <>
-      <ActiveSideBar />
+      <ActiveSideBar isModalOpen={isModalOpen}/>
       {isModalOpen && (
         <ActiveAlarmList
           isModalOpen={isModalOpen}
