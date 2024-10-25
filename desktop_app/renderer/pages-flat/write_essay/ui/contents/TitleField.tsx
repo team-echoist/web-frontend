@@ -60,6 +60,8 @@ interface TitleFieldProps {
   handlenavigateBack: () => void;
   step: string;
   handleStep: () => void;
+  setStep: Dispatch<SetStateAction<string>>;
+  editorType: string | null;
 }
 
 function TitleField({
@@ -68,7 +70,32 @@ function TitleField({
   handlenavigateBack,
   step,
   handleStep,
+  setStep,
+  editorType,
 }: TitleFieldProps) {
+  const renderButton = () => {
+    if (step === "write") {
+      return (
+        <Button isCancel={false} isDelete={false} onClick={handleStep}>
+          완료
+        </Button>
+      );
+    }
+
+    if (!editorType) {
+      return (
+        <Button
+          isCancel={false}
+          isDelete={step === "finish"}
+          onClick={handleStep}
+        >
+          삭제
+        </Button>
+      );
+    }
+
+    return null;
+  };
   return (
     <Layout>
       {step === "write" ? (
@@ -76,7 +103,11 @@ function TitleField({
           취소
         </Button>
       ) : (
-        <PrevButton onClick={handleStep}/>
+        <PrevButton
+          onClick={() => {
+            setStep("write");
+          }}
+        />
       )}
 
       <TitleDiv>
@@ -85,17 +116,12 @@ function TitleField({
             value={title}
             placeholder="제목을 입력해 주세요"
             onChange={(e) => setTitle(e.target.value)}
-            isTextCenter ={true}
+            isTextCenter={true}
+            maxLength={39}
           />
         )}
       </TitleDiv>
-      <Button
-        isCancel={false}
-        isDelete={step === "finish"}
-        onClick={handleStep}
-      >
-        {step === "write" ? "완료" : "삭제"}
-      </Button>
+      {renderButton()}
     </Layout>
   );
 }

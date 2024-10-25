@@ -6,7 +6,7 @@
   "author": "ehoist",
   "main": "app/background.js",
   "scripts": {
-    "dev": "nextron",
+    "dev": "nextron ",
     "build": "cross-env TSC_COMPILE_ON_ERROR=true NEXT_PUBLIC_ESLINT_DISABLE=true NODE_ENV=production nextron build",
     "build:mac": "cross-env TSC_COMPILE_ON_ERROR=true NEXT_PUBLIC_ESLINT_DISABLE=true NODE_ENV=production nextron build --mac",
     "build:win": "cross-env TSC_COMPILE_ON_ERROR=true NEXT_PUBLIC_ESLINT_DISABLE=true NODE_ENV=production nextron build --win",
