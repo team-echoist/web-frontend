@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { SideBar } from "@/shared/ui/sidebar";
-import { Footer } from "@/shared/ui/footer";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/shared/store";
 
@@ -18,20 +17,15 @@ const routerMapper = {
   mypage: "/web/mypage",
 };
 
-function ActiveSidebar({ isModalOpen }: { isModalOpen: boolean }) {
+function ActiveSidebar({ isModalOpen }: { isModalOpen?: boolean }) {
   const router = useRouter();
   const path = useStore((state) => state.path);
   const setPath = useStore((state) => state.setPath);
+  
   const focusedKey =
     (Object.keys(routerMapper) as Array<keyof IconMap>).find(
       (key) => routerMapper[key] === path
     ) || "home";
-
-  useEffect(() => {
-    if (focusedKey !== "home") {
-      setPath(routerMapper[focusedKey]);
-    }
-  }, [focusedKey, setPath]);
 
   const handleIconClick = (key: keyof IconMap) => {
     setPath(routerMapper[key]);
