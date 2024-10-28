@@ -1,11 +1,11 @@
 import React from "react";
 import * as Styled from "./mypage.styled";
-import ActiveFooter from "@/features/activeFooter/ui/activeFooter";
+import { ActiveSideBar } from "@/features/activesidebar";
 
 export const Mypage = () => {
   return (
     <Styled.SLayout>
-      <ActiveFooter />
+      <ActiveSideBar></ActiveSideBar>
     </Styled.SLayout>
   );
 };

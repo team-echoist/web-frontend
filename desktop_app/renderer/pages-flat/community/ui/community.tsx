@@ -1,11 +1,10 @@
 import React from "react";
-import ActiveFooter from "@/features/activeFooter/ui/activeFooter";
+import { ActiveSideBar } from "@/features/activesidebar";
 
 function community() {
   return (
     <div>
-      community
-      <ActiveFooter />
+     <ActiveSideBar></ActiveSideBar>
     </div>
   );
 }

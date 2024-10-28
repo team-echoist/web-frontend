@@ -1,12 +1,12 @@
 import React from "react";
-import ActiveFooter from "@/features/activeFooter/ui/activeFooter";
 import { useRouter } from "next/navigation";
+import { ActiveSideBar } from "@/features/activesidebar";
 
 function MyEssay() {
   const router = useRouter();
   return (
     <>
-      Essay
+     <ActiveSideBar></ActiveSideBar>
       <button
         style={{ width: "300px", height: "300px" }}
         onClick={() => {
@@ -15,9 +15,6 @@ function MyEssay() {
       >
         테스트용
       </button>
-      <div>
-        <ActiveFooter />
-      </div>
     </>
   );
 }
