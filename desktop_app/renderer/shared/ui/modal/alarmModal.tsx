@@ -43,6 +43,7 @@ const Layout = styled.div<{ isOpen: boolean }>`
   min-height: 95vh;
   overflow-y: auto;
   overflow-x: hidden;
+  border-left:1px solid #1a1a1a;
 `;
 
 const CloseButton = styled.div`
