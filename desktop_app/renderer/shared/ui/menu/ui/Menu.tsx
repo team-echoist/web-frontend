@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { LineGraph } from "../graph";
-import { CircularAvatar } from "../avatar";
+import { LineGraph } from "../../graph";
+import { CircularAvatar } from "../../avatar";
 import DefaultProfile from "@/shared/assets/img/default_profile.webp";
 import color from "@/shared/styles/color";
 import { useStore } from "@/shared/store";
 import RightArrow from "@/shared/assets/img/menu/right_arrow.svg";
-import { getUserSummary } from "./api";
+import { getUserSummary } from "../api";
+import UserSurpport from "./contents/UserSurpport";
+import UpdateHistory from "./contents/UpdateHistory";
+import Preference from "./contents/Preference";
+import DisplaySettings from "./contents/DisplaySettings";
+import DefaultLayout from "./DefaultLayout";
 
 const Layout = styled.nav`
   width: 376px;
@@ -155,12 +160,27 @@ const LogoutBtn = styled.button`
   position: absolute;
   right: 30px;
 `;
+
 function Menu() {
   const user = useStore((state) => state.user);
   const [userData, setUserData] = useState([]);
-  const menuItems = ["화면 설정", "환경 설정", "고객지원", "업데이트 기록"];
+  const [selectedComponent, setSelectedComponent] =
+    useState<JSX.Element | null>(null);
+  const componentMapper = {
+    "화면 설정": <DisplaySettings />,
+    "환경 설정": <Preference />,
+    고객지원: <UserSurpport />,
+    "업데이트 기록": <UpdateHistory />,
+  } as const;
+  const menuItems: Array<keyof typeof componentMapper> = [
+    "화면 설정",
+    "환경 설정",
+    "고객지원",
+    "업데이트 기록",
+  ];
+
   useEffect(() => {
-    fetchUserData();
+    // fetchUserData();
   }, []);
   const fetchUserData = async () => {
     try {
@@ -170,8 +190,12 @@ function Menu() {
       console.log(err);
     }
   };
+  const navigateToComponent = (key: keyof typeof componentMapper) => {
+    setSelectedComponent(componentMapper[key]);
+  };
   return (
     <Layout>
+      {selectedComponent && <DefaultLayout>{selectedComponent}</DefaultLayout>}
       <ProfileDiv>
         <ProfileItemDiv>
           <CircularAvatar img={DefaultProfile.src} width={80} height={80} />
@@ -188,14 +212,13 @@ function Menu() {
         <GraphTitleDiv>
           <SmallText>주간 링크드아웃 지수</SmallText>
           <GreyText>2024년 5월 28일 현재</GreyText>
-
         </GraphTitleDiv>
-        <LineGraph
-            data={userData}
-            dataKey="summary"
-            xAxisKey="count"
-            height={160}
-          ></LineGraph>
+        {/* <LineGraph
+          data={userData}
+          dataKey="summary"
+          xAxisKey="count"
+          height={160}
+        ></LineGraph> */}
       </GraphDiv>
       <StoreDiv>
         <GeneralText>상점</GeneralText>
@@ -203,7 +226,9 @@ function Menu() {
       </StoreDiv>
       <Ul>
         {menuItems.map((item) => (
-          <Li key={item}>{item}</Li>
+          <Li key={item} onClick={() => navigateToComponent(item)}>
+            {item}
+          </Li>
         ))}
       </Ul>
       <LogoutBtn>로그아웃</LogoutBtn>
