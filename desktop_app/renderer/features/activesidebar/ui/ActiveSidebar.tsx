@@ -3,6 +3,7 @@ import { SideBar } from "@/shared/ui/sidebar";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/shared/store";
 import { Menu } from "@/shared/ui/menu";
+import { usePathname } from 'next/navigation';
 
 interface IconMap {
   home: React.ReactElement;
@@ -25,6 +26,12 @@ function ActiveSidebar({ isModalOpen }: { isModalOpen?: boolean }) {
   const path = useStore((state) => state.path);
   const setPath = useStore((state) => state.setPath);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const trimmedPathname = pathname.replace(/\/$/, '');
+    setPath(trimmedPathname);
+  }, [pathname]); 
 
   const focusedKey =
     (Object.keys(routerMapper) as Array<keyof IconMap>).find(

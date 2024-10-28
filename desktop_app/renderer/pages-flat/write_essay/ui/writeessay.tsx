@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { getEssayDetail } from "@/shared/api";
 import { isBase64 } from "../lib/checkBase64";
 
+
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
   { ssr: false }
