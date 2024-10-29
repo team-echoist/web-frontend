@@ -1,4 +1,5 @@
 export { default as AxiosInstance } from "./axiosInstance";
-export { getUserInfo } from "./getUserInfo";
-export { getEssayDetail } from "./essay";
-export { getStories } from "./story";
+export * from "./getUserInfo";
+export * from "./essay";
+export * from "./story";
+export * from "./essay";

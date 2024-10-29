@@ -9,18 +9,23 @@ import Header from "./header/Header";
 import List from "./contents/List";
 import { ScrollTop } from "@/shared/ui/scroll";
 
+
+const Layout = styled.div`
+  width: 100vw;
+`;
+
 const StyledWriteButton = styled(WriteButtonSVG)`
-  position: absolute;
+  position: fixed;
   left: 92.5%;
   top: 85.89%;
   z-index: 10;
   cursor: pointer;
 `;
 
-const Container = styled.main<{ isModalOpen: boolean }>`
+const ContentsContainer = styled.main<{ isModalOpen: boolean }>`
   width: ${({ isModalOpen }) =>
     isModalOpen ? "calc(100vw - 390px)" : "calc(100vw - 270px)"};
-  height: 98vh;
+  // min-height: 98vh;
   font-family: Arial, sans-serif;
   position: fixed;
   top: 32px;
@@ -42,8 +47,8 @@ function MyEssay() {
   };
 
   return (
-    <>
-      <ScrollTop />
+    <Layout>
+      <ScrollTop></ScrollTop>
       <ActiveSideBar isModalOpen={isModalOpen}></ActiveSideBar>
       {isModalOpen && (
         <ActiveAlramList
@@ -51,7 +56,7 @@ function MyEssay() {
           handleAlarmButtonClick={handleAlarmButtonClick}
         />
       )}
-      <Container isModalOpen={isModalOpen}>
+      <ContentsContainer isModalOpen={isModalOpen}>
         <Header />
         {!isModalOpen && (
           <>
@@ -68,8 +73,8 @@ function MyEssay() {
         >
           테스트용
         </button> */}
-      </Container>
-    </>
+      </ContentsContainer>
+    </Layout>
   );
 }
 

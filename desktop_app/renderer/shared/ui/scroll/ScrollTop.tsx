@@ -16,6 +16,7 @@ function ScrollTop() {
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
+    console.log(scrollTop);
     setVisible(scrollTop > 300);
     window.Electron.ipcRenderer.send("scroll-event", scrollTop);
   };
@@ -33,7 +34,7 @@ function ScrollTop() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [window.scrollY]);
   return (
     <ScrollTopButton visible={visible} onClick={scrollToTop} >
       <Image src={ScrollTopIcon} alt="Scroll to top" width={50} height={50} />

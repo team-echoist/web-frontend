@@ -2,10 +2,13 @@ import React from "react";
 import SpotMenuIcon from "@/shared/assets/img/spotmenuicon.svg";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
+import { Essay } from "@/shared/types";
+import { formatDateFullString } from "@/shared/lib/date";
+import { useRouter } from "next/navigation";
 
 const Layout = styled.article`
   width: 657px;
-  height: 181px;
+  height: 141px;
   padding: 20.54px;
   flex-direction: column;
   align-items: flex-start;
@@ -15,6 +18,8 @@ const Layout = styled.article`
   border-bottom: 1.027px solid rgba(104, 104, 104, 0.1);
   background: url(<path-to-image>) lightgray 50% / cover no-repeat,
     rgba(0, 0, 0, 0.6);
+  margin: 0 auto;
+  cursor: pointer;
 `;
 const H1 = styled.h1`
   color: ${color.white};
@@ -23,6 +28,9 @@ const H1 = styled.h1`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 const SpotIconDiv = styled.div``;
 const TitleDiv = styled.div`
@@ -32,7 +40,7 @@ const TitleDiv = styled.div`
 `;
 const DescDiv = styled.div`
   width: 100%;
-  height: 102px;
+  height: 82px;
   color: ${color.white};
   font-family: Pretendard;
   font-size: 14px;
@@ -53,23 +61,42 @@ const TimeDiv = styled.div`
   font-weight: 400;
   line-height: 170%;
 `;
-function Card() {
+const Chip = styled.div`
+  color: ${color.black};
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
+  width: 40px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: ${color.pointcolor};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+function Card({ data, type }: { data: Essay; type: string }) {
+  const router = useRouter();
+
+
+  const navigateToDetails = () => {
+    router.push(`essay_details?id=${data.id}&pageType=${type}`);
+  };
   return (
-    <Layout>
+    <Layout onClick={navigateToDetails}>
       <TitleDiv>
-        <H1>나만의 글1</H1>
+        <H1>
+          {data.title} {type == "public" && <Chip>Out</Chip>}
+        </H1>
         <SpotIconDiv>
           <SpotMenuIcon />
         </SpotIconDiv>
       </TitleDiv>
-      <DescDiv>
-        예상치 못한 실패, 좌절, 엉뚱한 결과를 의도하는 사람은 거의 없을 것이다.
-        적어도 표면적으로는 말이다. 그러나 우리의 내면에는 우리가 미처 깨닫지
-        못하는 강력한 바람이 있다. 여행을 통해 '뜻밖의 사실'을 알게 되고, 자신과
-        세계에 대한 놀라운 깨달음을 얻게 되는 것, 그런 마법같은 순간을 경험하는
-        것, 바로 그것이다. 그러나...
-      </DescDiv>
-      <TimeDiv>2024년 04월 28일 16:47</TimeDiv>
+      <DescDiv>{data.content}...</DescDiv>
+      <TimeDiv>{formatDateFullString(data?.createdDate)}</TimeDiv>
     </Layout>
   );
 }

@@ -98,3 +98,33 @@ export const reportEssay = async (id: number, reason: string) => {
     return { status: 500 };
   }
 };
+
+interface EssayDataType {
+  essays: Essay[];
+  page: number;
+  total: number;
+  totalPage: number;
+}
+
+export const getEssays = async (
+  page: number,
+  limit: number,
+  pageType: string,
+  storyId?: number
+) => {
+  try {
+    const params = {
+      page: page,
+      limit: limit,
+      pageType: pageType,
+      ...(storyId && { storyId: storyId }),
+    };
+    const { data } = await fetchData<EssayDataType>("essays", "get", null, {
+      params,
+    });
+    return { data: data.essays, totalPage: data.totalPage };
+  } catch (err) {
+    return { data: [], totalPage: 1 };
+  }
+};
+

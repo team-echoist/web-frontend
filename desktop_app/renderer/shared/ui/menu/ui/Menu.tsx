@@ -182,14 +182,14 @@ function Menu() {
   useEffect(() => {
     // fetchUserData();
   }, []);
-  const fetchUserData = async () => {
-    try {
-      const { data } = await getUserSummary();
-      setUserData(data.weeklyEssayCounts);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const fetchUserData = async () => {
+  //   try {
+  //     const { data } = await getUserSummary();
+  //     setUserData(data.weeklyEssayCounts);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   const navigateToComponent = (key: keyof typeof componentMapper) => {
     setSelectedComponent(componentMapper[key]);
   };
