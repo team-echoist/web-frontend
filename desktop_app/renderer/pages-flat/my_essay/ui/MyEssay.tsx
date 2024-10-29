@@ -26,6 +26,8 @@ const Container = styled.main<{ isModalOpen: boolean }>`
   left: ${({ isModalOpen }) => (isModalOpen ? "0" : "259px")};
   transition: width 0.3s ease;
   overflow-x: hidden;
+  display:flex;
+  flex-direction: column;
 `;
 
 function MyEssay() {

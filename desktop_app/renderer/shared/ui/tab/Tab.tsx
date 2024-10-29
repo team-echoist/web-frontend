@@ -5,6 +5,7 @@ import color from "@/shared/styles/color";
 const TabContainer =styled.div`
  width: 100%;
  display:flex;
+ justify-content: center;
 `
 
 const TabItem = styled.button<{ isActiveTab: boolean }>`
