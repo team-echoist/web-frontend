@@ -5,6 +5,8 @@ import styled from "styled-components";
 import ActiveAlramList from "@/features/activeAlarmModal/ui/ActiveAlramList";
 import { AlarmButton } from "@/shared/ui/button";
 import WriteButtonSVG from "@/shared/assets/img/write_icon.svg";
+import Header from "./header/Header";
+import List from "./contents/List";
 
 const StyledWriteButton = styled(WriteButtonSVG)`
   position: absolute;
@@ -46,21 +48,22 @@ function MyEssay() {
         />
       )}
       <Container isModalOpen={isModalOpen}>
+        <Header/>
         {!isModalOpen && (
           <>
             <StyledWriteButton onClick={handleClick} />
             <AlarmButton onClick={handleAlarmButtonClick} />
           </>
         )}
-
-        <button
+        <List/>
+        {/* <button
           style={{ width: "300px", height: "300px" }}
           onClick={() => {
             router.push("essay_details?id=2674&pageType=public");
           }}
         >
           테스트용
-        </button>
+        </button> */}
       </Container>
     </>
   );
