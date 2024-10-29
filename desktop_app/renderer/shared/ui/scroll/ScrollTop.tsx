@@ -3,15 +3,16 @@ import ScrollTopIcon from "@/shared/assets/img/scrollTop.webp";
 import Image from "next/image";
 import styled from "styled-components";
 
-const ScrollTopButton = styled.div<{ visible: boolean }>`
+const ScrollTopButton = styled.div<{ visible: boolean; bottom: string }>`
   position: fixed;
-  bottom: 70px;
+  bottom: ${({ bottom }) => bottom};
   right: 51px;
   display: ${({ visible }) => (visible ? "block" : "none")};
   cursor: pointer;
+  z-index: 500;
 `;
 
-function ScrollTop() {
+function ScrollTop({ bottom = "70px" }: { bottom?: string }) {
   const [visible, setVisible] = useState(false);
 
   const handleScroll = () => {
@@ -35,8 +36,8 @@ function ScrollTop() {
     };
   }, [window.scrollY]);
   return (
-    <ScrollTopButton visible={visible} onClick={scrollToTop} >
-      <Image src={ScrollTopIcon} alt="Scroll to top" width={50} height={50} />
+    <ScrollTopButton visible={visible} onClick={scrollToTop} bottom={bottom}>
+      <Image src={ScrollTopIcon} alt="Scroll to top" width={55} height={55} />
     </ScrollTopButton>
   );
 }

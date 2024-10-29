@@ -50,7 +50,7 @@ function MyEssay() {
 
   return (
     <Layout>
-      <ScrollTop></ScrollTop>
+      <ScrollTop bottom="131px"/>
       <ActiveSideBar isModalOpen={isModalOpen}></ActiveSideBar>
       {isModalOpen && (
         <ActiveAlramList
