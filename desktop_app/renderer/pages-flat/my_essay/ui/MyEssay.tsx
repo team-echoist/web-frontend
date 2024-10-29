@@ -12,6 +12,8 @@ import { ScrollTop } from "@/shared/ui/scroll";
 
 const Layout = styled.div`
   width: 100vw;
+  min-height:90vh;
+  overflow-y: auto;
 `;
 
 const StyledWriteButton = styled(WriteButtonSVG)`
@@ -27,7 +29,7 @@ const ContentsContainer = styled.main<{ isModalOpen: boolean }>`
     isModalOpen ? "calc(100vw - 390px)" : "calc(100vw - 270px)"};
   // min-height: 98vh;
   font-family: Arial, sans-serif;
-  position: fixed;
+  position: absolute;
   top: 32px;
   left: ${({ isModalOpen }) => (isModalOpen ? "0" : "259px")};
   transition: width 0.3s ease;

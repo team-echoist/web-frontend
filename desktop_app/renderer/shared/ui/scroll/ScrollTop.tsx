@@ -16,7 +16,6 @@ function ScrollTop() {
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
-    console.log(scrollTop);
     setVisible(scrollTop > 300);
     window.Electron.ipcRenderer.send("scroll-event", scrollTop);
   };
