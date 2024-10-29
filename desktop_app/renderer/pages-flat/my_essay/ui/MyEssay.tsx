@@ -7,6 +7,7 @@ import { AlarmButton } from "@/shared/ui/button";
 import WriteButtonSVG from "@/shared/assets/img/write_icon.svg";
 import Header from "./header/Header";
 import List from "./contents/List";
+import { ScrollTop } from "@/shared/ui/scroll";
 
 const StyledWriteButton = styled(WriteButtonSVG)`
   position: absolute;
@@ -19,14 +20,14 @@ const StyledWriteButton = styled(WriteButtonSVG)`
 const Container = styled.main<{ isModalOpen: boolean }>`
   width: ${({ isModalOpen }) =>
     isModalOpen ? "calc(100vw - 390px)" : "calc(100vw - 270px)"};
-  height:98vh;
+  height: 98vh;
   font-family: Arial, sans-serif;
   position: fixed;
   top: 32px;
   left: ${({ isModalOpen }) => (isModalOpen ? "0" : "259px")};
   transition: width 0.3s ease;
   overflow-x: hidden;
-  display:flex;
+  display: flex;
   flex-direction: column;
 `;
 
@@ -42,6 +43,7 @@ function MyEssay() {
 
   return (
     <>
+      <ScrollTop />
       <ActiveSideBar isModalOpen={isModalOpen}></ActiveSideBar>
       {isModalOpen && (
         <ActiveAlramList
@@ -50,14 +52,14 @@ function MyEssay() {
         />
       )}
       <Container isModalOpen={isModalOpen}>
-        <Header/>
+        <Header />
         {!isModalOpen && (
           <>
             <StyledWriteButton onClick={handleClick} />
             <AlarmButton onClick={handleAlarmButtonClick} />
           </>
         )}
-        <List/>
+        <List />
         {/* <button
           style={{ width: "300px", height: "300px" }}
           onClick={() => {

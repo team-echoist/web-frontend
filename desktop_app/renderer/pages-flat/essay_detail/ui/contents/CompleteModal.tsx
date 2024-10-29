@@ -170,7 +170,6 @@ function CompleteModal({ completedType }: { completedType: string | null }) {
       ),
     },
   };
-  console.log("modalType",modalType)
   const handleModalOpen = () => {
     setIsOpen(false);
     if(completedType ==="linkedout"){

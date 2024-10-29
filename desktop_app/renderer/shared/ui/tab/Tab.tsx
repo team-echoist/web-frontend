@@ -3,14 +3,13 @@ import styled from "styled-components";
 import color from "@/shared/styles/color";
 
 const TabContainer =styled.div`
- width: 100%;
  display:flex;
- justify-content: center;
+ justify-content:center;
 `
 
 const TabItem = styled.button<{ isActiveTab: boolean }>`
   all: unset;
-  width: 206px;
+  width: 219px;
   height: 48px;
   border-bottom: ${({ isActiveTab }) =>
     isActiveTab ? `3px solid ${color.white}` : "none"};
