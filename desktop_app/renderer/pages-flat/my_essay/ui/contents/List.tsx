@@ -15,11 +15,11 @@ const CardContiner = styled.div`
 `;
 
 function List() {
-  const [tabData, setTabData] = useState(["나만의 글", "발행한 글", "스토리"]);
+  const tabData = ["나만의 글", "발행한 글", "스토리"];
   const [activeTab, setActiveTab] = useState(0);
   const [page, setPage] = useState(1);
   const [listData, setListData] = useState<Essay[]>([]);
-  const [listCount,setListCount] =useState(0);
+  const [listCount, setListCount] = useState(0);
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
