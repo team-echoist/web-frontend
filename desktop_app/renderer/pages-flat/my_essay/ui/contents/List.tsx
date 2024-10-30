@@ -19,6 +19,7 @@ function List() {
   const [activeTab, setActiveTab] = useState(0);
   const [page, setPage] = useState(1);
   const [listData, setListData] = useState<Essay[]>([]);
+  const [listCount,setListCount] =useState(0);
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
@@ -40,6 +41,7 @@ function List() {
       // pageType: private, public
       const { data } = await getEssays(page, 5, pageType);
       setListData(data);
+      setListCount(data.length);
     } catch (err) {
       console.log(err);
     }
@@ -51,6 +53,7 @@ function List() {
         tabData={tabData}
         activeTab={activeTab}
         handleChangeActiveTab={handleChangeActiveTab}
+        listCount={listCount}
       />
       <CardContiner>
         {listData.map((item) => (
