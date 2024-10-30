@@ -1,12 +1,12 @@
 import React from "react";
 import SpotMenuIcon from "@/shared/assets/img/spotmenuicon.svg";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import color from "@/shared/styles/color";
 import { Essay } from "@/shared/types";
 import { formatDateFullString } from "@/shared/lib/date";
 import { useRouter } from "next/navigation";
 
-const Layout = styled.article`
+const Layout = styled.article<{ img?: string }>`
   width: 657px;
   height: 141px;
   padding: 20.54px;
@@ -16,8 +16,10 @@ const Layout = styled.article`
   flex-shrink: 0;
   align-self: stretch;
   border-bottom: 1.027px solid rgba(104, 104, 104, 0.1);
-  background: url(<path-to-image>) lightgray 50% / cover no-repeat,
-    rgba(0, 0, 0, 0.6);
+  background: ${({ img }) =>
+    img
+      ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${img})`
+      : 'none'};
   margin: 0 auto;
   cursor: pointer;
 `;
@@ -31,6 +33,7 @@ const H1 = styled.h1`
   display: flex;
   align-items: center;
   gap: 10px;
+  z-index: 1;
 `;
 const SpotIconDiv = styled.div``;
 const TitleDiv = styled.div`
@@ -81,12 +84,12 @@ const Chip = styled.div`
 function Card({ data, type }: { data: Essay; type: string }) {
   const router = useRouter();
 
-
   const navigateToDetails = () => {
     router.push(`essay_details?id=${data.id}&pageType=${type}`);
   };
+  console.log("data", data);
   return (
-    <Layout onClick={navigateToDetails}>
+    <Layout onClick={navigateToDetails} img={data.thumbnail}>
       <TitleDiv>
         <H1>
           {data.title} {type == "public" && <Chip>Out</Chip>}
