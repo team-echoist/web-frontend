@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { css, keyframes } from "styled-components";
 import { useStore } from "@/shared/store";
 import color from "@/shared/styles/color";
 import Search from "@/shared/assets/img/search.svg";
@@ -20,21 +20,73 @@ const UserName = styled.h1`
   line-height: 150%;
   margin-left: 30px;
 `;
-const SearchIcon = styled.button`
+const SearchIcon = styled.button<{ isExpanded: boolean }>`
   all: unset;
   cursor: pointer;
   position: absolute;
-  left: 90.78%;
+  left: ${({ isExpanded }) => (isExpanded ? "78%" : "90.78%")};
+  transition: left 0.3s ease;
   top: 37.63px;
 `;
+
+const expand = keyframes`
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 140px;
+    opacity: 1;
+  }
+`;
+
+const collapse = keyframes`
+  from {
+    width: 140px;
+    opacity: 1;
+  }
+  to {
+    width: 0;
+    opacity: 0;
+  }
+`;
+const SearchInput = styled.input<{ isExpanded: boolean }>`
+  all: unset;
+  border-bottom: 1px solid ${color.white};
+  font-size: 11px;
+  padding: 5px;
+  width: 140px;
+  position: absolute;
+  top: 37.63px;
+  left: ${({ isExpanded }) => (isExpanded ? "81%" : "100%")};
+  transition: left 0.3s ease;
+  ${({ isExpanded }) =>
+    isExpanded
+      ? css`
+          animation: ${expand} 0.3s forwards;
+        `
+      : css`
+          animation: ${collapse} 0.3s forwards;
+        `}
+`;
+
 function Header() {
   const user = useStore((state) => state.user);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const handleButtonClick = () => {
+    setIsExpanded((prev) => !prev);
+  };
   return (
     <Layout>
       <UserName>{user?.nickname} 님</UserName>
-      <SearchIcon>
+
+      <SearchIcon isExpanded={isExpanded} onClick={handleButtonClick}>
         <Search />
       </SearchIcon>
+      <SearchInput
+        isExpanded={isExpanded}
+        placeholder="검색할 내용을 입력해주세요..."
+      ></SearchInput>
     </Layout>
   );
 }
