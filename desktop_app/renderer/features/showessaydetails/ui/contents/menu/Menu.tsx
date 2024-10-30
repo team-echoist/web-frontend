@@ -202,7 +202,7 @@ function Menu({
       console.log("err", err);
     }
   };
-  const privateRenderer = () => {
+  const myEssayRenderer = () => {
     return (
       <>
         {stories.length > 0 && isStoryModalOpen ? (
@@ -265,7 +265,7 @@ function Menu({
     );
   };
 
-  const publicRenderer = () => {
+  const essayRenderer = () => {
     return (
       <>
         {userName !== user?.nickname && (
@@ -313,7 +313,7 @@ function Menu({
           scale={scale}
           onClose={() => setIsMenuOpen(false)}
         >
-          {pageType === "public" ? publicRenderer() : privateRenderer()}
+          {userName !== user?.nickname ? essayRenderer() : myEssayRenderer()}
         </BlackMiniModal>
       )}
       <MenuIconDiv onClick={(e) => handleMenuOpen(e)} id="not-include">
