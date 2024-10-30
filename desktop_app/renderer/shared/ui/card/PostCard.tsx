@@ -76,9 +76,6 @@ function PostCard({
   imgUrl?: string;
   onClick?:()=>void;
 }) {
-  const MaxLength = 300;
-  const truncatedText =
-    desc.length > MaxLength ? desc.substring(0, MaxLength) + "..." : desc;
   return (
     <Layout onClick={onClick}>
       {imgUrl && (
@@ -91,7 +88,7 @@ function PostCard({
         <Time>{timeAgo(time)}</Time>
       </TitleDiv>
       <Desc isImageUrl={imgUrl ? true : false}>
-        {removeHtmlTags(truncatedText)}
+        {removeHtmlTags(desc)} ...
       </Desc>
       <Writer>{writer}</Writer>
     </Layout>

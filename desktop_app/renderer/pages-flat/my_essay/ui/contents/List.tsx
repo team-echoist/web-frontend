@@ -16,7 +16,6 @@ const CardContiner = styled.div`
 
 function List() {
   const [tabData, setTabData] = useState(["나만의 글", "발행한 글", "스토리"]);
-  //추후 api 연동후 글개수 counting 한거 파싱해야됨
   const [activeTab, setActiveTab] = useState(0);
   const [page, setPage] = useState(1);
   const [listData, setListData] = useState<Essay[]>([]);
