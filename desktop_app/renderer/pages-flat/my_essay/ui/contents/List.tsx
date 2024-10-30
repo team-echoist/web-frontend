@@ -13,6 +13,19 @@ const CardContiner = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+const NoneData = styled.div`
+  height: 80vh;
+  color: #686868;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 function List() {
   const tabData = ["나만의 글", "발행한 글", "스토리"];
@@ -55,6 +68,8 @@ function List() {
         handleChangeActiveTab={handleChangeActiveTab}
         listCount={listCount}
       />
+      {/* <NoneData>저장된 글이 없습니다.</NoneData> */}
+      {/* 추후 스토리 로직 세팅후 활성화 */}
       <CardContiner>
         {listData.map((item) => (
           <Card
