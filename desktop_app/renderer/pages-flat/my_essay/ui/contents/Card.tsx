@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import SpotMenuIcon from "@/shared/assets/img/spotmenuicon.svg";
 import styled, { css } from "styled-components";
 import color from "@/shared/styles/color";
 import { Essay } from "@/shared/types";
 import { formatDateFullString } from "@/shared/lib/date";
 import { useRouter } from "next/navigation";
+import { BlackMiniModal } from "@/shared/ui/modal";
+import EditIcon from "@/shared/assets/img/modal_icon/pen.svg";
+import DeleteIcon from "@/shared/assets/img/modal_icon/delete.svg";
+import DeleteModal from "@/shared/ui/modal/DeleteModal";
 
 const Layout = styled.article<{ img?: string }>`
   width: 657px;
@@ -19,7 +23,7 @@ const Layout = styled.article<{ img?: string }>`
   background: ${({ img }) =>
     img
       ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${img})`
-      : 'none'};
+      : "none"};
   margin: 0 auto;
   cursor: pointer;
 `;
@@ -33,9 +37,11 @@ const H1 = styled.h1`
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 1;
 `;
-const SpotIconDiv = styled.div``;
+const SpotIconDiv = styled.div`
+  z-index: 100;
+  position: relative;
+`;
 const TitleDiv = styled.div`
   width: 100%;
   display: flex;
@@ -81,26 +87,102 @@ const Chip = styled.div`
   align-items: center;
   justify-content: center;
 `;
-function Card({ data, type }: { data: Essay; type: string }) {
+const ModalItem = styled.button<{ isDelete: boolean }>`
+  all: unset;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  color: ${({ isDelete }) => (isDelete ? "red" : color.white)};
+  align-items: center;
+  border-bottom: 1px solid #1a1a1a;
+  cursor: pointer;
+  span {
+    width: 130px;
+  }
+`;
+const IconDiv = styled.div`
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  svg {
+    cursor: pointer;
+  }
+`;
+function Card({
+  data,
+  type,
+  handleEssayDelete,
+}: {
+  data: Essay;
+  type: string;
+  handleEssayDelete: (id: number) => void;
+}) {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const navigateToDetails = () => {
     router.push(`essay_details?id=${data.id}&pageType=${type}`);
   };
-  console.log("data", data);
+  const navigateToEditor = () => {
+    router.push(
+      `/web/write_essay?pageType=${type}&editorType=edit&essayId=${data.id}`
+    );
+  };
+  const onCloseModal = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setIsModalOpen(!isModalOpen);
+  };
   return (
-    <Layout onClick={navigateToDetails} img={data.thumbnail}>
-      <TitleDiv>
-        <H1>
-          {data.title} {type == "public" && <Chip>Out</Chip>}
-        </H1>
-        <SpotIconDiv>
-          <SpotMenuIcon />
-        </SpotIconDiv>
-      </TitleDiv>
-      <DescDiv>{data.content}...</DescDiv>
-      <TimeDiv>{formatDateFullString(data?.createdDate)}</TimeDiv>
-    </Layout>
+    <>
+      <DeleteModal
+        isDeleteModalOpen={isDeleteModalOpen}
+        setIsDeleteModalOpen={setIsDeleteModalOpen}
+        handleEssayDeleteWithId={handleEssayDelete}
+        id={data.id}
+      />
+      <Layout img={data.thumbnail}>
+        <TitleDiv onClick={navigateToDetails}>
+          <H1>
+            {data.title} {type == "public" && <Chip>Out</Chip>}
+          </H1>
+          <SpotIconDiv onClick={(e) => onCloseModal(e)}>
+            {isModalOpen && (
+              <BlackMiniModal
+                isAbsolute={true}
+                top="30px"
+                right="10px"
+                isNoneActiveOutside={true}
+              >
+                <ModalItem isDelete={false} onClick={navigateToEditor}>
+                  <span>수정</span>
+                  <IconDiv>
+                    <EditIcon />
+                  </IconDiv>
+                </ModalItem>
+                <ModalItem
+                  isDelete={true}
+                  onClick={() => {
+                    setIsModalOpen(false);
+                    setIsDeleteModalOpen(!isDeleteModalOpen);
+                  }}
+                >
+                  <span>삭제</span>
+                  <IconDiv>
+                    <DeleteIcon />
+                  </IconDiv>
+                </ModalItem>
+              </BlackMiniModal>
+            )}
+            <SpotMenuIcon />
+          </SpotIconDiv>
+        </TitleDiv>
+        <DescDiv onClick={navigateToDetails}>{data.content}...</DescDiv>
+        <TimeDiv onClick={navigateToDetails}>
+          {formatDateFullString(data?.createdDate)}
+        </TimeDiv>
+      </Layout>
+    </>
   );
 }
 

@@ -5,13 +5,15 @@ import styled from "styled-components";
 import { getEssays } from "@/shared/api";
 import { getStories } from "@/shared/api";
 import { Essay } from "@/shared/types";
-import { ScrollTop } from "@/shared/ui/scroll";
+import { deleteEssay } from "@/features/showessaydetails/api";
+import { ColorToast } from "@/shared/ui/toast";
 
 const CardContiner = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding-bottom: 50px;
 `;
 const NoneData = styled.div`
   height: 80vh;
@@ -22,9 +24,15 @@ const NoneData = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 170%;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+`;
+const ToastContainer = styled.div`
+  position: fixed;
+  bottom: 135px;
+  left: 43%;
+  z-index: 50;
 `;
 
 function List() {
@@ -33,6 +41,9 @@ function List() {
   const [page, setPage] = useState(1);
   const [listData, setListData] = useState<Essay[]>([]);
   const [listCount, setListCount] = useState(0);
+  const [showToast, setShowToast] = useState(false);
+  const [toastText, setToastText] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
@@ -59,7 +70,30 @@ function List() {
       console.log(err);
     }
   };
-
+  const handleEssayDelete = async (id: number) => {
+    try {
+      const { status } = await deleteEssay(id);
+      console.log(status);
+      if (status === 200) {
+        setShowToast(true);
+        setToastText("에세이 삭제에 성공했습니다.");
+        getList();
+      } else {
+        setShowToast(true);
+        setIsError(true);
+        setToastText("에세이 삭제에 실패했습니다.");
+        setTimeout(() => {
+          setIsError(false);
+        }, 3000);
+      }
+    } catch (err) {
+      setIsError(true);
+      setToastText("에세이 삭제에 실패했습니다.");
+      setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+    }
+  };
   return (
     <>
       <Tab
@@ -68,6 +102,17 @@ function List() {
         handleChangeActiveTab={handleChangeActiveTab}
         listCount={listCount}
       />
+      <ToastContainer>
+        <ColorToast
+          text={toastText}
+          onClose={() => {
+            setShowToast(false);
+          }}
+          isShowToast={showToast}
+          type={isError ? "alert" : "normal"}
+        />
+      </ToastContainer>
+
       {/* <NoneData>저장된 글이 없습니다.</NoneData> */}
       {/* 추후 스토리 로직 세팅후 활성화 */}
       <CardContiner>
@@ -76,6 +121,7 @@ function List() {
             key={item.title}
             data={item}
             type={activeTab === 0 ? "private" : "public"}
+            handleEssayDelete={handleEssayDelete}
           />
         ))}
       </CardContiner>

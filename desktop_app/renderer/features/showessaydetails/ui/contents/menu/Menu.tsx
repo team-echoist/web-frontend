@@ -15,7 +15,7 @@ import { updateEssayDetail } from "@/shared/api/essay";
 import { getStories } from "@/shared/api";
 import { deleteEssay } from "@/features/showessaydetails/api";
 import { Story } from "@/shared/types";
-import DeleteModal from "./DeleteModal";
+import DeleteModal from "@/shared/ui/modal/DeleteModal";
 import StoryModal from "./StoryModal";
 import { useStore } from "@/shared/store";
 import ReportModal from "./ReportModal";
@@ -135,18 +135,19 @@ function Menu({
       const { status } = await deleteEssay(essayId);
 
       if (status === 200) {
-        setToastText("스토리 삭제에 성공했습니다.");
+        setToastText("에세이 삭제에 성공했습니다.");
         setShowToast(true);
         setTimeout(() => {
           router.push("/web/main");
         }, 2000);
       } else {
+        setIsError(true);
         setShowToast(true);
-        setToastText("스토리 삭제에 실패했습니다.");
+        setToastText("에세이 삭제에 실패했습니다.");
       }
     } catch (err) {
       setIsError(true);
-      setToastText("스토리 삭제에 실패했습니다.");
+      setToastText("에세이 삭제에 실패했습니다.");
       setTimeout(() => {
         setIsError(false);
       }, 3000);
