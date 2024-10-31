@@ -192,12 +192,17 @@ const Chip = styled.div`
   line-height: 150%;
 `;
 
-function AddStoryModal({ handleStoryModal }: { handleStoryModal: () => void }) {
+function AddStoryModal({
+  handleStoryModal,
+  selectedStoryId,
+}: {
+  handleStoryModal: () => void;
+  selectedStoryId: number | null;
+}) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [essay, setEssay] = useState<Essay[]>([]);
   const [checkedCount, setCheckedCount] = useState(0);
   const [title, setTitle] = useState("");
-  const [storyId, setStoryId] = useState(null);
 
   useEffect(() => {
     const count = essay.filter((item) => item.isChecked).length;
@@ -207,9 +212,14 @@ function AddStoryModal({ handleStoryModal }: { handleStoryModal: () => void }) {
   useEffect(() => {
     essayList();
   }, []);
+
   const essayList = async () => {
     try {
-      const { data } = await getNotIncludedEssay();
+      const storyId = selectedStoryId ? selectedStoryId : null;
+      const { data } = await getNotIncludedEssay(storyId ?? undefined);
+      // story Id가 있으면 StoryId 태워서 보내고, storyId 매개변수로 안넣은것도 보내서 파싱해야됨
+      // storyId가 있는것들의 data값에는 무조건 isChecked:true로
+      // 스토리 id가 있다면 setTitle도 해줘야됨
       const updatedData = data.map((item) => ({
         ...item,
         isChecked: false,
@@ -232,8 +242,9 @@ function AddStoryModal({ handleStoryModal }: { handleStoryModal: () => void }) {
     );
   };
   const updateStory = async () => {
-    if(title.length ===0){
-      alert("스토리 이름을 적어주세요.")
+    // 스토리 id가 선택되었을때 안되었을때 나눠서 api요청
+    if (title.length === 0) {
+      alert("스토리 이름을 적어주세요.");
     }
     try {
       const { status, data } = await postStory(title, essay);
@@ -263,7 +274,7 @@ function AddStoryModal({ handleStoryModal }: { handleStoryModal: () => void }) {
       </Header>
       <ContentsBody>
         {isSuccess ? (
-          <SuccessStory />
+          <SuccessStory selectedStoryId={selectedStoryId} />
         ) : (
           <>
             <Input

@@ -41,6 +41,7 @@ const ContentsContainer = styled.main<{ isModalOpen: boolean }>`
 function MyEssay() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
+  const [selectedStoryId, setStoryId] = useState<number | null>(null);
   const router = useRouter();
   const handleAlarmButtonClick = () => {
     setIsModalOpen(!isModalOpen);
@@ -48,9 +49,12 @@ function MyEssay() {
   const handleClick = () => {
     router.push("/web/write_essay");
   };
-  const handleStoryModal =() =>{
-    setIsStoryModalOpen(!isStoryModalOpen)
-  }
+  const handleStoryModal = (id?: number) => {
+    setIsStoryModalOpen(!isStoryModalOpen);
+    if (id) {
+      setStoryId(id);
+    }
+  };
 
   return (
     <Layout>
@@ -72,11 +76,11 @@ function MyEssay() {
                 <AlarmButton onClick={handleAlarmButtonClick} />
               </>
             )}
-            <List handleStoryModal={handleStoryModal}/>
+            <List handleStoryModal={handleStoryModal} />
           </ContentsContainer>
         </>
       ) : (
-        <AddStoryModal handleStoryModal={handleStoryModal}/>
+        <AddStoryModal handleStoryModal={handleStoryModal} selectedStoryId={selectedStoryId}/>
       )}
     </Layout>
   );

@@ -83,7 +83,7 @@ const Time = styled.time`
   font-weight: 400;
   line-height: 150%;
 `;
-function SuccessStory() {
+function SuccessStory({selectedStoryId}:{selectedStoryId:number|null}) {
   return (
     <>
       <StoryInfo>
