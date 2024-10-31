@@ -87,23 +87,26 @@ const Chip = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const ModalItem = styled.button<{ isDelete: boolean }>`
+const ModalItem = styled.button<{ isDelete: boolean; isLast?: boolean }>`
   all: unset;
-  padding: 12px 20px;
+  padding: 12px 5px;
   display: flex;
   justify-content: space-between;
+  width:100%;
   color: ${({ isDelete }) => (isDelete ? "red" : color.white)};
   align-items: center;
-  border-bottom: 1px solid #1a1a1a;
+  border-bottom: ${({ isLast }) => (isLast ? "none" : "1px solid #1a1a1a")};
   cursor: pointer;
   span {
-    width: 130px;
+    width: 100px;
+    margin-left:5px;
   }
 `;
 const IconDiv = styled.div`
   width: 30px;
   display: flex;
   justify-content: center;
+  margin-right: 5px;
   svg {
     cursor: pointer;
   }
@@ -166,6 +169,7 @@ function Card({
                     setIsModalOpen(false);
                     setIsDeleteModalOpen(!isDeleteModalOpen);
                   }}
+                  isLast={true}
                 >
                   <span>삭제</span>
                   <IconDiv>

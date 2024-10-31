@@ -11,7 +11,7 @@ const Layout = styled.div<{ isAbsolute: boolean; top: string; right: string }>`
   border-radius: 10px;
   background: #0e0e0e;
   box-shadow: 0.1px 0.1px 6px -2px rgba(255, 255, 255, 0.05);
-  padding: 12px 20px;
+  padding: 12px 5px;
   position: ${({ isAbsolute }) => (isAbsolute ? "absolute" : "fixed")};
   top: ${({ top }) => top};
   right: ${({ right }) => right};

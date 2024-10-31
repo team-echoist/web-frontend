@@ -4,6 +4,7 @@ import PlusBtn from "@/shared/assets/img/plus.webp";
 import Image from "next/image";
 import color from "@/shared/styles/color";
 import BigLogo from "@/shared/assets/img/big_logo.webp";
+import StoryCard from "./StoryCard";
 
 const Layout = styled.article`
   display: flex;
@@ -14,6 +15,7 @@ const Layout = styled.article`
   background-position: center;
   background-repeat: no-repeat;
   background-size: 320.5px 266px;
+  cursor: pointer;
 `;
 
 const AddButton = styled.button`
@@ -27,6 +29,7 @@ const AddButton = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  margin-bottom: 20px;
 `;
 const P = styled.p`
   color: #909090;
@@ -36,18 +39,19 @@ const P = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-top:34.09px;
-  margin-left:14px;
-  width:100%;
+  margin-top: 34.09px;
+  margin-left: 14px;
+  width: 100%;
 `;
 
-function StoryList() {
+function StoryList({ handleStoryModal }: { handleStoryModal: () => void }) {
   return (
     <Layout>
-      <AddButton>
+      <AddButton onClick={handleStoryModal}>
         <Image src={PlusBtn.src} width={24} height={24} alt="plus_btn_icon" />
       </AddButton>
-      <P>썼던 글을 모아 스토리를 만들어보세요!</P>
+      <StoryCard></StoryCard>
+      {/* <P>썼던 글을 모아 스토리를 만들어보세요!</P> */}
     </Layout>
   );
 }

@@ -8,11 +8,11 @@ import WriteButtonSVG from "@/shared/assets/img/write_icon.svg";
 import Header from "./header/Header";
 import List from "./contents/List";
 import { ScrollTop } from "@/shared/ui/scroll";
-
+import AddStoryModal from "./contents/story/AddStoryModal";
 
 const Layout = styled.div`
   width: 100vw;
-  min-height:90vh;
+  min-height: 90vh;
   overflow-y: auto;
 `;
 
@@ -40,6 +40,7 @@ const ContentsContainer = styled.main<{ isModalOpen: boolean }>`
 
 function MyEssay() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
   const router = useRouter();
   const handleAlarmButtonClick = () => {
     setIsModalOpen(!isModalOpen);
@@ -47,27 +48,36 @@ function MyEssay() {
   const handleClick = () => {
     router.push("/web/write_essay");
   };
+  const handleStoryModal =() =>{
+    setIsStoryModalOpen(!isStoryModalOpen)
+  }
 
   return (
     <Layout>
-      <ScrollTop bottom="131px"/>
-      <ActiveSideBar isModalOpen={isModalOpen}></ActiveSideBar>
-      {isModalOpen && (
-        <ActiveAlramList
-          isModalOpen={isModalOpen}
-          handleAlarmButtonClick={handleAlarmButtonClick}
-        />
+      {!isStoryModalOpen ? (
+        <>
+          <ScrollTop bottom="131px" />
+          <ActiveSideBar isModalOpen={isModalOpen}></ActiveSideBar>
+          {isModalOpen && (
+            <ActiveAlramList
+              isModalOpen={isModalOpen}
+              handleAlarmButtonClick={handleAlarmButtonClick}
+            />
+          )}
+          <ContentsContainer isModalOpen={isModalOpen}>
+            <Header />
+            {!isModalOpen && (
+              <>
+                <StyledWriteButton onClick={handleClick} />
+                <AlarmButton onClick={handleAlarmButtonClick} />
+              </>
+            )}
+            <List handleStoryModal={handleStoryModal}/>
+          </ContentsContainer>
+        </>
+      ) : (
+        <AddStoryModal handleStoryModal={handleStoryModal}/>
       )}
-      <ContentsContainer isModalOpen={isModalOpen}>
-        <Header />
-        {!isModalOpen && (
-          <>
-            <StyledWriteButton onClick={handleClick} />
-            <AlarmButton onClick={handleAlarmButtonClick} />
-          </>
-        )}
-        <List />
-      </ContentsContainer>
     </Layout>
   );
 }

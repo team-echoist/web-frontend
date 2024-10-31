@@ -27,7 +27,11 @@ const MenuIconDiv = styled.div`
   right: 30px;
   cursor: pointer;
 `;
-const ModalItem = styled.button<{ isStory?: boolean; isRed?: boolean }>`
+const ModalItem = styled.button<{
+  isStory?: boolean;
+  isRed?: boolean;
+  isLast?: boolean;
+}>`
   all: unset;
   padding: 12px 20px;
   display: flex;
@@ -35,10 +39,10 @@ const ModalItem = styled.button<{ isStory?: boolean; isRed?: boolean }>`
   color: ${({ isStory, isRed }) =>
     isStory ? color.pointcolor : isRed ? color.red : color.white};
   align-items: center;
-  border-bottom: 1px solid #1a1a1a;
+  border-bottom: ${({ isLast }) => (isLast ? "none" : "1px solid #1a1a1a")};
   cursor: pointer;
   span {
-    width: 100px;
+    width: 120px;
   }
 `;
 const IconDiv = styled.div`
@@ -130,22 +134,22 @@ function Menu({
       return 500;
     }
   };
-  const toastHandler = (error:boolean)=>{
-    if(error){
-        setShowToast(true);
-        setIsError(true);
-        setToastText("에세이 삭제에 실패했습니다.");
-        setTimeout(() => {
-          setIsError(false);
-        }, 3000);
-    }else{
-        setShowToast(true);
-        setToastText("에세이 삭제에 성공했습니다.");
-        setTimeout(() => {
-          router.push("/web/main");
-        }, 2000);
+  const toastHandler = (error: boolean) => {
+    if (error) {
+      setShowToast(true);
+      setIsError(true);
+      setToastText("에세이 삭제에 실패했습니다.");
+      setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+    } else {
+      setShowToast(true);
+      setToastText("에세이 삭제에 성공했습니다.");
+      setTimeout(() => {
+        router.push("/web/main");
+      }, 2000);
     }
-  }
+  };
   const handleEssayDelete = async () => {
     try {
       const { status } = await deleteEssay(essayId);
@@ -263,6 +267,7 @@ function Menu({
             setIsMenuOpen(false);
             setIsDeleteModalOpen(!isDeleteModalOpen);
           }}
+          isLast={true}
         >
           <span>삭제</span>
           <IconDiv>
@@ -284,6 +289,7 @@ function Menu({
               setIsShowReport(!isShowReport);
               setIsMenuOpen(false);
             }}
+            isLast={true}
           >
             <span>신고하기</span>
             <IconDiv>
