@@ -8,6 +8,7 @@ import { Essay } from "@/shared/types";
 import { deleteEssay } from "@/features/showessaydetails/api";
 import { ColorToast } from "@/shared/ui/toast";
 import StoryList from "./story/StoryList";
+import { storyType } from "@/shared/types";
 
 const ContentsContainer = styled.div`
   width: 100%;
@@ -42,6 +43,7 @@ function List({ handleStoryModal }: { handleStoryModal: () => void }) {
   const [activeTab, setActiveTab] = useState(0);
   const [page, setPage] = useState(1);
   const [listData, setListData] = useState<Essay[]>([]);
+  const [storyList, setStoryList] = useState<storyType[]>([]);
   const [listCount, setListCount] = useState(0);
   const [showToast, setShowToast] = useState(false);
   const [toastText, setToastText] = useState("");
@@ -56,6 +58,8 @@ function List({ handleStoryModal }: { handleStoryModal: () => void }) {
   useEffect(() => {
     if (activeTab !== 2) {
       getList();
+    } else {
+      getStoryList();
     }
   }, [activeTab]);
 
@@ -69,6 +73,15 @@ function List({ handleStoryModal }: { handleStoryModal: () => void }) {
       // pageType: private, public
       const { data } = await getEssays(page, 5, pageType);
       setListData(data);
+      setListCount(data.length);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getStoryList = async () => {
+    try {
+      const { data } = await getStories();
+      setStoryList(data);
       setListCount(data.length);
     } catch (err) {
       console.log(err);
@@ -133,7 +146,7 @@ function List({ handleStoryModal }: { handleStoryModal: () => void }) {
               handleEssayDelete={handleEssayDelete}
             />
           ))}
-        {activeTab === 2 && <StoryList handleStoryModal={handleStoryModal}/>}
+        {activeTab === 2 && <StoryList handleStoryModal={handleStoryModal} storyList={storyList}/>}
       </ContentsContainer>
     </>
   );

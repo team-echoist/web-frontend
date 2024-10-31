@@ -5,6 +5,7 @@ import Image from "next/image";
 import color from "@/shared/styles/color";
 import BigLogo from "@/shared/assets/img/big_logo.webp";
 import StoryCard from "./StoryCard";
+import { storyType } from "@/shared/types";
 
 const Layout = styled.article`
   display: flex;
@@ -44,14 +45,23 @@ const P = styled.p`
   width: 100%;
 `;
 
-function StoryList({ handleStoryModal }: { handleStoryModal: () => void }) {
+function StoryList({
+  handleStoryModal,
+  storyList,
+}: {
+  handleStoryModal: () => void;
+  storyList: storyType[];
+}) {
   return (
     <Layout>
       <AddButton onClick={handleStoryModal}>
         <Image src={PlusBtn.src} width={24} height={24} alt="plus_btn_icon" />
       </AddButton>
-      <StoryCard></StoryCard>
-      {/* <P>썼던 글을 모아 스토리를 만들어보세요!</P> */}
+      {storyList.length === 1 ? (
+        <P>썼던 글을 모아 스토리를 만들어보세요!</P>
+      ) : (
+        <StoryCard></StoryCard>
+      )}
     </Layout>
   );
 }
