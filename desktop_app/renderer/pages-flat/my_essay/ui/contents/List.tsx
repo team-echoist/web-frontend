@@ -7,13 +7,15 @@ import { getStories } from "@/shared/api";
 import { Essay } from "@/shared/types";
 import { deleteEssay } from "@/features/showessaydetails/api";
 import { ColorToast } from "@/shared/ui/toast";
+import StoryList from "./story/StoryList";
 
-const CardContiner = styled.div`
+const ContentsContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
   padding-bottom: 50px;
+  margin-top:19px;
 `;
 const NoneData = styled.div`
   height: 80vh;
@@ -44,6 +46,8 @@ function List() {
   const [showToast, setShowToast] = useState(false);
   const [toastText, setToastText] = useState("");
   const [isError, setIsError] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
@@ -112,18 +116,22 @@ function List() {
           type={isError ? "alert" : "normal"}
         />
       </ToastContainer>
-      {listData.length === 0 && <NoneData>저장된 글이 없습니다.</NoneData>}
+      {listData.length === 0 && activeTab !== 2 ? (
+        <NoneData>저장된 글이 없습니다.</NoneData>
+      ) : null}
       {/* 추후 스토리 로직 세팅후 활성화 */}
-      <CardContiner>
-        {listData.map((item) => (
-          <Card
-            key={item.title}
-            data={item}
-            type={activeTab === 0 ? "private" : "public"}
-            handleEssayDelete={handleEssayDelete}
-          />
-        ))}
-      </CardContiner>
+      <ContentsContainer>
+        {activeTab !== 2 &&
+          listData.map((item) => (
+            <Card
+              key={item.title}
+              data={item}
+              type={activeTab === 0 ? "private" : "public"}
+              handleEssayDelete={handleEssayDelete}
+            />
+          ))}
+        {activeTab === 2 && <StoryList />}
+      </ContentsContainer>
     </>
   );
 }
