@@ -21,7 +21,7 @@ const Layout = styled.article`
 
 const AddButton = styled.button`
   all: unset;
-  width: 650px;
+  width: 670px;
   height: 50px;
   flex-shrink: 0;
   border-radius: 10px;
@@ -57,10 +57,14 @@ function StoryList({
       <AddButton onClick={handleStoryModal}>
         <Image src={PlusBtn.src} width={24} height={24} alt="plus_btn_icon" />
       </AddButton>
-      {storyList.length === 1 ? (
+      {storyList.length === 0 ? (
         <P>썼던 글을 모아 스토리를 만들어보세요!</P>
       ) : (
-        <StoryCard></StoryCard>
+        <>
+          {storyList.map((story) => (
+            <StoryCard key={story.name} story={story} />
+          ))}
+        </>
       )}
     </Layout>
   );

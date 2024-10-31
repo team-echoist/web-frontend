@@ -4,6 +4,7 @@ import SummaryIcon from "@/shared/assets/img/summaryIcon.svg";
 import SpotMenuIcon from "@/shared/assets/img/spotmenuicon.svg";
 import color from "@/shared/styles/color";
 import { BlackMiniModal } from "@/shared/ui/modal";
+import { storyType } from "@/shared/types";
 
 const Layout = styled.div`
   width: 650px;
@@ -59,18 +60,21 @@ const ModalItem = styled.button<{ isDelete: boolean; isLast?: boolean }>`
     margin-left: 5px;
   }
 `;
-function StoryCard() {
+function StoryCard({ story }: { story: storyType }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleModalOpen = () =>{
+    setIsModalOpen(!isModalOpen)
+  }
   return (
     <Layout>
       <SummaryDiv>
         <SummaryIcon />
-        <Count>9</Count>
+        <Count>{story.essaysCount}</Count>
       </SummaryDiv>
 
-      <Title>돌연한 출발</Title>
-      <MenuIconDiv>
-        <SpotMenuIcon></SpotMenuIcon>
+      <Title>{story.name}</Title>
+      <MenuIconDiv onClick={handleModalOpen}>
+        <SpotMenuIcon />
         {isModalOpen && (
           <BlackMiniModal
             isAbsolute={true}

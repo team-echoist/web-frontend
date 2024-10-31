@@ -232,6 +232,9 @@ function AddStoryModal({ handleStoryModal }: { handleStoryModal: () => void }) {
     );
   };
   const updateStory = async () => {
+    if(title.length ===0){
+      alert("스토리 이름을 적어주세요.")
+    }
     try {
       const { status, data } = await postStory(title, essay);
       console.log("status", status, data);
@@ -285,7 +288,7 @@ function AddStoryModal({ handleStoryModal }: { handleStoryModal: () => void }) {
                     check={item.isChecked}
                     setCheck={() => toggleCheck(index)}
                     type="circle"
-                  ></Check>
+                  />
                 </CheckDiv>
               </ListCard>
             ))}

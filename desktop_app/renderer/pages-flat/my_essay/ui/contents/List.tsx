@@ -87,6 +87,7 @@ function List({ handleStoryModal }: { handleStoryModal: () => void }) {
       console.log(err);
     }
   };
+  console.log("story",storyList)
 
   const toastHandler = (error: boolean) => {
     if (error) {
