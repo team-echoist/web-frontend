@@ -216,7 +216,7 @@ function AddStoryModal({
   const essayList = async () => {
     try {
       const storyId = selectedStoryId ? selectedStoryId : null;
-      const { data } = await getNotIncludedEssay(storyId ?? undefined);
+      const { data } = await getNotIncludedEssay();
       // story Id가 있으면 StoryId 태워서 보내고, storyId 매개변수로 안넣은것도 보내서 파싱해야됨
       // storyId가 있는것들의 data값에는 무조건 isChecked:true로
       // 스토리 id가 있다면 setTitle도 해줘야됨
