@@ -130,27 +130,33 @@ function Menu({
       return 500;
     }
   };
+  const toastHandler = (error:boolean)=>{
+    if(error){
+        setShowToast(true);
+        setIsError(true);
+        setToastText("에세이 삭제에 실패했습니다.");
+        setTimeout(() => {
+          setIsError(false);
+        }, 3000);
+    }else{
+        setShowToast(true);
+        setToastText("에세이 삭제에 성공했습니다.");
+        setTimeout(() => {
+          router.push("/web/main");
+        }, 2000);
+    }
+  }
   const handleEssayDelete = async () => {
     try {
       const { status } = await deleteEssay(essayId);
 
       if (status === 200) {
-        setToastText("에세이 삭제에 성공했습니다.");
-        setShowToast(true);
-        setTimeout(() => {
-          router.push("/web/main");
-        }, 2000);
+        toastHandler(false);
       } else {
-        setIsError(true);
-        setShowToast(true);
-        setToastText("에세이 삭제에 실패했습니다.");
+        toastHandler(true);
       }
     } catch (err) {
-      setIsError(true);
-      setToastText("에세이 삭제에 실패했습니다.");
-      setTimeout(() => {
-        setIsError(false);
-      }, 3000);
+      toastHandler(true);
     }
   };
   const stroryModalHandler = () => {
