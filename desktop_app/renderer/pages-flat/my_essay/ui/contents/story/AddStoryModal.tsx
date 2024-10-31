@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PrevButtonImg from "@/shared/assets/img/prevbutton.svg";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
@@ -6,6 +6,10 @@ import SpotMenuIcon from "@/shared/assets/img/spotmenuicon.svg";
 import Check from "@/shared/ui/check/check";
 import { Button } from "@/shared/ui/button";
 import SuccessStory from "./SuccessStory";
+import { getNotIncludedEssay } from "@/shared/api";
+import { Essay } from "@/shared/types";
+import { formatDateString } from "@/shared/lib/date";
+import { postStory } from "@/shared/api";
 
 const Layout = styled.article`
   display: flex;
@@ -72,6 +76,7 @@ const ContentsBody = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 30px;
 `;
 
 const ContentsInfo = styled.div`
@@ -188,7 +193,53 @@ const Chip = styled.div`
 `;
 
 function AddStoryModal({ handleStoryModal }: { handleStoryModal: () => void }) {
-  const [isSuccess, setIsSuccess] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [essay, setEssay] = useState<Essay[]>([]);
+  const [checkedCount, setCheckedCount] = useState(0);
+  const [title, setTitle] = useState("");
+  const [storyId, setStoryId] = useState(null);
+
+  useEffect(() => {
+    const count = essay.filter((item) => item.isChecked).length;
+    setCheckedCount(count);
+  }, [essay]);
+
+  useEffect(() => {
+    essayList();
+  }, []);
+  const essayList = async () => {
+    try {
+      const { data } = await getNotIncludedEssay();
+      const updatedData = data.map((item) => ({
+        ...item,
+        isChecked: false,
+      }));
+      setEssay(updatedData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const toggleCheck = (index: number) => {
+    setEssay((prevEssay) =>
+      prevEssay.map((item, i) =>
+        i === index ? { ...item, isChecked: !item.isChecked } : item
+      )
+    );
+  };
+  const selectAll = () => {
+    setEssay((prevEssay) =>
+      prevEssay.map((item) => ({ ...item, isChecked: !item.isChecked }))
+    );
+  };
+  const updateStory = async () => {
+    try {
+      const { status, data } = await postStory(title, essay);
+      console.log("status", status, data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Layout>
       <Header>
@@ -212,24 +263,39 @@ function AddStoryModal({ handleStoryModal }: { handleStoryModal: () => void }) {
           <SuccessStory />
         ) : (
           <>
-            <Input placeholder="에세이 제목" />
+            <Input
+              placeholder="에세이 제목"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
             <ContentsInfo>
               <Span>
-                전체 <Strong>8</Strong>개
+                전체 <Strong>{essay.length}</Strong>개
               </Span>
-              <BlackButton>전체 선택</BlackButton>
+              <BlackButton onClick={selectAll}>전체 선택</BlackButton>
             </ContentsInfo>
-            <ListCard>
-              <TextDiv>
-                <P>뜻밖의 사실</P>
-                <Time>2024.05.19</Time>
-              </TextDiv>
-              <CheckDiv>
-                <Check check={true} type="circle"></Check>
-              </CheckDiv>
-            </ListCard>
+            {essay.map((item, index) => (
+              <ListCard key={item.title}>
+                <TextDiv>
+                  <P>{item.title}</P>
+                  <Time>{formatDateString(item.createdDate)}</Time>
+                </TextDiv>
+                <CheckDiv>
+                  <Check
+                    check={item.isChecked}
+                    setCheck={() => toggleCheck(index)}
+                    type="circle"
+                  ></Check>
+                </CheckDiv>
+              </ListCard>
+            ))}
+
             <BtnDiv>
-              <Button text="총 0개 모으기" />
+              <Button
+                text={`총 ${checkedCount}개 모으기`}
+                type={checkedCount > 0 ? "point" : "disable"}
+                onClick={checkedCount > 0 ? updateStory : undefined}
+              />
             </BtnDiv>
           </>
         )}

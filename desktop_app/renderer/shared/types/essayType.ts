@@ -15,6 +15,7 @@ export interface Essay {
     story: Story;
     reviews: Review[];
     isBookmarked: boolean;
+    isChecked?: boolean;
   }
   
   export interface Tag {
