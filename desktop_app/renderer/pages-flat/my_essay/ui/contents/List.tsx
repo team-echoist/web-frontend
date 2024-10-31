@@ -112,8 +112,7 @@ function List() {
           type={isError ? "alert" : "normal"}
         />
       </ToastContainer>
-
-      {/* <NoneData>저장된 글이 없습니다.</NoneData> */}
+      {listData.length === 0 && <NoneData>저장된 글이 없습니다.</NoneData>}
       {/* 추후 스토리 로직 세팅후 활성화 */}
       <CardContiner>
         {listData.map((item) => (

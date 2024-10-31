@@ -119,7 +119,7 @@ function Menu({
   const submitReport = async (reason: string) => {
     try {
       const { status } = await reportEssay(essayId, reason);
-      return status
+      return status;
     } catch (err) {
       // toast
       setIsError(true);
@@ -127,7 +127,7 @@ function Menu({
         setIsError(false);
       }, 3000);
       setToastText("서버와의 연결이 불안정 합니다. 잠시후 다시 시도 해주세요.");
-      return 500
+      return 500;
     }
   };
   const handleEssayDelete = async () => {
@@ -222,16 +222,18 @@ function Menu({
             <EditIcon />
           </IconDiv>
         </ModalItem>
-        <ModalItem
-          isStory={false}
-          data-id="published"
-          onClick={(e) => updateEssayDetails(e)}
-        >
-          <span>발행</span>
-          <IconDiv>
-            <PublishIcon />
-          </IconDiv>
-        </ModalItem>
+        {pageType !== "public" && (
+          <ModalItem
+            isStory={false}
+            data-id="published"
+            onClick={(e) => updateEssayDetails(e)}
+          >
+            <span>발행</span>
+            <IconDiv>
+              <PublishIcon />
+            </IconDiv>
+          </ModalItem>
+        )}
         <ModalItem
           isStory={false}
           data-id="linkedout"
@@ -289,7 +291,11 @@ function Menu({
   return (
     <>
       {isShowReport && (
-        <ReportModal onClose={reportModalHandler} isShowModal={isShowReport} submitReport={submitReport} />
+        <ReportModal
+          onClose={reportModalHandler}
+          isShowModal={isShowReport}
+          submitReport={submitReport}
+        />
       )}
       <ToastDiv>
         <ColorToast
