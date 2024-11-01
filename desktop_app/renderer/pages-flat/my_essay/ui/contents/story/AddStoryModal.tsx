@@ -244,7 +244,7 @@ function AddStoryModal({
     if (selectedStoryId) {
       updateEssayList();
     } else {
-      essayList();
+      // essayList();
     }
   }, [selectedStoryId]);
 
@@ -252,30 +252,30 @@ function AddStoryModal({
 
   },[])
 
-  const essayList = async () => {
-    try {
-      const { data } = await getStoryEssayList();
-      const updatedData = data.map((item:any) => ({
-        ...item,
-        isChecked: false,
-      }));
-      setEssay(updatedData);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const getSuccessStory = async () => {
-    try {
-      if (selectedStoryId) {
-        const { data } = await getStoryEssayList(selectedStoryId);
-        setSuceesStoryList(data);
-        setCheckedCount(data?.length);
-        setTitle(data?.currentStoryName);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const essayList = async () => {
+  //   try {
+  //     const { data } = await getStoryEssayList();
+  //     const updatedData = data.map((item:any) => ({
+  //       ...item,
+  //       isChecked: false,
+  //     }));
+  //     setEssay(updatedData);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // const getSuccessStory = async () => {
+  //   try {
+  //     if (selectedStoryId) {
+  //       const { data } = await getStoryEssayList(selectedStoryId);
+  //       setSuceesStoryList(data);
+  //       setCheckedCount(data?.length);
+  //       setTitle(data?.currentStoryName);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   const updateEssayList = async () => {
     try {
       if (selectedStoryId) {
@@ -411,7 +411,7 @@ function AddStoryModal({
               </Span>
               <BlackButton onClick={selectAll}>전체 선택</BlackButton>
             </ContentsInfo>
-            {essay.map((item, index) => (
+            {/* {essay.map((item, index) => (
               <ListCard key={item.title}>
                 <TextDiv>
                   <P>{item.title}</P>
@@ -425,7 +425,7 @@ function AddStoryModal({
                   />
                 </CheckDiv>
               </ListCard>
-            ))}
+            ))} */}
 
             <BtnDiv>
               <Button

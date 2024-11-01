@@ -106,22 +106,22 @@ function SuccessStory({
 
   const [storyTitle, setStoryTitle] = useState<any>("");
   const user = useStore((state) => state.user);
-  useEffect(() => {
-    getSuccessStory();
-  }, [selectedStoryId]);
+  // useEffect(() => {
+  //   getSuccessStory();
+  // }, [selectedStoryId]);
 
-  const getSuccessStory = async () => {
-    try {
-      if (selectedStoryId) {
-        const { data } = await getStoryEssayList(selectedStoryId);
-        setSuccessStoryList(data);
-        setCheckedCount(data?.length);
-        setTitle(data?.currentStoryName);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const getSuccessStory = async () => {
+  //   try {
+  //     if (selectedStoryId) {
+  //       const { data } = await getStoryEssayList(selectedStoryId);
+  //       setSuccessStoryList(data);
+  //       setCheckedCount(data?.length);
+  //       setTitle(data?.currentStoryName);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   return (
     <>
       <StoryInfo>
