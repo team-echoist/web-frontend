@@ -15,6 +15,7 @@ import { putStory } from "@/shared/api";
 import { getEssays } from "@/shared/api";
 import { deleteStory } from "@/shared/api";
 
+
 const Layout = styled.article`
   display: flex;
   flex-direction: column;
@@ -232,6 +233,7 @@ function AddStoryModal({
   const [checkedCount, setCheckedCount] = useState(0);
   const [title, setTitle] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [successStoryList, setSuceesStoryList] = useState<any>([]);
 
   useEffect(() => {
     const count = essay.filter((item) => item.isChecked).length;
@@ -246,14 +248,30 @@ function AddStoryModal({
     }
   }, [selectedStoryId]);
 
+  useEffect(()=>{
+
+  },[])
+
   const essayList = async () => {
     try {
       const { data } = await getStoryEssayList();
-      const updatedData = data.map((item) => ({
+      const updatedData = data.map((item:any) => ({
         ...item,
         isChecked: false,
       }));
       setEssay(updatedData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getSuccessStory = async () => {
+    try {
+      if (selectedStoryId) {
+        const { data } = await getStoryEssayList(selectedStoryId);
+        setSuceesStoryList(data);
+        setCheckedCount(data?.length);
+        setTitle(data?.currentStoryName);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -328,7 +346,6 @@ function AddStoryModal({
       console.log(err);
     }
   };
-  console.log("title",title)
   return (
     <Layout>
       <Header>
@@ -378,6 +395,8 @@ function AddStoryModal({
             selectedStoryId={selectedStoryId}
             setCheckedCount={setCheckedCount}
             setTitle={setTitle}
+            successStoryList={successStoryList}
+            setSuccessStoryList={setSuceesStoryList}
           />
         ) : (
           <>

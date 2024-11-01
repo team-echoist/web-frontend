@@ -21,7 +21,7 @@ export const getStoryEssayList = async (storyId?: number) => {
     const params = {
       ...(storyId && { storyId: storyId }),
     };
-    const { data } = await fetchData<{ essays: Essay[] }>(
+    const { data } = await fetchData<any>(
       "stories/related",
       "get",
       null,

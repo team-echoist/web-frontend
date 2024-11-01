@@ -91,13 +91,19 @@ const Time = styled.time`
 function SuccessStory({
   selectedStoryId,
   setCheckedCount,
-  setTitle
+  setTitle,
+  successStoryList,
+  setSuccessStoryList
+  
 }: {
   selectedStoryId: number | null;
   setCheckedCount: React.Dispatch<React.SetStateAction<number>>;
   setTitle: React.Dispatch<React.SetStateAction<any>>;
+  successStoryList:any[];
+  setSuccessStoryList:React.Dispatch<React.SetStateAction<any>>;
+
 }) {
-  const [SuccessStory, setSuceesStory] = useState<any>([]);
+
   const [storyTitle, setStoryTitle] = useState<any>("");
   const user = useStore((state) => state.user);
   useEffect(() => {
@@ -106,14 +112,11 @@ function SuccessStory({
 
   const getSuccessStory = async () => {
     try {
-      const {data} =await getStories();
-      const storyTitle = data.find((item) => item.id === selectedStoryId)?.name;
-      setStoryTitle(storyTitle);
-      setTitle(storyTitle);
       if (selectedStoryId) {
         const { data } = await getStoryEssayList(selectedStoryId);
-        setSuceesStory(data);
+        setSuccessStoryList(data);
         setCheckedCount(data?.length);
+        setTitle(data?.currentStoryName);
       }
     } catch (err) {
       console.log(err);
@@ -126,7 +129,7 @@ function SuccessStory({
         <H1>{storyTitle}</H1>
         <BlackText>{user?.nickname} 아무개</BlackText>
       </StoryInfo>
-      {SuccessStory.map((item: any, index: number) => (
+      {successStoryList.map((item: any, index: number) => (
         <StoryItemBox key={item.title}>
           <Number>{index + 1}</Number>
           <TitleDiv>
