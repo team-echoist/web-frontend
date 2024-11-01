@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PlusBtn from "@/shared/assets/img/plus.webp";
 import Image from "next/image";
@@ -6,6 +6,7 @@ import color from "@/shared/styles/color";
 import BigLogo from "@/shared/assets/img/big_logo.webp";
 import StoryCard from "./StoryCard";
 import { storyType } from "@/shared/types";
+import { deleteStory } from "@/shared/api";
 
 const Layout = styled.article`
   display: flex;
@@ -48,13 +49,31 @@ const P = styled.p`
 function StoryList({
   handleStoryModal,
   storyList,
+  setStoryId,
+  getStoryList,
+  setStoredStoryName,
 }: {
-  handleStoryModal: () => void;
+  handleStoryModal: (id?: number) => void;
   storyList: storyType[];
+  setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
+  getStoryList:()=>void;
+  setStoredStoryName:React.Dispatch<React.SetStateAction<string>>;
+  handleEssayDelete:(id:number) => void;
 }) {
+  const deleteStoryInfo = async (id: number) => {
+    try {
+      const { status } = await deleteStory(id);
+      if(status ===200){
+        await getStoryList();
+      }
+      console.log(status);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Layout>
-      <AddButton onClick={handleStoryModal}>
+      <AddButton onClick={() => handleStoryModal()}>
         <Image src={PlusBtn.src} width={24} height={24} alt="plus_btn_icon" />
       </AddButton>
       {storyList.length === 0 ? (
@@ -62,7 +81,14 @@ function StoryList({
       ) : (
         <>
           {storyList.map((story) => (
-            <StoryCard key={story.name} story={story} />
+            <StoryCard
+              key={story.name}
+              story={story}
+              handleStoryModal={handleStoryModal}
+              setStoryId={setStoryId}
+              deleteStoryInfo={deleteStoryInfo}
+              setStoredStoryName={setStoredStoryName}
+            />
           ))}
         </>
       )}

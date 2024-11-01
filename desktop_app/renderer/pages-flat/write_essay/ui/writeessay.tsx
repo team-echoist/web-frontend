@@ -130,7 +130,6 @@ export const WriteEssay = () => {
       if((data?.essay?.location ?? "").length > 0) {
         setIsLocationSave(true)
       }
-      console.log("data", data);
     } catch (err) {
       console.log("err", err);
     }

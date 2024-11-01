@@ -38,7 +38,15 @@ const ToastContainer = styled.div`
   z-index: 50;
 `;
 
-function List({ handleStoryModal }: { handleStoryModal: () => void }) {
+function List({
+  handleStoryModal,
+  setStoryId,
+  setStoredStoryName
+}: {
+  handleStoryModal: () => void;
+  setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
+  setStoredStoryName:React.Dispatch<React.SetStateAction<string>>;
+}) {
   const tabData = ["나만의 글", "발행한 글", "스토리"];
   const [activeTab, setActiveTab] = useState(0);
   const [page, setPage] = useState(1);
@@ -50,6 +58,7 @@ function List({ handleStoryModal }: { handleStoryModal: () => void }) {
   const [isError, setIsError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
@@ -87,7 +96,6 @@ function List({ handleStoryModal }: { handleStoryModal: () => void }) {
       console.log(err);
     }
   };
-  console.log("story",storyList)
 
   const toastHandler = (error: boolean) => {
     if (error) {
@@ -147,7 +155,16 @@ function List({ handleStoryModal }: { handleStoryModal: () => void }) {
               handleEssayDelete={handleEssayDelete}
             />
           ))}
-        {activeTab === 2 && <StoryList handleStoryModal={handleStoryModal} storyList={storyList}/>}
+        {activeTab === 2 && (
+          <StoryList
+            handleStoryModal={handleStoryModal}
+            storyList={storyList}
+            setStoryId={setStoryId}
+            getStoryList={getStoryList}
+            setStoredStoryName={setStoredStoryName}
+            handleEssayDelete={handleEssayDelete}
+          />
+        )}
       </ContentsContainer>
     </>
   );

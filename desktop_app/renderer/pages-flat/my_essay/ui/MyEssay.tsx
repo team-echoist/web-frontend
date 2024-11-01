@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ActiveSideBar } from "@/features/activesidebar";
 import styled from "styled-components";
@@ -42,6 +42,8 @@ function MyEssay() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
   const [selectedStoryId, setStoryId] = useState<number | null>(null);
+  const [storedStoryName, setStoredStoryName] = useState("");
+  
   const router = useRouter();
   const handleAlarmButtonClick = () => {
     setIsModalOpen(!isModalOpen);
@@ -49,13 +51,14 @@ function MyEssay() {
   const handleClick = () => {
     router.push("/web/write_essay");
   };
-  const handleStoryModal = (id?: number) => {
+  const handleStoryModal = () => {
     setIsStoryModalOpen(!isStoryModalOpen);
-    if (id) {
-      setStoryId(id);
-    }
   };
-
+  useEffect(() => {
+    if (!isStoryModalOpen) {
+      setStoryId(null);
+    }
+  }, [isStoryModalOpen]);
   return (
     <Layout>
       {!isStoryModalOpen ? (
@@ -76,11 +79,21 @@ function MyEssay() {
                 <AlarmButton onClick={handleAlarmButtonClick} />
               </>
             )}
-            <List handleStoryModal={handleStoryModal} />
+            <List
+              setStoredStoryName={setStoredStoryName}
+              handleStoryModal={handleStoryModal}
+              setStoryId={setStoryId}
+            />
           </ContentsContainer>
         </>
       ) : (
-        <AddStoryModal handleStoryModal={handleStoryModal} selectedStoryId={selectedStoryId}/>
+        <AddStoryModal
+          handleStoryModal={handleStoryModal}
+          selectedStoryId={selectedStoryId}
+          setStoryId={setStoryId}
+          storedStoryName={storedStoryName}
+          setStoredStoryName={setStoredStoryName}
+        />
       )}
     </Layout>
   );

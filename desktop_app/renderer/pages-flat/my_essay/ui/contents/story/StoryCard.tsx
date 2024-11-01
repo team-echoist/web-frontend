@@ -60,11 +60,23 @@ const ModalItem = styled.button<{ isDelete: boolean; isLast?: boolean }>`
     margin-left: 5px;
   }
 `;
-function StoryCard({ story }: { story: storyType }) {
+function StoryCard({
+  story,
+  handleStoryModal,
+  setStoryId,
+  deleteStoryInfo,
+  setStoredStoryName
+}: {
+  story: storyType;
+  handleStoryModal: (id?: number) => void;
+  setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
+  deleteStoryInfo: (id: number) => void;
+  setStoredStoryName:React.Dispatch<React.SetStateAction<string>>;
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleModalOpen = () =>{
-    setIsModalOpen(!isModalOpen)
-  }
+  const handleModalOpen = () => {
+    setIsModalOpen(!isModalOpen);
+  };
   return (
     <Layout>
       <SummaryDiv>
@@ -82,8 +94,21 @@ function StoryCard({ story }: { story: storyType }) {
             right="10px"
             isNoneActiveOutside={true}
           >
-            <ModalItem isDelete={false}>스토리 편집</ModalItem>
-            <ModalItem isDelete={true} isLast={true}>
+            <ModalItem
+              isDelete={false}
+              onClick={() => {
+                setStoryId(story.id);
+                setStoredStoryName(story.name);
+                handleStoryModal();
+              }}
+            >
+              스토리 편집
+            </ModalItem>
+            <ModalItem
+              isDelete={true}
+              isLast={true}
+              onClick={() => deleteStoryInfo(story.id)}
+            >
               스토리 삭제
             </ModalItem>
           </BlackMiniModal>

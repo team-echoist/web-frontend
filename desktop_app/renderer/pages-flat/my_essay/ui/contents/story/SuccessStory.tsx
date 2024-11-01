@@ -1,7 +1,12 @@
-import React from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 import LinkedoutIcon from "@/shared/assets/img/linkedout.svg";
+import { getStoryEssayList } from "@/shared/api";
+import { useStore } from "@/shared/store";
+import { formatDateString } from "@/shared/lib/date";
+import { getEssays } from "@/features/showessaydetails/api";
+import { getStories } from "@/shared/api";
 
 const StoryInfo = styled.div`
   width: 640px;
@@ -40,9 +45,9 @@ const StoryItemBox = styled.div`
   padding: 20px 5px;
   display: flex;
   align-items: center;
-  svg{
-   height:100%;
-   padding-top:10px;
+  svg {
+    height: 100%;
+    padding-top: 10px;
   }
 `;
 const Number = styled.div`
@@ -83,22 +88,54 @@ const Time = styled.time`
   font-weight: 400;
   line-height: 150%;
 `;
-function SuccessStory({selectedStoryId}:{selectedStoryId:number|null}) {
+function SuccessStory({
+  selectedStoryId,
+  setCheckedCount,
+  setTitle
+}: {
+  selectedStoryId: number | null;
+  setCheckedCount: React.Dispatch<React.SetStateAction<number>>;
+  setTitle: React.Dispatch<React.SetStateAction<any>>;
+}) {
+  const [SuccessStory, setSuceesStory] = useState<any>([]);
+  const [storyTitle, setStoryTitle] = useState<any>("");
+  const user = useStore((state) => state.user);
+  useEffect(() => {
+    getSuccessStory();
+  }, [selectedStoryId]);
+
+  const getSuccessStory = async () => {
+    try {
+      const {data} =await getStories();
+      const storyTitle = data.find((item) => item.id === selectedStoryId)?.name;
+      setStoryTitle(storyTitle);
+      setTitle(storyTitle);
+      if (selectedStoryId) {
+        const { data } = await getStoryEssayList(selectedStoryId);
+        setSuceesStory(data);
+        setCheckedCount(data?.length);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <StoryInfo>
-        <BlackText>8편의 글</BlackText>
-        <H1>돌연한 출발</H1>
-        <BlackText>구르브 아무개</BlackText>
+        <BlackText>{SuccessStory?.length}편의 글</BlackText>
+        <H1>{storyTitle}</H1>
+        <BlackText>{user?.nickname} 아무개</BlackText>
       </StoryInfo>
-      <StoryItemBox>
-        <Number>1</Number>
-        <TitleDiv>
-          <Strong>스토리글</Strong>
-          <Time>2024.01.05</Time>
-        </TitleDiv>
-        <LinkedoutIcon />
-      </StoryItemBox>
+      {SuccessStory.map((item: any, index: number) => (
+        <StoryItemBox key={item.title}>
+          <Number>{index + 1}</Number>
+          <TitleDiv>
+            <Strong>{item.title}</Strong>
+            <Time>{formatDateString(item.createdDate)}</Time>
+          </TitleDiv>
+          <LinkedoutIcon />
+        </StoryItemBox>
+      ))}
     </>
   );
 }
