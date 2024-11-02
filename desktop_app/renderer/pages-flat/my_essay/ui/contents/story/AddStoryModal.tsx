@@ -7,12 +7,10 @@ import Check from "@/shared/ui/check/check";
 import { Button } from "@/shared/ui/button";
 import SuccessStory from "./SuccessStory";
 import { getStoryEssayList } from "@/shared/api";
-import { Essay } from "@/shared/types";
 import { formatDateString } from "@/shared/lib/date";
 import { postStory } from "@/shared/api";
 import { BlackMiniModal } from "@/shared/ui/modal";
 import { putStory } from "@/shared/api";
-import { getEssays } from "@/shared/api";
 import { deleteStory } from "@/shared/api";
 
 const Layout = styled.article`
@@ -226,19 +224,20 @@ function AddStoryModal({
   setStoryId,
   storedStoryName,
   setStoredStoryName,
+  toastHandler,
 }: {
   handleStoryModal: (id?: number) => void;
   selectedStoryId: number | null;
   setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
   storedStoryName: string;
   setStoredStoryName: React.Dispatch<React.SetStateAction<string>>;
+  toastHandler: (text: string, isError: boolean) => void;
 }) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [essay, setEssay] = useState<any[]>([]);
   const [checkedCount, setCheckedCount] = useState(0);
   const [title, setTitle] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [successStoryList, setSuceesStoryList] = useState<any>([]);
 
   useEffect(() => {
     const count = essay.filter((item) => item.isChecked).length;
@@ -248,15 +247,15 @@ function AddStoryModal({
   useEffect(() => {
     if (selectedStoryId) {
       updateEssayList();
-    }else{
+    } else {
       essayList();
     }
   }, [selectedStoryId, isSuccess]);
 
-    const essayList = async () => {
+  const essayList = async () => {
     try {
       const { data } = await getStoryEssayList();
-      const updatedData = data.map((item:any) => ({
+      const updatedData = data.map((item: any) => ({
         ...item,
         isChecked: false,
       }));
@@ -284,7 +283,7 @@ function AddStoryModal({
         );
         setEssay([...updatedData]);
         setStoredStoryName(title);
-      } 
+      }
     } catch (Err) {
       console.log(Err);
     }
@@ -304,7 +303,7 @@ function AddStoryModal({
   const updateStory = async () => {
     // 스토리 id가 선택되었을때 안되었을때 나눠서 api요청
     if (title.length === 0) {
-      alert("스토리 이름을 적어주세요.");
+      toastHandler("스토리 이름을 적어주세요.",true);
     }
     try {
       if (selectedStoryId) {
@@ -313,7 +312,7 @@ function AddStoryModal({
           setIsSuccess(true);
         } else {
           // 알럿
-          alert("서버와의 연결이 불안정 합니다. 다시 시도해 주세요.");
+          toastHandler("서버와의 연결이 불안정 합니다. 다시 시도해 주세요.",true);
         }
       } else {
         const { status, data } = await postStory(title, essay);
@@ -322,11 +321,11 @@ function AddStoryModal({
           setIsSuccess(true);
         } else {
           // 알럿
-          alert("서버와의 연결이 불안정 합니다. 다시 시도해 주세요.");
+          toastHandler("서버와의 연결이 불안정 합니다. 다시 시도해 주세요.",true);
         }
       }
     } catch (err) {
-      alert("서버와의 연결이 불안정 합니다. 다시 시도해 주세요.");
+      toastHandler("서버와의 연결이 불안정 합니다. 다시 시도해 주세요.",true);
       console.log(err);
     }
   };
@@ -336,7 +335,7 @@ function AddStoryModal({
       if (selectedStoryId) {
         const { status } = await deleteStory(selectedStoryId);
         if (status === 200) {
-          alert("삭제되었습니다.");
+          toastHandler("삭제되었습니다.",false);
           handleStoryModal();
         }
       }
@@ -356,7 +355,7 @@ function AddStoryModal({
           {status === "successStory" ? (
             <>
               <Chip>스토리</Chip>
-              {title} <CountText>{checkedCount}편</CountText>
+              {title} <CountText>{essay.length}편</CountText>
               <SpotMenuIconDiv>
                 <SpotMenuIcon
                   class="menu"

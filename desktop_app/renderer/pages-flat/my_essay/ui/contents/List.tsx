@@ -56,8 +56,6 @@ function List({
   const [showToast, setShowToast] = useState(false);
   const [toastText, setToastText] = useState("");
   const [isError, setIsError] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
 
   const handleChangeActiveTab = (index: number) => {
@@ -97,17 +95,17 @@ function List({
     }
   };
 
-  const toastHandler = (error: boolean) => {
+  const toastHandler = (error: boolean,text:string) => {
     if (error) {
       setShowToast(true);
       setIsError(true);
-      setToastText("에세이 삭제에 실패했습니다.");
+      setToastText(text);
       setTimeout(() => {
         setIsError(false);
       }, 3000);
     } else {
       setShowToast(true);
-      setToastText("에세이 삭제에 성공했습니다.");
+      setToastText(text);
       getList();
     }
   };
@@ -115,12 +113,12 @@ function List({
     try {
       const { status } = await deleteEssay(id);
       if (status === 200) {
-        toastHandler(false);
+        toastHandler(false,"에세이 삭제에 성공했습니다.");
       } else {
-        toastHandler(true);
+        toastHandler(true,"에세이 삭제에 실패했습니다.");
       }
     } catch (err) {
-      toastHandler(true);
+      toastHandler(true,"에세이 삭제에 실패했습니다.");
     }
   };
   return (
@@ -162,7 +160,7 @@ function List({
             setStoryId={setStoryId}
             getStoryList={getStoryList}
             setStoredStoryName={setStoredStoryName}
-            handleEssayDelete={handleEssayDelete}
+            toastHandler={toastHandler}
           />
         )}
       </ContentsContainer>
