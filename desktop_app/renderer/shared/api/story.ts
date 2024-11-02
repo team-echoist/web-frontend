@@ -21,15 +21,13 @@ export const getStoryEssayList = async (storyId?: number) => {
     const params = {
       ...(storyId && { storyId: storyId }),
     };
-    const { data } = await fetchData<any>(
-      "stories/related",
-      "get",
-      null,
-      {
-        params,
-      }
-    );
-    return { data: data.essays };
+    const { data } = await fetchData<any>("stories/related", "get", null, {
+      params,
+    });
+    return {
+      data: data.essays,
+      title: data.currentStoryName ? data.currentStoryName : "",
+    };
   } catch (err) {
     console.log(err);
     return { data: [] };

@@ -15,7 +15,6 @@ import { putStory } from "@/shared/api";
 import { getEssays } from "@/shared/api";
 import { deleteStory } from "@/shared/api";
 
-
 const Layout = styled.article`
   display: flex;
   flex-direction: column;
@@ -215,18 +214,24 @@ const ModalItem = styled.button<{ isDelete: boolean; isLast?: boolean }>`
     margin-left: 5px;
   }
 `;
+const SpotMenuIconDiv = styled.div`
+  position: fixed;
+  right: 0px;
+  top: 45px;
+`;
 
 function AddStoryModal({
   handleStoryModal,
   selectedStoryId,
   setStoryId,
-  storedStoryName
+  storedStoryName,
+  setStoredStoryName,
 }: {
   handleStoryModal: (id?: number) => void;
   selectedStoryId: number | null;
   setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
-  storedStoryName:string;
-  setStoredStoryName:React.Dispatch<React.SetStateAction<string>>;
+  storedStoryName: string;
+  setStoredStoryName: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [essay, setEssay] = useState<any[]>([]);
@@ -243,50 +248,43 @@ function AddStoryModal({
   useEffect(() => {
     if (selectedStoryId) {
       updateEssayList();
-    } else {
-      // essayList();
+    }else{
+      essayList();
     }
-  }, [selectedStoryId]);
+  }, [selectedStoryId, isSuccess]);
 
-  useEffect(()=>{
+    const essayList = async () => {
+    try {
+      const { data } = await getStoryEssayList();
+      const updatedData = data.map((item:any) => ({
+        ...item,
+        isChecked: false,
+      }));
+      setEssay(updatedData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  },[])
-
-  // const essayList = async () => {
-  //   try {
-  //     const { data } = await getStoryEssayList();
-  //     const updatedData = data.map((item:any) => ({
-  //       ...item,
-  //       isChecked: false,
-  //     }));
-  //     setEssay(updatedData);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // const getSuccessStory = async () => {
-  //   try {
-  //     if (selectedStoryId) {
-  //       const { data } = await getStoryEssayList(selectedStoryId);
-  //       setSuceesStoryList(data);
-  //       setCheckedCount(data?.length);
-  //       setTitle(data?.currentStoryName);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
   const updateEssayList = async () => {
     try {
-      if (selectedStoryId) {
+      if (selectedStoryId && !isSuccess) {
         const { data } = await getStoryEssayList(selectedStoryId);
-        const updatedData = data.map((item:any) => ({
+        const updatedData = data.map((item: any) => ({
           ...item,
           isChecked: item.story === selectedStoryId ? true : false,
         }));
         setTitle(storedStoryName);
         setEssay([...updatedData]);
-      }
+      } else if (selectedStoryId && isSuccess) {
+        const { data, title } = await getStoryEssayList(selectedStoryId);
+        setTitle(title);
+        const updatedData = data.filter(
+          (item: any) => item.story === selectedStoryId
+        );
+        setEssay([...updatedData]);
+        setStoredStoryName(title);
+      } 
     } catch (Err) {
       console.log(Err);
     }
@@ -332,38 +330,63 @@ function AddStoryModal({
       console.log(err);
     }
   };
+  // 스토리 등록 api
   const deleteStoryInfo = async () => {
     try {
-      if(selectedStoryId){
+      if (selectedStoryId) {
         const { status } = await deleteStory(selectedStoryId);
-        if(status ===200){
+        if (status === 200) {
           alert("삭제되었습니다.");
           handleStoryModal();
         }
       }
-
     } catch (err) {
       console.log(err);
     }
   };
-  return (
-    <Layout>
-      <Header>
-        <PrevBtn onClick={() => handleStoryModal()}>
-          <PrevButtonImg />
-        </PrevBtn>
+  const titleRenderer = () => {
+    let status = isSuccess
+      ? "successStory"
+      : selectedStoryId
+      ? "editStory"
+      : "createStory";
+    return (
+      <>
         <Title>
-          {isSuccess ? (
+          {status === "successStory" ? (
             <>
               <Chip>스토리</Chip>
               {title} <CountText>{checkedCount}편</CountText>
+              <SpotMenuIconDiv>
+                <SpotMenuIcon
+                  class="menu"
+                  onClick={() => {
+                    setIsMenuOpen(!isMenuOpen);
+                  }}
+                />
+              </SpotMenuIconDiv>
             </>
-          ) : selectedStoryId ? (
+          ) : status === "editStory" ? (
             "스토리 수정"
           ) : (
             "스토리 만들기"
           )}
         </Title>
+      </>
+    );
+  };
+  return (
+    <Layout>
+      <Header>
+        <PrevBtn
+          onClick={() => {
+            handleStoryModal();
+            setStoryId(null);
+          }}
+        >
+          <PrevButtonImg />
+        </PrevBtn>
+
         {isMenuOpen && (
           <BlackMiniModal top="79px" right="35px">
             <ModalItem
@@ -380,24 +403,11 @@ function AddStoryModal({
           </BlackMiniModal>
         )}
 
-        {isSuccess && (
-          <SpotMenuIcon
-            class="menu"
-            onClick={() => {
-              setIsMenuOpen(!isMenuOpen);
-            }}
-          />
-        )}
+        {titleRenderer()}
       </Header>
       <ContentsBody>
         {isSuccess ? (
-          <SuccessStory
-            selectedStoryId={selectedStoryId}
-            setCheckedCount={setCheckedCount}
-            setTitle={setTitle}
-            successStoryList={successStoryList}
-            setSuccessStoryList={setSuceesStoryList}
-          />
+          <SuccessStory essay={essay} title={title} />
         ) : (
           <>
             <Input
@@ -411,7 +421,7 @@ function AddStoryModal({
               </Span>
               <BlackButton onClick={selectAll}>전체 선택</BlackButton>
             </ContentsInfo>
-            {/* {essay.map((item, index) => (
+            {essay.map((item, index) => (
               <ListCard key={item.title}>
                 <TextDiv>
                   <P>{item.title}</P>
@@ -425,7 +435,7 @@ function AddStoryModal({
                   />
                 </CheckDiv>
               </ListCard>
-            ))} */}
+            ))}
 
             <BtnDiv>
               <Button

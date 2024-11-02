@@ -7,7 +7,7 @@ import { getStories } from "@/shared/api";
 import { Essay } from "@/shared/types";
 import { deleteEssay } from "@/features/showessaydetails/api";
 import { ColorToast } from "@/shared/ui/toast";
-import StoryList from "./story/StoryList";
+import StoryList from "./story/list/StoryList";
 import { storyType } from "@/shared/types";
 
 const ContentsContainer = styled.div`

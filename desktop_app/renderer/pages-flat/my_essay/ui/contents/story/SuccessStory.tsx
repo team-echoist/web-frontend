@@ -89,47 +89,23 @@ const Time = styled.time`
   line-height: 150%;
 `;
 function SuccessStory({
-  selectedStoryId,
-  setCheckedCount,
-  setTitle,
-  successStoryList,
-  setSuccessStoryList
+  essay,
+  title
   
 }: {
-  selectedStoryId: number | null;
-  setCheckedCount: React.Dispatch<React.SetStateAction<number>>;
-  setTitle: React.Dispatch<React.SetStateAction<any>>;
-  successStoryList:any[];
-  setSuccessStoryList:React.Dispatch<React.SetStateAction<any>>;
-
+  essay:any[]
+  title:string
 }) {
 
-  const [storyTitle, setStoryTitle] = useState<any>("");
   const user = useStore((state) => state.user);
-  // useEffect(() => {
-  //   getSuccessStory();
-  // }, [selectedStoryId]);
-
-  // const getSuccessStory = async () => {
-  //   try {
-  //     if (selectedStoryId) {
-  //       const { data } = await getStoryEssayList(selectedStoryId);
-  //       setSuccessStoryList(data);
-  //       setCheckedCount(data?.length);
-  //       setTitle(data?.currentStoryName);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
   return (
     <>
       <StoryInfo>
-        <BlackText>{SuccessStory?.length}편의 글</BlackText>
-        <H1>{storyTitle}</H1>
+        <BlackText>{essay?.length}편의 글</BlackText>
+        <H1>{title}</H1>
         <BlackText>{user?.nickname} 아무개</BlackText>
       </StoryInfo>
-      {successStoryList.map((item: any, index: number) => (
+      {essay.map((item: any, index: number) => (
         <StoryItemBox key={item.title}>
           <Number>{index + 1}</Number>
           <TitleDiv>

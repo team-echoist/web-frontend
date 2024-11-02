@@ -43,6 +43,7 @@ function MyEssay() {
   const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
   const [selectedStoryId, setStoryId] = useState<number | null>(null);
   const [storedStoryName, setStoredStoryName] = useState("");
+ // 스토리 편집시 진입되는 화면에서 스토리 이름을 응답값을 주고 잇지 않아서 state로 임시 저장  
   
   const router = useRouter();
   const handleAlarmButtonClick = () => {
@@ -59,6 +60,7 @@ function MyEssay() {
       setStoryId(null);
     }
   }, [isStoryModalOpen]);
+  console.log("stor Id",selectedStoryId)
   return (
     <Layout>
       {!isStoryModalOpen ? (
