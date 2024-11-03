@@ -53,6 +53,7 @@ function StoryList({
   getStoryList,
   setStoredStoryName,
   toastHandler,
+  setIsSuccess
 }: {
   handleStoryModal: (id?: number) => void;
   storyList: storyType[];
@@ -60,6 +61,7 @@ function StoryList({
   getStoryList: () => void;
   setStoredStoryName: React.Dispatch<React.SetStateAction<string>>;
   toastHandler: (text: string, error: boolean) => void;
+  setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const deleteStoryInfo = async (id: number) => {
     try {
@@ -91,6 +93,7 @@ function StoryList({
               setStoryId={setStoryId}
               deleteStoryInfo={deleteStoryInfo}
               setStoredStoryName={setStoredStoryName}
+              setIsSuccess={setIsSuccess}
             />
           ))}
         </>

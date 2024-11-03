@@ -53,6 +53,7 @@ function MyEssay() {
   const [toastText, setToastText] = useState("");
   const [isError, setError] = useState(false);
   const [isShowToast, setIsShowToast] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const router = useRouter();
   const handleAlarmButtonClick = () => {
@@ -116,6 +117,7 @@ function MyEssay() {
               handleStoryModal={handleStoryModal}
               setStoryId={setStoryId}
               toastHandler={toastHandler}
+              setIsSuccess={setIsSuccess}
             />
           </ContentsContainer>
         </>
@@ -127,6 +129,8 @@ function MyEssay() {
           storedStoryName={storedStoryName}
           setStoredStoryName={setStoredStoryName}
           toastHandler={toastHandler}
+          isSuccess={isSuccess}
+          setIsSuccess={setIsSuccess}
         />
       )}
     </Layout>

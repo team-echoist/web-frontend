@@ -8,6 +8,8 @@ import { formatDateString } from "@/shared/lib/date";
 import { getEssays } from "@/features/showessaydetails/api";
 import { getStories } from "@/shared/api";
 
+
+
 const StoryInfo = styled.div`
   width: 640px;
   height: 200px;
@@ -45,6 +47,7 @@ const StoryItemBox = styled.div`
   padding: 20px 5px;
   display: flex;
   align-items: center;
+  cursor: pointer;
   svg {
     height: 100%;
     padding-top: 10px;
@@ -112,7 +115,7 @@ function SuccessStory({
             <Strong>{item.title}</Strong>
             <Time>{formatDateString(item.createdDate)}</Time>
           </TitleDiv>
-          <LinkedoutIcon />
+          {/* <LinkedoutIcon /> */}
         </StoryItemBox>
       ))}
     </>

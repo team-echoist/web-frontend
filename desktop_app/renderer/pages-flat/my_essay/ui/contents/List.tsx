@@ -42,12 +42,14 @@ function List({
   handleStoryModal,
   setStoryId,
   setStoredStoryName,
-  toastHandler
+  toastHandler,
+  setIsSuccess
 }: {
   handleStoryModal: () => void;
   setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
   setStoredStoryName:React.Dispatch<React.SetStateAction<string>>;
   toastHandler:(text:string,isError:boolean) =>void;
+  setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const tabData = ["나만의 글", "발행한 글", "스토리"];
   const [activeTab, setActiveTab] = useState(0);
@@ -139,6 +141,7 @@ function List({
             getStoryList={getStoryList}
             setStoredStoryName={setStoredStoryName}
             toastHandler={toastHandler}
+            setIsSuccess={setIsSuccess}
           />
         )}
       </ContentsContainer>

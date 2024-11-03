@@ -225,6 +225,8 @@ function AddStoryModal({
   storedStoryName,
   setStoredStoryName,
   toastHandler,
+  isSuccess,
+  setIsSuccess,
 }: {
   handleStoryModal: (id?: number) => void;
   selectedStoryId: number | null;
@@ -232,8 +234,9 @@ function AddStoryModal({
   storedStoryName: string;
   setStoredStoryName: React.Dispatch<React.SetStateAction<string>>;
   toastHandler: (text: string, isError: boolean) => void;
+  isSuccess: boolean;
+  setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [isSuccess, setIsSuccess] = useState(false);
   const [essay, setEssay] = useState<any[]>([]);
   const [checkedCount, setCheckedCount] = useState(0);
   const [title, setTitle] = useState("");
@@ -303,7 +306,7 @@ function AddStoryModal({
   const updateStory = async () => {
     // 스토리 id가 선택되었을때 안되었을때 나눠서 api요청
     if (title.length === 0) {
-      toastHandler("스토리 이름을 적어주세요.",true);
+      toastHandler("스토리 이름을 적어주세요.", true);
     }
     try {
       if (selectedStoryId) {
@@ -312,7 +315,10 @@ function AddStoryModal({
           setIsSuccess(true);
         } else {
           // 알럿
-          toastHandler("서버와의 연결이 불안정 합니다. 다시 시도해 주세요.",true);
+          toastHandler(
+            "서버와의 연결이 불안정 합니다. 다시 시도해 주세요.",
+            true
+          );
         }
       } else {
         const { status, data } = await postStory(title, essay);
@@ -321,11 +327,14 @@ function AddStoryModal({
           setIsSuccess(true);
         } else {
           // 알럿
-          toastHandler("서버와의 연결이 불안정 합니다. 다시 시도해 주세요.",true);
+          toastHandler(
+            "서버와의 연결이 불안정 합니다. 다시 시도해 주세요.",
+            true
+          );
         }
       }
     } catch (err) {
-      toastHandler("서버와의 연결이 불안정 합니다. 다시 시도해 주세요.",true);
+      toastHandler("서버와의 연결이 불안정 합니다. 다시 시도해 주세요.", true);
       console.log(err);
     }
   };
@@ -335,7 +344,7 @@ function AddStoryModal({
       if (selectedStoryId) {
         const { status } = await deleteStory(selectedStoryId);
         if (status === 200) {
-          toastHandler("삭제되었습니다.",false);
+          toastHandler("삭제되었습니다.", false);
           handleStoryModal();
         }
       }
