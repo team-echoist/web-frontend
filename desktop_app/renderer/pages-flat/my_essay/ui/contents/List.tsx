@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Tab } from "@/shared/ui/tab";
 import Card from "./Card";
 import styled from "styled-components";
@@ -55,19 +55,19 @@ function List({
   const [listData, setListData] = useState<Essay[]>([]);
   const [storyList, setStoryList] = useState<storyType[]>([]);
   const [listCount, setListCount] = useState(0);
-  const [showToast, setShowToast] = useState(false);
-  const [toastText, setToastText] = useState("");
-  const [isError, setIsError] = useState(false);
-
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (activeTab !== 2) {
+      setListData([]);
+      setListCount(0);
       getList();
     } else {
+      setListData([]);
+      setListCount(0);
       getStoryList();
     }
   }, [activeTab]);
