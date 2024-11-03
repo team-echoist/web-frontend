@@ -12,6 +12,7 @@ import { postStory } from "@/shared/api";
 import { BlackMiniModal } from "@/shared/ui/modal";
 import { putStory } from "@/shared/api";
 import { deleteStory } from "@/shared/api";
+import { getUserEssays } from "@/shared/api";
 
 const Layout = styled.article`
   display: flex;

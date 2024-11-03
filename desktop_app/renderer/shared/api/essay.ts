@@ -128,3 +128,21 @@ export const getEssays = async (
   }
 };
 
+export const getUserEssays = async (storyId: number) => {
+  try {
+    const params = {
+      storyId: storyId,
+    };
+    const { data } = await fetchData<EssayDataType>(
+      `essays/${storyId}`,
+      "get",
+      null,
+      {
+        params,
+      }
+    );
+    return {data:data}
+  } catch (err) {
+    return { data: [] };
+  }
+};
