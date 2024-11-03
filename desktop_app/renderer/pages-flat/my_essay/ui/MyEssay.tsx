@@ -115,6 +115,7 @@ function MyEssay() {
               setStoredStoryName={setStoredStoryName}
               handleStoryModal={handleStoryModal}
               setStoryId={setStoryId}
+              toastHandler={toastHandler}
             />
           </ContentsContainer>
         </>

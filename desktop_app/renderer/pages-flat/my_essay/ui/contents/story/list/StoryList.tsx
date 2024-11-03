@@ -52,23 +52,23 @@ function StoryList({
   setStoryId,
   getStoryList,
   setStoredStoryName,
-  toastHandler
+  toastHandler,
 }: {
   handleStoryModal: (id?: number) => void;
   storyList: storyType[];
   setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
-  getStoryList:()=>void;
-  setStoredStoryName:React.Dispatch<React.SetStateAction<string>>;
-  toastHandler:(error:boolean,text:string) => void;
+  getStoryList: () => void;
+  setStoredStoryName: React.Dispatch<React.SetStateAction<string>>;
+  toastHandler: (text: string, error: boolean) => void;
 }) {
   const deleteStoryInfo = async (id: number) => {
     try {
       const { status } = await deleteStory(id);
-      if(status ===200){
-        toastHandler(false,"스토리 삭제에 성공했습니다.")
+      if (status === 200) {
+        toastHandler("스토리 삭제에 성공했습니다.", false);
         await getStoryList();
-      }else{
-        toastHandler(false,"스토리 삭제에 실패했습니다.")
+      } else {
+        toastHandler("스토리 삭제에 실패했습니다.", false);
       }
     } catch (err) {
       console.log(err);

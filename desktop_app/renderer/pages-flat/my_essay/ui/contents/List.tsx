@@ -41,11 +41,13 @@ const ToastContainer = styled.div`
 function List({
   handleStoryModal,
   setStoryId,
-  setStoredStoryName
+  setStoredStoryName,
+  toastHandler
 }: {
   handleStoryModal: () => void;
   setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
   setStoredStoryName:React.Dispatch<React.SetStateAction<string>>;
+  toastHandler:(text:string,isError:boolean) =>void;
 }) {
   const tabData = ["나만의 글", "발행한 글", "스토리"];
   const [activeTab, setActiveTab] = useState(0);
@@ -94,31 +96,17 @@ function List({
       console.log(err);
     }
   };
-
-  const toastHandler = (error: boolean,text:string) => {
-    if (error) {
-      setShowToast(true);
-      setIsError(true);
-      setToastText(text);
-      setTimeout(() => {
-        setIsError(false);
-      }, 3000);
-    } else {
-      setShowToast(true);
-      setToastText(text);
-      getList();
-    }
-  };
   const handleEssayDelete = async (id: number) => {
     try {
       const { status } = await deleteEssay(id);
       if (status === 200) {
-        toastHandler(false,"에세이 삭제에 성공했습니다.");
+        toastHandler("에세이 삭제에 성공했습니다.",false);
+        getList();
       } else {
-        toastHandler(true,"에세이 삭제에 실패했습니다.");
+        toastHandler("에세이 삭제에 실패했습니다.",true);
       }
     } catch (err) {
-      toastHandler(true,"에세이 삭제에 실패했습니다.");
+      toastHandler("에세이 삭제에 실패했습니다.",true);
     }
   };
   return (
@@ -129,16 +117,6 @@ function List({
         handleChangeActiveTab={handleChangeActiveTab}
         listCount={listCount}
       />
-      <ToastContainer>
-        <ColorToast
-          text={toastText}
-          onClose={() => {
-            setShowToast(false);
-          }}
-          isShowToast={showToast}
-          type={isError ? "alert" : "normal"}
-        />
-      </ToastContainer>
       {listData.length === 0 && activeTab !== 2 ? (
         <NoneData>저장된 글이 없습니다.</NoneData>
       ) : null}
