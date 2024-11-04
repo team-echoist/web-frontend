@@ -6,7 +6,6 @@ import { getEssays } from "@/shared/api";
 import { getStories } from "@/shared/api";
 import { Essay } from "@/shared/types";
 import { deleteEssay } from "@/features/showessaydetails/api";
-import { ColorToast } from "@/shared/ui/toast";
 import StoryList from "./story/list/StoryList";
 import { storyType } from "@/shared/types";
 import { Virtuoso } from "react-virtuoso";
@@ -78,7 +77,7 @@ function List({
       getStoryList();
     }
   }, [activeTab]);
-  
+
   useEffect(() => {
     if (hasMore && activeTab !== 2) {
       getList();
@@ -167,41 +166,6 @@ function List({
             setIsSuccess={setIsSuccess}
           />
         )}
-        {/* {
-          activeTab !== 2 && (
-            <Virtuoso
-              data={listData}
-              endReached={loadMore}
-              itemContent={(index, item) => (
-                <Card
-                  key={item.title}
-                  data={item}
-                  type={activeTab === 0 ? "private" : "public"}
-                  handleEssayDelete={handleEssayDelete}
-                />
-              )}
-            />
-          )
-          // listData.map((item) => (
-          //   <Card
-          //     key={item.title}
-          //     data={item}
-          //     type={activeTab === 0 ? "private" : "public"}
-          //     handleEssayDelete={handleEssayDelete}
-          //   />
-          // ))
-        }
-        {activeTab === 2 && (
-          <StoryList
-            handleStoryModal={handleStoryModal}
-            storyList={storyList}
-            setStoryId={setStoryId}
-            getStoryList={getStoryList}
-            setStoredStoryName={setStoredStoryName}
-            toastHandler={toastHandler}
-            setIsSuccess={setIsSuccess}
-          />
-        )} */}
       </ContentsContainer>
     </>
   );

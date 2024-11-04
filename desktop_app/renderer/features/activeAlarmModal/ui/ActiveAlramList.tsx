@@ -5,6 +5,7 @@ import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { getAlramList } from "../api";
 import { Alert } from "@/shared/types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Virtuoso } from "react-virtuoso";
 
 interface AlarmModalProps {
   isModalOpen: boolean;
@@ -14,7 +15,7 @@ interface AlarmModalProps {
 interface RenderAlarmProps {
   list: Alert[];
   length: number;
-  setAlarmList: Dispatch<SetStateAction<Alert[]>>;
+  setAlarmList: Dispatch<SetStateAction<any[]>>;
 }
 
 const RenderAlarm = ({ list, length, setAlarmList }: RenderAlarmProps) => {
@@ -25,8 +26,11 @@ const RenderAlarm = ({ list, length, setAlarmList }: RenderAlarmProps) => {
   );
 };
 
-function ActiveAlramList({ isModalOpen, handleAlarmButtonClick }: AlarmModalProps) {
-  const [alarmList, setAlarmList] = useState<Alert[]>([]);
+function ActiveAlramList({
+  isModalOpen,
+  handleAlarmButtonClick,
+}: AlarmModalProps) {
+  const [alarmList, setAlarmList] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [totalAlertPage, setTotalAlertPage] = useState<number | null>(null);
   const [isFetching, setIsFetching] = useState(false);
@@ -43,21 +47,47 @@ function ActiveAlramList({ isModalOpen, handleAlarmButtonClick }: AlarmModalProp
       setTotalAlertPage(totalPage);
     } catch (error) {
       console.error("Failed to fetch data", error);
-    } finally {
-      setIsFetching(false);
-    }
+    } 
   };
-
   useEffect(() => {
     fetchData();
   }, [page]);
+
+  const loadMoreItems = () => {
+    if (totalAlertPage === null || page <= totalAlertPage) {
+      setPage((prev) => prev + 1);
+      setIsFetching
+    }
+  };
 
   return (
     <AlarmModal
       isOpen={isModalOpen}
       handleAlarmButtonClick={handleAlarmButtonClick}
     >
-      <InfiniteScroll
+      {alarmList.length > 0 ? (
+        <Virtuoso
+        style={{ height: "705px", width: "100%" }}
+        data={alarmList}
+        endReached={loadMoreItems}
+        itemContent={(index, item) => (
+          <AlarmList
+            key={index}
+            list={alarmList} setAlarmList={setAlarmList}
+          />
+        )}
+      />
+        // <AlarmList list={alarmList} setAlarmList={setAlarmList} />
+      ) : (
+        <NoneAlarm />
+      )}
+      {/* <Virtuoso
+        data={alarmList}
+        itemContent={(index, alert) => <RenderAlarm list={[alert]} />}
+        endReached={loadMoreItems}
+        style={{ height: "400px" }}
+      /> */}
+      {/* <InfiniteScroll
         dataLength={alarmList.length}
         next={() => {
           if (totalAlertPage === null || page <= totalAlertPage) {
@@ -73,7 +103,7 @@ function ActiveAlramList({ isModalOpen, handleAlarmButtonClick }: AlarmModalProp
           length={alarmList.length}
           setAlarmList={setAlarmList}
         />
-      </InfiniteScroll>
+      </InfiniteScroll> */}
     </AlarmModal>
   );
 }

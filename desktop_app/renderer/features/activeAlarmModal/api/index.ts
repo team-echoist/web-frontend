@@ -4,6 +4,7 @@ import { pageType, Alert, AlarmListResponse } from "@/shared/types";
 interface AlarmListResult {
   alerts: Alert[];
   totalPage: number;
+  total:number;
 }
 
 export const getAlramList = async ({
@@ -19,10 +20,10 @@ export const getAlramList = async ({
       params,
     });
 
-    return { alerts: data?.alerts || [], totalPage: data?.totalPage || 0 };
+    return { alerts: data?.alerts || [], totalPage: data?.totalPage || 0 ,total:data?.total};
   } catch (err) {
     console.log("Err", err);
-    return { alerts: [], totalPage: 0 };
+    return { alerts: [], totalPage: 0 ,total:0};
   }
 };
 export const updateReadStatus = async (
