@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState,useRef } from "react";
 import { Tab } from "@/shared/ui/tab";
 import Card from "./Card";
 import styled from "styled-components";
@@ -58,6 +58,8 @@ function List({
   const [storyList, setStoryList] = useState<storyType[]>([]);
   const [listCount, setListCount] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
@@ -127,7 +129,6 @@ function List({
       toastHandler("에세이 삭제에 실패했습니다.", true);
     }
   };
-
   return (
     <>
       <Tab
@@ -140,10 +141,11 @@ function List({
         <NoneData>저장된 글이 없습니다.</NoneData>
       ) : null}
       {/* 추후 스토리 로직 세팅후 활성화 */}
-      <ContentsContainer>
-        {activeTab !== 2 ? (
+      <ContentsContainer ref={contentRef} >
+        {activeTab !== 2&&listData.length > 0 ? (
           <Virtuoso
-            style={{ height: "705px", width: "100%" }}
+            key={activeTab}
+            style={{ height: "700px", width: "100%" }} 
             data={listData}
             endReached={loadMore}
             itemContent={(index, item) => (
@@ -155,7 +157,7 @@ function List({
               />
             )}
           />
-        ) : (
+        ): activeTab === 2? (
           <StoryList
             handleStoryModal={handleStoryModal}
             storyList={storyList}
@@ -165,7 +167,7 @@ function List({
             toastHandler={toastHandler}
             setIsSuccess={setIsSuccess}
           />
-        )}
+        ):null}
       </ContentsContainer>
     </>
   );
