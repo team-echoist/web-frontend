@@ -81,12 +81,6 @@ function ActiveAlramList({
       ) : (
         <NoneAlarm />
       )}
-      {/* <Virtuoso
-        data={alarmList}
-        itemContent={(index, alert) => <RenderAlarm list={[alert]} />}
-        endReached={loadMoreItems}
-        style={{ height: "400px" }}
-      /> */}
       {/* <InfiniteScroll
         dataLength={alarmList.length}
         next={() => {
