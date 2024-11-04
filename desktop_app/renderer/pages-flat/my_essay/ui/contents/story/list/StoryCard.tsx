@@ -66,24 +66,24 @@ function StoryCard({
   setStoryId,
   deleteStoryInfo,
   setStoredStoryName,
-  setIsSuccess
+  setIsSuccess,
 }: {
   story: storyType;
   handleStoryModal: (id?: number) => void;
   setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
   deleteStoryInfo: (id: number) => void;
-  setStoredStoryName:React.Dispatch<React.SetStateAction<string>>;
+  setStoredStoryName: React.Dispatch<React.SetStateAction<string>>;
   setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(!isModalOpen);
   };
-  const navigateDetails = () =>{
+  const navigateDetails = () => {
     setIsSuccess(true);
     setStoryId(story.id);
     handleStoryModal();
-  }
+  };
   return (
     <Layout>
       <SummaryDiv onClick={navigateDetails}>
@@ -96,7 +96,7 @@ function StoryCard({
         <SpotMenuIcon />
         {isModalOpen && (
           <BlackMiniModal
-            isAbsolute={true}
+            isabsolute={true}
             top="30px"
             right="10px"
             isNoneActiveOutside={true}

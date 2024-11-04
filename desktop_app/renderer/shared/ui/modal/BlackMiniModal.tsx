@@ -6,13 +6,13 @@ import PlusBtn from "@/shared/assets/img/button/plus_button.svg";
 import PlusDisableBtn from "@/shared/assets/img/button/plus_disable_button.svg";
 import color from "@/shared/styles/color";
 
-const Layout = styled.div<{ isAbsolute: boolean; top: string; right: string }>`
+const Layout = styled.div<{ isabsolute: boolean; top: string; right: string }>`
   width: 180px;
   border-radius: 10px;
   background: #0e0e0e;
   box-shadow: 0.1px 0.1px 6px -2px rgba(255, 255, 255, 0.05);
   padding: 12px 5px;
-  position: ${({ isAbsolute }) => (isAbsolute ? "absolute" : "fixed")};
+  position: ${({ isabsolute }) => (isabsolute ? "absolute" : "fixed")};
   top: ${({ top }) => top};
   right: ${({ right }) => right};
   z-index: 2;
@@ -44,7 +44,7 @@ function BlackMiniModal({
   scale,
   children,
   onClose,
-  isAbsolute = false,
+  isabsolute = false,
   top = "69px",
   right = "30px",
   isNoneActiveOutside = false,
@@ -54,7 +54,7 @@ function BlackMiniModal({
   scale?: number;
   children: React.ReactNode;
   onClose?: () => void;
-  isAbsolute?: boolean;
+  isabsolute?: boolean;
   top?: string;
   right?: string;
   isNoneActiveOutside?: boolean;
@@ -92,7 +92,7 @@ function BlackMiniModal({
     return status === "minus" ? minusBtn : plusBtn;
   };
   return (
-    <Layout ref={modalRef} isAbsolute={isAbsolute} top={top} right={right}>
+    <Layout ref={modalRef} isabsolute={isabsolute} top={top} right={right}>
       {scale && (
         <ScaleAdjustDiv>
           {scaleBtnController("minus")}

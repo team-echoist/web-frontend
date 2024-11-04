@@ -92,14 +92,14 @@ const ModalItem = styled.button<{ isDelete: boolean; isLast?: boolean }>`
   padding: 12px 5px;
   display: flex;
   justify-content: space-between;
-  width:100%;
+  width: 100%;
   color: ${({ isDelete }) => (isDelete ? "red" : color.white)};
   align-items: center;
   border-bottom: ${({ isLast }) => (isLast ? "none" : "1px solid #1a1a1a")};
   cursor: pointer;
   span {
     width: 100px;
-    margin-left:5px;
+    margin-left: 5px;
   }
 `;
 const IconDiv = styled.div`
@@ -152,7 +152,7 @@ function Card({
           <SpotIconDiv onClick={(e) => onCloseModal(e)}>
             {isModalOpen && (
               <BlackMiniModal
-                isAbsolute={true}
+                isabsolute={true}
                 top="30px"
                 right="10px"
                 isNoneActiveOutside={true}

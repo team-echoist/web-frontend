@@ -368,7 +368,7 @@ function AddStoryModal({
               {title} <CountText>{essay.length}편</CountText>
               <SpotMenuIconDiv>
                 <SpotMenuIcon
-                  class="menu"
+                  className="menu"
                   onClick={() => {
                     setIsMenuOpen(!isMenuOpen);
                   }}
