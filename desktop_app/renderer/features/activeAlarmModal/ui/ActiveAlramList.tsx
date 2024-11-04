@@ -32,32 +32,30 @@ function ActiveAlramList({
 }: AlarmModalProps) {
   const [alarmList, setAlarmList] = useState<any[]>([]);
   const [page, setPage] = useState(1);
-  const [totalAlertPage, setTotalAlertPage] = useState<number | null>(null);
-  const [isFetching, setIsFetching] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchData = async () => {
-    if (isFetching || (totalAlertPage && page > totalAlertPage)) return;
-    setIsFetching(true);
     try {
       const { alerts, totalPage } = await getAlramList({
         page: page,
         limit: 20,
       });
       setAlarmList((prev) => [...prev, ...alerts]);
-      setTotalAlertPage(totalPage);
+      if (page >= totalPage) {
+        setHasMore(false);
+      }
     } catch (error) {
       console.error("Failed to fetch data", error);
-    } 
+    }
   };
   useEffect(() => {
-    fetchData();
+    if (hasMore) {
+      fetchData();
+    }
   }, [page]);
 
   const loadMoreItems = () => {
-    if (totalAlertPage === null || page <= totalAlertPage) {
-      setPage((prev) => prev + 1);
-      setIsFetching
-    }
+    setPage((prev) => prev + 1);
   };
 
   return (
@@ -67,18 +65,19 @@ function ActiveAlramList({
     >
       {alarmList.length > 0 ? (
         <Virtuoso
-        style={{ height: "705px", width: "100%" }}
-        data={alarmList}
-        endReached={loadMoreItems}
-        itemContent={(index, item) => (
-          <AlarmList
-            key={index}
-            list={alarmList} setAlarmList={setAlarmList}
-          />
-        )}
-      />
-        // <AlarmList list={alarmList} setAlarmList={setAlarmList} />
+          style={{ height: "705px", width: "100%" }}
+          data={alarmList}
+          endReached={loadMoreItems}
+          itemContent={(index, item) => (
+            <AlarmList
+              key={index}
+              list={alarmList}
+              setAlarmList={setAlarmList}
+            />
+          )}
+        />
       ) : (
+        // <AlarmList list={alarmList} setAlarmList={setAlarmList} />
         <NoneAlarm />
       )}
       {/* <InfiniteScroll
