@@ -71,9 +71,14 @@ function StoryModal({
   isStoryIncluded: boolean;
   isStoryChecked: boolean;
   deleteInculudedStory: () => void;
-  addUpdateStory: () => void;
+  addUpdateStory: (storyId:number) => void;
   onClose: () => void;
 }) {
+  const handleAddUpdateStory =() =>{
+    let matchedStoryId = stories.filter((item) =>item.isIncluded ===true)[0]?.id;
+    addUpdateStory(matchedStoryId);
+  }
+
   return (
     <>
         <BackgroundContainer>
@@ -113,7 +118,7 @@ function StoryModal({
                 }
                 text="추가/변경"
                 scale="small"
-                onClick={addUpdateStory}
+                onClick={handleAddUpdateStory}
               />
             </BtnDiv>
           </BottomSheet>

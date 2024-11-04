@@ -86,3 +86,22 @@ export const deleteStory = async (storyId: number) => {
     return { status: 500 };
   }
 };
+
+export const deleteStoryIncludedEssay = async(essayId:number) =>{
+  try{
+    const { status } = await fetchData(`stories/essays/${essayId}`, "delete");
+    return { status: status };
+  }catch(err){
+    return {status:500}
+  }
+}
+
+
+export const addEssayforStory = async(storyId:number,essayId:number) =>{
+  try{
+    const { status } = await fetchData(`stories/${storyId}/essays/${essayId}`, "put");
+    return { status: status };
+  }catch(err){
+    return {status:500}
+  }
+}

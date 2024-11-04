@@ -13,6 +13,7 @@ import { ScrollTop } from "@/shared/ui/scroll";
 import { addEssayBookMark, deleteEssayBookMark } from "@/shared/api/essay";
 import { ColorToast } from "@/shared/ui/toast";
 import { useStore } from "@/shared/store";
+import { deleteStoryIncludedEssay,addEssayforStory } from "@/shared/api";
 
 const Container = styled.main<{ scale: number }>`
   width: 99vw;
@@ -114,7 +115,35 @@ function ShowEssayDetails({
       }, 3000);
     }
   };
+  const deleteInculudedStory = async () => {
+    // 스토리에서 삭제하는api 추후 스토리 만들고나서 구현해야됨
+    try {
+      if (essayId) {
+        const { status } = await deleteStoryIncludedEssay(essayId);
+        console.log(status);
 
+        if(status === 200){
+          alert("삭제성공");
+          getEssayData();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  const addUpdateStory = async (storyId:number) => {
+    try{
+      const {status} =await addEssayforStory(storyId,essayId);
+      if(status === 200){
+        alert("Success");
+        getEssayData();
+      }
+    }catch(err){
+      console.log(err);
+    }
+    
+  };
   return (
     <Container scale={scale}>
       <ScrollTop />
@@ -138,6 +167,8 @@ function ShowEssayDetails({
         essayId={essayId}
         includedStory={includedStory}
         userName={essay?.author?.nickname || "꾸르륵"}
+        deleteInculudedStory={deleteInculudedStory}
+        addUpdateStory={addUpdateStory}
       />
       <ArticleLayout>
         <Article

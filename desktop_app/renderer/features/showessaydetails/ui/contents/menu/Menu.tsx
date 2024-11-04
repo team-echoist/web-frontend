@@ -20,6 +20,7 @@ import StoryModal from "./StoryModal";
 import { useStore } from "@/shared/store";
 import ReportModal from "./ReportModal";
 import { reportEssay } from "@/shared/api/essay";
+import { deleteStoryIncludedEssay } from "@/shared/api";
 
 const MenuIconDiv = styled.div`
   position: fixed;
@@ -68,6 +69,8 @@ function Menu({
   essayId,
   includedStory,
   userName,
+  deleteInculudedStory,
+  addUpdateStory
 }: {
   handleZoomIn: () => void;
   handleZoomOut: () => void;
@@ -76,6 +79,8 @@ function Menu({
   essayId: number;
   includedStory: Story | null;
   userName: string;
+  deleteInculudedStory:() =>void;
+  addUpdateStory:(storyId:number) =>void;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMenuOpen = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -101,11 +106,9 @@ function Menu({
     }
   }, [includedStory]);
 
-  const deleteInculudedStory = async () => {
-    // 스토리에서 삭제하는api 추후 스토리 만들고나서 구현해야됨
-  };
 
-  const addUpdateStory = async () => {};
+
+
 
   const getStoryList = async () => {
     try {
@@ -163,11 +166,13 @@ function Menu({
       toastHandler(true);
     }
   };
-  const stroryModalHandler = () => {
+  const storyModalHandler = () => {
     setIsMenuOpen(false);
     if (stories.length === 0) {
       setShowToast(true);
       setToastText("아직 만들어진 스토리가 없습니다.");
+    } else {
+      setIsStoryModalOpen(!isStoryModalOpen);
     }
   };
   const reportModalHandler = () => {
@@ -177,7 +182,6 @@ function Menu({
   const handleAddStory = (id: number) => {
     setIsStoryChecked(!isStoryChecked);
     const hasIncludedStory = stories.some((story) => story.isIncluded);
-
     setStories((prevStories) =>
       prevStories.map((story) =>
         hasIncludedStory
@@ -212,20 +216,9 @@ function Menu({
       console.log("err", err);
     }
   };
-  const myEssayRenderer = () => {
+  const MyEssayRenderer = () => {
     return (
       <>
-        {stories.length > 0 && isStoryModalOpen ? (
-          <StoryModal
-            stories={stories}
-            handleAddStory={handleAddStory}
-            isStoryChecked={isStoryChecked}
-            isStoryIncluded={isStoryIncluded}
-            deleteInculudedStory={deleteInculudedStory}
-            addUpdateStory={addUpdateStory}
-            onClose={stroryModalHandler}
-          />
-        ) : null}
         <ModalItem isStory={false} onClick={navigateToEditor}>
           <span>수정</span>
           <IconDiv>
@@ -254,7 +247,7 @@ function Menu({
             <LinkedoutIcon />
           </IconDiv>
         </ModalItem>
-        <ModalItem isStory={true} onClick={stroryModalHandler}>
+        <ModalItem isStory={true} onClick={storyModalHandler}>
           <span>스토리 선택</span>
           <IconDiv>
             <CheckIcon />
@@ -302,6 +295,17 @@ function Menu({
   };
   return (
     <>
+      {stories.length > 0 && isStoryModalOpen ? (
+        <StoryModal
+          stories={stories}
+          handleAddStory={handleAddStory}
+          isStoryChecked={isStoryChecked}
+          isStoryIncluded={isStoryIncluded}
+          deleteInculudedStory={deleteInculudedStory}
+          addUpdateStory={addUpdateStory}
+          onClose={storyModalHandler}
+        />
+      ) : null}
       {isShowReport && (
         <ReportModal
           onClose={reportModalHandler}
@@ -331,7 +335,7 @@ function Menu({
           scale={scale}
           onClose={() => setIsMenuOpen(false)}
         >
-          {userName !== user?.nickname ? essayRenderer() : myEssayRenderer()}
+          {userName !== user?.nickname ? essayRenderer() : <MyEssayRenderer />}
         </BlackMiniModal>
       )}
       <MenuIconDiv onClick={(e) => handleMenuOpen(e)} id="not-include">
