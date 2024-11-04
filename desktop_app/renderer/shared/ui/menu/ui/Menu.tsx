@@ -169,13 +169,17 @@ function Menu() {
   const user = useStore((state) => state.user);
   const [userData, setUserData] = useState([]);
   const [selectedComponent, setSelectedComponent] =
-    useState<JSX.Element | null>(<DisplaySettings />);
+    useState<JSX.Element | null>(null);
+
+  const handleCloseComponent = () =>{
+    setSelectedComponent(null)
+  }
 
   const componentMapper = {
-    "화면 설정": <DisplaySettings />,
-    "환경 설정": <Preference />,
-    고객지원: <UserSurpport />,
-    "업데이트 기록": <UpdateHistory />,
+    "화면 설정": <DisplaySettings handleCloseComponent={handleCloseComponent}/>,
+    "환경 설정": <Preference handleCloseComponent={handleCloseComponent}/>,
+    고객지원: <UserSurpport handleCloseComponent={handleCloseComponent}/>,
+    "업데이트 기록": <UpdateHistory handleCloseComponent={handleCloseComponent}/>,
   } as const;
   const menuItems: Array<keyof typeof componentMapper> = [
     "화면 설정",
@@ -183,6 +187,7 @@ function Menu() {
     "고객지원",
     "업데이트 기록",
   ];
+
 
   useEffect(() => {
     fetchUserData();
