@@ -58,6 +58,7 @@ function List({
   const [listData, setListData] = useState<Essay[]>([]);
   const [storyList, setStoryList] = useState<storyType[]>([]);
   const [listCount, setListCount] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
@@ -68,13 +69,21 @@ function List({
     if (activeTab !== 2) {
       setListData([]);
       setListCount(0);
+      setHasMore(true);
       getList();
     } else {
       setListData([]);
       setListCount(0);
+      setHasMore(true);
       getStoryList();
     }
-  }, [activeTab,page]);
+  }, [activeTab]);
+  
+  useEffect(() => {
+    if (hasMore && activeTab !== 2) {
+      getList();
+    }
+  }, [page]);
 
   const getList = async () => {
     try {
@@ -84,9 +93,12 @@ function List({
       } as const;
       const pageType = tabInfo[activeTab];
       // pageType: private, public
-      const { data, total } = await getEssays(page, 5, pageType);
+      const { data, total, totalPage } = await getEssays(page, 5, pageType);
       setListData((prevData) => [...prevData, ...data]);
       setListCount(total);
+      if (page >= totalPage) {
+        setHasMore(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -116,7 +128,7 @@ function List({
       toastHandler("에세이 삭제에 실패했습니다.", true);
     }
   };
-  console.log("Test",page)
+
   return (
     <>
       <Tab
@@ -132,7 +144,7 @@ function List({
       <ContentsContainer>
         {activeTab !== 2 ? (
           <Virtuoso
-            style={{ height: "705px",width:"100%" }}
+            style={{ height: "705px", width: "100%" }}
             data={listData}
             endReached={loadMore}
             itemContent={(index, item) => (
