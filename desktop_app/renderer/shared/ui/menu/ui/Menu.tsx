@@ -12,6 +12,7 @@ import UpdateHistory from "./contents/UpdateHistory";
 import Preference from "./contents/Preference";
 import DisplaySettings from "./contents/DisplaySettings";
 import DefaultLayout from "./DefaultLayout";
+import { useRouter } from "next/navigation";
 
 const Layout = styled.nav`
   width: 376px;
@@ -168,6 +169,7 @@ function Menu() {
   const [userData, setUserData] = useState([]);
   const [selectedComponent, setSelectedComponent] =
     useState<JSX.Element | null>(<DisplaySettings />);
+
   const componentMapper = {
     "화면 설정": <DisplaySettings />,
     "환경 설정": <Preference />,
@@ -195,23 +197,31 @@ function Menu() {
   const navigateToComponent = (key: keyof typeof componentMapper) => {
     setSelectedComponent(componentMapper[key]);
   };
-  const now = new Date(); 
-  const year = now.getFullYear(); 
-  const month = String(now.getMonth() + 1).padStart(2, '0'); 
-  const day = String(now.getDate()).padStart(2, '0'); 
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
   return (
     <Layout>
       {selectedComponent && <DefaultLayout>{selectedComponent}</DefaultLayout>}
       <ProfileDiv>
         <ProfileItemDiv>
-          <CircularAvatar img={DefaultProfile.src} width={80} height={80} />
+          <CircularAvatar
+            img={user?.profileImage ? user?.profileImage : DefaultProfile.src}
+            width={80}
+            height={80}
+          />
           <ProfileHeaderText>
             <H1>
               <Strong>{user?.nickname}</Strong> 아무개
             </H1>
             <GreyText>43일째 링크드아웃!</GreyText>
           </ProfileHeaderText>
-          <RightArrow />
+          {/* <RightArrow
+            onClick={() => {
+              router.push("/web/mypage");
+            }}
+          /> */}
         </ProfileItemDiv>
       </ProfileDiv>
       <GraphDiv>
