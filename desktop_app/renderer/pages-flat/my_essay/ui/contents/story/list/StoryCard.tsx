@@ -44,16 +44,16 @@ const MenuIconDiv = styled.div`
   position: relative;
 `;
 
-const ModalItem = styled.button<{ isDelete: boolean; isLast?: boolean }>`
+const ModalItem = styled.button<{ isdelete: boolean; islast?: boolean }>`
   all: unset;
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  color: ${({ isDelete }) => (isDelete ? "red" : color.white)};
+  color: ${({ isdelete }) => (isdelete ? "red" : color.white)};
   align-items: center;
-  border-bottom: ${({ isLast }) => (isLast ? "none" : "1px solid #1a1a1a")};
+  border-bottom: ${({ islast }) => (islast ? "none" : "1px solid #1a1a1a")};
   cursor: pointer;
   span {
     width: 100px;
@@ -102,7 +102,7 @@ function StoryCard({
             isNoneActiveOutside={true}
           >
             <ModalItem
-              isDelete={false}
+              isdelete={false}
               onClick={() => {
                 setStoryId(story.id);
                 setStoredStoryName(story.name);
@@ -112,8 +112,8 @@ function StoryCard({
               스토리 편집
             </ModalItem>
             <ModalItem
-              isDelete={true}
-              isLast={true}
+              isdelete={true}
+              islast={true}
               onClick={() => deleteStoryInfo(story.id)}
             >
               스토리 삭제

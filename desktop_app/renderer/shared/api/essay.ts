@@ -122,9 +122,9 @@ export const getEssays = async (
     const { data } = await fetchData<EssayDataType>("essays", "get", null, {
       params,
     });
-    return { data: data.essays, totalPage: data.totalPage };
+    return { data: data.essays, totalPage: data.totalPage,total:data.total };
   } catch (err) {
-    return { data: [], totalPage: 1 };
+    return { data: [], totalPage: 1,total:0 };
   }
 };
 

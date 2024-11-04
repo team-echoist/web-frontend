@@ -87,15 +87,15 @@ const Chip = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const ModalItem = styled.button<{ isDelete: boolean; isLast?: boolean }>`
+const ModalItem = styled.button<{ isdelete: boolean; islast?: boolean }>`
   all: unset;
   padding: 12px 5px;
   display: flex;
   justify-content: space-between;
   width: 100%;
-  color: ${({ isDelete }) => (isDelete ? "red" : color.white)};
+  color: ${({ isdelete }) => (isdelete ? "red" : color.white)};
   align-items: center;
-  border-bottom: ${({ isLast }) => (isLast ? "none" : "1px solid #1a1a1a")};
+  border-bottom: ${({ islast }) => (islast ? "none" : "1px solid #1a1a1a")};
   cursor: pointer;
   span {
     width: 100px;
@@ -157,19 +157,19 @@ function Card({
                 right="10px"
                 isNoneActiveOutside={true}
               >
-                <ModalItem isDelete={false} onClick={navigateToEditor}>
+                <ModalItem isdelete={false} onClick={navigateToEditor}>
                   <span>수정</span>
                   <IconDiv>
                     <EditIcon />
                   </IconDiv>
                 </ModalItem>
                 <ModalItem
-                  isDelete={true}
+                  isdelete={true}
                   onClick={() => {
                     setIsModalOpen(false);
                     setIsDeleteModalOpen(!isDeleteModalOpen);
                   }}
-                  isLast={true}
+                  islast={true}
                 >
                   <span>삭제</span>
                   <IconDiv>

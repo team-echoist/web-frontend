@@ -30,7 +30,7 @@ const MenuIconDiv = styled.div`
 const ModalItem = styled.button<{
   isStory?: boolean;
   isRed?: boolean;
-  isLast?: boolean;
+  islast?: boolean;
 }>`
   all: unset;
   padding: 12px 20px;
@@ -39,7 +39,7 @@ const ModalItem = styled.button<{
   color: ${({ isStory, isRed }) =>
     isStory ? color.pointcolor : isRed ? color.red : color.white};
   align-items: center;
-  border-bottom: ${({ isLast }) => (isLast ? "none" : "1px solid #1a1a1a")};
+  border-bottom: ${({ islast }) => (islast ? "none" : "1px solid #1a1a1a")};
   cursor: pointer;
   span {
     width: 120px;
@@ -267,7 +267,7 @@ function Menu({
             setIsMenuOpen(false);
             setIsDeleteModalOpen(!isDeleteModalOpen);
           }}
-          isLast={true}
+          islast={true}
         >
           <span>삭제</span>
           <IconDiv>
@@ -289,7 +289,7 @@ function Menu({
               setIsShowReport(!isShowReport);
               setIsMenuOpen(false);
             }}
-            isLast={true}
+            islast={true}
           >
             <span>신고하기</span>
             <IconDiv>

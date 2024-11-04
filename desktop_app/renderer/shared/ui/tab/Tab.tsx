@@ -7,12 +7,12 @@ const TabContainer = styled.div`
   justify-content: center;
 `;
 
-const TabItem = styled.button<{ isActiveTab: boolean }>`
+const TabItem = styled.button<{ isactivetab: boolean }>`
   all: unset;
   width: 219px;
   height: 48px;
-  border-bottom: ${({ isActiveTab }) =>
-    isActiveTab ? `3px solid ${color.white}` : "none"};
+  border-bottom: ${({ isactivetab }) =>
+    isactivetab ? `3px solid ${color.white}` : "none"};
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -39,7 +39,7 @@ function Tab({
       {tabData.map((item, index) => (
         <TabItem
           key={item}
-          isActiveTab={activeTab === index}
+          isactivetab={activeTab === index}
           onClick={() => handleChangeActiveTab(index)}
         >
           {item}

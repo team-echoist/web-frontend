@@ -9,6 +9,7 @@ import { deleteEssay } from "@/features/showessaydetails/api";
 import { ColorToast } from "@/shared/ui/toast";
 import StoryList from "./story/list/StoryList";
 import { storyType } from "@/shared/types";
+import { Virtuoso } from "react-virtuoso";
 
 const ContentsContainer = styled.div`
   width: 100%;
@@ -43,12 +44,12 @@ function List({
   setStoryId,
   setStoredStoryName,
   toastHandler,
-  setIsSuccess
+  setIsSuccess,
 }: {
   handleStoryModal: () => void;
   setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
-  setStoredStoryName:React.Dispatch<React.SetStateAction<string>>;
-  toastHandler:(text:string,isError:boolean) =>void;
+  setStoredStoryName: React.Dispatch<React.SetStateAction<string>>;
+  toastHandler: (text: string, isError: boolean) => void;
   setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const tabData = ["나만의 글", "발행한 글", "스토리"];
@@ -60,6 +61,7 @@ function List({
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
+    setPage(1);
   };
 
   useLayoutEffect(() => {
@@ -72,7 +74,7 @@ function List({
       setListCount(0);
       getStoryList();
     }
-  }, [activeTab]);
+  }, [activeTab,page]);
 
   const getList = async () => {
     try {
@@ -82,12 +84,15 @@ function List({
       } as const;
       const pageType = tabInfo[activeTab];
       // pageType: private, public
-      const { data } = await getEssays(page, 5, pageType);
-      setListData(data);
-      setListCount(data.length);
+      const { data, total } = await getEssays(page, 5, pageType);
+      setListData((prevData) => [...prevData, ...data]);
+      setListCount(total);
     } catch (err) {
       console.log(err);
     }
+  };
+  const loadMore = () => {
+    setPage((prevPage) => prevPage + 1);
   };
   const getStoryList = async () => {
     try {
@@ -102,15 +107,16 @@ function List({
     try {
       const { status } = await deleteEssay(id);
       if (status === 200) {
-        toastHandler("에세이 삭제에 성공했습니다.",false);
+        toastHandler("에세이 삭제에 성공했습니다.", false);
         getList();
       } else {
-        toastHandler("에세이 삭제에 실패했습니다.",true);
+        toastHandler("에세이 삭제에 실패했습니다.", true);
       }
     } catch (err) {
-      toastHandler("에세이 삭제에 실패했습니다.",true);
+      toastHandler("에세이 삭제에 실패했습니다.", true);
     }
   };
+  console.log("Test",page)
   return (
     <>
       <Tab
@@ -124,16 +130,21 @@ function List({
       ) : null}
       {/* 추후 스토리 로직 세팅후 활성화 */}
       <ContentsContainer>
-        {activeTab !== 2 &&
-          listData.map((item) => (
-            <Card
-              key={item.title}
-              data={item}
-              type={activeTab === 0 ? "private" : "public"}
-              handleEssayDelete={handleEssayDelete}
-            />
-          ))}
-        {activeTab === 2 && (
+        {activeTab !== 2 ? (
+          <Virtuoso
+            style={{ height: "705px",width:"100%" }}
+            data={listData}
+            endReached={loadMore}
+            itemContent={(index, item) => (
+              <Card
+                key={item.title}
+                data={item}
+                type={activeTab === 0 ? "private" : "public"}
+                handleEssayDelete={handleEssayDelete}
+              />
+            )}
+          />
+        ) : (
           <StoryList
             handleStoryModal={handleStoryModal}
             storyList={storyList}
@@ -144,6 +155,41 @@ function List({
             setIsSuccess={setIsSuccess}
           />
         )}
+        {/* {
+          activeTab !== 2 && (
+            <Virtuoso
+              data={listData}
+              endReached={loadMore}
+              itemContent={(index, item) => (
+                <Card
+                  key={item.title}
+                  data={item}
+                  type={activeTab === 0 ? "private" : "public"}
+                  handleEssayDelete={handleEssayDelete}
+                />
+              )}
+            />
+          )
+          // listData.map((item) => (
+          //   <Card
+          //     key={item.title}
+          //     data={item}
+          //     type={activeTab === 0 ? "private" : "public"}
+          //     handleEssayDelete={handleEssayDelete}
+          //   />
+          // ))
+        }
+        {activeTab === 2 && (
+          <StoryList
+            handleStoryModal={handleStoryModal}
+            storyList={storyList}
+            setStoryId={setStoryId}
+            getStoryList={getStoryList}
+            setStoredStoryName={setStoredStoryName}
+            toastHandler={toastHandler}
+            setIsSuccess={setIsSuccess}
+          />
+        )} */}
       </ContentsContainer>
     </>
   );

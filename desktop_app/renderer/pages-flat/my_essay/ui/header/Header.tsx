@@ -20,11 +20,11 @@ const UserName = styled.h1`
   line-height: 150%;
   margin-left: 30px;
 `;
-const SearchIcon = styled.button<{ isExpanded: boolean }>`
+const SearchIcon = styled.button<{ isexpanded: boolean }>`
   all: unset;
   cursor: pointer;
   position: absolute;
-  left: ${({ isExpanded }) => (isExpanded ? "78%" : "90.78%")};
+  left: ${({ isexpanded }) => (isexpanded ? "78%" : "90.78%")};
   transition: left 0.3s ease;
   top: 37.63px;
 `;
@@ -50,7 +50,7 @@ const collapse = keyframes`
     opacity: 0;
   }
 `;
-const SearchInput = styled.input<{ isExpanded: boolean }>`
+const SearchInput = styled.input<{ isexpanded: boolean }>`
   all: unset;
   border-bottom: 1px solid ${color.white};
   font-size: 11px;
@@ -58,10 +58,10 @@ const SearchInput = styled.input<{ isExpanded: boolean }>`
   width: 140px;
   position: absolute;
   top: 37.63px;
-  left: ${({ isExpanded }) => (isExpanded ? "81%" : "100%")};
+  left: ${({ isexpanded }) => (isexpanded ? "81%" : "100%")};
   transition: left 0.3s ease;
-  ${({ isExpanded }) =>
-    isExpanded
+  ${({ isexpanded }) =>
+    isexpanded
       ? css`
           animation: ${expand} 0.3s forwards;
         `
@@ -80,11 +80,11 @@ function Header() {
     <Layout>
       <UserName>{user?.nickname} 님</UserName>
 
-      <SearchIcon isExpanded={isExpanded} onClick={handleButtonClick}>
+      <SearchIcon isexpanded={isExpanded} onClick={handleButtonClick}>
         <Search />
       </SearchIcon>
       <SearchInput
-        isExpanded={isExpanded}
+        isexpanded={isExpanded}
         placeholder="검색할 내용을 입력해주세요..."
       ></SearchInput>
     </Layout>

@@ -25,14 +25,14 @@ const StyledWriteButton = styled(WriteButtonSVG)`
   cursor: pointer;
 `;
 
-const ContentsContainer = styled.main<{ isModalOpen: boolean }>`
-  width: ${({ isModalOpen }) =>
-    isModalOpen ? "calc(100vw - 390px)" : "calc(100vw - 270px)"};
+const ContentsContainer = styled.main<{ ismodalopen: boolean }>`
+  width: ${({ ismodalopen }) =>
+    ismodalopen ? "calc(100vw - 390px)" : "calc(100vw - 270px)"};
   // min-height: 98vh;
   font-family: Arial, sans-serif;
   position: absolute;
   top: 32px;
-  left: ${({ isModalOpen }) => (isModalOpen ? "0" : "259px")};
+  left: ${({ ismodalopen }) => (ismodalopen ? "0" : "259px")};
   transition: width 0.3s ease;
   overflow-x: hidden;
   display: flex;
@@ -104,7 +104,7 @@ function MyEssay() {
               handleAlarmButtonClick={handleAlarmButtonClick}
             />
           )}
-          <ContentsContainer isModalOpen={isModalOpen}>
+          <ContentsContainer ismodalopen={isModalOpen}>
             <Header />
             {!isModalOpen && (
               <>
