@@ -8,7 +8,7 @@ const Layout =styled.div`
   left:636px;
   top:32px;
   background: #121212;
-  z-index:198;
+  z-index:600;
 `
 
 function DefaultLayout({ children }: { children: React.ReactNode }) {

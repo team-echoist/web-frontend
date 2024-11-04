@@ -3,7 +3,8 @@ import { SideBar } from "@/shared/ui/sidebar";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/shared/store";
 import { Menu } from "@/shared/ui/menu";
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
+
 
 interface IconMap {
   home: React.ReactElement;
@@ -29,9 +30,9 @@ function ActiveSidebar({ isModalOpen }: { isModalOpen?: boolean }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const trimmedPathname = pathname.replace(/\/$/, '');
+    const trimmedPathname = pathname.replace(/\/$/, "");
     setPath(trimmedPathname);
-  }, [pathname]); 
+  }, [pathname]);
 
   const focusedKey =
     (Object.keys(routerMapper) as Array<keyof IconMap>).find(
@@ -41,11 +42,11 @@ function ActiveSidebar({ isModalOpen }: { isModalOpen?: boolean }) {
   const handleIconClick = (key: keyof IconMap) => {
     setPath(routerMapper[key]);
     if (key !== "setting") {
-      setIsMenuOpen(false)
+      setIsMenuOpen(false);
       router.push(routerMapper[key]);
     } else {
       // 메뉴 관리 state 상태 변경
-      setIsMenuOpen(true)
+      setIsMenuOpen(true);
     }
   };
   if (isModalOpen) {
@@ -54,6 +55,7 @@ function ActiveSidebar({ isModalOpen }: { isModalOpen?: boolean }) {
   return (
     <>
       <SideBar focusedKey={focusedKey} onIconClick={handleIconClick} />
+
       {isMenuOpen && <Menu />}
     </>
   );

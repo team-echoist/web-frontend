@@ -13,6 +13,7 @@ import Preference from "./contents/Preference";
 import DisplaySettings from "./contents/DisplaySettings";
 import DefaultLayout from "./DefaultLayout";
 import { useRouter } from "next/navigation";
+import Background from "./Background";
 
 const Layout = styled.nav`
   width: 376px;
@@ -98,7 +99,7 @@ const SmallText = styled.p`
   font-weight: 500;
   // line-height: 150%;
   white-space: nowrap;
-  margin-left:20px;
+  margin-left: 20px;
 `;
 const GeneralText = styled.p`
   color: ${color.white};
@@ -171,15 +172,19 @@ function Menu() {
   const [selectedComponent, setSelectedComponent] =
     useState<JSX.Element | null>(null);
 
-  const handleCloseComponent = () =>{
-    setSelectedComponent(null)
-  }
+  const handleCloseComponent = () => {
+    setSelectedComponent(null);
+  };
 
   const componentMapper = {
-    "화면 설정": <DisplaySettings handleCloseComponent={handleCloseComponent}/>,
-    "환경 설정": <Preference handleCloseComponent={handleCloseComponent}/>,
-    고객지원: <UserSurpport handleCloseComponent={handleCloseComponent}/>,
-    "업데이트 기록": <UpdateHistory handleCloseComponent={handleCloseComponent}/>,
+    "화면 설정": (
+      <DisplaySettings handleCloseComponent={handleCloseComponent} />
+    ),
+    "환경 설정": <Preference handleCloseComponent={handleCloseComponent} />,
+    고객지원: <UserSurpport handleCloseComponent={handleCloseComponent} />,
+    "업데이트 기록": (
+      <UpdateHistory handleCloseComponent={handleCloseComponent} />
+    ),
   } as const;
   const menuItems: Array<keyof typeof componentMapper> = [
     "화면 설정",
@@ -187,7 +192,6 @@ function Menu() {
     "고객지원",
     "업데이트 기록",
   ];
-
 
   useEffect(() => {
     fetchUserData();
@@ -209,7 +213,11 @@ function Menu() {
   const day = String(now.getDate()).padStart(2, "0");
   return (
     <Layout>
-      {selectedComponent && <DefaultLayout>{selectedComponent}</DefaultLayout>}
+      {selectedComponent ? (
+        <DefaultLayout>{selectedComponent}</DefaultLayout>
+      ) : (
+        <Background />
+      )}
       <ProfileDiv>
         <ProfileItemDiv>
           <CircularAvatar
