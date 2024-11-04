@@ -70,7 +70,7 @@ function ActiveAlramList({
           itemContent={(index, item) => (
             <AlarmList
               key={index}
-              list={alarmList}
+              list={item}
               setAlarmList={setAlarmList}
             />
           )}
