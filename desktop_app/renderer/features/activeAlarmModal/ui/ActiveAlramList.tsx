@@ -4,7 +4,6 @@ import AlarmList from "./contents/alarmList";
 import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { getAlramList } from "../api";
 import { Alert } from "@/shared/types";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { Virtuoso } from "react-virtuoso";
 
 interface AlarmModalProps {
@@ -77,26 +76,8 @@ function ActiveAlramList({
           )}
         />
       ) : (
-        // <AlarmList list={alarmList} setAlarmList={setAlarmList} />
         <NoneAlarm />
       )}
-      {/* <InfiniteScroll
-        dataLength={alarmList.length}
-        next={() => {
-          if (totalAlertPage === null || page <= totalAlertPage) {
-            setPage((prev) => prev + 1);
-          }
-        }}
-        scrollableTarget="scrollableDiv"
-        hasMore={totalAlertPage === null || page <= totalAlertPage}
-        loader={null}
-      >
-        <RenderAlarm
-          list={alarmList}
-          length={alarmList.length}
-          setAlarmList={setAlarmList}
-        />
-      </InfiniteScroll> */}
     </AlarmModal>
   );
 }
