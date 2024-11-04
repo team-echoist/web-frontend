@@ -120,15 +120,28 @@ function ShowEssayDetails({
     try {
       if (essayId) {
         const { status } = await deleteStoryIncludedEssay(essayId);
-        console.log(status);
 
         if(status === 200){
-          alert("삭제성공");
+          setIsShowToast(true);
+          setToastText("스토리에서 제외 되었습니다.");
           getEssayData();
+        }else{
+          setIsShowToast(true);
+          setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+          setError(true);
+          setTimeout(() => {
+            setError(false);
+          }, 3000);
         }
       }
     } catch (err) {
       console.log(err);
+      setIsShowToast(true);
+      setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
     }
   };
   
@@ -136,11 +149,25 @@ function ShowEssayDetails({
     try{
       const {status} =await addEssayforStory(storyId,essayId);
       if(status === 200){
-        alert("Success");
+        setIsShowToast(true);
+        setToastText("스토리에 추가 되었습니다.");
         getEssayData();
+      }else{
+        setIsShowToast(true);
+        setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
       }
     }catch(err){
       console.log(err);
+      setIsShowToast(true);
+      setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
     }
     
   };

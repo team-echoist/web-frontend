@@ -304,6 +304,7 @@ function Menu({
           deleteInculudedStory={deleteInculudedStory}
           addUpdateStory={addUpdateStory}
           onClose={storyModalHandler}
+          setIsStoryModalOpen={setIsStoryModalOpen}
         />
       ) : null}
       {isShowReport && (
