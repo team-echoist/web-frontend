@@ -171,6 +171,7 @@ function Menu() {
   const [userData, setUserData] = useState([]);
   const [selectedComponent, setSelectedComponent] =
     useState<JSX.Element | null>(null);
+    const router =useRouter()
 
   const handleCloseComponent = () => {
     setSelectedComponent(null);
@@ -231,11 +232,11 @@ function Menu() {
             </H1>
             <GreyText>43일째 링크드아웃!</GreyText>
           </ProfileHeaderText>
-          {/* <RightArrow
+          <RightArrow
             onClick={() => {
               router.push("/web/mypage");
             }}
-          /> */}
+          />
         </ProfileItemDiv>
       </ProfileDiv>
       <GraphDiv>
