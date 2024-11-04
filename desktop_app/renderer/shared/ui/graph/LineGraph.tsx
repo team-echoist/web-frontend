@@ -32,7 +32,7 @@ function LineGraph({
         display: "flex",
         justifyContent: "center",
         paddingLeft: "20px",
-        paddingRight:"20px"
+        paddingRight: "20px",
       }}
       width={"90%"}
       height={height || 400}
@@ -52,11 +52,25 @@ function LineGraph({
               ? `${weekStartDate.getMonth() + 1}월`
               : "";
           }}
+          tick={{
+            fill: color.pointcolor,
+            fontFamily: "Pretendard",
+            fontSize: "12px",
+            fontStyle: "normal",
+            fontWeight: 400,
+          }}
           style={{ stroke: "none" }}
         />
         <YAxis hide={true} style={{ stroke: "none" }} />
         <Tooltip
-          contentStyle={{ backgroundColor: color.lightBlack,border:"none" }}
+          contentStyle={{
+            backgroundColor: color.lightBlack,
+            border: "none",
+            fontFamily: "Pretendard",
+            fontSize: "12px",
+            fontStyle: "normal",
+            fontWeight: 400,
+          }}
           labelFormatter={(date) =>
             `Week of ${new Date(date).toLocaleDateString()}`
           }
