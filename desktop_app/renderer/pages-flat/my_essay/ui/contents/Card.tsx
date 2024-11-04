@@ -89,7 +89,7 @@ const Chip = styled.div`
 `;
 const ModalItem = styled.button<{ isdelete: boolean; islast?: boolean }>`
   all: unset;
-  padding: 12px 5px;
+  padding: 12px 10px;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -106,7 +106,7 @@ const IconDiv = styled.div`
   width: 30px;
   display: flex;
   justify-content: center;
-  margin-right: 5px;
+  margin-right: 15px;
   svg {
     cursor: pointer;
   }
