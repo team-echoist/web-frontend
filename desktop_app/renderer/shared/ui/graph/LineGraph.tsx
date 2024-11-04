@@ -31,8 +31,10 @@ function LineGraph({
       style={{
         display: "flex",
         justifyContent: "center",
+        paddingLeft: "20px",
+        paddingRight:"20px"
       }}
-      width={width || "80%"}
+      width={"90%"}
       height={height || 400}
     >
       <LineChart data={data}>

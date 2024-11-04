@@ -98,6 +98,7 @@ const SmallText = styled.p`
   font-weight: 500;
   // line-height: 150%;
   white-space: nowrap;
+  margin-left:20px;
 `;
 const GeneralText = styled.p`
   color: ${color.white};
