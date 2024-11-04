@@ -167,7 +167,7 @@ function Menu() {
   const user = useStore((state) => state.user);
   const [userData, setUserData] = useState([]);
   const [selectedComponent, setSelectedComponent] =
-    useState<JSX.Element | null>(null);
+    useState<JSX.Element | null>(<DisplaySettings />);
   const componentMapper = {
     "화면 설정": <DisplaySettings />,
     "환경 설정": <Preference />,
