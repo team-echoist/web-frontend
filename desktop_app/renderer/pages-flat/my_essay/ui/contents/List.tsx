@@ -58,8 +58,7 @@ function List({
   const [storyList, setStoryList] = useState<storyType[]>([]);
   const [listCount, setListCount] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-
-  const contentRef = useRef<HTMLDivElement>(null);
+  const [totalPages, setTotalPages] = useState(1);
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
@@ -141,7 +140,7 @@ function List({
         <NoneData>저장된 글이 없습니다.</NoneData>
       ) : null}
       {/* 추후 스토리 로직 세팅후 활성화 */}
-      <ContentsContainer ref={contentRef} >
+      <ContentsContainer >
         {activeTab !== 2&&listData.length > 0 ? (
           <Virtuoso
             key={activeTab}

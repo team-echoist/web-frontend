@@ -87,6 +87,7 @@ const GreyText = styled.p`
   font-weight: 400;
   line-height: 150%;
   white-space: nowrap;
+  margin-right: 10px;
 `;
 const SmallText = styled.p`
   color: ${color.white};
@@ -112,9 +113,10 @@ const GraphDiv = styled.div`
 `;
 const GraphTitleDiv = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 88px;
-  padding-left: 30px;
-  padding-right: 30px;
+  // padding-left: 30px;
+  // padding-right: 30px;
   padding-top: 20px;
 `;
 const StoreDiv = styled.div`
@@ -180,19 +182,23 @@ function Menu() {
   ];
 
   useEffect(() => {
-    // fetchUserData();
+    fetchUserData();
   }, []);
-  // const fetchUserData = async () => {
-  //   try {
-  //     const { data } = await getUserSummary();
-  //     setUserData(data.weeklyEssayCounts);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const fetchUserData = async () => {
+    try {
+      const { data } = await getUserSummary();
+      setUserData(data.weeklyEssayCounts);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const navigateToComponent = (key: keyof typeof componentMapper) => {
     setSelectedComponent(componentMapper[key]);
   };
+  const now = new Date(); 
+  const year = now.getFullYear(); 
+  const month = String(now.getMonth() + 1).padStart(2, '0'); 
+  const day = String(now.getDate()).padStart(2, '0'); 
   return (
     <Layout>
       {selectedComponent && <DefaultLayout>{selectedComponent}</DefaultLayout>}
@@ -211,14 +217,14 @@ function Menu() {
       <GraphDiv>
         <GraphTitleDiv>
           <SmallText>주간 링크드아웃 지수</SmallText>
-          <GreyText>2024년 5월 28일 현재</GreyText>
+          <GreyText>{`${year}년 ${month}월 ${day}일 현재`}</GreyText>
         </GraphTitleDiv>
-        {/* <LineGraph
+        <LineGraph
           data={userData}
-          dataKey="summary"
-          xAxisKey="count"
+          dataKey="count"
+          xAxisKey="weekStart"
           height={160}
-        ></LineGraph> */}
+        ></LineGraph>
       </GraphDiv>
       <StoreDiv>
         <GeneralText>상점</GeneralText>
