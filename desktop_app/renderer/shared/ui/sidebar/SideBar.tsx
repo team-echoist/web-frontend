@@ -50,7 +50,7 @@ const Layout = styled.nav`
   z-index: 200;
   border-right: 0.75px solid #191919;
   background: #121212;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 32px;
   padding: 29.25px 22.5px;

@@ -10,7 +10,7 @@ const Layout = styled.div`
 const TitleDiv = styled.div`
   width: 100%;
   height: 102px;
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
 `;
@@ -31,15 +31,14 @@ const P = styled.p`
   line-height: 170%;
 `;
 const ContentDiv = styled.div`
-  margin-top:20px;
-   width: 100%;
- height:300px;
-`
-const TitleTextDiv = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  height: 300px;
 `;
-const SelectBoxDiv =styled.div`
-  margin-right:30px;
-`
+const TitleTextDiv = styled.div``;
+const SelectBoxDiv = styled.div`
+  margin-right: 30px;
+`;
 const options = [
   { value: "first", label: "첫 문장" },
   { value: "last", label: "마지막 문장" },
@@ -67,13 +66,12 @@ function Banner() {
           <P>글의 시작을 알리는 문장들을 만나보세요.</P>
         </TitleTextDiv>
         <SelectBoxDiv>
-        <SelectBox
-          options={options}
-          selectedValue={selectedValue}
-          onChange={(value) => setSelectedValue(value)}
-        />
+          <SelectBox
+            options={options}
+            selectedValue={selectedValue}
+            onChange={(value) => setSelectedValue(value)}
+          />
         </SelectBoxDiv>
-
       </TitleDiv>
       <ContentDiv></ContentDiv>
     </Layout>

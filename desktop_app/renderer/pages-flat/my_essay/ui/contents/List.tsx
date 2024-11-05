@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState,useRef } from "react";
+import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { Tab } from "@/shared/ui/tab";
 import Card from "./Card";
 import styled from "styled-components";
@@ -70,17 +70,15 @@ function List({
       setListData([]);
       setListCount(0);
       setHasMore(true);
+      setPage(1);
       getList();
     } else {
-      setListData([]);
-      setListCount(0);
-      setHasMore(true);
       getStoryList();
     }
   }, [activeTab]);
 
   useEffect(() => {
-    if (hasMore && activeTab !== 2) {
+    if (page > 1 && hasMore && activeTab !== 2) {
       getList();
     }
   }, [page]);
@@ -94,7 +92,6 @@ function List({
       const pageType = tabInfo[activeTab];
       // pageType: private, public
       const { data, total, totalPage } = await getEssays(page, 5, pageType);
-      console.log(data,page)
       setListData((prevData) => [...prevData, ...data]);
       setListCount(total);
       if (page >= totalPage) {
@@ -121,7 +118,7 @@ function List({
       const { status } = await deleteEssay(id);
       if (status === 200) {
         toastHandler("에세이 삭제에 성공했습니다.", false);
-        setListData([])
+        setListData([]);
         setListCount(0);
         setHasMore(true);
         getList();
@@ -144,11 +141,11 @@ function List({
         <NoneData>저장된 글이 없습니다.</NoneData>
       ) : null}
       {/* 추후 스토리 로직 세팅후 활성화 */}
-      <ContentsContainer >
-        {activeTab !== 2&&listData.length > 0 ? (
+      <ContentsContainer>
+        {activeTab !== 2 && listData.length > 0 ? (
           <Virtuoso
             key={activeTab}
-            style={{ height: "700px", width: "100%" }} 
+            style={{ height: "700px", width: "100%" }}
             data={listData}
             endReached={loadMore}
             itemContent={(index, item) => (
@@ -160,7 +157,7 @@ function List({
               />
             )}
           />
-        ): activeTab === 2? (
+        ) : activeTab === 2 ? (
           <StoryList
             handleStoryModal={handleStoryModal}
             storyList={storyList}
@@ -170,7 +167,7 @@ function List({
             toastHandler={toastHandler}
             setIsSuccess={setIsSuccess}
           />
-        ):null}
+        ) : null}
       </ContentsContainer>
     </>
   );

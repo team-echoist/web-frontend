@@ -10,16 +10,18 @@ const Layout = styled.main`
   width: 100vw;
   min-height: 90vh;
   overflow-y: auto;
+  display:flex;
+  flex-direction: column;
 `;
 const BannerContainer = styled.div`
   width: calc(100vw - 270px);
   height: 646px;
   flex-shrink: 0;
   background: #d9d9d9;
-  position: fixed;
+  position: absolute;
   top: 32px;
   left: 265px;
-  display:flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
 `;
@@ -30,9 +32,9 @@ function community() {
       <ActiveSideBar></ActiveSideBar>
       <BannerContainer>
         <Header />
-        <Banner/>
+        <Banner />
       </BannerContainer>
-      <EssayList></EssayList>
+      <EssayList />
     </Layout>
   );
 }
