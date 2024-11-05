@@ -12,7 +12,7 @@ import { postStory } from "@/shared/api";
 import { BlackMiniModal } from "@/shared/ui/modal";
 import { putStory } from "@/shared/api";
 import { deleteStory } from "@/shared/api";
-import { getUserEssays } from "@/shared/api";
+import { getUserEssays,getStoryDetails } from "@/shared/api";
 
 const Layout = styled.article`
   display: flex;
@@ -280,13 +280,13 @@ function AddStoryModal({
         setTitle(storedStoryName);
         setEssay([...updatedData]);
       } else if (selectedStoryId && isSuccess) {
-        const { data, title } = await getStoryEssayList(selectedStoryId);
-        setTitle(title);
-        const updatedData = data.filter(
-          (item: any) => item.story === selectedStoryId
-        );
-        setEssay([...updatedData]);
-        setStoredStoryName(title);
+        await getStoryDetails(selectedStoryId);
+        // setTitle(title);
+        // const updatedData = data.filter(
+        //   (item: any) => item.story === selectedStoryId
+        // );
+        // setEssay([...updatedData]);
+        // setStoredStoryName(title);
       }
     } catch (Err) {
       console.log(Err);

@@ -15,6 +15,18 @@ export const getStories = async () => {
     return { data: [] };
   }
 };
+export const getStoryDetails = async (storyId: number) => {
+  try {
+    const params = {
+      pageType: "story",
+      storyId: storyId,
+    };
+    const { data } = await fetchData("essays", "get", null, { params });
+    console.log(data);
+  } catch (err) {
+    return { data: [] };
+  }
+};
 
 export const getStoryEssayList = async (storyId?: number) => {
   try {
@@ -24,6 +36,7 @@ export const getStoryEssayList = async (storyId?: number) => {
     const { data } = await fetchData<any>("stories/related", "get", null, {
       params,
     });
+    console.log(data)
     return {
       data: data.essays,
       title: data.currentStoryName ? data.currentStoryName : "",
@@ -87,21 +100,23 @@ export const deleteStory = async (storyId: number) => {
   }
 };
 
-export const deleteStoryIncludedEssay = async(essayId:number) =>{
-  try{
+export const deleteStoryIncludedEssay = async (essayId: number) => {
+  try {
     const { status } = await fetchData(`stories/essays/${essayId}`, "delete");
     return { status: status };
-  }catch(err){
-    return {status:500}
+  } catch (err) {
+    return { status: 500 };
   }
-}
+};
 
-
-export const addEssayforStory = async(storyId:number,essayId:number) =>{
-  try{
-    const { status } = await fetchData(`stories/${storyId}/essays/${essayId}`, "put");
+export const addEssayforStory = async (storyId: number, essayId: number) => {
+  try {
+    const { status } = await fetchData(
+      `stories/${storyId}/essays/${essayId}`,
+      "put"
+    );
     return { status: status };
-  }catch(err){
-    return {status:500}
+  } catch (err) {
+    return { status: 500 };
   }
-}
+};
