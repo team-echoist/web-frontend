@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { timeAgo } from "@/shared/lib/date";
 import Image from "next/image";
+import LinkedoutIcon from "@/shared/assets/img/linkedout_icon.svg" 
 
 const Layout = styled.div`
   width: 100%;
@@ -25,6 +26,9 @@ const H1 = styled.h1`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+  display: flex;
+  align-items: center;
+  gap:10px;
 `;
 
 const Time = styled.time`
@@ -67,7 +71,8 @@ function PostCard({
   desc,
   time,
   imgUrl,
-  onClick
+  onClick,
+  linkedout=false
 }: {
   writer: string;
   title: string;
@@ -75,6 +80,7 @@ function PostCard({
   time: string;
   imgUrl?: string;
   onClick?:()=>void;
+  linkedout?:boolean;
 }) {
   return (
     <Layout onClick={onClick}>
@@ -84,7 +90,7 @@ function PostCard({
         </ImageDiv>
       )}
       <TitleDiv>
-        <H1>{title}</H1>
+        <H1>{linkedout&&<LinkedoutIcon/>} {title}</H1>
         <Time>{timeAgo(time)}</Time>
       </TitleDiv>
       <Desc isImageUrl={imgUrl ? true : false}>
