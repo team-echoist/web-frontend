@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { ScrollTop } from "@/shared/ui/scroll";
 import Header from "./header/Header";
 import Banner from "./banner/Banner";
+import EssayList from "./contents/EssayList";
 
 const Layout = styled.main`
   width: 100vw;
@@ -31,6 +32,7 @@ function community() {
         <Header />
         <Banner/>
       </BannerContainer>
+      <EssayList></EssayList>
     </Layout>
   );
 }
