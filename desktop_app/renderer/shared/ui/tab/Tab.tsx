@@ -7,12 +7,21 @@ const TabContainer = styled.div`
   justify-content: center;
 `;
 
-const TabItem = styled.button<{ isactivetab: boolean }>`
+const TabItem = styled.button<{
+  isactivetab: boolean;
+  isblack: boolean;
+  width: string;
+}>`
   all: unset;
-  width: 219px;
+  width: ${({ width }) => (width ? width : "219px")};
   height: 48px;
-  border-bottom: ${({ isactivetab }) =>
-    isactivetab ? `3px solid ${color.white}` : "none"};
+  color: ${({ isblack }) => (isblack ? "#252525" : color.white)};
+  border-bottom: ${({ isactivetab, isblack }) =>
+    isactivetab && isblack
+      ? `3px solid #252525`
+      : isactivetab && !isblack
+      ? `3px solid ${color.white}`
+      : "none"};
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -28,11 +37,15 @@ function Tab({
   activeTab,
   handleChangeActiveTab,
   listCount,
+  isBlack = false,
+  width = "219px",
 }: {
   tabData: string[];
   activeTab: number;
   handleChangeActiveTab: (index: number) => void;
-  listCount: number;
+  listCount?: number;
+  isBlack?: boolean;
+  width?: string;
 }) {
   return (
     <TabContainer>
@@ -40,6 +53,8 @@ function Tab({
         <TabItem
           key={item}
           isactivetab={activeTab === index}
+          isblack={isBlack}
+          width={width}
           onClick={() => handleChangeActiveTab(index)}
         >
           {item}

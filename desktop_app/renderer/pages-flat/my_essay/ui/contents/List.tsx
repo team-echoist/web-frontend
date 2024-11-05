@@ -58,7 +58,7 @@ function List({
   const [storyList, setStoryList] = useState<storyType[]>([]);
   const [listCount, setListCount] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [totalPages, setTotalPages] = useState(1);
+
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);

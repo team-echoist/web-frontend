@@ -19,7 +19,7 @@ const Title = styled.h1`
   font-style: normal;
   font-weight: 700;
   line-height: 150%;
-  margin-left: 30px;
+  // margin-left: 30px;
   margin-top: 34px;
 `;
 const SearchIcon = styled.button<{ isexpanded: boolean }>`
