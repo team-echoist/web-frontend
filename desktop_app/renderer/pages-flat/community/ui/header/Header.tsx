@@ -26,7 +26,7 @@ const SearchIcon = styled.button<{ isexpanded: boolean }>`
   all: unset;
   cursor: pointer;
   position: absolute;
-  left: ${({ isexpanded }) => (isexpanded ? "78%" : "90.78%")};
+  left: 89%;
   transition: left 0.3s ease;
   top: 37.63px;
 `;
@@ -71,11 +71,11 @@ const SearchInput = styled.input<{ isexpanded: boolean }>`
           animation: ${collapse} 0.3s forwards;
         `}
 `;
-const BookMarkBtn = styled.button`
+const BookMarkBtn = styled.button<{ isexpanded: boolean }>`
   all: unset;
   cursor: pointer;
   position: absolute;
-  right:20px;
+  left: 93%;
   top: 40px;
 `;
 function Header() {
@@ -89,11 +89,11 @@ function Header() {
       <SearchIcon isexpanded={isExpanded} onClick={handleButtonClick}>
         <Search />
       </SearchIcon>
-      <SearchInput
+      {/* <SearchInput
         isexpanded={isExpanded}
         placeholder="검색할 내용을 입력해주세요..."
-      />
-      <BookMarkBtn>
+      /> */}
+      <BookMarkBtn isexpanded={isExpanded}>
         <BlackBookMark />
       </BookMarkBtn>
     </Layout>

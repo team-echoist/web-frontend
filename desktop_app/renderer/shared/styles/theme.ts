@@ -10,7 +10,7 @@ export const lightTheme: DefaultTheme = {
   
   export const darkTheme: DefaultTheme = {
     colors: {
-      background: '#121212',
+      background: ' #0E0E0E',
       text: '#ffffff',
     },
   };
