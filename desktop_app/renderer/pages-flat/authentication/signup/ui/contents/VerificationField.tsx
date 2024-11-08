@@ -31,6 +31,7 @@ const H1 = styled.h1`
   line-height: 150%;
   padding-left: 31px;
   padding-top: 10px;
+  margin-top:32px;
 `;
 const P = styled.p`
   color: ${color.white};
@@ -161,9 +162,9 @@ function VerificationField({ onRetry }: { onRetry: (type?: string) => void }) {
   };
   return (
     <>
-      <RectangleDiv>
+      {/* <RectangleDiv>
         <Rectangle />
-      </RectangleDiv>
+      </RectangleDiv> */}
       <H1>인증번호 입력하기</H1>
       <P>이메일로 인증번호 6자리를 보내드렸어요.</P>
       <InputDiv>
