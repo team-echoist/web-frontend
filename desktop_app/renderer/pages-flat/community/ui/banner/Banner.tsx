@@ -73,7 +73,6 @@ const Chip = styled.div<{
     if (expanded) {
       return translateX;
     }
-    return `translateX(${index * 20}px)`;
   }};
   z-index: ${({ expanded, index }) => (expanded ? 1 : 10 - index)};
   position: absolute;
