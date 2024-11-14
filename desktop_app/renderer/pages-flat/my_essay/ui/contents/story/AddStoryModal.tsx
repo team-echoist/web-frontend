@@ -279,8 +279,9 @@ function AddStoryModal({
         setTitle(storedStoryName);
         setEssay([...updatedData]);
       } else if (selectedStoryId && isSuccess) {
-        const { data } = await getStoryDetails(selectedStoryId);
+        const { data,currentStoryName } = await getStoryDetails(selectedStoryId);
         setEssay(data);
+        setTitle(currentStoryName);
       }
     } catch (Err) {
       console.log(Err);

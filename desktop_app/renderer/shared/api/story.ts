@@ -22,7 +22,10 @@ export const getStoryDetails = async (storyId: number) => {
       storyId: storyId,
     };
     const { data } = await fetchData<any>("essays", "get", null, { params });
-    return { data: data?.essays ||[]};
+    return {
+      data: data?.essays || [],
+      currentStoryName: data.currentStoryName,
+    };
   } catch (err) {
     return { data: [] };
   }
