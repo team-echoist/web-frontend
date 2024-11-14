@@ -35,30 +35,50 @@ const ContentDiv = styled.div`
   margin-top: 20px;
   width: 100%;
   height: 300px;
+  overflow: hidden;
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  position: relative;
 `;
 const TitleTextDiv = styled.div``;
 const SelectBoxDiv = styled.div`
   margin-right: 30px;
 `;
-const Chip = styled.div<{ color?: string; expanded?: boolean; width: string }>`
-  background-color: ${({ color = colorList.black }) => color};
+const Chip = styled.div<{
+  color?: string;
+  expanded?: boolean;
+  width: string;
+  index: number;
+  isVisible: boolean;
+  left: string;
+  translateX: string;
+}>`
+  background-color: ${({ color = "black" }) => color};
   cursor: pointer;
   display: inline-flex;
   height: 60px;
   padding: 8px 20px;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 10px;
-  flex-shrink: 0;
   font-family: Pretendard;
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
   line-height: 170%;
   border-radius: 0px 50px 50px 0px;
-  width: ${({ expanded, width }) => (expanded ? "95%" : width)};
-  transition: width 0.5s ease;
+  visibility: ${({ isVisible }) => (isVisible ? "visible" : "hidden")};
+  width: ${({ expanded, width, index }) =>
+    expanded ? (index === 0 ? "820px" : "calc(820px - 40px)") : width};
+  transition: width 0.5s ease, transform 0.5s ease;
+  transform: ${({ expanded, index, translateX }) => {
+    if (expanded) {
+      return translateX;
+    }
+    return `translateX(${index * 20}px)`;
+  }};
+  z-index: ${({ expanded, index }) => (expanded ? 1 : 10 - index)};
+  position: absolute;
+  top: 0;
+  left: ${({ left }) => left};
 `;
 const Span = styled.span<{ color?: string }>`
   width: 80%;
@@ -70,6 +90,15 @@ const Span = styled.span<{ color?: string }>`
   text-overflow: ellipsis;
   color: ${({ color = colorList.white }) => color};
 `;
+const ContentItemDiv = styled.div`
+  width: 100%;
+  height: 80px;
+  display: flex;
+`;
+const ChipContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
 const options = [
   { value: "first", label: "첫 문장" },
   { value: "last", label: "마지막 문장" },
@@ -78,15 +107,43 @@ function Banner() {
   const tab = ["랜덤", "구독"];
   const [selectedValue, setSelectedValue] = useState<string>(options[0].label);
   const [activeTab, setActiveTab] = useState(0);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedChipIndex, setExpandedChipIndex] = useState<number | null>(
+    null
+  );
 
-  const handleClick = () => {
-    setIsExpanded((prev) => !prev);
+  const handleClick = (index: number) => {
+    setExpandedChipIndex((prevIndex) => (prevIndex === index ? null : index));
   };
-
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
   };
+
+  const chipsData = [
+    {
+      text: "이원영은 초파리를 좋아했다.",
+      color: colorList.black,
+      textColor: colorList.white,
+      width: "180px",
+      left: "0px",
+      translateX: "translateX(0)",
+    },
+    {
+      text: "빗소리가 커서 괜찮지 않냐고 물었지만 사실 너무 커서 무서웠다.",
+      color: colorList.white,
+      textColor: colorList.black,
+      width: "400px",
+      left: "-200px",
+      translateX: "translateX(-10%)",
+    },
+    {
+      text: "빗소리가 커서 괜찮지 않냐고 물었지만 사실 너무 커서 무서웠다.",
+      color: colorList.black,
+      textColor: colorList.white,
+      width: "417px",
+      left: "-100px",
+      translateX: "translateX(-60%)",
+    },
+  ];
   return (
     <Layout>
       <Tab
@@ -110,28 +167,26 @@ function Banner() {
         </SelectBoxDiv>
       </TitleDiv>
       <ContentDiv>
-        <Chip expanded={isExpanded} onClick={handleClick} width="150px">
-          <Span color={colorList.white}>이원영은 초파리를 좋아했다.</Span>
-        </Chip>
-        <Chip
-          expanded={isExpanded}
-          onClick={handleClick}
-          width="150px"
-          color={colorList.white}
-        >
-          <Span color={colorList.black}>
-            빗소리가 커서 괜찮지 않냐고 물었지만 사실 너무 커서 무서웠다.
-          </Span>
-        </Chip>
-        <Chip
-          expanded={isExpanded}
-          onClick={handleClick}
-          width="150px"
-        >
-          <Span color={colorList.white}>
-            빗소리가 커서 괜찮지 않냐고 물었지만 사실 너무 커서 무서웠다.
-          </Span>
-        </Chip>
+        <ContentItemDiv>
+          {chipsData.map((chip, index) => (
+            <ChipContainer key={index}>
+              <Chip
+                expanded={expandedChipIndex === index}
+                onClick={() => handleClick(index)}
+                width={chip.width}
+                color={chip.color}
+                index={index}
+                isVisible={
+                  expandedChipIndex === null || expandedChipIndex === index
+                }
+                left={chip.left}
+                translateX={chip.translateX}
+              >
+                <Span color={chip.textColor}>{chip.text}</Span>
+              </Chip>
+            </ChipContainer>
+          ))}
+        </ContentItemDiv>
       </ContentDiv>
     </Layout>
   );
