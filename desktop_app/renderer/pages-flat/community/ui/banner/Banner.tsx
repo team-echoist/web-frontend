@@ -52,7 +52,7 @@ const Chip = styled.div<{
   left: string;
   translateX: string;
 }>`
-  background-color: ${({ color = "black" }) => color};
+  background-color: ${({ color = colorList.black }) => color};
   cursor: pointer;
   display: inline-flex;
   height: 60px;
@@ -67,7 +67,7 @@ const Chip = styled.div<{
   border-radius: 0px 50px 50px 0px;
   visibility: ${({ isVisible }) => (isVisible ? "visible" : "hidden")};
   width: ${({ expanded, width, index }) =>
-    expanded ? (index === 0 ? "820px" : "calc(820px - 40px)") : width};
+    expanded ? (index === 0 ? "822px" : "calc(820px - 40px)") : width};
   transition: width 0.5s ease, transform 0.5s ease;
   transform: ${({ expanded, index, translateX }) => {
     if (expanded) {
