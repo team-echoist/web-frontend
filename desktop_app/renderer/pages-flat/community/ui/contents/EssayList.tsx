@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
-import { Article } from "@/shared/ui/article";
-import { getEssays } from "@/shared/api";
 import { Essay } from "@/shared/types";
 import { PostCard } from "@/shared/ui/card";
 import { useRouter } from "next/navigation";
@@ -41,7 +39,6 @@ const P = styled.p`
   line-height: 170%;
 `;
 const TitleDiv = styled.div`
-  margin-bottom: 20px;
 `;
 
 function EssayList() {
@@ -58,13 +55,12 @@ function EssayList() {
       console.log(Err);
     }
   };
-  const navigateToEssay = (id?: number) => {
+  const navigateToEssay = (id?: number,status?:string) => {
     const essayId = id || 0;
     if (essayId) {
-      router.push(`/web/essay_details?id=${essayId}&pageType=public`);
+      router.push(`/web/essay_details?id=${essayId}&pageType=${status}`);
     }
   };
-
   return (
     <Layout>
       <Wrapper>
@@ -81,7 +77,7 @@ function EssayList() {
             time={item.createdDate}
             imgUrl={item.thumbnail}
             linkedout={item.status === "linkedout"}
-            onClick={() => navigateToEssay(item.id)}
+            onClick={() => navigateToEssay(item.id,item.status)}
           ></PostCard>
         ))}
       </Wrapper>
