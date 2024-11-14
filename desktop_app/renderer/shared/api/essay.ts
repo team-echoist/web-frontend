@@ -146,3 +146,22 @@ export const getUserEssays = async (storyId: number) => {
     return { data: [] };
   }
 };
+
+export const getRandomEssays = async (limit?:number) => {
+  try {
+    const params = {
+      limit: limit,
+    };
+    const { data } = await fetchData<any>(
+      "essays/recommend",
+      "get",
+      null,
+      {
+        params,
+      }
+    );
+    return { data: data.essays };
+  } catch (err) {
+    return { data: [] };
+  }
+};

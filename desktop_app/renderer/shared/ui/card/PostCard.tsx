@@ -11,6 +11,7 @@ const Layout = styled.div`
   flex-direction: column;
   position: relative;
   cursor: pointer;
+  margin-top:10px;
 `;
 
 const TitleDiv = styled.div`
@@ -41,7 +42,7 @@ const Time = styled.time`
   line-height: 170%;
 `;
 const Desc = styled.p<{ isImageUrl: boolean }>`
-  width: ${({ isImageUrl }) => (isImageUrl ? "85%" : "100%")};
+  width: ${({ isImageUrl }) => (isImageUrl ? "80%" : "100%")};
   margin-top: 10px;
 `;
 const Writer = styled.span`

@@ -6,6 +6,7 @@ import { getEssays } from "@/shared/api";
 import { Essay } from "@/shared/types";
 import { PostCard } from "@/shared/ui/card";
 import { useRouter } from "next/navigation";
+import { getRandomEssays } from "@/shared/api";
 
 const Layout = styled.article`
   width: calc(100vw - 270px);
@@ -51,9 +52,8 @@ function EssayList() {
   }, []);
   const getEssayList = async () => {
     try {
-      const { data, totalPage, total } = await getEssays(1, 10, "public");
+      const { data } = await getRandomEssays( 10);
       setList(data);
-      console.log(data);
     } catch (Err) {
       console.log(Err);
     }
