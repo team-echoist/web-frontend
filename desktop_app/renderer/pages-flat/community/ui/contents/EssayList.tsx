@@ -16,6 +16,7 @@ const Layout = styled.article`
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding-bottom: 80px;
 `;
 const Wrapper = styled.div`
   width: 861px;
