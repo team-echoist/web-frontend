@@ -21,8 +21,8 @@ export const getStoryDetails = async (storyId: number) => {
       pageType: "story",
       storyId: storyId,
     };
-    const { data } = await fetchData("essays", "get", null, { params });
-    console.log(data);
+    const { data } = await fetchData<any>("essays", "get", null, { params });
+    return { data: data?.essays ||[]};
   } catch (err) {
     return { data: [] };
   }
@@ -36,7 +36,7 @@ export const getStoryEssayList = async (storyId?: number) => {
     const { data } = await fetchData<any>("stories/related", "get", null, {
       params,
     });
-    console.log(data)
+    console.log(data);
     return {
       data: data.essays,
       title: data.currentStoryName ? data.currentStoryName : "",

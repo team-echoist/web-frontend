@@ -12,7 +12,7 @@ import { postStory } from "@/shared/api";
 import { BlackMiniModal } from "@/shared/ui/modal";
 import { putStory } from "@/shared/api";
 import { deleteStory } from "@/shared/api";
-import { getUserEssays,getStoryDetails } from "@/shared/api";
+import { getUserEssays, getStoryDetails } from "@/shared/api";
 
 const Layout = styled.article`
   display: flex;
@@ -268,7 +268,6 @@ function AddStoryModal({
       console.log(err);
     }
   };
-
   const updateEssayList = async () => {
     try {
       if (selectedStoryId && !isSuccess) {
@@ -280,13 +279,8 @@ function AddStoryModal({
         setTitle(storedStoryName);
         setEssay([...updatedData]);
       } else if (selectedStoryId && isSuccess) {
-        await getStoryDetails(selectedStoryId);
-        // setTitle(title);
-        // const updatedData = data.filter(
-        //   (item: any) => item.story === selectedStoryId
-        // );
-        // setEssay([...updatedData]);
-        // setStoredStoryName(title);
+        const { data } = await getStoryDetails(selectedStoryId);
+        setEssay(data);
       }
     } catch (Err) {
       console.log(Err);
@@ -391,6 +385,7 @@ function AddStoryModal({
           onClick={() => {
             handleStoryModal();
             setStoryId(null);
+            setIsSuccess(false);
           }}
         >
           <PrevButtonImg />
