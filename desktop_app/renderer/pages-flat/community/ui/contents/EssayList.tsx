@@ -11,12 +11,11 @@ import { getRandomEssays } from "@/shared/api";
 const Layout = styled.article`
   width: calc(100vw - 270px);
   position: absolute;
-  top: 678px;
+  top: 726px;
   left: 265px;
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 80px;
 `;
 const Wrapper = styled.div`
   width: 861px;

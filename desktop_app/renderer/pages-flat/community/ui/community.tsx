@@ -15,7 +15,7 @@ const Layout = styled.main`
 `;
 const BannerContainer = styled.div`
   width: calc(100vw - 270px);
-  height: 646px;
+  height: 706px;
   flex-shrink: 0;
   background: #d9d9d9;
   position: absolute;
