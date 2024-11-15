@@ -45,7 +45,7 @@ const focusIcon: IconMap = {
 
 const Layout = styled.nav`
   width: 214px;
-  height: 90vh;
+  height: 100vh;
   flex-shrink: 0;
   z-index: 200;
   border-right: 0.75px solid #191919;
