@@ -117,7 +117,7 @@ function TitleField({
             placeholder="제목을 입력해 주세요"
             onChange={(e) => setTitle(e.target.value)}
             isTextCenter={true}
-            maxLength={39}
+            maxLength={30}
           />
         )}
       </TitleDiv>
