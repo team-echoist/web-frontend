@@ -65,8 +65,8 @@ function EssayList() {
     <Layout>
       <Wrapper>
         <TitleDiv>
-          <H1>오늘의 글</H1>
-          <P>오늘 쓰여진 다양하고 솔직한 글들을 읽어보세요.</P>
+          <H1>랜덤 글</H1>
+          <P>수많은 유저들의 진솔하고 다양한 경험을 만나보세요.</P>
         </TitleDiv>
         {list.map((item) => (
           <PostCard
