@@ -29,7 +29,7 @@ export const getAlramList = async ({
 export const updateReadStatus = async (
   id: number,
   list: Alert[],
-  setAlarmList: React.Dispatch<React.SetStateAction<Alert[]>>
+  setAlarmList: React.Dispatch<React.SetStateAction<any>>
 ) => {
   try {
     const alertToUpdate = list.find(alert => alert.id === id);
