@@ -36,7 +36,8 @@ const EditorContainer = styled.div<{ isBottomFieldVisible: boolean }>`
   .ql-editor {
     flex-grow: 1;
     overflow-y: auto;
-  }
+  }'
+  border:3px solid red;
 `;
 interface BottomValue {
   active: "tag" | "location";
