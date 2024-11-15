@@ -207,7 +207,7 @@ function ShowEssayDetails({
           handleBookmarkClick={handleBookmarkClick}
           isBookMark={isBookMark}
           isShowBookmark={
-            pageType === "public" && user?.nickname !== essay?.author?.nickname
+            pageType === "published" && user?.nickname !== essay?.author?.nickname
               ? true
               : false
           }
@@ -222,7 +222,7 @@ function ShowEssayDetails({
           })}
         </TagDiv>
       </ArticleLayout>
-      {pageType === "public" && (
+      {pageType === "published" && (
         <UserProfile
           userName={essay?.author?.nickname || "꾸르륵"}
           profileImage={TempThumbnail.src}
