@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 const Layout = styled.div`
   width: 862px;
   padding-top: 51px;
+
 `;
 const TitleDiv = styled.div`
   width: 100%;
@@ -17,6 +18,7 @@ const TitleDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top:40px;
 `;
 const H1 = styled.h1`
   color: #262626;
@@ -122,9 +124,7 @@ const options = [
   { value: "last", label: "마지막 문장" },
 ];
 function Banner() {
-  const tab = ["랜덤", "구독"];
   const [selectedValue, setSelectedValue] = useState<string>(options[0].label);
-  const [activeTab, setActiveTab] = useState(0);
   const [sentence, setSentence] = useState<any>([]);
   const [expandedChipIndices, setExpandedChipIndices] = useState<{
     [key: number]: number | null;
@@ -169,9 +169,7 @@ function Banner() {
       return newIndices;
     });
   };
-  const handleChangeActiveTab = (index: number) => {
-    setActiveTab(index);
-  };
+
 
   const navigateToDetails = (id: number, status: string) => {
     router.push(`/web/essay_details?id=${id}&pageType=${status}`);
@@ -179,13 +177,6 @@ function Banner() {
 
   return (
     <Layout>
-      <Tab
-        tabData={tab}
-        activeTab={activeTab}
-        handleChangeActiveTab={handleChangeActiveTab}
-        isBlack={true}
-        width="431px"
-      />
       <TitleDiv>
         <TitleTextDiv>
           <H1>한 문장을 모아</H1>

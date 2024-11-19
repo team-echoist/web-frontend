@@ -28,7 +28,7 @@ export const parseDataToChips = (data:any) => {
       ["300px", "400px", "417px"],
       ["228px", "340px", "417px"],
       ["326px", "400px", "417px"],
-      ["445px", "400px", "417px"],
+      ["400px", "400px", "417px"],
     ];
   
     const colors = [colorList.black, colorList.white];
