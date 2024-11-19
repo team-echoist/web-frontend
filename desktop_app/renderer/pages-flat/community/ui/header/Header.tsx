@@ -4,7 +4,7 @@ import Search from "@/shared/assets/img/search_black.svg";
 import BlackBookMark from "@/shared/assets/img/black_bookmark.svg";
 import WhiteSearch from "@/shared/assets/img/search.svg";
 import color from "@/shared/styles/color";
-import PointedBookMark from "@/shared/assets/img/bookmark/pointedBookMark.svg"
+import PointedBookMark from "@/shared/assets/img/bookmark/pointedBookMark.svg";
 
 const Layout = styled.header`
   width: 90%;
@@ -40,18 +40,19 @@ const BookMarkBtn = styled.button<{ isexpanded: boolean }>`
   top: 40px;
 `;
 function Header({ activeTab }: { activeTab: number }) {
+  const isBlack = activeTab === 0 ? false : true;
   const [isExpanded, setIsExpanded] = useState(false);
   const handleButtonClick = () => {
     setIsExpanded((prev) => !prev);
   };
   return (
     <Layout>
-      <Title isblack={activeTab === 0 ? false : true}>커뮤니티</Title>
+      <Title isblack={isBlack}>커뮤니티</Title>
       <SearchIcon isexpanded={isExpanded} onClick={handleButtonClick}>
-        {activeTab === 0 ? <Search /> : <WhiteSearch />}
+        {isBlack ? <WhiteSearch /> : <Search />}
       </SearchIcon>
       <BookMarkBtn isexpanded={isExpanded}>
-        {activeTab === 0 ? <BlackBookMark />: <PointedBookMark />}
+        {isBlack ? <PointedBookMark /> : <BlackBookMark />}
       </BookMarkBtn>
     </Layout>
   );
