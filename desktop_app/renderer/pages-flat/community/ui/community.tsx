@@ -8,10 +8,11 @@ import EssayList from "./contents/EssayList";
 
 const Layout = styled.main`
   width: 100vw;
-  min-height: 90vh;
+  // max-height: 90vh;
   overflow-y: auto;
   display:flex;
   flex-direction: column;
+  border:3px solid red;
 `;
 const BannerContainer = styled.div`
   width: calc(100vw - 270px);

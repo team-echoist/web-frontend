@@ -31,12 +31,7 @@ const NoneData = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const ToastContainer = styled.div`
-  position: fixed;
-  bottom: 135px;
-  left: 43%;
-  z-index: 50;
-`;
+
 
 function List({
   handleStoryModal,
@@ -58,7 +53,6 @@ function List({
   const [storyList, setStoryList] = useState<storyType[]>([]);
   const [listCount, setListCount] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);

@@ -5,6 +5,7 @@ import { Essay } from "@/shared/types";
 import { PostCard } from "@/shared/ui/card";
 import { useRouter } from "next/navigation";
 import { getRandomEssays } from "@/shared/api";
+import { Virtuoso } from "react-virtuoso";
 
 const Layout = styled.article`
   width: calc(100vw - 270px);
@@ -16,9 +17,8 @@ const Layout = styled.article`
   flex-direction: column;
 `;
 const Wrapper = styled.div`
-  width: 861px;
+  width: 80%;
   margin-top: 26px;
-  height: 60vh;
 `;
 const H1 = styled.h1`
   color: ${color.pointcolor};
@@ -38,28 +38,38 @@ const P = styled.p`
   font-weight: 400;
   line-height: 170%;
 `;
-const TitleDiv = styled.div`
+const TitleDiv = styled.div``;
+const ContentsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 50px;
+  margin-top: 19px;
 `;
-
 function EssayList() {
   const [list, setList] = useState<Essay[]>([]);
   const router = useRouter();
   useEffect(() => {
     getEssayList();
   }, []);
+
   const getEssayList = async () => {
     try {
-      const { data } = await getRandomEssays( 10);
-      setList(data);
+      const { data } = await getRandomEssays(10);
+      setList((prevData) => [...prevData, ...data]);
     } catch (Err) {
       console.log(Err);
     }
   };
-  const navigateToEssay = (id?: number,status?:string) => {
+  const navigateToEssay = (id?: number, status?: string) => {
     const essayId = id || 0;
     if (essayId) {
       router.push(`/web/essay_details?id=${essayId}&pageType=${status}`);
     }
+  };
+  const loadMore = () => {
+    getEssayList();
   };
   return (
     <Layout>
@@ -68,18 +78,25 @@ function EssayList() {
           <H1>랜덤 글</H1>
           <P>수많은 유저들의 진솔하고 다양한 경험을 만나보세요.</P>
         </TitleDiv>
-        {list.map((item) => (
-          <PostCard
-            key={item.id}
-            writer={item.author.nickname}
-            title={item.title}
-            desc={item.content}
-            time={item.createdDate}
-            imgUrl={item.thumbnail}
-            linkedout={item.status === "linkedout"}
-            onClick={() => navigateToEssay(item.id,item.status)}
-          ></PostCard>
-        ))}
+        <ContentsContainer>
+          <Virtuoso
+            style={{ height: "700px", width: "100%" }}
+            data={list}
+            endReached={loadMore}
+            itemContent={(_, item) => (
+              <PostCard
+                key={item.id}
+                writer={item.author.nickname}
+                title={item.title}
+                desc={item.content}
+                time={item.createdDate}
+                imgUrl={item.thumbnail}
+                linkedout={item.status === "linkedout"}
+                onClick={() => navigateToEssay(item.id, item.status)}
+              />
+            )}
+          />
+        </ContentsContainer>
       </Wrapper>
     </Layout>
   );

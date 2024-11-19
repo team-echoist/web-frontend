@@ -122,9 +122,9 @@ export const getEssays = async (
     const { data } = await fetchData<EssayDataType>("essays", "get", null, {
       params,
     });
-    return { data: data.essays, totalPage: data.totalPage,total:data.total };
+    return { data: data.essays, totalPage: data.totalPage, total: data.total };
   } catch (err) {
-    return { data: [], totalPage: 1,total:0 };
+    return { data: [], totalPage: 1, total: 0 };
   }
 };
 
@@ -141,25 +141,35 @@ export const getUserEssays = async (storyId: number) => {
         params,
       }
     );
-    return {data:data}
+    return { data: data };
   } catch (err) {
     return { data: [] };
   }
 };
 
-export const getRandomEssays = async (limit?:number) => {
+export const getRandomEssays = async (limit?: number) => {
   try {
     const params = {
       limit: limit,
     };
-    const { data } = await fetchData<any>(
-      "essays/recommend",
-      "get",
-      null,
-      {
-        params,
-      }
-    );
+    const { data } = await fetchData<any>("essays/recommend", "get", null, {
+      params,
+    });
+    return { data: data.essays };
+  } catch (err) {
+    return { data: [] };
+  }
+};
+
+export const getSentence = async (type: string) => {
+  try {
+    const params = {
+      type: type,
+      limit:15
+    };
+    const { data } = await fetchData<any>("essays/sentence", "get", null, {
+      params,
+    });
     return { data: data.essays };
   } catch (err) {
     return { data: [] };
