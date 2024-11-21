@@ -13,7 +13,8 @@ import { ScrollTop } from "@/shared/ui/scroll";
 import { addEssayBookMark, deleteEssayBookMark } from "@/shared/api/essay";
 import { ColorToast } from "@/shared/ui/toast";
 import { useStore } from "@/shared/store";
-import { deleteStoryIncludedEssay,addEssayforStory } from "@/shared/api";
+import { deleteStoryIncludedEssay, addEssayforStory } from "@/shared/api";
+import { postFollows } from "@/shared/api";
 
 const Container = styled.main<{ scale: number }>`
   width: 99vw;
@@ -121,11 +122,11 @@ function ShowEssayDetails({
       if (essayId) {
         const { status } = await deleteStoryIncludedEssay(essayId);
 
-        if(status === 200){
+        if (status === 200) {
           setIsShowToast(true);
           setToastText("스토리에서 제외 되었습니다.");
           getEssayData();
-        }else{
+        } else {
           setIsShowToast(true);
           setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
           setError(true);
@@ -144,15 +145,15 @@ function ShowEssayDetails({
       }, 3000);
     }
   };
-  
-  const addUpdateStory = async (storyId:number) => {
-    try{
-      const {status} =await addEssayforStory(storyId,essayId);
-      if(status === 200){
+
+  const addUpdateStory = async (storyId: number) => {
+    try {
+      const { status } = await addEssayforStory(storyId, essayId);
+      if (status === 200) {
         setIsShowToast(true);
         setToastText("스토리에 추가 되었습니다.");
         getEssayData();
-      }else{
+      } else {
         setIsShowToast(true);
         setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
         setError(true);
@@ -160,7 +161,7 @@ function ShowEssayDetails({
           setError(false);
         }, 3000);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
       setIsShowToast(true);
       setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
@@ -169,12 +170,31 @@ function ShowEssayDetails({
         setError(false);
       }, 3000);
     }
-    
+  };
+  console.log("essay", essay);
+  const submitFollows = async () => {
+    try {
+      if (essay) {
+        const { status } = await postFollows(essay.id);
+        if (status === 201 || status === 200) {
+          setIsShowToast(true);
+          setToastText("구독 추가 되었습니다.");
+        }
+      }
+    } catch (err) {
+      console.log("err", err);
+      setIsShowToast(true);
+      setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+    }
   };
   return (
     <Container scale={scale}>
       <ScrollTop />
-      <PrevButton path="/web/main"/>
+      <PrevButton path="/web/main" />
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -207,7 +227,8 @@ function ShowEssayDetails({
           handleBookmarkClick={handleBookmarkClick}
           isBookMark={isBookMark}
           isShowBookmark={
-            pageType === "published" && user?.nickname !== essay?.author?.nickname
+            pageType === "published" &&
+            user?.nickname !== essay?.author?.nickname
               ? true
               : false
           }
@@ -226,14 +247,11 @@ function ShowEssayDetails({
         <UserProfile
           userName={essay?.author?.nickname || "꾸르륵"}
           profileImage={TempThumbnail.src}
+          submitFollows={submitFollows}
         />
       )}
       <Divider />
-      <Contents
-        pageType={pageType}
-        storyId={storyId}
-        essayId={essayId}
-      />
+      <Contents pageType={pageType} storyId={storyId} essayId={essayId} />
     </Container>
   );
 }

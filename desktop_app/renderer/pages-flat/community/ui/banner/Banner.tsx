@@ -9,8 +9,6 @@ import { useRouter } from "next/navigation";
 
 const Layout = styled.div`
   width: 862px;
-  padding-top: 51px;
-
 `;
 const TitleDiv = styled.div`
   width: 100%;
@@ -18,7 +16,7 @@ const TitleDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top:40px;
+  // margin-top:40px;
 `;
 const H1 = styled.h1`
   color: #262626;

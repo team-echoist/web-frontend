@@ -7,19 +7,18 @@ import Banner from "./banner/Banner";
 import EssayList from "./contents/EssayList";
 import { Tab } from "@/shared/ui/tab";
 import FollowList from "./banner/FollowList";
-import color from "@/shared/styles/color";
+
 
 const Layout = styled.main`
   width: 100vw;
-  // max-height: 90vh;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  border: 3px solid red;
 `;
-const BannerContainer = styled.div<{ activeTab: number }>`
+const Container = styled.div<{ activeTab: number }>`
   width: calc(100vw - 270px);
-  height: 696px;
+  height: ${({ activeTab }) => (activeTab === 1 ? "" : "696px")};
   flex-shrink: 0;
   background: ${({ activeTab }) => (activeTab === 1 ? "none" : "#d9d9d9")};
   position: absolute;
@@ -30,9 +29,9 @@ const BannerContainer = styled.div<{ activeTab: number }>`
   align-items: center;
 `;
 const TabContainer = styled.div`
-  position: absolute;
-  top: 103px;
+  margin-top: 10px;
 `;
+
 function community() {
   const tab = ["랜덤", "구독"];
   const [activeTab, setActiveTab] = useState(0);
@@ -55,9 +54,9 @@ function community() {
   return (
     <Layout>
       <ScrollTop bottom="131px" />
-      <ActiveSideBar></ActiveSideBar>
-      <BannerContainer activeTab={activeTab}>
-        <Header  activeTab={activeTab}/>
+      <ActiveSideBar />
+      <Container activeTab={activeTab}>
+        <Header activeTab={activeTab} />
         <TabContainer>
           <Tab
             tabData={tab}
@@ -68,8 +67,9 @@ function community() {
           />
         </TabContainer>
         {renderBanner({ activeTab })}
-      </BannerContainer>
-      <EssayList />
+        <EssayList isRandomEssay={activeTab === 0}/>
+      </Container>
+
     </Layout>
   );
 }

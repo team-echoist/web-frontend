@@ -4,6 +4,7 @@ import DefaultProfileImg from "@/shared/assets/img/default_profile.webp";
 import Image from "next/image";
 import color from "@/shared/styles/color";
 import { useStore } from "@/shared/store";
+import { getFollows } from "@/shared/api";
 
 const Layout = styled.div`
   width: 80%;
@@ -85,9 +86,11 @@ function splitByKeyword(str: string, keyword: string) {
 function UserProfile({
   userName,
   profileImage,
+  submitFollows
 }: {
   userName: string;
   profileImage: string;
+  submitFollows:()=>void;
 }) {
   const [splitedUserName, setSplitedUserName] = useState<string[]>([]);
   const user = useStore((state) => state.user);
@@ -95,7 +98,26 @@ function UserProfile({
   useEffect(() => {
     const splitedStringArr = splitByKeyword(userName, "아무개");
     setSplitedUserName(splitedStringArr);
+    fetchFollows();
   }, [userName]);
+
+  const fetchFollows = async () => {
+    try {
+      const { data, status } = await getFollows();
+      console.log("data",data);
+      // 추후 구독 api 수정되면 바꾸기
+      if (status === 200) {
+        
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleFollows = async() =>{
+    // 구독 여부에 따라 분기처리
+    submitFollows();
+  }
 
   return (
     <Layout>
@@ -112,7 +134,7 @@ function UserProfile({
           {splitedUserName[0]} <Strong>아무개</Strong>
         </ProfileName>
       </ProfileDiv>
-      {user?.nickname !== userName && <SubscribeBtn>구독하기</SubscribeBtn>}
+      {user?.nickname !== userName && <SubscribeBtn onClick={handleFollows}>구독하기</SubscribeBtn>}
     </Layout>
   );
 }

@@ -6,12 +6,13 @@ import { PostCard } from "@/shared/ui/card";
 import { useRouter } from "next/navigation";
 import { getRandomEssays } from "@/shared/api";
 import { Virtuoso } from "react-virtuoso";
+import { getFollowingsEssay } from "@/shared/api";
 
 const Layout = styled.article`
   width: calc(100vw - 270px);
-  position: absolute;
-  top: 726px;
-  left: 265px;
+  // position: absolute;
+  // top: 726px;
+  // left: 265px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -47,12 +48,12 @@ const ContentsContainer = styled.div`
   padding-bottom: 50px;
   margin-top: 19px;
 `;
-function EssayList() {
+function EssayList({ isRandomEssay }: { isRandomEssay: boolean }) {
   const [list, setList] = useState<Essay[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(null);
+
   const router = useRouter();
-  useEffect(() => {
-    getEssayList();
-  }, []);
 
   const getEssayList = async () => {
     try {
@@ -62,22 +63,56 @@ function EssayList() {
       console.log(Err);
     }
   };
+  const fetchFollowingsEssay = async () => {
+    try {
+      setList([]);
+      const { data, totalPage, status } = await getFollowingsEssay(page);
+
+      if (status === 200) {
+        setList((prevData) => [...prevData, ...data]);
+        setTotalPage(totalPage);
+      }
+    } catch (Err) {
+      console.log(Err);
+    }
+  };
+  const loadMore = () => {
+    if (isRandomEssay) {
+      getEssayList();
+    } else {
+      if (totalPage && page >= totalPage) {
+        return;
+      }
+      setPage((prev) => prev + 1);
+    }
+  };
   const navigateToEssay = (id?: number, status?: string) => {
     const essayId = id || 0;
     if (essayId) {
       router.push(`/web/essay_details?id=${essayId}&pageType=${status}`);
     }
   };
-  const loadMore = () => {
-    getEssayList();
-  };
+  useEffect(() => {
+    if (isRandomEssay) {
+      getEssayList();
+    } else {
+      fetchFollowingsEssay();
+    }
+  }, [isRandomEssay]);
+
+  useEffect(() => {
+    fetchFollowingsEssay();
+  }, [page]);
+
   return (
     <Layout>
       <Wrapper>
-        <TitleDiv>
-          <H1>랜덤 글</H1>
-          <P>수많은 유저들의 진솔하고 다양한 경험을 만나보세요.</P>
-        </TitleDiv>
+        {isRandomEssay && (
+          <TitleDiv>
+            <H1>랜덤 글</H1>
+            <P>수많은 유저들의 진솔하고 다양한 경험을 만나보세요.</P>
+          </TitleDiv>
+        )}
         <ContentsContainer>
           <Virtuoso
             style={{ height: "700px", width: "100%" }}

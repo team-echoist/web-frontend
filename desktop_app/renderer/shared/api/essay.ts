@@ -165,7 +165,7 @@ export const getSentence = async (type: string) => {
   try {
     const params = {
       type: type,
-      limit:15
+      limit: 15,
     };
     const { data } = await fetchData<any>("essays/sentence", "get", null, {
       params,
@@ -173,5 +173,24 @@ export const getSentence = async (type: string) => {
     return { data: data.essays };
   } catch (err) {
     return { data: [] };
+  }
+};
+export const getFollowingsEssay = async (page: number) => {
+  try {
+    const params = {
+      page: page,
+      limit: 10,
+    };
+    const { data, status } = await fetchData<any>(
+      "essays/followings",
+      "get",
+      null,
+      {
+        params,
+      }
+    );
+    return { data:data.essays, totalPage: data.totalPage, status };
+  } catch (err) {
+    return { data: [], status: 500,totalPage:null };
   }
 };

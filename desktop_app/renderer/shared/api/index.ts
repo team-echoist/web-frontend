@@ -3,3 +3,4 @@ export * from "./getUserInfo";
 export * from "./essay";
 export * from "./story";
 export * from "./essay";
+export * from "./follow"
