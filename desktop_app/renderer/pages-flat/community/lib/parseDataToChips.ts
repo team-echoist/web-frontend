@@ -10,9 +10,9 @@ export const parseDataToChips = (data:any) => {
     const translateXVariants = [
       ["translateX(0)", "translateX(-12%)", "translateX(-60%)"],
       ["translateX(0)", "translateX(-29%)", "translateX(-68%)"],
+      ["translateX(0)", "translateX(-30%)", "translateX(-67%)"],
       ["translateX(0)", "translateX(-30%)", "translateX(-68%)"],
-      ["translateX(0)", "translateX(-30%)", "translateX(-68%)"],
-      ["translateX(0)", "translateX(-35%)", "translateX(-68%)"],
+      ["translateX(0)", "translateX(-35%)", "translateX(-67%)"],
     ];
   
     const leftVariants = [
@@ -28,7 +28,7 @@ export const parseDataToChips = (data:any) => {
       ["300px", "400px", "417px"],
       ["228px", "340px", "417px"],
       ["326px", "400px", "417px"],
-      ["400px", "400px", "417px"],
+      ["400px", "400px", "450px"],
     ];
   
     const colors = [colorList.black, colorList.white];

@@ -39,65 +39,36 @@ function List({
   setStoredStoryName,
   toastHandler,
   setIsSuccess,
+  activeTab,
+  listData,
+  setListData,
+  loadMore,
+  setListCount,
+  setHasMore,
+  getList
 }: {
   handleStoryModal: () => void;
   setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
   setStoredStoryName: React.Dispatch<React.SetStateAction<string>>;
   toastHandler: (text: string, isError: boolean) => void;
   setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  activeTab:number;
+  listData: Essay[],
+  setListData:React.Dispatch<React.SetStateAction<Essay[]>>,
+  loadMore:()=>void;
+  setListCount:React.Dispatch<React.SetStateAction<number>>;
+  setHasMore:React.Dispatch<React.SetStateAction<boolean>>;
+  getList: () => void;
 }) {
-  const tabData = ["나만의 글", "발행한 글", "스토리"];
-  const [activeTab, setActiveTab] = useState(0);
-  const [page, setPage] = useState(1);
-  const [listData, setListData] = useState<Essay[]>([]);
-  const [storyList, setStoryList] = useState<storyType[]>([]);
-  const [listCount, setListCount] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
 
-  const handleChangeActiveTab = (index: number) => {
-    setActiveTab(index);
-    setPage(1);
-  };
+  const [storyList, setStoryList] = useState<storyType[]>([]);
 
   useLayoutEffect(() => {
-    if (activeTab !== 2) {
-      setListData([]);
-      setListCount(0);
-      setHasMore(true);
-      setPage(1);
-      getList();
-    } else {
+    if (activeTab === 2) {
       getStoryList();
     }
   }, [activeTab]);
 
-  useEffect(() => {
-    if (page > 1 && hasMore && activeTab !== 2) {
-      getList();
-    }
-  }, [page]);
-
-  const getList = async () => {
-    try {
-      const tabInfo: { [key: number]: string } = {
-        0: "private",
-        1: "public",
-      } as const;
-      const pageType = tabInfo[activeTab];
-      // pageType: private, public
-      const { data, total, totalPage } = await getEssays(page, 5, pageType);
-      setListData((prevData) => [...prevData, ...data]);
-      setListCount(total);
-      if (page >= totalPage) {
-        setHasMore(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const loadMore = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
   const getStoryList = async () => {
     try {
       const { data } = await getStories();
@@ -125,12 +96,6 @@ function List({
   };
   return (
     <>
-      <Tab
-        tabData={tabData}
-        activeTab={activeTab}
-        handleChangeActiveTab={handleChangeActiveTab}
-        listCount={listCount}
-      />
       {listData.length === 0 && activeTab !== 2 ? (
         <NoneData>저장된 글이 없습니다.</NoneData>
       ) : null}

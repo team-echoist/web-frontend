@@ -87,6 +87,8 @@ const Span = styled.span<{ color?: string }>`
   height: 100%;
   display: flex;
   align-items: center;
+  position:absolute;
+  left:20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -116,6 +118,8 @@ const DetailBtn = styled.button`
   width: 100px;
   height: 45px;
   flex-shrink: 0;
+  position:absolute;
+  right:12px;
 `;
 const options = [
   { value: "first", label: "첫 문장" },

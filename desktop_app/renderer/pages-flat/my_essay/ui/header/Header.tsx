@@ -69,8 +69,10 @@ const SearchInput = styled.input<{ isexpanded: boolean }>`
           animation: ${collapse} 0.3s forwards;
         `}
 `;
-
-function Header() {
+interface HeaderProps {
+  handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+function Header({ handleSearchChange }: HeaderProps) {
   const user = useStore((state) => state.user);
   const [isExpanded, setIsExpanded] = useState(false);
   const handleButtonClick = () => {
@@ -83,6 +85,7 @@ function Header() {
         <Search />
       </SearchIcon>
       <SearchInput
+        onChange={handleSearchChange}
         isexpanded={isExpanded}
         placeholder="검색할 내용을 입력해주세요..."
       ></SearchInput>

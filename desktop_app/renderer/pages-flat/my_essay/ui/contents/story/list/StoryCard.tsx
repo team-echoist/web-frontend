@@ -12,6 +12,7 @@ const Layout = styled.div`
   padding: 20px 0px;
   display: flex;
   justify-content: center;
+  cursor: pointer;
 `;
 const SummaryDiv = styled.div`
   position: relative;

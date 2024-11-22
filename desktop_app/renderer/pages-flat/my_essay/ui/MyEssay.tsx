@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useLayoutEffect} from "react";
 import { useRouter } from "next/navigation";
 import { ActiveSideBar } from "@/features/activesidebar";
 import styled from "styled-components";
@@ -10,6 +10,11 @@ import List from "./contents/List";
 import { ScrollTop } from "@/shared/ui/scroll";
 import AddStoryModal from "./contents/story/AddStoryModal";
 import { ColorToast } from "@/shared/ui/toast";
+import { useDebounce } from "@/shared/lib/debounce";
+import { searchEssay } from "@/shared/api";
+import { Essay } from "@/shared/types";
+import { Tab } from "@/shared/ui/tab";
+import { getEssays } from "@/shared/api";
 
 const Layout = styled.div`
   width: 100vw;
@@ -44,6 +49,8 @@ const ToastContainer = styled.div`
   left: 43%;
   z-index: 50;
 `;
+
+const tabData = ["나만의 글", "발행한 글", "스토리"];
 function MyEssay() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
@@ -54,6 +61,12 @@ function MyEssay() {
   const [isError, setError] = useState(false);
   const [isShowToast, setIsShowToast] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState(0);
+  const [listData, setListData] = useState<Essay[]>([]);
+  const [page, setPage] = useState(1);
+  const [listCount, setListCount] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
   const router = useRouter();
   const handleAlarmButtonClick = () => {
@@ -81,6 +94,66 @@ function MyEssay() {
       }, 3000);
     }
   };
+  const { debouncedFunction } = useDebounce((term: string) => {
+    const pageType =
+      activeTab === 0 ? "private" : activeTab === 1 ? "public" : "private";
+    if (activeTab === 2) {
+      return;
+    }
+    searchEssay(pageType, term)
+      .then((response) => {
+        setListData(response.data);
+        setListCount(response.data.length);
+      })
+      .catch((error) => {
+        console.error("API 호출 오류:", error);
+      });
+  }, 300);
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedFunction(event.target.value);
+  };
+  const handleChangeActiveTab = (index: number) => {
+    setActiveTab(index);
+    setPage(1);
+  };
+  useLayoutEffect(() => {
+    if (activeTab !== 2) {
+      setListData([]);
+      setListCount(0);
+      setHasMore(true);
+      setPage(1);
+      getList();
+    } 
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (page > 1 && hasMore && activeTab !== 2) {
+      getList();
+    }
+  }, [page]);
+
+  const getList = async () => {
+    try {
+      const tabInfo: { [key: number]: string } = {
+        0: "private",
+        1: "public",
+      } as const;
+      const pageType = tabInfo[activeTab];
+      // pageType: private, public
+      const { data, total, totalPage } = await getEssays(page, 5, pageType);
+      setListData((prevData) => [...prevData, ...data]);
+      setListCount(total);
+      if (page >= totalPage) {
+        setHasMore(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const loadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
   return (
     <Layout>
       <ToastContainer>
@@ -105,19 +178,33 @@ function MyEssay() {
             />
           )}
           <ContentsContainer ismodalopen={isModalOpen}>
-            <Header />
+            <Header handleSearchChange={handleSearchChange} />
             {!isModalOpen && (
               <>
                 <StyledWriteButton onClick={handleClick} />
                 <AlarmButton onClick={handleAlarmButtonClick} />
               </>
             )}
+            <Tab
+              tabData={tabData}
+              activeTab={activeTab}
+              handleChangeActiveTab={handleChangeActiveTab}
+              listCount={listCount}
+            />
             <List
               setStoredStoryName={setStoredStoryName}
               handleStoryModal={handleStoryModal}
               setStoryId={setStoryId}
               toastHandler={toastHandler}
               setIsSuccess={setIsSuccess}
+              activeTab={activeTab}
+              listData={listData}
+              setListData={setListData}
+              loadMore={loadMore}
+              setListCount={setListCount}
+              setHasMore={setHasMore}
+              getList={getList}
+              
             />
           </ContentsContainer>
         </>

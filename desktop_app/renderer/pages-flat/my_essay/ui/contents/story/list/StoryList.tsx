@@ -17,7 +17,6 @@ const Layout = styled.article`
   background-position: center;
   background-repeat: no-repeat;
   background-size: 320.5px 266px;
-  cursor: pointer;
 `;
 
 const AddButton = styled.button`

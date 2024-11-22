@@ -189,8 +189,27 @@ export const getFollowingsEssay = async (page: number) => {
         params,
       }
     );
-    return { data:data.essays, totalPage: data.totalPage, status };
+    return { data: data.essays, totalPage: data.totalPage, status };
   } catch (err) {
-    return { data: [], status: 500,totalPage:null };
+    return { data: [], status: 500, totalPage: null };
+  }
+};
+export const searchEssay = async (pageType:string,keyword:string) => {
+  try {
+    const params = {
+      pageType: pageType,
+      keyword: keyword,
+    };
+    const { data, status } = await fetchData<any>(
+      "essays/search",
+      "get",
+      null,
+      {
+        params,
+      }
+    );
+    return { data: data.essays, totalPage: data.totalPage, status };
+  } catch (err) {
+    return { data: [], status: 500 };
   }
 };
