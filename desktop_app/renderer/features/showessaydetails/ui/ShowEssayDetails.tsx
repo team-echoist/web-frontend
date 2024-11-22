@@ -15,6 +15,7 @@ import { ColorToast } from "@/shared/ui/toast";
 import { useStore } from "@/shared/store";
 import { deleteStoryIncludedEssay, addEssayforStory } from "@/shared/api";
 import { postFollows } from "@/shared/api";
+import { deleteFollow } from "@/shared/api";
 
 const Container = styled.main<{ scale: number }>`
   width: 99vw;
@@ -171,14 +172,16 @@ function ShowEssayDetails({
       }, 3000);
     }
   };
-  console.log("essay", essay);
-  const submitFollows = async () => {
+  const submitFollows = async (isFollow: boolean) => {
     try {
       if (essay) {
-        const { status } = await postFollows(essay.id);
+        const { status } = isFollow
+          ? await deleteFollow(essay.author.id)
+          : await postFollows(essay.author.id);
         if (status === 201 || status === 200) {
+          const alertText =isFollow ?"구독 취소 되었습니다." :"구독 추가 되었습니다."
           setIsShowToast(true);
-          setToastText("구독 추가 되었습니다.");
+          setToastText(alertText);
         }
       }
     } catch (err) {

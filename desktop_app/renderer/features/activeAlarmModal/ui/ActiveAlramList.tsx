@@ -9,6 +9,7 @@ import styled from "styled-components";
 
 const ContentsContainer = styled.div`
   width: 100%;
+  height:80vh;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -49,6 +50,7 @@ function ActiveAlramList({
         page: page,
         limit: 20,
       });
+      console.log("alerts",alerts)
       setAlarmList((prev: any) => [...prev, ...alerts]);
       if (page >= totalPage) {
         setHasMore(false);
@@ -74,7 +76,7 @@ function ActiveAlramList({
       <ContentsContainer>
         {alarmList.length > 0 ? (
           <Virtuoso
-            style={{ height: "905px", width: "100%" }}
+            style={{ height: "1150px", width: "100%" }}
             data={alarmList}
             endReached={loadMoreItems}
             itemContent={(index, item) => (

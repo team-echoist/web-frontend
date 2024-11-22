@@ -153,18 +153,20 @@ const tempData = [
   },
 ];
 function FollowList() {
-  const [follows, setFollows] = useState<Users | null>(null);
+  const [follows, setFollows] = useState<Users>([]);
 
   useEffect(() => {
     fetchFollows();
   }, []);
 
-
   const fetchFollows = async () => {
     try {
       const { data, status } = await getFollows();
       if (status === 200) {
-        setFollows(data);
+        const filteredData = data?.filter(
+          (item) => Object.keys(item).length > 0
+        );
+        setFollows(filteredData || []);
       }
     } catch (err) {
       console.log(err);
@@ -176,16 +178,20 @@ function FollowList() {
         {isNoneFollows ? (
           <FollowsLayout>
             <FollowsListContentLayout>
-              <ProfileItemDiv>
-                <CircularAvatar
-                  img={DefaultProfileImg.src}
-                  width={60}
-                  height={60}
-                />
-                <Span>꾸루룩</Span>
-              </ProfileItemDiv>
+              {follows.map((item) => (
+                <ProfileItemDiv>
+                  <CircularAvatar
+                    img={item.profileImage || DefaultProfileImg.src}
+                    width={60}
+                    height={60}
+                  />
+                  <Span>{item.nickname}</Span>
+                </ProfileItemDiv>
+              ))}
             </FollowsListContentLayout>
-            <AllProfileBtnDiv><Btn>전체</Btn></AllProfileBtnDiv>
+            <AllProfileBtnDiv>
+              <Btn>전체</Btn>
+            </AllProfileBtnDiv>
           </FollowsLayout>
         ) : (
           <NoneFollowsLayout>구독한 아무개가 없습니다.</NoneFollowsLayout>
@@ -193,7 +199,7 @@ function FollowList() {
       </>
     );
   };
-  return <>{followsListRenderer(follows?.length === 0)}</>;
+  return <> {followsListRenderer(follows?.length > 0 ? true : false)}</>;
 }
 
 export default FollowList;

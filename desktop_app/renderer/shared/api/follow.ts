@@ -22,3 +22,12 @@ export const postFollows = async (userId: number) => {
     return { status: 500 };
   }
 };
+
+export const deleteFollow = async (userId: number) => {
+  try {
+    const { status } = await fetchData(`follows/${userId}`, "delete");
+    return { status: status };
+  } catch (err) {
+    return { status: 500 };
+  }
+};

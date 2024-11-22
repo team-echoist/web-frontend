@@ -20,7 +20,7 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 11px;
-  height:180px;
+  height:230px;
 `;
 const Time = styled.time`
   color: #3e3e3e;
@@ -81,7 +81,7 @@ function AlarmList({
   setAlarmList,
 }: {
   list: Alert;
-  setAlarmList: Dispatch<SetStateAction<Alert>>;
+  setAlarmList: Dispatch<SetStateAction<any>>;
 }) {
   const [renderedComponent, setRenderedComponent] =
     useState<React.ReactNode | null>(null);
@@ -94,7 +94,15 @@ function AlarmList({
     title: string,
     createdDate: string
   ) => {
-    await updateReadStatus(id, [list], setAlarmList);
+    const response =await updateReadStatus(id, [list]);
+    const data =response?.data;
+    setAlarmList((prev:any) =>
+      prev.map((alarm:any) =>
+        data?.find((updatedAlarm) => updatedAlarm.id === alarm.id)
+          ? { ...alarm, ...data.find((updatedAlarm) => updatedAlarm.id === alarm.id) }
+          : alarm
+      )
+    );
     const { component } = handleNotification(
       type,
       title,
@@ -105,7 +113,6 @@ function AlarmList({
       setRenderedComponent(component);
     }
   };
-
   const handleCloseModal = () => {
     setRenderedComponent(null);
   };
