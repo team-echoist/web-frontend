@@ -200,7 +200,7 @@ export const searchEssay = async (pageType:string,keyword:string) => {
       pageType: pageType,
       keyword: keyword,
     };
-    const { data, status } = await fetchData<any>(
+    const { data, status, } = await fetchData<any>(
       "essays/search",
       "get",
       null,
@@ -208,7 +208,7 @@ export const searchEssay = async (pageType:string,keyword:string) => {
         params,
       }
     );
-    return { data: data.essays, totalPage: data.totalPage, status };
+    return { data: data.essays, totalPage: data.totalPage,total:data.total, status };
   } catch (err) {
     return { data: [], status: 500 };
   }

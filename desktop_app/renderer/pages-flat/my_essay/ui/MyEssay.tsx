@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useLayoutEffect} from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ActiveSideBar } from "@/features/activesidebar";
 import styled from "styled-components";
@@ -61,7 +61,6 @@ function MyEssay() {
   const [isError, setError] = useState(false);
   const [isShowToast, setIsShowToast] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState(0);
   const [listData, setListData] = useState<Essay[]>([]);
   const [page, setPage] = useState(1);
@@ -100,10 +99,14 @@ function MyEssay() {
     if (activeTab === 2) {
       return;
     }
+    if (term === "") {
+      getList();
+    }
+
     searchEssay(pageType, term)
       .then((response) => {
         setListData(response.data);
-        setListCount(response.data.length);
+        setListCount(response.total);
       })
       .catch((error) => {
         console.error("API 호출 오류:", error);
@@ -123,7 +126,7 @@ function MyEssay() {
       setHasMore(true);
       setPage(1);
       getList();
-    } 
+    }
   }, [activeTab]);
 
   useEffect(() => {
@@ -204,7 +207,6 @@ function MyEssay() {
               setListCount={setListCount}
               setHasMore={setHasMore}
               getList={getList}
-              
             />
           </ContentsContainer>
         </>

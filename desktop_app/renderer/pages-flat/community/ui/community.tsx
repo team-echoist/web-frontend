@@ -7,6 +7,7 @@ import Banner from "./banner/Banner";
 import EssayList from "./contents/EssayList";
 import { Tab } from "@/shared/ui/tab";
 import FollowList from "./banner/FollowList";
+import BookmarkModal from "./bookmark/BookmarkModal";
 
 
 const Layout = styled.main`
