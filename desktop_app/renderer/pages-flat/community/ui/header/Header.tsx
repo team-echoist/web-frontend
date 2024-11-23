@@ -39,7 +39,13 @@ const BookMarkBtn = styled.button<{ isexpanded: boolean }>`
   left: 93%;
   top: 40px;
 `;
-function Header({ activeTab }: { activeTab: number }) {
+function Header({
+  activeTab,
+  modlaHandler,
+}: {
+  activeTab: number;
+  modlaHandler: (name: string) => void;
+}) {
   const isBlack = activeTab === 0 ? false : true;
   const [isExpanded, setIsExpanded] = useState(false);
   const handleButtonClick = () => {
@@ -48,10 +54,16 @@ function Header({ activeTab }: { activeTab: number }) {
   return (
     <Layout>
       <Title isblack={isBlack}>커뮤니티</Title>
-      <SearchIcon isexpanded={isExpanded} onClick={handleButtonClick}>
+      <SearchIcon
+        isexpanded={isExpanded}
+        onClick={() => modlaHandler("search")}
+      >
         {isBlack ? <WhiteSearch /> : <Search />}
       </SearchIcon>
-      <BookMarkBtn isexpanded={isExpanded}>
+      <BookMarkBtn
+        isexpanded={isExpanded}
+        onClick={() => modlaHandler("bookmark")}
+      >
         {isBlack ? <PointedBookMark /> : <BlackBookMark />}
       </BookMarkBtn>
     </Layout>

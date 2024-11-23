@@ -99,9 +99,6 @@ function MyEssay() {
     if (activeTab === 2) {
       return;
     }
-    if (term === "") {
-      getList();
-    }
 
     searchEssay(pageType, term)
       .then((response) => {

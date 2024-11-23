@@ -134,7 +134,7 @@ function EssayList({ isRandomEssay }: { isRandomEssay: boolean }) {
         </ContentsContainer>
       </Wrapper>
     </Layout>
-  );
+  ); 
 }
 
 export default EssayList;
