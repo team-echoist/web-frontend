@@ -113,8 +113,8 @@ function Header() {
           <ProfileImageWrapper>
             <CircularAvatar
               img={user?.profileImage || DefaultProfileImg.src}
-              width={60}
-              height={60}
+              width={108}
+              height={108}
             />
             <Span>
               <strong>{user?.nickname}</strong> 아무개
