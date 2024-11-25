@@ -17,9 +17,9 @@ const StyledWriteButton = styled(WriteButtonSVG)`
   cursor: pointer;
 `;
 
-const Container = styled.main<{ isModalOpen: boolean }>`
-  width: ${({ isModalOpen }) =>
-    isModalOpen ? "calc(100vw - 390px)" : "100vw"};
+const Container = styled.main<{ ismodalopen: boolean }>`
+  width: ${({ ismodalopen }) =>
+    ismodalopen ? "calc(100vw - 390px)" : "100vw"};
   font-family: Arial, sans-serif;
   position: fixed;
   top: 32px;
@@ -53,7 +53,7 @@ export const Main = () => {
           handleAlarmButtonClick={handleAlarmButtonClick}
         />
       )}
-      <Container isModalOpen={isModalOpen}>
+      <Container ismodalopen={isModalOpen}>
         <HomeDiv>
           {!isModalOpen && (
             <>

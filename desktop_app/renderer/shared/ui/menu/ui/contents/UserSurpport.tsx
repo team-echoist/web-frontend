@@ -1,8 +1,13 @@
 import React from 'react'
+import Header from "./header/Header";
 
-function UserSurpport() {
+function UserSurpport({
+  handleCloseComponent,
+}: {
+  handleCloseComponent: () => void;
+}) {
   return (
-    <div>UserSurpport</div>
+    <div><Header title="고객지원" handleClose={handleCloseComponent}/></div>
   )
 }
 

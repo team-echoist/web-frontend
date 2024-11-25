@@ -6,15 +6,15 @@ import PlusBtn from "@/shared/assets/img/button/plus_button.svg";
 import PlusDisableBtn from "@/shared/assets/img/button/plus_disable_button.svg";
 import color from "@/shared/styles/color";
 
-const Layout = styled.div`
+const Layout = styled.div<{ isabsolute: boolean; top: string; right: string }>`
   width: 180px;
   border-radius: 10px;
   background: #0e0e0e;
   box-shadow: 0.1px 0.1px 6px -2px rgba(255, 255, 255, 0.05);
-  padding: 12px 20px;
-  position: fixed;
-  top: 69px;
-  right: 30px;
+  padding: 12px 5px;
+  position: ${({ isabsolute }) => (isabsolute ? "absolute" : "fixed")};
+  top: ${({ top }) => top};
+  right: ${({ right }) => right};
   z-index: 2;
 `;
 const ScaleAdjustDiv = styled.div`
@@ -44,15 +44,23 @@ function BlackMiniModal({
   scale,
   children,
   onClose,
+  isabsolute = false,
+  top = "69px",
+  right = "30px",
+  isNoneActiveOutside = false,
 }: {
-  handleZoomIn: () => void;
-  handleZoomOut: () => void;
-  scale: number;
+  handleZoomIn?: () => void;
+  handleZoomOut?: () => void;
+  scale?: number;
   children: React.ReactNode;
-  onClose: () => void;
+  onClose?: () => void;
+  isabsolute?: boolean;
+  top?: string;
+  right?: string;
+  isNoneActiveOutside?: boolean;
 }) {
   const modalRef = useRef<HTMLDivElement>(null);
- 
+
   const handleClickOutside = (event: MouseEvent) => {
     const clickedElement = event.target as HTMLElement;
 
@@ -60,18 +68,20 @@ function BlackMiniModal({
     if (
       modalRef.current &&
       !modalRef.current.contains(clickedElement) &&
-      !isNotIncludeElement?.contains(clickedElement)
+      !isNotIncludeElement?.contains(clickedElement)&&onClose
     ) {
       onClose();
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    if (!isNoneActiveOutside) {
+      document.addEventListener("mousedown", handleClickOutside);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
   }, []);
   const scaleBtnController = (status: string) => {
     let minusBtn =
@@ -82,12 +92,15 @@ function BlackMiniModal({
     return status === "minus" ? minusBtn : plusBtn;
   };
   return (
-    <Layout ref={modalRef}>
-      <ScaleAdjustDiv>
-        {scaleBtnController("minus")}
-        <Span>가</Span>
-        {scaleBtnController("plus")}
-      </ScaleAdjustDiv>
+    <Layout ref={modalRef} isabsolute={isabsolute} top={top} right={right}>
+      {scale && (
+        <ScaleAdjustDiv>
+          {scaleBtnController("minus")}
+          <Span>가</Span>
+          {scaleBtnController("plus")}
+        </ScaleAdjustDiv>
+      )}
+
       {children}
     </Layout>
   );

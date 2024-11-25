@@ -5,7 +5,7 @@ import { PrevButton } from "@/shared/ui/button";
 
 interface ButtonProps {
   isCancel: boolean;
-  isDelete: boolean;
+  isdelete: boolean;
 }
 
 const Layout = styled.div`
@@ -28,12 +28,12 @@ const Button = styled.button<ButtonProps>`
   border-radius: 4px;
   white-space: nowrap;
   z-index: 1;
-  ${({ isCancel, isDelete }) =>
+  ${({ isCancel, isdelete }) =>
     isCancel
       ? css`
           color: #686868;
         `
-      : isDelete
+      : isdelete
       ? css`
           color: #c13535;
         `
@@ -76,7 +76,7 @@ function TitleField({
   const renderButton = () => {
     if (step === "write") {
       return (
-        <Button isCancel={false} isDelete={false} onClick={handleStep}>
+        <Button isCancel={false} isdelete={false} onClick={handleStep}>
           완료
         </Button>
       );
@@ -86,7 +86,7 @@ function TitleField({
       return (
         <Button
           isCancel={false}
-          isDelete={step === "finish"}
+          isdelete={step === "finish"}
           onClick={handleStep}
         >
           삭제
@@ -99,7 +99,7 @@ function TitleField({
   return (
     <Layout>
       {step === "write" ? (
-        <Button isCancel={true} isDelete={false} onClick={handlenavigateBack}>
+        <Button isCancel={true} isdelete={false} onClick={handlenavigateBack}>
           취소
         </Button>
       ) : (
@@ -117,7 +117,7 @@ function TitleField({
             placeholder="제목을 입력해 주세요"
             onChange={(e) => setTitle(e.target.value)}
             isTextCenter={true}
-            maxLength={39}
+            maxLength={30}
           />
         )}
       </TitleDiv>

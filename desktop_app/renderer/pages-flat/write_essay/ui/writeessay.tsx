@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { getEssayDetail } from "@/shared/api";
 import { isBase64 } from "../lib/checkBase64";
 
+
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
   { ssr: false }
@@ -35,7 +36,8 @@ const EditorContainer = styled.div<{ isBottomFieldVisible: boolean }>`
   .ql-editor {
     flex-grow: 1;
     overflow-y: auto;
-  }
+  }'
+  border:3px solid red;
 `;
 interface BottomValue {
   active: "tag" | "location";
@@ -129,7 +131,6 @@ export const WriteEssay = () => {
       if((data?.essay?.location ?? "").length > 0) {
         setIsLocationSave(true)
       }
-      console.log("data", data);
     } catch (err) {
       console.log("err", err);
     }

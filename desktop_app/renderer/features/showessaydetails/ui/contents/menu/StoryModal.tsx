@@ -65,59 +65,77 @@ function StoryModal({
   deleteInculudedStory,
   addUpdateStory,
   onClose,
+  setIsStoryModalOpen,
 }: {
   stories: Story[];
   handleAddStory: (id: number) => void;
   isStoryIncluded: boolean;
   isStoryChecked: boolean;
   deleteInculudedStory: () => void;
-  addUpdateStory: () => void;
+  addUpdateStory: (storyId: number) => void;
   onClose: () => void;
+  setIsStoryModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const handleAddUpdateStory = () => {
+    let matchedStoryId = stories.filter((item) => item.isIncluded === true)[0]
+      ?.id;
+    addUpdateStory(matchedStoryId);
+  };
+ console.log(isStoryIncluded)
   return (
     <>
-        <BackgroundContainer>
-          <BottomSheet
-            isOpen={true}
-            size="large"
-            isCloseModified={true}
-            onClose={onClose}
-          >
-            <BottomSheetTitle>
-              이 글을 어떤 스토리로 추가/변경 할까요?
-            </BottomSheetTitle>
-            <BottomSheetItemContainer>
-              {stories.map((item) => (
-                <BottomSheetItemDiv onClick={() => handleAddStory(item.id)}>
-                  <Span>{item.name}</Span>
-                  {item.isIncluded && <CheckIcon />}
+      <BackgroundContainer>
+        <BottomSheet
+          isOpen={true}
+          size="large"
+          isCloseModified={true}
+          onClose={onClose}
+        >
+          <BottomSheetTitle>
+            이 글을 어떤 스토리로 추가/변경 할까요?
+          </BottomSheetTitle>
+          <BottomSheetItemContainer>
+            {stories.map((item) => (
+              <BottomSheetItemDiv onClick={() => handleAddStory(item.id)}>
+                <Span>{item.name}</Span>
+                {item.isIncluded && <CheckIcon />}
 
-                  {/* 체크아이콘은 클릭했을때 생김 */}
-                </BottomSheetItemDiv>
-              ))}
-            </BottomSheetItemContainer>
-            <BtnDiv>
-              <Button
-                text="스토리에서 삭제"
-                type={isStoryIncluded ? "point" : "disable"}
-                scale="small"
-                onClick={deleteInculudedStory}
-              />
-              <Button
-                type={
-                  isStoryChecked
-                    ? "point"
-                    : isStoryIncluded
-                    ? "disable"
-                    : "disable"
+                {/* 체크아이콘은 클릭했을때 생김 */}
+              </BottomSheetItemDiv>
+            ))}
+          </BottomSheetItemContainer>
+          <BtnDiv>
+            <Button
+              text="스토리에서 삭제"
+              type={isStoryIncluded ? "point" : "disable"}
+              scale="small"
+              onClick={() => {
+                if(isStoryIncluded){
+                  setIsStoryModalOpen(false);
+                  deleteInculudedStory();
                 }
-                text="추가/변경"
-                scale="small"
-                onClick={addUpdateStory}
-              />
-            </BtnDiv>
-          </BottomSheet>
-        </BackgroundContainer>
+              }}
+            />
+            <Button
+              type={
+                isStoryChecked
+                  ? "point"
+                  : isStoryIncluded
+                  ? "disable"
+                  : "point"
+              }
+              text="추가/변경"
+              scale="small"
+              onClick={() => {
+                if(isStoryChecked||!isStoryIncluded){
+                  setIsStoryModalOpen(false);
+                  handleAddUpdateStory();
+                }
+              }}
+            />
+          </BtnDiv>
+        </BottomSheet>
+      </BackgroundContainer>
     </>
   );
 }

@@ -34,11 +34,15 @@ const BtnDiv = styled.div`
 function DeleteModal({
   isDeleteModalOpen,
   setIsDeleteModalOpen,
-  handleEssayDelete
+  handleEssayDelete,
+  handleEssayDeleteWithId,
+  id,
 }: {
   isDeleteModalOpen: boolean;
   setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleEssayDelete:()=>void;
+  handleEssayDelete?: () => void;
+  handleEssayDeleteWithId?: (id: number) => void;
+  id?: number;
 }) {
   const BottomSheetHandler = () => {
     setIsDeleteModalOpen(!isDeleteModalOpen);
@@ -59,10 +63,19 @@ function DeleteModal({
             </ModalTextDiv>
             <BtnDiv>
               <Button text="취소" scale="small" onClick={BottomSheetHandler} />
-              <Button text="확인" scale="small" onClick={()=>{
-                BottomSheetHandler();
-                handleEssayDelete();
-              }}/>
+              <Button
+                text="확인"
+                scale="small"
+                onClick={() => {
+                  BottomSheetHandler();
+                  if (handleEssayDelete) {
+                    handleEssayDelete();
+                  }
+                  if (handleEssayDeleteWithId && id) {
+                    handleEssayDeleteWithId(id)
+                  }
+                }}
+              />
             </BtnDiv>
           </BottomSheet>
         </BackgroundContainer>

@@ -4,6 +4,7 @@ import DefaultProfileImg from "@/shared/assets/img/default_profile.webp";
 import Image from "next/image";
 import color from "@/shared/styles/color";
 import { useStore } from "@/shared/store";
+import { getFollows } from "@/shared/api";
 
 const Layout = styled.div`
   width: 80%;
@@ -55,7 +56,7 @@ const Strong = styled.strong`
   display: flex;
   align-items: center;
 `;
-const SubscribeBtn = styled.button`
+const SubscribeBtn = styled.button<{ isFollow: boolean }>`
   border: none;
   padding: 0;
   margin: 0;
@@ -63,8 +64,8 @@ const SubscribeBtn = styled.button`
   height: 38px;
   flex-shrink: 0;
   border-radius: 4px;
-  background: ${color.pointcolor};
-  color: #000;
+  background: ${({ isFollow }) => (isFollow ? "#1D1D1D" : color.pointcolor)};
+  color: ${({ isFollow }) => (isFollow ? color.pointcolor : "#000")};
   text-align: center;
   font-family: Pretendard;
   font-size: 14px;
@@ -85,17 +86,39 @@ function splitByKeyword(str: string, keyword: string) {
 function UserProfile({
   userName,
   profileImage,
+  submitFollows,
 }: {
   userName: string;
   profileImage: string;
+  submitFollows: (isFollow: boolean) => void;
 }) {
   const [splitedUserName, setSplitedUserName] = useState<string[]>([]);
+  const [isFollow, setIsFollow] = useState<null | boolean>(null);
   const user = useStore((state) => state.user);
 
   useEffect(() => {
     const splitedStringArr = splitByKeyword(userName, "아무개");
     setSplitedUserName(splitedStringArr);
-  }, [userName]);
+    fetchFollows();
+  }, [userName,submitFollows]);
+  const fetchFollows = async () => {
+    try {
+      const { data, status } = await getFollows();
+      // 추후 구독 api 수정되면 바꾸기
+      if (status === 200) {
+        const isFollow =
+          data?.some((item) => item.nickname === userName) || false;
+        setIsFollow(isFollow);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleFollows = async (isFollow: boolean) => {
+    // 구독 여부에 따라 분기처리
+    submitFollows(isFollow);
+  };
 
   return (
     <Layout>
@@ -112,7 +135,14 @@ function UserProfile({
           {splitedUserName[0]} <Strong>아무개</Strong>
         </ProfileName>
       </ProfileDiv>
-      {user?.nickname !== userName && <SubscribeBtn>구독하기</SubscribeBtn>}
+      {user?.nickname !== userName && (
+        <SubscribeBtn
+          onClick={() => handleFollows(isFollow ?? false)}
+          isFollow={isFollow ?? false}
+        >
+          {isFollow ? "구독중" : "구독하기"}
+        </SubscribeBtn>
+      )}
     </Layout>
   );
 }

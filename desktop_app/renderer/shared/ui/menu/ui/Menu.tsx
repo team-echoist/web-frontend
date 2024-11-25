@@ -12,6 +12,8 @@ import UpdateHistory from "./contents/UpdateHistory";
 import Preference from "./contents/Preference";
 import DisplaySettings from "./contents/DisplaySettings";
 import DefaultLayout from "./DefaultLayout";
+import { useRouter } from "next/navigation";
+import Background from "./Background";
 
 const Layout = styled.nav`
   width: 376px;
@@ -87,6 +89,7 @@ const GreyText = styled.p`
   font-weight: 400;
   line-height: 150%;
   white-space: nowrap;
+  margin-right: 10px;
 `;
 const SmallText = styled.p`
   color: ${color.white};
@@ -96,6 +99,7 @@ const SmallText = styled.p`
   font-weight: 500;
   // line-height: 150%;
   white-space: nowrap;
+  margin-left: 20px;
 `;
 const GeneralText = styled.p`
   color: ${color.white};
@@ -112,9 +116,10 @@ const GraphDiv = styled.div`
 `;
 const GraphTitleDiv = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 88px;
-  padding-left: 30px;
-  padding-right: 30px;
+  // padding-left: 30px;
+  // padding-right: 30px;
   padding-top: 20px;
 `;
 const StoreDiv = styled.div`
@@ -166,11 +171,21 @@ function Menu() {
   const [userData, setUserData] = useState([]);
   const [selectedComponent, setSelectedComponent] =
     useState<JSX.Element | null>(null);
+    const router =useRouter()
+
+  const handleCloseComponent = () => {
+    setSelectedComponent(null);
+  };
+
   const componentMapper = {
-    "화면 설정": <DisplaySettings />,
-    "환경 설정": <Preference />,
-    고객지원: <UserSurpport />,
-    "업데이트 기록": <UpdateHistory />,
+    "화면 설정": (
+      <DisplaySettings handleCloseComponent={handleCloseComponent} />
+    ),
+    "환경 설정": <Preference handleCloseComponent={handleCloseComponent} />,
+    고객지원: <UserSurpport handleCloseComponent={handleCloseComponent} />,
+    "업데이트 기록": (
+      <UpdateHistory handleCloseComponent={handleCloseComponent} />
+    ),
   } as const;
   const menuItems: Array<keyof typeof componentMapper> = [
     "화면 설정",
@@ -180,7 +195,7 @@ function Menu() {
   ];
 
   useEffect(() => {
-    // fetchUserData();
+    fetchUserData();
   }, []);
   const fetchUserData = async () => {
     try {
@@ -193,32 +208,48 @@ function Menu() {
   const navigateToComponent = (key: keyof typeof componentMapper) => {
     setSelectedComponent(componentMapper[key]);
   };
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
   return (
     <Layout>
-      {selectedComponent && <DefaultLayout>{selectedComponent}</DefaultLayout>}
+      {selectedComponent ? (
+        <DefaultLayout>{selectedComponent}</DefaultLayout>
+      ) : (
+        <Background />
+      )}
       <ProfileDiv>
         <ProfileItemDiv>
-          <CircularAvatar img={DefaultProfile.src} width={80} height={80} />
+          <CircularAvatar
+            img={user?.profileImage ? user?.profileImage : DefaultProfile.src}
+            width={80}
+            height={80}
+          />
           <ProfileHeaderText>
             <H1>
               <Strong>{user?.nickname}</Strong> 아무개
             </H1>
             <GreyText>43일째 링크드아웃!</GreyText>
           </ProfileHeaderText>
-          <RightArrow />
+          <RightArrow
+            onClick={() => {
+              router.push("/web/mypage");
+            }}
+          />
         </ProfileItemDiv>
       </ProfileDiv>
       <GraphDiv>
         <GraphTitleDiv>
           <SmallText>주간 링크드아웃 지수</SmallText>
-          <GreyText>2024년 5월 28일 현재</GreyText>
+          <GreyText>{`${year}년 ${month}월 ${day}일 현재`}</GreyText>
         </GraphTitleDiv>
-        {/* <LineGraph
+        <LineGraph
           data={userData}
-          dataKey="summary"
-          xAxisKey="count"
+          dataKey="count"
+          xAxisKey="weekStart"
           height={160}
-        ></LineGraph> */}
+        ></LineGraph>
       </GraphDiv>
       <StoreDiv>
         <GeneralText>상점</GeneralText>

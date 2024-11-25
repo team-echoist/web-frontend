@@ -13,6 +13,9 @@ import { ScrollTop } from "@/shared/ui/scroll";
 import { addEssayBookMark, deleteEssayBookMark } from "@/shared/api/essay";
 import { ColorToast } from "@/shared/ui/toast";
 import { useStore } from "@/shared/store";
+import { deleteStoryIncludedEssay, addEssayforStory } from "@/shared/api";
+import { postFollows } from "@/shared/api";
+import { deleteFollow } from "@/shared/api";
 
 const Container = styled.main<{ scale: number }>`
   width: 99vw;
@@ -114,11 +117,87 @@ function ShowEssayDetails({
       }, 3000);
     }
   };
+  const deleteInculudedStory = async () => {
+    // 스토리에서 삭제하는api 추후 스토리 만들고나서 구현해야됨
+    try {
+      if (essayId) {
+        const { status } = await deleteStoryIncludedEssay(essayId);
 
+        if (status === 200) {
+          setIsShowToast(true);
+          setToastText("스토리에서 제외 되었습니다.");
+          getEssayData();
+        } else {
+          setIsShowToast(true);
+          setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+          setError(true);
+          setTimeout(() => {
+            setError(false);
+          }, 3000);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      setIsShowToast(true);
+      setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+    }
+  };
+
+  const addUpdateStory = async (storyId: number) => {
+    try {
+      const { status } = await addEssayforStory(storyId, essayId);
+      if (status === 200) {
+        setIsShowToast(true);
+        setToastText("스토리에 추가 되었습니다.");
+        getEssayData();
+      } else {
+        setIsShowToast(true);
+        setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
+      }
+    } catch (err) {
+      console.log(err);
+      setIsShowToast(true);
+      setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+    }
+  };
+  const submitFollows = async (isFollow: boolean) => {
+    try {
+      if (essay) {
+        const { status } = isFollow
+          ? await deleteFollow(essay.author.id)
+          : await postFollows(essay.author.id);
+        if (status === 201 || status === 200) {
+          const alertText =isFollow ?"구독 취소 되었습니다." :"구독 추가 되었습니다."
+          setIsShowToast(true);
+          setToastText(alertText);
+        }
+      }
+    } catch (err) {
+      console.log("err", err);
+      setIsShowToast(true);
+      setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+    }
+  };
   return (
     <Container scale={scale}>
       <ScrollTop />
-      <PrevButton path="/web/main"/>
+      <PrevButton path="/web/main" />
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -138,6 +217,8 @@ function ShowEssayDetails({
         essayId={essayId}
         includedStory={includedStory}
         userName={essay?.author?.nickname || "꾸르륵"}
+        deleteInculudedStory={deleteInculudedStory}
+        addUpdateStory={addUpdateStory}
       />
       <ArticleLayout>
         <Article
@@ -149,7 +230,8 @@ function ShowEssayDetails({
           handleBookmarkClick={handleBookmarkClick}
           isBookMark={isBookMark}
           isShowBookmark={
-            pageType === "public" && user?.nickname !== essay?.author?.nickname
+            pageType === "published" &&
+            user?.nickname !== essay?.author?.nickname
               ? true
               : false
           }
@@ -164,18 +246,15 @@ function ShowEssayDetails({
           })}
         </TagDiv>
       </ArticleLayout>
-      {pageType === "public" && (
+      {pageType === "published" && (
         <UserProfile
           userName={essay?.author?.nickname || "꾸르륵"}
           profileImage={TempThumbnail.src}
+          submitFollows={submitFollows}
         />
       )}
       <Divider />
-      <Contents
-        pageType={pageType}
-        storyId={storyId}
-        essayId={essayId}
-      />
+      <Contents pageType={pageType} storyId={storyId} essayId={essayId} />
     </Container>
   );
 }

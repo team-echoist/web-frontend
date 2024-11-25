@@ -45,12 +45,12 @@ const focusIcon: IconMap = {
 
 const Layout = styled.nav`
   width: 214px;
-  height: 90vh;
+  height: 100vh;
   flex-shrink: 0;
   z-index: 200;
   border-right: 0.75px solid #191919;
   background: #121212;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 32px;
   padding: 29.25px 22.5px;
@@ -59,13 +59,13 @@ const Layout = styled.nav`
   gap:39px;
   overflow: hidden;
 `;
-const SideBarItem = styled.div<{ textColor: string }>`
+const SideBarItem = styled.div<{ textcolor: string }>`
   display: flex;
   align-items: center;
   gap: 20px;
   width: 100%;
   height: 30px;
-  color: ${({ textColor }) => textColor};
+  color: ${({ textcolor }) => textcolor};
   cursor: pointer;
   svg{
     width:32px;
@@ -94,7 +94,7 @@ function SideBar({
       <SideBarItem
         key={key}
         onClick={() => onIconClick(key as keyof IconMap)}
-        textColor={textColor}
+        textcolor={textColor}
       >
         {IconComponent} {navName}
       </SideBarItem>

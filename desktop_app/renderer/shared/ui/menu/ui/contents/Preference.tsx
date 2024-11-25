@@ -1,8 +1,13 @@
 import React from 'react'
+import Header from "./header/Header";
 
-function Preference() {
+function Preference({
+  handleCloseComponent,
+}: {
+  handleCloseComponent: () => void;
+}) {
   return (
-    <div>Preference</div>
+    <div><Header title="환경 설정" handleClose={handleCloseComponent}/></div>
   )
 }
 

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { timeAgo } from "@/shared/lib/date";
 import Image from "next/image";
+import LinkedoutIcon from "@/shared/assets/img/linkedout_icon.svg" 
 
 const Layout = styled.div`
   width: 100%;
@@ -10,6 +11,7 @@ const Layout = styled.div`
   flex-direction: column;
   position: relative;
   cursor: pointer;
+  margin-top:10px;
 `;
 
 const TitleDiv = styled.div`
@@ -25,6 +27,9 @@ const H1 = styled.h1`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+  display: flex;
+  align-items: center;
+  gap:10px;
 `;
 
 const Time = styled.time`
@@ -37,7 +42,7 @@ const Time = styled.time`
   line-height: 170%;
 `;
 const Desc = styled.p<{ isImageUrl: boolean }>`
-  width: ${({ isImageUrl }) => (isImageUrl ? "85%" : "100%")};
+  width: ${({ isImageUrl }) => (isImageUrl ? "80%" : "100%")};
   margin-top: 10px;
 `;
 const Writer = styled.span`
@@ -67,7 +72,8 @@ function PostCard({
   desc,
   time,
   imgUrl,
-  onClick
+  onClick,
+  linkedout=false
 }: {
   writer: string;
   title: string;
@@ -75,10 +81,8 @@ function PostCard({
   time: string;
   imgUrl?: string;
   onClick?:()=>void;
+  linkedout?:boolean;
 }) {
-  const MaxLength = 300;
-  const truncatedText =
-    desc.length > MaxLength ? desc.substring(0, MaxLength) + "..." : desc;
   return (
     <Layout onClick={onClick}>
       {imgUrl && (
@@ -87,11 +91,11 @@ function PostCard({
         </ImageDiv>
       )}
       <TitleDiv>
-        <H1>{title}</H1>
+        <H1>{linkedout&&<LinkedoutIcon/>} {title}</H1>
         <Time>{timeAgo(time)}</Time>
       </TitleDiv>
       <Desc isImageUrl={imgUrl ? true : false}>
-        {removeHtmlTags(truncatedText)}
+        {removeHtmlTags(desc)} ...
       </Desc>
       <Writer>{writer}</Writer>
     </Layout>
