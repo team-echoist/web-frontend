@@ -31,14 +31,17 @@ const FollowsListContentLayout = styled.div`
   white-space: nowrap;
   gap: 28px;
 `;
-const ProfileItemDiv = styled.div`
+const ProfileItemDiv = styled.div<{ isselected: boolean }>`
   width: 100px;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gpa: 2px;
+  gap: 2px;
+  border-radius: 10px;
+  background: ${({ isselected }) => (isselected ? "#222" : "none")};
+  cursor: pointer;
 `;
 const Span = styled.span`
   color: #5c5c5c;
@@ -70,89 +73,14 @@ const Btn = styled.button`
   line-height: 126%;
   cursor: pointer;
 `;
-const tempData = [
-  {
-    id: 0,
-    email: "string",
-    nickname: "string",
-    profileImage: "string",
-    gems: 0,
-    createdDate: "2024-11-21T12:20:12.346Z",
-    isFirst: true,
-    locationConsent: true,
-    devices: [
-      {
-        id: 0,
-        uid: "string",
-        fcmToken: "string",
-        os: "string",
-        type: "string",
-        model: "string",
-      },
-    ],
-    homeLayouts: [
-      {
-        id: 0,
-        isActive: true,
-        updatedDate: "2024-11-21T12:20:12.346Z",
-        homeItems: [
-          {
-            id: 0,
-            item: {
-              id: 0,
-              name: "string",
-              position: "string",
-              price: 0,
-              url: "string",
-              owned: true,
-            },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 0,
-    email: "string",
-    nickname: "string",
-    profileImage: "string",
-    gems: 0,
-    createdDate: "2024-11-21T12:20:12.346Z",
-    isFirst: true,
-    locationConsent: true,
-    devices: [
-      {
-        id: 0,
-        uid: "string",
-        fcmToken: "string",
-        os: "string",
-        type: "string",
-        model: "string",
-      },
-    ],
-    homeLayouts: [
-      {
-        id: 0,
-        isActive: true,
-        updatedDate: "2024-11-21T12:20:12.346Z",
-        homeItems: [
-          {
-            id: 0,
-            item: {
-              id: 0,
-              name: "string",
-              position: "string",
-              price: 0,
-              url: "string",
-              owned: true,
-            },
-          },
-        ],
-      },
-    ],
-  },
-];
-function FollowList() {
+
+function FollowList({
+  handleFollowId,
+  selectedFollowId,
+}: {
+  handleFollowId: (id: number) => void;
+  selectedFollowId: number | null;
+}) {
   const [follows, setFollows] = useState<Users>([]);
 
   useEffect(() => {
@@ -179,7 +107,10 @@ function FollowList() {
           <FollowsLayout>
             <FollowsListContentLayout>
               {follows.map((item) => (
-                <ProfileItemDiv>
+                <ProfileItemDiv
+                  isselected={item.id === selectedFollowId}
+                  onClick={() => handleFollowId(item.id)}
+                >
                   <CircularAvatar
                     img={item.profileImage || DefaultProfileImg.src}
                     width={60}

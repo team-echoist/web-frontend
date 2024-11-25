@@ -3,6 +3,7 @@ import { Users } from "../types";
 
 interface UserType {
   followings: Users;
+  totalPage: number;
 }
 
 export const getFollows = async () => {
@@ -29,5 +30,17 @@ export const deleteFollow = async (userId: number) => {
     return { status: status };
   } catch (err) {
     return { status: 500 };
+  }
+};
+
+export const getAuthorEssays = async (id: number) => {
+  try {
+    const { data, status } = await fetchData<any>(
+      `essays/author/${id}`,
+      "get"
+    );
+    return { status: status, data: data?.essays, totalPage: data.totalPage };
+  } catch (Err) {
+    return { status: 500, totalPage: 1, data: [] };
   }
 };

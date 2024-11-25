@@ -7,10 +7,10 @@ import Banner from "./banner/Banner";
 import EssayList from "./contents/EssayList";
 import { Tab } from "@/shared/ui/tab";
 import FollowList from "./banner/FollowList";
-import Bookmark from "@/features/activeModal/bookmark/ui/Bookmark"
+import Bookmark from "@/features/activeModal/bookmark/ui/Bookmark";
 import { ColorToast } from "@/shared/ui/toast";
 import { allEssayDelete } from "@/shared/api/bookmark";
-import SearchModal from "@/features/activeModal/search/ui/SearchModal"
+import SearchModal from "@/features/activeModal/search/ui/SearchModal";
 
 const Layout = styled.main`
   width: 100vw;
@@ -48,6 +48,11 @@ function community() {
   const [isError, setError] = useState(false);
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
   const [isSearchModalOpen, setSearchModalOpen] = useState(false);
+  const [selectedFollowId, setSelectedFollowId] = useState<null | number>(null);
+
+  const handleFollowId = (id:number) =>{
+    setSelectedFollowId(id)
+  }
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
@@ -58,7 +63,7 @@ function community() {
       case 0:
         return <Banner />;
       case 1:
-        return <FollowList />;
+        return <FollowList handleFollowId={handleFollowId} selectedFollowId={selectedFollowId}/>;
       default:
         return <Banner />;
     }
@@ -93,7 +98,7 @@ function community() {
       setSaveModalOpen((prev) => !prev);
     }
     if (name === "search") {
-      setSearchModalOpen((prev) => !prev)
+      setSearchModalOpen((prev) => !prev);
     }
   };
 
@@ -109,13 +114,15 @@ function community() {
           type={isError ? "alert" : "normal"}
         />
       </ToastContainer>
-      {isSearchModalOpen && <SearchModal modlaHandler={modlaHandler} pageType="public"/>}
+      {isSearchModalOpen && (
+        <SearchModal modlaHandler={modlaHandler} pageType="public" />
+      )}
 
       {isSaveModalOpen && (
         <Bookmark
           deleteSavedEssays={deleteSavedEssays}
           modlaHandler={modlaHandler}
-        ></Bookmark>
+        />
       )}
       <ScrollTop bottom="131px" />
       <ActiveSideBar />
@@ -131,7 +138,7 @@ function community() {
           />
         </TabContainer>
         {renderBanner({ activeTab })}
-        <EssayList isRandomEssay={activeTab === 0} />
+        <EssayList isRandomEssay={activeTab === 0} selectedFollowId={selectedFollowId}/>
       </Container>
     </Layout>
   );

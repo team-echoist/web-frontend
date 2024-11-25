@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { getRandomEssays } from "@/shared/api";
 import { Virtuoso } from "react-virtuoso";
 import { getFollowingsEssay } from "@/shared/api";
+import { getAuthorEssays } from "@/shared/api";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 const Layout = styled.article`
   width: calc(100vw - 270px);
@@ -48,7 +50,13 @@ const ContentsContainer = styled.div`
   padding-bottom: 50px;
   margin-top: 19px;
 `;
-function EssayList({ isRandomEssay }: { isRandomEssay: boolean }) {
+function EssayList({
+  isRandomEssay,
+  selectedFollowId,
+}: {
+  isRandomEssay: boolean;
+  selectedFollowId: null | number;
+}) {
   const [list, setList] = useState<Essay[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(null);
@@ -76,6 +84,21 @@ function EssayList({ isRandomEssay }: { isRandomEssay: boolean }) {
       console.log(Err);
     }
   };
+  const fetchFollowingAutorEssay = async (id: number) => {
+    try {
+      setList([]);
+      if (selectedFollowId) {
+        const { data, totalPage, status } = await getAuthorEssays(id);
+
+        if (status === 200) {
+          setList((prevData) => [...prevData, ...data]);
+          setTotalPage(totalPage);
+        }
+      }
+    } catch (Err) {
+      console.log(Err);
+    }
+  };
   const loadMore = () => {
     if (isRandomEssay) {
       getEssayList();
@@ -96,9 +119,13 @@ function EssayList({ isRandomEssay }: { isRandomEssay: boolean }) {
     if (isRandomEssay) {
       getEssayList();
     } else {
-      fetchFollowingsEssay();
+      if (selectedFollowId) {
+        fetchFollowingAutorEssay(selectedFollowId);
+      } else {
+        fetchFollowingsEssay();
+      }
     }
-  }, [isRandomEssay]);
+  }, [isRandomEssay, selectedFollowId]);
 
   useEffect(() => {
     fetchFollowingsEssay();
@@ -134,7 +161,7 @@ function EssayList({ isRandomEssay }: { isRandomEssay: boolean }) {
         </ContentsContainer>
       </Wrapper>
     </Layout>
-  ); 
+  );
 }
 
 export default EssayList;
