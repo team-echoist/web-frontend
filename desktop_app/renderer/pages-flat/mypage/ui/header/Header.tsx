@@ -9,7 +9,7 @@ import { getUserProfile } from "@/shared/api/user";
 
 const Layout = styled.div`
   position: absolute;
-  top: 120.97px;
+  top: 80.97px;
   width: 90%;
   height: 326px;
   display: flex;

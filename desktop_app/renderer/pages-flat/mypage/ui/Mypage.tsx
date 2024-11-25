@@ -6,7 +6,7 @@ import Header from "./header/Header";
 
 const Layout = styled.main`
   width: 100vw;
-  min-height: 90vh;
+  min-height: 110vh;
   overflow-y: auto;
 `;
 const ContentsContainer = styled.article`
