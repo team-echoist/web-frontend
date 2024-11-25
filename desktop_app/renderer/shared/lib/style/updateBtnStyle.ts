@@ -40,6 +40,10 @@ const styleObj = {
         width: "442px",
         height: "50px",
       },
+      max: {
+        width: "758px",
+        height: "62px",
+      },
     },
     round: {
       small: {

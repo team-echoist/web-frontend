@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Button } from "@/shared/ui/button";
 import { useStore } from "@/shared/store";
 import { CircularAvatar } from "@/shared/ui/avatar";
 import DefaultProfileImg from "@/shared/assets/img/default_profile.webp";
 import color from "@/shared/styles/color";
+import { getUserProfile } from "@/shared/api/user";
 
 const Layout = styled.div`
   position: absolute;
@@ -45,15 +46,14 @@ const BtnDiv = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top:16px;
+  margin-top: 16px;
 `;
 const OverviewDiv = styled.div`
   width: 100%;
   height: 98px;
   display: flex;
-  justify-content: center;
-  gap: 60px;
-  margin-top:21px;
+  justify-content: space-between;
+  margin-top: 21px;
 `;
 const StatisticsItemDiv = styled.div`
   width: 20%;
@@ -81,9 +81,31 @@ const GreyBigText = styled.span`
   font-weight: 500;
   line-height: 150%;
 `;
-
+interface stateType{
+  totalEssays:number;
+  publishedEssays:number;
+  linkedOutEssays:number;
+}
 function Header() {
   const user = useStore((state) => state.user);
+  const [essaystats,setEssaystats] =useState<stateType|null>(null)
+  useEffect(() => {
+    if (user && user.id) {
+      fetchUserProfile();
+    }
+  }, [user]);
+
+  const fetchUserProfile = async () => {
+    try {
+      const { data, status } = await getUserProfile(user?.id || 0);
+      if(status ===200){
+        setEssaystats(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log("test",essaystats)
   return (
     <Layout>
       <Wrapper>
@@ -102,19 +124,19 @@ function Header() {
         <OverviewDiv>
           <StatisticsItemDiv>
             <GreyText>쓴글</GreyText>
-            <GreyBigText>38</GreyBigText>
+            <GreyBigText>{essaystats?.totalEssays}</GreyBigText>
           </StatisticsItemDiv>
           <StatisticsItemDiv>
             <GreyText>발행</GreyText>
-            <GreyBigText>24</GreyBigText>
+            <GreyBigText>{essaystats?.publishedEssays}</GreyBigText>
           </StatisticsItemDiv>
           <StatisticsItemDiv>
             <GreyText>링크드아웃</GreyText>
-            <GreyBigText>7</GreyBigText>
+            <GreyBigText>{essaystats?.linkedOutEssays}</GreyBigText>
           </StatisticsItemDiv>
         </OverviewDiv>
         <BtnDiv>
-          <Button text="프로필 편집" />
+          <Button text="프로필 편집" scale="max" />
         </BtnDiv>
       </Wrapper>
     </Layout>
