@@ -81,7 +81,6 @@ function community() {
   const deleteSavedEssays = async (ids: number[]) => {
     try {
       const { status } = await allEssayDelete(ids);
-      console.log(status);
       if (status === 200) {
         toastHandler("저장된글 수정에 성공했습니다.", false);
       } else {

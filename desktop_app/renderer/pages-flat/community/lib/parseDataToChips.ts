@@ -25,7 +25,7 @@ export const parseDataToChips = (data:any) => {
   
     const widthVariants = [
       ["180px", "400px", "417px"],
-      ["300px", "400px", "417px"],
+      ["300px", "360px", "417px"],
       ["228px", "340px", "417px"],
       ["326px", "400px", "417px"],
       ["400px", "400px", "450px"],
