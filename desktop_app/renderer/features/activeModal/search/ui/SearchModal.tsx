@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import DefaultLayout from "../DefaultLayout";
+import DefaultLayout from "../../ui/DefaultLayout";
 import WhiteSearch from "@/shared/assets/img/search.svg";
 import { PostCard } from "@/shared/ui/card";
 import { useDebounce } from "@/shared/lib/debounce";
@@ -54,13 +54,15 @@ const ListItemDiv = styled.div`
 
 function SearchModal({
   modlaHandler,
+  pageType
 }: {
   modlaHandler: (name: string) => void;
+  pageType:string;
 }) {
   const [listData, setListData] = useState<Essay[]>([]);
   const router = useRouter();
   const { debouncedFunction } = useDebounce((term: string) => {
-    searchEssay("public", term)
+    searchEssay(pageType, term)
       .then((response) => {
         setListData(response.data);
       })

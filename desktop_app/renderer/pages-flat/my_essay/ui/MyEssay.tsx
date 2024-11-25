@@ -15,6 +15,7 @@ import { searchEssay } from "@/shared/api";
 import { Essay } from "@/shared/types";
 import { Tab } from "@/shared/ui/tab";
 import { getEssays } from "@/shared/api";
+import { SearchModal } from "@/features/activeModal/search";
 
 const Layout = styled.div`
   width: 100vw;
@@ -66,6 +67,7 @@ function MyEssay() {
   const [page, setPage] = useState(1);
   const [listCount, setListCount] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [isSearchModalOpen, setSearchModalOpen] = useState(false);
 
   const router = useRouter();
   const handleAlarmButtonClick = () => {
@@ -93,25 +95,7 @@ function MyEssay() {
       }, 3000);
     }
   };
-  const { debouncedFunction } = useDebounce((term: string) => {
-    const pageType =
-      activeTab === 0 ? "private" : activeTab === 1 ? "public" : "private";
-    if (activeTab === 2) {
-      return;
-    }
 
-    searchEssay(pageType, term)
-      .then((response) => {
-        setListData(response.data);
-        setListCount(response.total);
-      })
-      .catch((error) => {
-        console.error("API 호출 오류:", error);
-      });
-  }, 300);
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    debouncedFunction(event.target.value);
-  };
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
     setPage(1);
@@ -153,9 +137,17 @@ function MyEssay() {
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
+  const modlaHandler = (name: string) => {
+    if (name === "search") {
+      setSearchModalOpen((prev) => !prev);
+    }
+  };
 
   return (
     <Layout>
+      {isSearchModalOpen && (
+        <SearchModal modlaHandler={modlaHandler} pageType="private"></SearchModal>
+      )}
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -178,7 +170,7 @@ function MyEssay() {
             />
           )}
           <ContentsContainer ismodalopen={isModalOpen}>
-            <Header handleSearchChange={handleSearchChange} />
+            <Header modlaHandler={modlaHandler}/>
             {!isModalOpen && (
               <>
                 <StyledWriteButton onClick={handleClick} />

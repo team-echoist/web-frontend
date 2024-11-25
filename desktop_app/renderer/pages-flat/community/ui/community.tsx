@@ -7,10 +7,10 @@ import Banner from "./banner/Banner";
 import EssayList from "./contents/EssayList";
 import { Tab } from "@/shared/ui/tab";
 import FollowList from "./banner/FollowList";
-import Bookmark from "./modal/bookmark/Bookmark";
+import Bookmark from "@/features/activeModal/bookmark/ui/Bookmark"
 import { ColorToast } from "@/shared/ui/toast";
 import { allEssayDelete } from "@/shared/api/bookmark";
-import SearchModal from "./modal/search/SearchModal";
+import SearchModal from "@/features/activeModal/search/ui/SearchModal"
 
 const Layout = styled.main`
   width: 100vw;
@@ -109,7 +109,7 @@ function community() {
           type={isError ? "alert" : "normal"}
         />
       </ToastContainer>
-      {isSearchModalOpen && <SearchModal modlaHandler={modlaHandler} />}
+      {isSearchModalOpen && <SearchModal modlaHandler={modlaHandler} pageType="public"/>}
 
       {isSaveModalOpen && (
         <Bookmark

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DefaultLayout from "../DefaultLayout";
+import DefaultLayout from "../../ui/DefaultLayout";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 import { getBookmarks } from "@/shared/api/bookmark";

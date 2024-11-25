@@ -50,7 +50,6 @@ function ActiveAlramList({
         page: page,
         limit: 20,
       });
-      console.log("alerts",alerts)
       setAlarmList((prev: any) => [...prev, ...alerts]);
       if (page >= totalPage) {
         setHasMore(false);

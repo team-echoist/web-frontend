@@ -20,11 +20,11 @@ const UserName = styled.h1`
   line-height: 150%;
   margin-left: 30px;
 `;
-const SearchIcon = styled.button<{ isexpanded: boolean }>`
+const SearchIcon = styled.button`
   all: unset;
   cursor: pointer;
   position: absolute;
-  left: ${({ isexpanded }) => (isexpanded ? "78%" : "90.78%")};
+  left: 90.78%;
   transition: left 0.3s ease;
   top: 37.63px;
 `;
@@ -70,25 +70,17 @@ const SearchInput = styled.input<{ isexpanded: boolean }>`
         `}
 `;
 interface HeaderProps {
-  handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  modlaHandler: (name: string) => void;
 }
-function Header({ handleSearchChange }: HeaderProps) {
+function Header({ modlaHandler }: HeaderProps) {
   const user = useStore((state) => state.user);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const handleButtonClick = () => {
-    setIsExpanded((prev) => !prev);
-  };
+
   return (
     <Layout>
       <UserName>{user?.nickname} 님</UserName>
-      <SearchIcon isexpanded={isExpanded} onClick={handleButtonClick}>
+      <SearchIcon onClick={()=>modlaHandler("search")}>
         <Search />
       </SearchIcon>
-      <SearchInput
-        onChange={handleSearchChange}
-        isexpanded={isExpanded}
-        placeholder="검색할 내용을 입력해주세요..."
-      ></SearchInput>
     </Layout>
   );
 }
