@@ -146,7 +146,7 @@ function MyEssay() {
   return (
     <Layout>
       {isSearchModalOpen && (
-        <SearchModal modlaHandler={modlaHandler} pageType="private"></SearchModal>
+        <SearchModal modlaHandler={modlaHandler} pageType="search"></SearchModal>
       )}
       <ToastContainer>
         <ColorToast
@@ -170,7 +170,7 @@ function MyEssay() {
             />
           )}
           <ContentsContainer ismodalopen={isModalOpen}>
-            <Header modlaHandler={modlaHandler}/>
+            <Header modlaHandler={modlaHandler} isModalOpen={isModalOpen}/>
             {!isModalOpen && (
               <>
                 <StyledWriteButton onClick={handleClick} />

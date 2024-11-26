@@ -71,16 +71,19 @@ const SearchInput = styled.input<{ isexpanded: boolean }>`
 `;
 interface HeaderProps {
   modlaHandler: (name: string) => void;
+  isModalOpen: boolean;
 }
-function Header({ modlaHandler }: HeaderProps) {
+function Header({ modlaHandler, isModalOpen }: HeaderProps) {
   const user = useStore((state) => state.user);
 
   return (
     <Layout>
       <UserName>{user?.nickname} 님</UserName>
-      <SearchIcon onClick={()=>modlaHandler("search")}>
-        <Search />
-      </SearchIcon>
+      {!isModalOpen && (
+        <SearchIcon onClick={() => modlaHandler("search")}>
+          <Search />
+        </SearchIcon>
+      )}
     </Layout>
   );
 }
