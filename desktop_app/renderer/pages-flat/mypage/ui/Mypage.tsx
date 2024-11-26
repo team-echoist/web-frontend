@@ -67,7 +67,7 @@ export const Mypage = () => {
     <Layout>
       <ActiveSideBar />
       <ContentsContainer>
-        <H1>MY</H1>
+        <H1>프로필</H1>
         <Header />
         <TitleDiv>
           <Span>링크드아웃 뱃지</Span>

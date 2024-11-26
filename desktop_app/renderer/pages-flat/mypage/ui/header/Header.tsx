@@ -13,7 +13,7 @@ const Layout = styled.div`
   height: 326px;
   display: flex;
   justify-content: center;
-  margin-bottom:20px;
+  margin-bottom:39px;
 `;
 const Wrapper = styled.div`
   height: 100%;

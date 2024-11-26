@@ -21,7 +21,7 @@ const Layout = styled.article`
 `;
 const Wrapper = styled.div`
   width: 80%;
-  margin-top: 26px;
+  // margin-top: 26px;
 `;
 const H1 = styled.h1`
   color: ${color.pointcolor};
