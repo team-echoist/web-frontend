@@ -17,10 +17,11 @@ const ContentsContainer = styled.article`
   top: 32px;
   left: 265px;
   width: calc(100vw - 270px);
-  height: 90vh;
+  // height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom:50px;
 `;
 const H1 = styled.h1`
   color: ${color.white};

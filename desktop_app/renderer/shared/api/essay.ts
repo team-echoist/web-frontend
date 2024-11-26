@@ -194,13 +194,13 @@ export const getFollowingsEssay = async (page: number) => {
     return { data: [], status: 500, totalPage: null };
   }
 };
-export const searchEssay = async (pageType:string,keyword:string) => {
+export const searchEssay = async (pageType: string, keyword: string) => {
   try {
     const params = {
       pageType: pageType,
       keyword: keyword,
     };
-    const { data, status, } = await fetchData<any>(
+    const { data, status } = await fetchData<any>(
       "essays/search",
       "get",
       null,
@@ -208,7 +208,37 @@ export const searchEssay = async (pageType:string,keyword:string) => {
         params,
       }
     );
-    return { data: data.essays, totalPage: data.totalPage,total:data.total, status };
+    return {
+      data: data.essays,
+      totalPage: data.totalPage,
+      total: data.total,
+      status,
+    };
+  } catch (err) {
+    return { data: [], status: 500 };
+  }
+};
+
+export const getRecentEssay = async (page: number, limit: number) => {
+  try {
+    const params = {
+      page: page,
+      limit: limit,
+    };
+    const { data, status } = await fetchData<any>(
+      "essays/recent",
+      "get",
+      null,
+      {
+        params,
+      }
+    );
+    return {
+      data: data.essays,
+      totalPage: data.totalPage,
+      total: data.total,
+      status,
+    };
   } catch (err) {
     return { data: [], status: 500 };
   }
