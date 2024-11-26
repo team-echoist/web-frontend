@@ -8,15 +8,14 @@ import color from "@/shared/styles/color";
 import { getUserProfile } from "@/shared/api/user";
 
 const Layout = styled.div`
-  position: absolute;
-  top: 80.97px;
-  width: 90%;
+  margin-top:100px;
+  width: 100%;
   height: 326px;
   display: flex;
   justify-content: center;
+  margin-bottom:20px;
 `;
 const Wrapper = styled.div`
-  width: 63.48%;
   height: 100%;
 `;
 const ProfileImageDiv = styled.div`
@@ -105,7 +104,6 @@ function Header() {
       console.log(err);
     }
   };
-  console.log("test",essaystats)
   return (
     <Layout>
       <Wrapper>

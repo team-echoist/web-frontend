@@ -198,16 +198,9 @@ function Banner() {
       </TitleDiv>
       <ContentDiv>
         {sentence.map((group: any[], groupIndex: number) => {
-          console.log(`Rendering group ${groupIndex}`, group); // 그룹 디버깅
-
           return (
             <ContentItemDiv key={`group-${groupIndex}`}>
               {group.map((chip, chipIndex) => {
-                console.log(
-                  `Rendering chip in group ${groupIndex}, chip ${chipIndex}`,
-                  chip
-                ); // 칩 디버깅
-
                 return (
                   <ChipContainer key={`chip-${groupIndex}-${chipIndex}`}>
                     <Chip

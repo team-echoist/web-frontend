@@ -1,6 +1,5 @@
 import { fetchData } from "./fetchData";
 
-
 export const getUserProfile = async (id: number) => {
   try {
     const { data, status } = await fetchData<any>(`users/profile/${id}`, "get");
