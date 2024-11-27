@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ActiveSideBar } from "@/features/activesidebar";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
@@ -6,6 +6,11 @@ import Header from "./header/Header";
 import { ActiveBadge } from "@/features/activeBadge";
 import WhiteArrow from "@/shared/assets/img/white_arrow.svg";
 import RecentEssay from "./contents/RecentEssay";
+import { WideModal } from "@/shared/ui/modal";
+import ModalContents from "./contents/modal/ModalContents";
+import { ColorToast } from "@/shared/ui/toast";
+import { putUserInfo } from "@/shared/api/user";
+import { useStore } from "@/shared/store";
 
 const Layout = styled.main`
   width: 100vw;
@@ -21,7 +26,7 @@ const ContentsContainer = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom:50px;
+  padding-bottom: 50px;
 `;
 const H1 = styled.h1`
   color: ${color.white};
@@ -58,14 +63,76 @@ const Chip = styled.div`
   border-radius: 42px;
   background: #191919;
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
-  
-  color:${color.pointcolor}
+  color: ${color.pointcolor};
 `;
+const ToastContainer = styled.div`
+  position: fixed;
+  top: 80%;
+  left: 36%;
+  z-index: 1200;
+`;
+
+interface User {
+  email?: string;
+  nickname?: string;
+  password?: string;
+  gender?: string;
+  profileImage?: string;
+  birthDate?: string;
+  isFirst?: boolean;
+  locationConsent?: boolean;
+}
 export const Mypage = () => {
+  const [isError, setIsError] = useState(false);
+  const [toastText, setToastText] = useState("닉네임이 변경 되었습니다.");
+  const [isShowToast, setIsShowToast] = useState(false);
+  const setUser = useStore((state) => state.setUser);
+
+  const toastHandler = (text: string, isError: boolean) => {
+    setIsShowToast(true);
+    setToastText(text);
+    setIsError(isError);
+    if (isError) {
+      setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+    }
+  };
+
+  const editUserInfo = async (body: User) => {
+    try {
+      const { status, data } = await putUserInfo(body);
+      if (status === 200) {
+        setUser(data);
+        toastHandler("닉네임이 변경 되었습니다.", false);
+      } else {
+        setIsError(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Layout>
+      <ToastContainer>
+        <ColorToast
+          text={toastText}
+          onClose={() => {
+            setIsShowToast(false);
+          }}
+          isShowToast={isShowToast}
+          type={isError ? "alert" : "normal"}
+        />
+      </ToastContainer>
+      <WideModal isOpen={true}>
+        <ModalContents
+          isError={isError}
+          editUserInfo={editUserInfo}
+          setIsError={setIsError}
+        ></ModalContents>
+      </WideModal>
       <ActiveSideBar />
       <ContentsContainer>
         <H1>프로필</H1>

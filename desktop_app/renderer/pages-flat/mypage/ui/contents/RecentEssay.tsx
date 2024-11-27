@@ -4,12 +4,12 @@ import { getRecentEssay } from "@/shared/api";
 import color from "@/shared/styles/color";
 import { Essay } from "@/shared/types";
 import { useRouter } from "next/navigation";
-import Devider from "@/shared/assets/img/devider.svg";
 
 const Layout = styled.div`
   width: 758px;
   display: flex;
   gap: 32px;
+  min-height: 168px;
 `;
 const Card = styled.div<{ islast: boolean }>`
   width: 220px;
@@ -38,7 +38,18 @@ const Desc = styled.p`
   line-height: 170%; /* 23.8px */
   letter-spacing: 0.14px;
 `;
-
+const NoneContentsLayout = styled.div`
+ width: 100%;
+  color: #686868;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 function RecentEssay() {
   const [data, setData] = useState<Essay[]>([]);
   const router = useRouter();
@@ -63,17 +74,23 @@ function RecentEssay() {
   };
   return (
     <Layout>
-      {data.map((item, index) => (
-        <Card
-          islast={data.length !== index + 1}
-          onClick={() => {
-            navigateToEssay(item.id, item.status);
-          }}
-        >
-          <Title>{item?.title}</Title>
-          <Desc>{item?.content}</Desc>
-        </Card>
-      ))}
+      {data.length > 0 ? (
+        <>
+          {data.map((item, index) => (
+            <Card
+              islast={data.length !== index + 1}
+              onClick={() => {
+                navigateToEssay(item.id, item.status);
+              }}
+            >
+              <Title>{item?.title}</Title>
+              <Desc>{item?.content}</Desc>
+            </Card>
+          ))}
+        </>
+      ) : (
+        <NoneContentsLayout>최근 본 글이 없습니다.</NoneContentsLayout>
+      )}
     </Layout>
   );
 }
