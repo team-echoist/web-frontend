@@ -88,6 +88,7 @@ export const Mypage = () => {
   const [isError, setIsError] = useState(false);
   const [toastText, setToastText] = useState("닉네임이 변경 되었습니다.");
   const [isShowToast, setIsShowToast] = useState(false);
+  const [isShowProfileModal, setIsShowProfileModal] = useState(false);
   const setUser = useStore((state) => state.setUser);
 
   const toastHandler = (text: string, isError: boolean) => {
@@ -114,6 +115,9 @@ export const Mypage = () => {
       console.log(err);
     }
   };
+  const handleProfileModal = () => {
+    setIsShowProfileModal(!isShowProfileModal);
+  };
   return (
     <Layout>
       <ToastContainer>
@@ -126,17 +130,18 @@ export const Mypage = () => {
           type={isError ? "alert" : "normal"}
         />
       </ToastContainer>
-      <WideModal isOpen={true}>
+      <WideModal isOpen={isShowProfileModal} onClose={handleProfileModal}>
         <ModalContents
           isError={isError}
           editUserInfo={editUserInfo}
           setIsError={setIsError}
-        ></ModalContents>
+          handleProfileModal={handleProfileModal}
+        />
       </WideModal>
       <ActiveSideBar />
       <ContentsContainer>
         <H1>프로필</H1>
-        <Header />
+        <Header handleProfileModal={handleProfileModal}/>
         <TitleDiv>
           <Span>링크드아웃 뱃지</Span>
           <WhiteArrow />

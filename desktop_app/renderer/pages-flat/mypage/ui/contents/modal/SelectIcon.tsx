@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import DefaultProfile from "@/shared/assets/img/profile/profile_icon_01.webp";
 import Image from "next/image";
@@ -73,7 +73,6 @@ function SelectIcon() {
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -97,7 +96,34 @@ function SelectIcon() {
       }
     }
   };
+  const handleExampleImageClick = async (imageSrc: string, index: number) => {
+    try {
+      // 이미지 fetch 후 Blob으로 변환
+      const response = await fetch(imageSrc);
+      const blob = await response.blob();
 
+      // Blob을 File로 변환
+      const file = new File([blob], `profile${index + 1}.webp`, {
+        type: blob.type,
+      });
+
+      // FormData 생성 및 이미지 추가
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const { status, data } = await postImages(formData);
+      if (status === 200 || status === 201) {
+        const body = {
+          profileImage: data.imageUrl,
+        };
+        const response = await putUserInfo(body);
+        setUser(response.data);
+        setProfileImage(response.data.profileImage)
+      }
+    } catch (error) {
+      console.error("Image upload failed:", error);
+    }
+  };
   return (
     <Layout>
       <ProfileImageDiv>
@@ -132,6 +158,7 @@ function SelectIcon() {
             alt={`Example profile ${index + 1}`}
             width={120}
             height={120}
+            onClick={() => handleExampleImageClick(profile.src, index)}
           />
         ))}
       </ExampleProfileDiv>

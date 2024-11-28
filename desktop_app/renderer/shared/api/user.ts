@@ -31,7 +31,7 @@ export const putUserInfo = async (body: User) => {
 
 export const postImages = async (image: FormData) => {
   try {
-    const { status, data } = await fetchData<any>(`users`, "put", image);
+    const { status, data } = await fetchData<any>(`users/images`, "post", image);
     return { status: status, data: data };
   } catch (err) {
     return { status: 500 };

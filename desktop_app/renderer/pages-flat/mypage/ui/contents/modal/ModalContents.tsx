@@ -19,10 +19,12 @@ function ModalContents({
   isError,
   editUserInfo,
   setIsError,
+  handleProfileModal
 }: {
   isError: boolean;
   editUserInfo: (body: User) => void;
   setIsError: React.Dispatch<React.SetStateAction<boolean>>;
+  handleProfileModal:()=>void;
 }) {
   const user = useStore((state) => state.user);
   const suffix = "아무개";
@@ -48,6 +50,7 @@ function ModalContents({
         nickname={nickname}
         isProfileEdit={isProfileEdit}
         handleEdit={handleEdit}
+        handleProfileModal={handleProfileModal}
       />
       {isProfileEdit ? (
         <SelectIcon />

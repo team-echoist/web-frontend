@@ -8,12 +8,12 @@ import color from "@/shared/styles/color";
 import { getUserProfile } from "@/shared/api/user";
 
 const Layout = styled.div`
-  margin-top:100px;
+  margin-top: 100px;
   width: 100%;
   height: 326px;
   display: flex;
   justify-content: center;
-  margin-bottom:39px;
+  margin-bottom: 39px;
 `;
 const Wrapper = styled.div`
   height: 100%;
@@ -80,14 +80,14 @@ const GreyBigText = styled.span`
   font-weight: 500;
   line-height: 150%;
 `;
-interface stateType{
-  totalEssays:number;
-  publishedEssays:number;
-  linkedOutEssays:number;
+interface stateType {
+  totalEssays: number;
+  publishedEssays: number;
+  linkedOutEssays: number;
 }
-function Header() {
+function Header({ handleProfileModal }: { handleProfileModal: () => void }) {
   const user = useStore((state) => state.user);
-  const [essaystats,setEssaystats] =useState<stateType|null>(null)
+  const [essaystats, setEssaystats] = useState<stateType | null>(null);
   useEffect(() => {
     if (user && user.id) {
       fetchUserProfile();
@@ -97,7 +97,7 @@ function Header() {
   const fetchUserProfile = async () => {
     try {
       const { data, status } = await getUserProfile(user?.id || 0);
-      if(status ===200){
+      if (status === 200) {
         setEssaystats(data);
       }
     } catch (err) {
@@ -134,7 +134,7 @@ function Header() {
           </StatisticsItemDiv>
         </OverviewDiv>
         <BtnDiv>
-          <Button text="프로필 편집" scale="max" />
+          <Button text="프로필 편집" scale="max" onClick={handleProfileModal}/>
         </BtnDiv>
       </Wrapper>
     </Layout>

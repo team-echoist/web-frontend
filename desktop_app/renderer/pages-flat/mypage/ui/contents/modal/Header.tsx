@@ -58,12 +58,14 @@ function Header({
   editUserInfo,
   nickname,
   isProfileEdit,
-  handleEdit
+  handleEdit,
+  handleProfileModal
 }: {
   editUserInfo: (body: User) => void;
   nickname: string;
   isProfileEdit: boolean;
   handleEdit:()=>void;
+  handleProfileModal:() =>void;
 }) {
   const onSubmit = () => {
     const body = {
@@ -74,7 +76,7 @@ function Header({
   const editProfileNameRenderer = () => {
     return (
       <>
-        <GreyBtn>취소</GreyBtn>
+        <GreyBtn onClick={handleProfileModal}>취소</GreyBtn>
         <Title>프로필 편집</Title>
         <Btn onClick={onSubmit}>완료</Btn>
       </>
