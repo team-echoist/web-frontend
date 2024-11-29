@@ -53,10 +53,10 @@ const ListItemDiv = styled.div`
 `;
 
 function SearchModal({
-  modlaHandler,
+  modalHandler,
   pageType
 }: {
-  modlaHandler: (name: string) => void;
+  modalHandler: (name: string) => void;
   pageType:string;
 }) {
   const [listData, setListData] = useState<Essay[]>([]);
@@ -81,7 +81,7 @@ function SearchModal({
     }
   };
   return (
-    <DefaultLayout modlaHandler={modlaHandler} name="search">
+    <DefaultLayout modalHandler={modalHandler} name="search">
       <InputContainer>
         <Icon>
           <WhiteSearch />

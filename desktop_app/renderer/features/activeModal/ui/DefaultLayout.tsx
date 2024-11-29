@@ -18,16 +18,16 @@ const PrevBtn = styled.button`
 
 function DefaultLayout({
   children,
-  modlaHandler,
+  modalHandler,
   name
 }: {
   children: React.ReactNode;
-  modlaHandler: (name: string) => void;
+  modalHandler: (name: string) => void;
   name:string
 }) {
   return (
     <Layout>
-      <PrevBtn onClick={()=>modlaHandler(name)}>
+      <PrevBtn onClick={()=>modalHandler(name)}>
         <PrevButtonImg />
       </PrevBtn>
       {children}

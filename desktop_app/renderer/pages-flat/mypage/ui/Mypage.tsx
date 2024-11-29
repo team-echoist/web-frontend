@@ -11,6 +11,7 @@ import ModalContents from "./contents/modal/ModalContents";
 import { ColorToast } from "@/shared/ui/toast";
 import { putUserInfo } from "@/shared/api/user";
 import { useStore } from "@/shared/store";
+import { RecentEssayModal } from "@/features/activeModal/recentessay";
 
 const Layout = styled.main`
   width: 100vw;
@@ -89,6 +90,7 @@ export const Mypage = () => {
   const [toastText, setToastText] = useState("닉네임이 변경 되었습니다.");
   const [isShowToast, setIsShowToast] = useState(false);
   const [isShowProfileModal, setIsShowProfileModal] = useState(false);
+  const [isShowRecentModal, setIsShowRecentModal] = useState(false);
   const setUser = useStore((state) => state.setUser);
 
   const toastHandler = (text: string, isError: boolean) => {
@@ -118,8 +120,16 @@ export const Mypage = () => {
   const handleProfileModal = () => {
     setIsShowProfileModal(!isShowProfileModal);
   };
+
+  const modalHandler = (name: string) => {
+    if (name === "recent") {
+      setIsShowRecentModal(!isShowRecentModal);
+    }
+  };
+
   return (
     <Layout>
+      {isShowRecentModal && <RecentEssayModal modalHandler={modalHandler} />}
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -141,7 +151,7 @@ export const Mypage = () => {
       <ActiveSideBar />
       <ContentsContainer>
         <H1>프로필</H1>
-        <Header handleProfileModal={handleProfileModal}/>
+        <Header handleProfileModal={handleProfileModal} />
         <TitleDiv>
           <Span>링크드아웃 뱃지</Span>
           <WhiteArrow />
@@ -149,7 +159,11 @@ export const Mypage = () => {
         <ActiveBadge></ActiveBadge>
         <TitleDiv>
           <Span>최근 본 글</Span>
-          <WhiteArrow />
+          <WhiteArrow
+            onClick={() => {
+              modalHandler("recent");
+            }}
+          />
         </TitleDiv>
         <RecentEssay></RecentEssay>
         <TitleDiv>

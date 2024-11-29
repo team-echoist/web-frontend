@@ -92,7 +92,7 @@ function community() {
     }
   };
 
-  const modlaHandler = (name: string) => {
+  const modalHandler = (name: string) => {
     if (name === "bookmark") {
       setSaveModalOpen((prev) => !prev);
     }
@@ -114,19 +114,19 @@ function community() {
         />
       </ToastContainer>
       {isSearchModalOpen && (
-        <SearchModal modlaHandler={modlaHandler} pageType="public" />
+        <SearchModal modalHandler={modalHandler} pageType="public" />
       )}
 
       {isSaveModalOpen && (
         <Bookmark
           deleteSavedEssays={deleteSavedEssays}
-          modlaHandler={modlaHandler}
+          modalHandler={modalHandler}
         />
       )}
       <ScrollTop bottom="131px" />
       <ActiveSideBar />
       <Container activeTab={activeTab}>
-        <Header activeTab={activeTab} modlaHandler={modlaHandler} />
+        <Header activeTab={activeTab} modlaHandler={modalHandler} />
         <TabContainer>
           <Tab
             tabData={tab}
