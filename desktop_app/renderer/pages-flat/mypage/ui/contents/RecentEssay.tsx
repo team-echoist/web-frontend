@@ -11,13 +11,13 @@ const Layout = styled.div`
   gap: 32px;
   min-height: 168px;
 `;
-const Card = styled.div<{ islast: boolean }>`
+const Card = styled.div<{ isnotlast: boolean }>`
   width: 220px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   cursor: pointer;
-  border-right: ${({ islast }) => (islast ? "1px solid #333" : "")};
+  border-right: ${({ isnotlast }) => (isnotlast ? "1px solid #333" : "")};
   padding-right: 20px;
 `;
 const Title = styled.span`
@@ -39,7 +39,7 @@ const Desc = styled.p`
   letter-spacing: 0.14px;
 `;
 const NoneContentsLayout = styled.div`
- width: 100%;
+  width: 100%;
   color: #686868;
   font-family: Pretendard;
   font-size: 16px;
@@ -78,7 +78,7 @@ function RecentEssay() {
         <>
           {data.map((item, index) => (
             <Card
-              islast={data.length !== index + 1}
+              isnotlast={data.length !== index + 1}
               onClick={() => {
                 navigateToEssay(item.id, item.status);
               }}
