@@ -75,8 +75,7 @@ const Strong = styled.strong`
 const ProgressBarContainer = styled.div`
   width: 520px;
   height: 30.754px;
-  background-color: ${color.pointcolor};
-  opacity: 0.3;
+   background-color:rgba(97, 111, 237, 0.3);
   border-radius: 10px;
   overflow: hidden;
   position: relative;
@@ -84,7 +83,7 @@ const ProgressBarContainer = styled.div`
 `;
 
 const Progress = styled.div<{ progress: number }>`
-  width: ${(props) => props.progress}%;
+  width: ${(props) =>  Math.min(props.progress, 100)}%;
   height: 100%;
   background-color: ${color.pointcolor};
   transition: width 0.3s ease;
