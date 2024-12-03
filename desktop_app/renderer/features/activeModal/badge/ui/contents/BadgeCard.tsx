@@ -13,7 +13,6 @@ import ActiveBadge4 from "@/shared/assets/img/img_badge_activate/img_badge4_acti
 import ActiveBadge5 from "@/shared/assets/img/img_badge_activate/img_badge5_activate.svg";
 import color from "@/shared/styles/color";
 import Arrow from "@/shared/assets/img/badge_arrow.svg";
-import { getBadgeDetails } from "@/shared/api";
 import Reward from "./Reward";
 
 const Layout = styled.div`
@@ -201,13 +200,15 @@ interface BadgeWithTags extends Badge {
 function BadgeCard({
   badge,
   fetchBadgeList,
+  badgeDetails,
 }: {
   badge: Badge;
   fetchBadgeList: () => void;
+  badgeDetails: BadgeWithTags[];
 }) {
   const badgeInfo = badgeArr.find((item) => item.name === badge.name);
   const [BadgeDetailName, setBadgeDetailName] = useState<null | string>(null);
-  const [badgeDetails, setBadgeDetails] = useState<BadgeWithTags[]>([]);
+
   let selectedDetail =
     badgeDetails.find((item) => item.name === BadgeDetailName) || null;
 
@@ -219,20 +220,6 @@ function BadgeCard({
     }
   };
 
-  useEffect(() => {
-    fetchBadgeDetails();
-  }, []);
-
-  const fetchBadgeDetails = async () => {
-    try {
-      const { data, status } = await getBadgeDetails();
-      if (status === 200) {
-        setBadgeDetails(data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
   return (
     <Layout>
       {badgeInfo && (

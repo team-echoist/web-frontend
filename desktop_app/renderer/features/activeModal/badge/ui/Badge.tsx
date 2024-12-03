@@ -5,6 +5,7 @@ import color from "@/shared/styles/color";
 import BadgeCard from "./contents/BadgeCard";
 import { Badge } from "@/shared/types";
 import { getBadges } from "@/shared/api";
+import { getBadgeDetails } from "@/shared/api";
 
 const H1 = styled.h1`
   color: ${color.white};
@@ -26,12 +27,16 @@ const BadgeLayout = styled.div`
   margin-top:52px;
   margin-bottom:50px;
 `;
+interface BadgeWithTags extends Badge {
+    tags?: string[];
+  }
 function BadgeModal({
   modalHandler,
 }: {
   modalHandler: (name: string) => void;
 }) {
   const [badgeList, setBadgeList] = useState<Badge[]>([]);
+  const [badgeDetails, setBadgeDetails] = useState<BadgeWithTags[]>([]);
   useEffect(() => {
     fetchBadgeList();
   }, []);
@@ -46,12 +51,26 @@ function BadgeModal({
       console.log(err);
     }
   };
+  useEffect(() => {
+    fetchBadgeDetails();
+  }, []);
+
+  const fetchBadgeDetails = async () => {
+    try {
+      const { data, status } = await getBadgeDetails();
+      if (status === 200) {
+        setBadgeDetails(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <DefaultLayout modalHandler={modalHandler} name="badge">
       <H1>링크드아웃 뱃지</H1>
       <BadgeLayout>
         {badgeList.map((badge) => (
-          <BadgeCard badge={badge} fetchBadgeList={fetchBadgeList}/>
+          <BadgeCard badge={badge} fetchBadgeList={fetchBadgeList} badgeDetails={badgeDetails}/>
         ))}
       </BadgeLayout>
     </DefaultLayout>
