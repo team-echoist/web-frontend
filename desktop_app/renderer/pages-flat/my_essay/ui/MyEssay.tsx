@@ -137,7 +137,7 @@ function MyEssay() {
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
-  const modlaHandler = (name: string) => {
+  const modalHandler = (name: string) => {
     if (name === "search") {
       setSearchModalOpen((prev) => !prev);
     }
@@ -146,7 +146,7 @@ function MyEssay() {
   return (
     <Layout>
       {isSearchModalOpen && (
-        <SearchModal modlaHandler={modlaHandler} pageType="search"></SearchModal>
+        <SearchModal modalHandler={modalHandler} pageType="search"></SearchModal>
       )}
       <ToastContainer>
         <ColorToast
@@ -170,7 +170,7 @@ function MyEssay() {
             />
           )}
           <ContentsContainer ismodalopen={isModalOpen}>
-            <Header modlaHandler={modlaHandler} isModalOpen={isModalOpen}/>
+            <Header modalHandler={modalHandler} isModalOpen={isModalOpen}/>
             {!isModalOpen && (
               <>
                 <StyledWriteButton onClick={handleClick} />
