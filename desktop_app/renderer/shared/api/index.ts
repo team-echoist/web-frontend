@@ -4,3 +4,4 @@ export * from "./essay";
 export * from "./story";
 export * from "./essay";
 export * from "./follow"
+export * from "./badge"

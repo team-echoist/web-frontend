@@ -3,13 +3,14 @@ import styled from "styled-components";
 import PrevButtonImg from "@/shared/assets/img/prevbutton.svg";
 const Layout = styled.div`
   width: 100%;
-  height: 100vh;
+  max-height: 92vh;
   z-index: 500;
   background: #121212;
   position: fixed;
   top: 32px;
   left: 265px;
   padding: 10px;
+  overflow-y: auto;
 `;
 const PrevBtn = styled.button`
   all: unset;

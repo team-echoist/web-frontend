@@ -12,6 +12,7 @@ import { ColorToast } from "@/shared/ui/toast";
 import { putUserInfo } from "@/shared/api/user";
 import { useStore } from "@/shared/store";
 import { RecentEssayModal } from "@/features/activeModal/recentessay";
+import { BadgeModal } from "@/features/activeModal/badge";
 
 const Layout = styled.main`
   width: 100vw;
@@ -91,6 +92,7 @@ export const Mypage = () => {
   const [isShowToast, setIsShowToast] = useState(false);
   const [isShowProfileModal, setIsShowProfileModal] = useState(false);
   const [isShowRecentModal, setIsShowRecentModal] = useState(false);
+  const [isShowBadgeModal, setIsShowBadgeModal] = useState(false);
   const setUser = useStore((state) => state.setUser);
 
   const toastHandler = (text: string, isError: boolean) => {
@@ -123,13 +125,17 @@ export const Mypage = () => {
 
   const modalHandler = (name: string) => {
     if (name === "recent") {
-      setIsShowRecentModal(!isShowRecentModal);
+      setIsShowRecentModal((prev) => !prev);
+    }
+    if (name === "badge") {
+      setIsShowBadgeModal((prev) => !prev);
     }
   };
 
   return (
     <Layout>
       {isShowRecentModal && <RecentEssayModal modalHandler={modalHandler} />}
+      {isShowBadgeModal && <BadgeModal modalHandler={modalHandler} />}
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -140,6 +146,7 @@ export const Mypage = () => {
           type={isError ? "alert" : "normal"}
         />
       </ToastContainer>
+
       <WideModal isOpen={isShowProfileModal} onClose={handleProfileModal}>
         <ModalContents
           isError={isError}
@@ -154,9 +161,13 @@ export const Mypage = () => {
         <Header handleProfileModal={handleProfileModal} />
         <TitleDiv>
           <Span>링크드아웃 뱃지</Span>
-          <WhiteArrow />
+          <WhiteArrow
+            onClick={() => {
+              modalHandler("badge");
+            }}
+          />
         </TitleDiv>
-        <ActiveBadge></ActiveBadge>
+        <ActiveBadge/>
         <TitleDiv>
           <Span>최근 본 글</Span>
           <WhiteArrow
