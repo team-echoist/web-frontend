@@ -141,14 +141,17 @@ export const Login = () => {
         if (socialAccessToken && socialRefreshToken) {
           try {
             // 소셜로그인 쿼리로 토큰이 세팅 되어있을때
-            const accessTokenExpiry = calculateExpiryDate(30);
-
             Cookies.set("accessToken", socialAccessToken, {
               expires: 1,
               secure: true,
               sameSite: "Strict",
             });
             Cookies.set("refreshToken", socialRefreshToken, {
+              expires: 30,
+              secure: true,
+              sameSite: "Strict",
+            });
+            Cookies.set("isOauth", "yes", {
               expires: 30,
               secure: true,
               sameSite: "Strict",
