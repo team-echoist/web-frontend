@@ -108,7 +108,7 @@ function Bookmark({ deleteSavedEssays, modalHandler }: BookmarkProps) {
           ...item,
           isChecked: selectedItems.some((selected) => selected === item.id),
         }));
-        setList(updatedData);
+        setList((prevList) => [...prevList, ...updatedData]);
         if (totalPage) {
           setTotalPage(totalPage);
         }
