@@ -13,6 +13,7 @@ import { putUserInfo } from "@/shared/api/user";
 import { useStore } from "@/shared/store";
 import { RecentEssayModal } from "@/features/activeModal/recentessay";
 import { BadgeModal } from "@/features/activeModal/badge";
+import { UserManage } from "@/features/activeModal/user_manage";
 
 const Layout = styled.main`
   width: 100vw;
@@ -93,6 +94,7 @@ export const Mypage = () => {
   const [isShowProfileModal, setIsShowProfileModal] = useState(false);
   const [isShowRecentModal, setIsShowRecentModal] = useState(false);
   const [isShowBadgeModal, setIsShowBadgeModal] = useState(false);
+  const [isShowUserManage, setIsShowUserManage] = useState(false);
   const setUser = useStore((state) => state.setUser);
 
   const toastHandler = (text: string, isError: boolean) => {
@@ -130,12 +132,16 @@ export const Mypage = () => {
     if (name === "badge") {
       setIsShowBadgeModal((prev) => !prev);
     }
+    if (name === "manage") {
+      setIsShowUserManage((prev) => !prev);
+    }
   };
 
   return (
     <Layout>
       {isShowRecentModal && <RecentEssayModal modalHandler={modalHandler} />}
       {isShowBadgeModal && <BadgeModal modalHandler={modalHandler} />}
+      {isShowUserManage&& <UserManage modalHandler={modalHandler} />}
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -167,7 +173,7 @@ export const Mypage = () => {
             }}
           />
         </TitleDiv>
-        <ActiveBadge/>
+        <ActiveBadge />
         <TitleDiv>
           <Span>최근 본 글</Span>
           <WhiteArrow
@@ -183,7 +189,11 @@ export const Mypage = () => {
         </TitleDiv>
         <TitleDiv>
           <Span>계정 관리</Span>
-          <WhiteArrow />
+          <WhiteArrow
+            onClick={() => {
+              modalHandler("manage");
+            }}
+          />
         </TitleDiv>
       </ContentsContainer>
     </Layout>
