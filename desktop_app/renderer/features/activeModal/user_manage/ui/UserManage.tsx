@@ -10,6 +10,7 @@ import { DarkBackground } from "@/shared/ui/background";
 import { Button } from "@/shared/ui/button";
 import { handleLogout } from "@/shared/lib/auth";
 import { useRouter } from "next/router";
+import WithDrawModal from "./withdraw/WithDrawModal";
 
 const H1 = styled.h1`
   color: ${color.white};
@@ -98,6 +99,7 @@ function UserManage({
   const user = useStore((state) => state.user);
   const [isOauth, setIsOauth] = useState<string | null>(null);
   const [isShowLogout, setShowLogout] = useState(false);
+  const [isShowWithDrawer, setShowWithDrawer] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -109,6 +111,9 @@ function UserManage({
   const submodalHandler = (name: string) => {
     if (name === "logout") {
       setShowLogout((prev) => !prev);
+    }
+    if (name === "withdraw") {
+      setShowWithDrawer((prev) => !prev);
     }
   };
 
@@ -133,13 +138,14 @@ function UserManage({
                 scale="small"
                 onClick={() => {
                   handleLogout();
-                  router.push("/web/login")
+                  router.push("/web/login");
                 }}
               />
             </BtnDiv>
           </BottomSheet>
         </DarkBackground>
       )}
+      {isShowWithDrawer && <WithDrawModal submodalHandler={submodalHandler} />}
 
       <ContentsContainer>
         <Wrapper>
@@ -167,7 +173,11 @@ function UserManage({
           </TabLayout>
           <TabLayout>
             <Span>탈퇴하기</Span>
-            <WhiteArrow />
+            <WhiteArrow
+              onClick={() => {
+                submodalHandler("withdraw");
+              }}
+            />
           </TabLayout>
         </Wrapper>
       </ContentsContainer>
