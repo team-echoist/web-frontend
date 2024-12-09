@@ -47,7 +47,7 @@ const Layout = styled.nav`
   width: 214px;
   height: 100vh;
   flex-shrink: 0;
-  z-index: 200;
+  z-index: 4000;
   border-right: 0.75px solid #191919;
   background: #121212;
   position: fixed;

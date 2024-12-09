@@ -23,7 +23,7 @@ const Layout = styled.nav`
   position: fixed;
   top: 32px;
   left: 259px;
-  z-index: 190;
+  z-index: 3000;
 `;
 const ProfileDiv = styled.div`
   width: 100%;
