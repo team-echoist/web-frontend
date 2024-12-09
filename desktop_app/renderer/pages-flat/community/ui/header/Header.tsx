@@ -41,10 +41,10 @@ const BookMarkBtn = styled.button<{ isexpanded: boolean }>`
 `;
 function Header({
   activeTab,
-  modlaHandler,
+  modalHandler,
 }: {
   activeTab: number;
-  modlaHandler: (name: string) => void;
+  modalHandler: (name: string) => void;
 }) {
   const isBlack = activeTab === 0 ? false : true;
   const [isExpanded, setIsExpanded] = useState(false);
@@ -56,13 +56,13 @@ function Header({
       <Title isblack={isBlack}>커뮤니티</Title>
       <SearchIcon
         isexpanded={isExpanded}
-        onClick={() => modlaHandler("search")}
+        onClick={() => modalHandler("search")}
       >
         {isBlack ? <WhiteSearch /> : <Search />}
       </SearchIcon>
       <BookMarkBtn
         isexpanded={isExpanded}
-        onClick={() => modlaHandler("bookmark")}
+        onClick={() => modalHandler("bookmark")}
       >
         {isBlack ? <PointedBookMark /> : <BlackBookMark />}
       </BookMarkBtn>

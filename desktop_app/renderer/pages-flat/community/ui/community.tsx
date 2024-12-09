@@ -50,11 +50,11 @@ function community() {
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
   const [isSearchModalOpen, setSearchModalOpen] = useState(false);
   const [selectedFollowId, setSelectedFollowId] = useState<null | number>(null);
-  const router =useRouter();
+  const router = useRouter();
 
-  const handleFollowId = (id:number) =>{
-    setSelectedFollowId(id)
-  }
+  const handleFollowId = (id: number) => {
+    setSelectedFollowId(id);
+  };
 
   const handleChangeActiveTab = (index: number) => {
     setActiveTab(index);
@@ -65,7 +65,12 @@ function community() {
       case 0:
         return <Banner />;
       case 1:
-        return <FollowList handleFollowId={handleFollowId} selectedFollowId={selectedFollowId}/>;
+        return (
+          <FollowList
+            handleFollowId={handleFollowId}
+            selectedFollowId={selectedFollowId}
+          />
+        );
       default:
         return <Banner />;
     }
@@ -105,7 +110,6 @@ function community() {
 
   return (
     <Layout>
-
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -129,8 +133,7 @@ function community() {
       <ScrollTop bottom="131px" />
       <ActiveSideBar />
       <Container activeTab={activeTab}>
-
-        <Header activeTab={activeTab} modlaHandler={modalHandler} />
+        <Header activeTab={activeTab} modalHandler={modalHandler} />
         <TabContainer>
           <Tab
             tabData={tab}
@@ -141,8 +144,17 @@ function community() {
           />
         </TabContainer>
         {renderBanner({ activeTab })}
-        <button onClick={()=>{router.push("/web/user_profile")}}>테스트</button>
-        <EssayList isRandomEssay={activeTab === 0} selectedFollowId={selectedFollowId}/>
+        <button
+          onClick={() => {
+            router.push("/web/user_profile");
+          }}
+        >
+          테스트
+        </button>
+        <EssayList
+          isRandomEssay={activeTab === 0}
+          selectedFollowId={selectedFollowId}
+        />
       </Container>
     </Layout>
   );
