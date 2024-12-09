@@ -55,8 +55,10 @@ AxiosInstance.interceptors.response.use(
       } else {
         Cookies.remove("refreshToken");
         Cookies.remove("accessToken");
+        Cookies.remove("isOauth");
         sessionStorage.removeItem("accessToken");
         sessionStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("isOauth");
         window.location.href = "/web/login";
       }
     }

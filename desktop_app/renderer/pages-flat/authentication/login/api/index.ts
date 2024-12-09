@@ -27,7 +27,6 @@ export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
     const refreshToken = data.refreshToken;
 
     if (accessToken && refreshToken) {
-      const accessTokenExpiry = calculateExpiryDate(30); 
       if (autoLoginCheck) {
         Cookies.set("accessToken", accessToken, {
           expires: 1,

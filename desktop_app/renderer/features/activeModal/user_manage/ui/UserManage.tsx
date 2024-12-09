@@ -11,6 +11,8 @@ import { Button } from "@/shared/ui/button";
 import { handleLogout } from "@/shared/lib/auth";
 import { useRouter } from "next/router";
 import WithDrawModal from "./withdraw/WithDrawModal";
+import ChangePassword from "./change_password/ChangePassword";
+import ChangeEmail from "./change_email/ChangeEmail";
 
 const H1 = styled.h1`
   color: ${color.white};
@@ -100,6 +102,8 @@ function UserManage({
   const [isOauth, setIsOauth] = useState<string | null>(null);
   const [isShowLogout, setShowLogout] = useState(false);
   const [isShowWithDrawer, setShowWithDrawer] = useState(false);
+  const [isShowChangePassword, setShowChangePassword] = useState(false);
+  const [isSHowChangeEmail, setIsShowChangeEmail] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -114,6 +118,12 @@ function UserManage({
     }
     if (name === "withdraw") {
       setShowWithDrawer((prev) => !prev);
+    }
+    if (name === "changepassword") {
+      setShowChangePassword((prev) => !prev);
+    }
+    if (name === "changeEmail") {
+      setIsShowChangeEmail((prev) => !prev);
     }
   };
 
@@ -146,7 +156,11 @@ function UserManage({
         </DarkBackground>
       )}
       {isShowWithDrawer && <WithDrawModal submodalHandler={submodalHandler} />}
+      {isShowChangePassword && (
+        <ChangePassword submodalHandler={submodalHandler} />
+      )}
 
+      {isSHowChangeEmail && <ChangeEmail submodalHandler={submodalHandler} />}
       <ContentsContainer>
         <Wrapper>
           <H2>로그인 정보</H2>
@@ -155,12 +169,22 @@ function UserManage({
               이메일 주소 {isOauth === "yes" ? "" : "변경"}
               <P>{user?.email}</P>
             </Span>
-            {isOauth !== "yes" && <WhiteArrow />}
+            {isOauth !== "yes" && (
+              <WhiteArrow
+                onClick={() => {
+                  submodalHandler("changeEmail");
+                }}
+              />
+            )}
           </TabLayout>
           {isOauth !== "yes" && (
             <TabLayout>
               <Span>비밀번호 변경</Span>
-              <WhiteArrow />
+              <WhiteArrow
+                onClick={() => {
+                  submodalHandler("changepassword");
+                }}
+              />
             </TabLayout>
           )}
           <TabLayout>

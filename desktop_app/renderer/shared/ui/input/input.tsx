@@ -2,11 +2,15 @@ import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 
-const SInput = styled.input<{ hasError?: boolean; hasValue?: boolean }>`
+const SInput = styled.input<{
+  hasError?: boolean;
+  hasValue?: boolean;
+  width: number;
+}>`
   all: unset;
   border-radius: 10px;
   background: #252525;
-  width: 442px;
+  width: ${({ width }) => (width ? `${width}px` : "442px")};
   height: 50px;
   flex-shrink: 0;
   box-sizing: border-box;
@@ -30,7 +34,8 @@ interface InputProps<T> {
   error?: boolean;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  maxLength?:number;
+  maxLength?: number;
+  width?: number;
 }
 
 export const Input = <
@@ -42,7 +47,8 @@ export const Input = <
   error,
   value,
   onChange,
-  maxLength
+  maxLength,
+  width,
 }: InputProps<T>) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
@@ -56,7 +62,7 @@ export const Input = <
       }));
     }
   };
-  const inputType = name === "password" ? "password" : "text";
+  const inputType = typeof name === "string" && name.includes("password") ? "password" : "text";
   return (
     <SInput
       placeholder={placeholder}
@@ -67,6 +73,7 @@ export const Input = <
       value={value}
       hasValue={(value && value?.length > 0) || false}
       maxLength={maxLength || undefined}
+      width={width ? width : 442}
     />
   );
 };
