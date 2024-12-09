@@ -11,6 +11,7 @@ import Bookmark from "@/features/activeModal/bookmark/ui/Bookmark";
 import { ColorToast } from "@/shared/ui/toast";
 import { allEssayDelete } from "@/shared/api/bookmark";
 import SearchModal from "@/features/activeModal/search/ui/SearchModal";
+import { useRouter } from "next/router";
 
 const Layout = styled.main`
   width: 100vw;
@@ -49,6 +50,7 @@ function community() {
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
   const [isSearchModalOpen, setSearchModalOpen] = useState(false);
   const [selectedFollowId, setSelectedFollowId] = useState<null | number>(null);
+  const router =useRouter();
 
   const handleFollowId = (id:number) =>{
     setSelectedFollowId(id)
@@ -103,6 +105,7 @@ function community() {
 
   return (
     <Layout>
+
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -126,6 +129,7 @@ function community() {
       <ScrollTop bottom="131px" />
       <ActiveSideBar />
       <Container activeTab={activeTab}>
+
         <Header activeTab={activeTab} modlaHandler={modalHandler} />
         <TabContainer>
           <Tab
@@ -137,6 +141,7 @@ function community() {
           />
         </TabContainer>
         {renderBanner({ activeTab })}
+        <button onClick={()=>{router.push("/web/user_profile")}}>테스트</button>
         <EssayList isRandomEssay={activeTab === 0} selectedFollowId={selectedFollowId}/>
       </Container>
     </Layout>

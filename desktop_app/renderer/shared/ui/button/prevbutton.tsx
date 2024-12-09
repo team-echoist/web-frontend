@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import { useStore } from "@/shared/store";
 
+
 const PrevBtn = styled.button`
   width: 24px;
   height: 20.5px;

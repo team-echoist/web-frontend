@@ -174,7 +174,7 @@ function UserManage({
               />
             )}
           </TabLayout>
-          {isOauth !== "yes" && (
+          {/* {isOauth !== "yes" && (
             <TabLayout>
               <Span>비밀번호 변경</Span>
               <WhiteArrow
@@ -183,7 +183,7 @@ function UserManage({
                 }}
               />
             </TabLayout>
-          )}
+          )} */}
           <TabLayout>
             <Span>로그아웃</Span>
             <WhiteArrow
