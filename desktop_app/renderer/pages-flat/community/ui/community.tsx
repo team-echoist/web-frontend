@@ -50,8 +50,7 @@ function community() {
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
   const [isSearchModalOpen, setSearchModalOpen] = useState(false);
   const [selectedFollowId, setSelectedFollowId] = useState<null | number>(null);
-  const router = useRouter();
-
+  
   const handleFollowId = (id: number) => {
     setSelectedFollowId(id);
   };
@@ -144,13 +143,6 @@ function community() {
           />
         </TabContainer>
         {renderBanner({ activeTab })}
-        <button
-          onClick={() => {
-            router.push("/web/user_profile");
-          }}
-        >
-          테스트
-        </button>
         <EssayList
           isRandomEssay={activeTab === 0}
           selectedFollowId={selectedFollowId}
