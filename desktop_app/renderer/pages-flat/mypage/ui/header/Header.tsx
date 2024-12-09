@@ -122,15 +122,15 @@ function Header({ handleProfileModal }: { handleProfileModal: () => void }) {
         <OverviewDiv>
           <StatisticsItemDiv>
             <GreyText>쓴글</GreyText>
-            <GreyBigText>{essaystats?.totalEssays}</GreyBigText>
+            <GreyBigText>{essaystats?.totalEssays??0}</GreyBigText>
           </StatisticsItemDiv>
           <StatisticsItemDiv>
             <GreyText>발행</GreyText>
-            <GreyBigText>{essaystats?.publishedEssays}</GreyBigText>
+            <GreyBigText>{essaystats?.publishedEssays??0}</GreyBigText>
           </StatisticsItemDiv>
           <StatisticsItemDiv>
             <GreyText>링크드아웃</GreyText>
-            <GreyBigText>{essaystats?.linkedOutEssays}</GreyBigText>
+            <GreyBigText>{essaystats?.linkedOutEssays??0}</GreyBigText>
           </StatisticsItemDiv>
         </OverviewDiv>
         <BtnDiv>

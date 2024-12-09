@@ -11,7 +11,7 @@ import { Button } from "@/shared/ui/button";
 import { handleLogout } from "@/shared/lib/auth";
 import { useRouter } from "next/router";
 import WithDrawModal from "./withdraw/WithDrawModal";
-import ChangePassword from "./change_password/ChangePassword";
+import ChangePassword from "./reset_password/ResetPassword";
 import ChangeEmail from "./change_email/ChangeEmail";
 
 const H1 = styled.h1`
@@ -156,9 +156,6 @@ function UserManage({
         </DarkBackground>
       )}
       {isShowWithDrawer && <WithDrawModal submodalHandler={submodalHandler} />}
-      {isShowChangePassword && (
-        <ChangePassword submodalHandler={submodalHandler} />
-      )}
 
       {isSHowChangeEmail && <ChangeEmail submodalHandler={submodalHandler} />}
       <ContentsContainer>

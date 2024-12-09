@@ -44,14 +44,48 @@ export const postImages = async (image: FormData) => {
 
 export const postWithdraw = async (reason: string) => {
   try {
-    const { status } = await fetchData<any>(
-      `auth/deactivate`,
-      "post",
-      reason
-    );
-    return { status: status};
+    const { status } = await fetchData<any>(`auth/deactivate`, "post", reason);
+    return { status: status };
   } catch (err) {
     return { status: 500 };
   }
 };
 
+export const postVerifyEmail = async (email: string) => {
+  try {
+    const body = {
+      email: email,
+    };
+    const { status } = await fetchData<any>(`auth/email/verify`, "post", body);
+    return { status: status };
+  } catch (err) {
+    return { status: 500 };
+  }
+};
+export const changeEmail = async (code: string) => {
+  try {
+    const body = {
+      code: code,
+    };
+    const { status } = await fetchData<any>(`auth/email/change`, "post", body);
+    return { status: status };
+  } catch (err) {
+    return { status: 500 };
+  }
+};
+
+export const resetPassword = async (email: string) => {
+  try {
+    const body = {
+      email: email,
+    };
+    const { status } = await fetchData<any>(
+      `auth/password/reset`,
+      "post",
+      body
+    );
+    return { status: status };
+  } catch (err) {
+    return { status: 500 };
+  }
+};
