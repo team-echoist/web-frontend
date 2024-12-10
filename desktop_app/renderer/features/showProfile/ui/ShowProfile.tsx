@@ -85,7 +85,7 @@ interface stateType {
   publishedEssays: number;
   linkedOutEssays: number;
 }
-function Header({ handleProfileModal }: { handleProfileModal: () => void }) {
+function ShowProfile({ handleProfileModal }: { handleProfileModal: () => void }) {
   const user = useStore((state) => state.user);
   const [essaystats, setEssaystats] = useState<stateType | null>(null);
   useEffect(() => {
@@ -141,4 +141,4 @@ function Header({ handleProfileModal }: { handleProfileModal: () => void }) {
   );
 }
 
-export default Header;
+export default ShowProfile;

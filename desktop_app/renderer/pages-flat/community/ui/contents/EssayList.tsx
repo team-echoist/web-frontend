@@ -8,6 +8,7 @@ import { getRandomEssays } from "@/shared/api";
 import { Virtuoso } from "react-virtuoso";
 import { getFollowingsEssay } from "@/shared/api";
 import { getAuthorEssays } from "@/shared/api";
+import { getFollows } from "@/shared/api/follow";
 
 const Layout = styled.article`
   width: calc(100vw - 270px);

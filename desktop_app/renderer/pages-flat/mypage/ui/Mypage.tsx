@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { ActiveSideBar } from "@/features/activesidebar";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
-import Header from "./header/Header";
 import { ActiveBadge } from "@/features/activeBadge";
 import WhiteArrow from "@/shared/assets/img/white_arrow.svg";
 import RecentEssay from "./contents/RecentEssay";
@@ -14,6 +13,7 @@ import { useStore } from "@/shared/store";
 import { RecentEssayModal } from "@/features/activeModal/recentessay";
 import { BadgeModal } from "@/features/activeModal/badge";
 import { UserManage } from "@/features/activeModal/user_manage";
+import { ShowProfile } from "@/features/showProfile";
 
 const Layout = styled.main`
   width: 100vw;
@@ -164,7 +164,7 @@ export const Mypage = () => {
       <ActiveSideBar />
       <ContentsContainer>
         <H1>프로필</H1>
-        <Header handleProfileModal={handleProfileModal} />
+        <ShowProfile handleProfileModal={handleProfileModal} />
         <TitleDiv>
           <Span>링크드아웃 뱃지</Span>
           <WhiteArrow
