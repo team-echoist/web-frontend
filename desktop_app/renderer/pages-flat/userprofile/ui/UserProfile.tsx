@@ -20,13 +20,15 @@ function UserProfile() {
   const router = useRouter();
   const { query } = router;
 
+  const isSubscribed = query.isSubscribed === "true";
   return (
     <>
       <ActiveSideBar />
       <ContentsContainer>
         <ShowProfile
           id={Number(query.id)}
-        ></ShowProfile>
+          isSubscribed={isSubscribed || false}
+        />
       </ContentsContainer>
     </>
   );

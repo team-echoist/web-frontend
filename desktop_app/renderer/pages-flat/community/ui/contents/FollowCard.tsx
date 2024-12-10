@@ -64,7 +64,7 @@ function FollowCard({ data }: { data: User }) {
   const router = useRouter();
 
   const navigateUserProfile = (id: number) => {
-    router.push(`/web/user_profile?id=${id}`);
+    router.push(`/web/user_profile?id=${id}&isSubscribed=true`);
   };
   return (
     <Card>

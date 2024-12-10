@@ -84,6 +84,25 @@ const GreyBigText = styled.span`
   font-weight: 500;
   line-height: 150%;
 `;
+const SubscribeBtn = styled.button`
+  all: unset;
+  width: 758px;
+  height: 62px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #242424;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #757575;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  cursor:pointer;
+`;
 interface stateType {
   totalEssays: number;
   publishedEssays: number;
@@ -92,11 +111,13 @@ interface stateType {
 function ShowProfile({
   handleProfileModal,
   id,
-  isMyProfile=false
+  isMyProfile = false,
+  isSubscribed = false,
 }: {
   handleProfileModal?: () => void;
   id: number;
-  isMyProfile?:boolean;
+  isMyProfile?: boolean;
+  isSubscribed?: boolean;
 }) {
   const [essaystats, setEssaystats] = useState<stateType | null>(null);
   const [userData, setUserData] = useState<User | null>(null);
@@ -147,12 +168,16 @@ function ShowProfile({
           </StatisticsItemDiv>
         </OverviewDiv>
         <BtnDiv>
-          {isMyProfile && (
+          {isMyProfile ? (
             <Button
               text="프로필 편집"
               scale="max"
               onClick={handleProfileModal}
             />
+          ) : isSubscribed ? (
+            <SubscribeBtn>구독중</SubscribeBtn>
+          ) : (
+            <Button text="구독" scale="max" />
           )}
         </BtnDiv>
       </Wrapper>
