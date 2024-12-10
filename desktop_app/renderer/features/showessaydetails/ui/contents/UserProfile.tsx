@@ -128,7 +128,6 @@ function UserProfile({
   const navigateUserProfile = (id: number) => {
     router.push(`/web/user_profile?id=${id}`);
   };
-
   return (
     <Layout>
       <ProfileDiv>

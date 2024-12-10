@@ -139,11 +139,11 @@ function ShowProfile({
   useEffect(() => {
     if (id) {
       fetchUserProfile();
-      if(!isMyProfile){
+      if (!isMyProfile) {
         fetchFollows();
       }
     }
-  }, [id]);
+  }, [id, userData]);
 
   const submitFollows = async (isFollow: boolean) => {
     try {
