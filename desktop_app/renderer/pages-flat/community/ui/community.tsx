@@ -11,7 +11,7 @@ import Bookmark from "@/features/activeModal/bookmark/ui/Bookmark";
 import { ColorToast } from "@/shared/ui/toast";
 import { allEssayDelete } from "@/shared/api/bookmark";
 import SearchModal from "@/features/activeModal/search/ui/SearchModal";
-import { useRouter } from "next/router";
+import AllFollowList from "./contents/AllFollowList";
 
 const Layout = styled.main`
   width: 100vw;
@@ -57,13 +57,13 @@ function community() {
   };
 
   const handleChangeActiveTab = (index: number) => {
-    if(!isShowAllFollows){
+    if (!isShowAllFollows) {
       setActiveTab(index);
     }
   };
-  const handleShowAllfollower =() =>{
-    setShowAllFollows(!isShowAllFollows)
-  }
+  const handleShowAllfollower = () => {
+    setShowAllFollows(!isShowAllFollows);
+  };
   const renderBanner = ({ activeTab }: { activeTab: number }) => {
     switch (activeTab) {
       case 0:
@@ -78,7 +78,7 @@ function community() {
           />
         );
       default:
-        return <Banner/>;
+        return <Banner />;
     }
   };
   const toastHandler = (text: string, isError: boolean) => {
@@ -139,7 +139,12 @@ function community() {
       <ScrollTop bottom="131px" />
       <ActiveSideBar />
       <Container activeTab={activeTab}>
-        <Header activeTab={activeTab} modalHandler={modalHandler} isShowAllFollows={isShowAllFollows} handleShowAllfollower={handleShowAllfollower}/>
+        <Header
+          activeTab={activeTab}
+          modalHandler={modalHandler}
+          isShowAllFollows={isShowAllFollows}
+          handleShowAllfollower={handleShowAllfollower}
+        />
         <TabContainer>
           <Tab
             tabData={tab}
@@ -150,11 +155,14 @@ function community() {
           />
         </TabContainer>
         {renderBanner({ activeTab })}
-        <EssayList
-          isRandomEssay={activeTab === 0}
-          selectedFollowId={selectedFollowId}
-          isShowAllFollows={isShowAllFollows}
-        />
+        {isShowAllFollows ? (
+          <AllFollowList/>
+        ) : (
+          <EssayList
+            isRandomEssay={activeTab === 0}
+            selectedFollowId={selectedFollowId}
+          />
+        )}
       </Container>
     </Layout>
   );
