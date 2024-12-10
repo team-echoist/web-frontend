@@ -23,7 +23,7 @@ const P = styled.p`
   display: flex;
   align-items: center;
   margin-left: 17px;
-  width: 545px;
+  width: 505px;
 `;
 const Strong = styled.strong`
   color: ${color.white};
@@ -55,9 +55,10 @@ const Btn = styled.button`
   cursor: pointer;
   margin-left: 72px;
 `;
-const AvatarBtn = styled.button`
+const ProfileBtn = styled.button`
   all: unset;
   cursor: pointer;
+  display: flex;
 `;
 
 function FollowCard({ data }: { data: User }) {
@@ -68,16 +69,17 @@ function FollowCard({ data }: { data: User }) {
   };
   return (
     <Card>
-      <AvatarBtn
+      <ProfileBtn
         onClick={() => {
           navigateUserProfile(data.id);
         }}
       >
         <CircularAvatar img={data.profileImage} width={60} height={60} />
-      </AvatarBtn>
-      <P>
-        <Strong>{data.nickname}</Strong> 아무개
-      </P>
+        <P>
+          <Strong>{data.nickname}</Strong> 아무개
+        </P>
+      </ProfileBtn>
+
       <Btn>구독중</Btn>
     </Card>
   );

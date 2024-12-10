@@ -143,10 +143,10 @@ function UserProfile({
             width={60}
             height={60}
           ></Image>
+          <ProfileName>
+            {splitedUserName[0]} <Strong>아무개</Strong>
+          </ProfileName>
         </ProfileButton>
-        <ProfileName>
-          {splitedUserName[0]} <Strong>아무개</Strong>
-        </ProfileName>
       </ProfileDiv>
       {user?.nickname !== userName && (
         <SubscribeBtn
