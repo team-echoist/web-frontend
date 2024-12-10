@@ -143,6 +143,7 @@ export const Mypage = () => {
       {isShowRecentModal && <RecentEssayModal modalHandler={modalHandler} />}
       {isShowBadgeModal && <BadgeModal modalHandler={modalHandler} />}
       {isShowUserManage && <UserManage modalHandler={modalHandler} />}
+      <ActiveSideBar />
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -162,7 +163,7 @@ export const Mypage = () => {
           handleProfileModal={handleProfileModal}
         />
       </WideModal>
-      <ActiveSideBar />
+
       <ContentsContainer>
         <H1>프로필</H1>
         <ShowProfile

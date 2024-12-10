@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Layout = styled.div`
   width: 100%;
   height: 97vh;
-  z-index: 500;
+  z-index: 5000;
   position: fixed;
   top: 32px;
   left: 0;
