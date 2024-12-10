@@ -27,7 +27,6 @@ function UserProfile() {
       <ContentsContainer>
         <ShowProfile
           id={Number(query.id)}
-          isSubscribed={isSubscribed || false}
         />
       </ContentsContainer>
     </>

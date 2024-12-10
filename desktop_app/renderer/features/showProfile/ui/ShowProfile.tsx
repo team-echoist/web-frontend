@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Button } from "@/shared/ui/button";
-import { useStore } from "@/shared/store";
+import { postFollows } from "@/shared/api";
 import { CircularAvatar } from "@/shared/ui/avatar";
 import DefaultProfileImg from "@/shared/assets/img/default_profile.webp";
 import color from "@/shared/styles/color";
 import { getUserProfile } from "@/shared/api/user";
 import { User } from "@/shared/types";
+import { deleteFollow } from "@/shared/api";
+import { ColorToast } from "@/shared/ui/toast";
+import { getFollows } from "@/shared/api";
 
 const Layout = styled.div`
   margin-top: 100px;
@@ -101,7 +104,16 @@ const SubscribeBtn = styled.button`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
-  cursor:pointer;
+  cursor: pointer;
+`;
+const ToastContainer = styled.div`
+  position: fixed;
+  bottom: 70px;
+  left: 45%;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 interface stateType {
   totalEssays: number;
@@ -112,21 +124,63 @@ function ShowProfile({
   handleProfileModal,
   id,
   isMyProfile = false,
-  isSubscribed = false,
 }: {
   handleProfileModal?: () => void;
   id: number;
   isMyProfile?: boolean;
-  isSubscribed?: boolean;
 }) {
   const [essaystats, setEssaystats] = useState<stateType | null>(null);
   const [userData, setUserData] = useState<User | null>(null);
+  const [isShowToast, setIsShowToast] = useState(false);
+  const [toastText, setToastText] = useState("");
+  const [isError, setError] = useState(false);
+  const [isFollow, setFollow] = useState(false);
+
   useEffect(() => {
     if (id) {
       fetchUserProfile();
+      if(!isMyProfile){
+        fetchFollows();
+      }
     }
   }, [id]);
 
+  const submitFollows = async (isFollow: boolean) => {
+    try {
+      const { status } = isFollow
+        ? await deleteFollow(id)
+        : await postFollows(id);
+      if (status === 201 || status === 200) {
+        const alertText = isFollow
+          ? "구독 취소 되었습니다."
+          : "구독 추가 되었습니다.";
+        fetchFollows();
+        setIsShowToast(true);
+        setToastText(alertText);
+      }
+    } catch (err) {
+      console.log("err", err);
+      setIsShowToast(true);
+      setToastText("서버 연결이 불안정합니다. 다시 시도 해주세요.");
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+    }
+  };
+  const fetchFollows = async () => {
+    try {
+      const { data, status } = await getFollows();
+      // 추후 구독 api 수정되면 바꾸기
+      if (status === 200) {
+        const isFollow =
+          data?.some((item) => item.nickname === userData?.nickname) || false;
+        setFollow(isFollow);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const fetchUserProfile = async () => {
     try {
       const { data, user, status } = await getUserProfile(id || 0);
@@ -141,6 +195,16 @@ function ShowProfile({
   return (
     <Layout>
       <Wrapper>
+        <ToastContainer>
+          <ColorToast
+            text={toastText}
+            onClose={() => {
+              setIsShowToast(false);
+            }}
+            isShowToast={isShowToast}
+            type={isError ? "alert" : "normal"}
+          />
+        </ToastContainer>
         <ProfileImageDiv>
           <ProfileImageWrapper>
             <CircularAvatar
@@ -174,10 +238,16 @@ function ShowProfile({
               scale="max"
               onClick={handleProfileModal}
             />
-          ) : isSubscribed ? (
-            <SubscribeBtn>구독중</SubscribeBtn>
+          ) : isFollow ? (
+            <SubscribeBtn onClick={() => submitFollows(isFollow)}>
+              구독중
+            </SubscribeBtn>
           ) : (
-            <Button text="구독" scale="max" />
+            <Button
+              text="구독"
+              scale="max"
+              onClick={() => submitFollows(isFollow)}
+            />
           )}
         </BtnDiv>
       </Wrapper>
