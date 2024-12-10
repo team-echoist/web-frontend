@@ -116,7 +116,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const themeProps = useTheme();
-  const pathname = usePathname();
 
   return (
     <CustomThemeContext.Provider value={themeProps}>
@@ -125,9 +124,7 @@ export default function RootLayout({
       >
         <StyledComponentsRegistry>
           <div
-            className={`container  ${Pretendard.className} ${
-              pathname?.includes("/web/login") ? "slide-up" : ""
-            }`}
+            className={`container  ${Pretendard.className}`}
           >
             {children}
           </div>
