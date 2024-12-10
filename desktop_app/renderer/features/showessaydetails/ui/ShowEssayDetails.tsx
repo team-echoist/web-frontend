@@ -248,15 +248,15 @@ function ShowEssayDetails({
           })}
         </TagDiv>
       </ArticleLayout>
-      {pageType === "published" ||
-        (pageType === "public" && (
+      {(pageType === "published" ||
+        pageType === "public") && (
           <UserProfile
             userName={essay?.author?.nickname || "꾸르륵"}
             profileImage={essay?.author?.profileImage || TempThumbnail.src}
             submitFollows={submitFollows}
             id={essay?.author?.id || 0}
           />
-        ))}
+        )}
       <Divider />
       <Contents pageType={pageType} storyId={storyId} essayId={essayId} />
     </Container>

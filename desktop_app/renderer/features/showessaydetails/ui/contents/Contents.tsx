@@ -200,7 +200,6 @@ function Contents({
     setPage(page);
   };
   const IndicatorRenderer = () => {
-    console.log("pageType",pageType)
     switch (true) {
       case pageType === "private":
         return (
