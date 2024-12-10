@@ -8,7 +8,7 @@ import { getRandomEssays } from "@/shared/api";
 import { Virtuoso } from "react-virtuoso";
 import { getFollowingsEssay } from "@/shared/api";
 import { getAuthorEssays } from "@/shared/api";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
+import AllFollowList from "./AllFollowList";
 
 const Layout = styled.article`
   width: calc(100vw - 270px);
@@ -53,9 +53,11 @@ const ContentsContainer = styled.div`
 function EssayList({
   isRandomEssay,
   selectedFollowId,
+  isShowAllFollows,
 }: {
   isRandomEssay: boolean;
   selectedFollowId: null | number;
+  isShowAllFollows: boolean;
 }) {
   const [list, setList] = useState<Essay[]>([]);
   const [page, setPage] = useState(1);
@@ -118,6 +120,8 @@ function EssayList({
   useEffect(() => {
     if (isRandomEssay) {
       getEssayList();
+    } else if (isShowAllFollows) {
+      // 팔로워 리스트 api
     } else {
       if (selectedFollowId) {
         fetchFollowingAutorEssay(selectedFollowId);
@@ -125,7 +129,7 @@ function EssayList({
         fetchFollowingsEssay();
       }
     }
-  }, [isRandomEssay, selectedFollowId]);
+  }, [isRandomEssay, selectedFollowId, isShowAllFollows]);
 
   useEffect(() => {
     fetchFollowingsEssay();
@@ -141,23 +145,27 @@ function EssayList({
           </TitleDiv>
         )}
         <ContentsContainer>
-          <Virtuoso
-            style={{ height: "700px", width: "100%" }}
-            data={list}
-            endReached={loadMore}
-            itemContent={(_, item) => (
-              <PostCard
-                key={item.id}
-                writer={item.author.nickname}
-                title={item.title}
-                desc={item.content}
-                time={item.createdDate}
-                imgUrl={item.thumbnail}
-                linkedout={item.status === "linkedout"}
-                onClick={() => navigateToEssay(item.id, item.status)}
-              />
-            )}
-          />
+          {isShowAllFollows ? (
+            <AllFollowList />
+          ) : (
+            <Virtuoso
+              style={{ height: "700px", width: "100%" }}
+              data={list}
+              endReached={loadMore}
+              itemContent={(_, item) => (
+                <PostCard
+                  key={item.id}
+                  writer={item.author.nickname}
+                  title={item.title}
+                  desc={item.content}
+                  time={item.createdDate}
+                  imgUrl={item.thumbnail}
+                  linkedout={item.status === "linkedout"}
+                  onClick={() => navigateToEssay(item.id, item.status)}
+                />
+              )}
+            />
+          )}
         </ContentsContainer>
       </Wrapper>
     </Layout>

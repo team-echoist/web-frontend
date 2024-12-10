@@ -50,15 +50,20 @@ function community() {
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
   const [isSearchModalOpen, setSearchModalOpen] = useState(false);
   const [selectedFollowId, setSelectedFollowId] = useState<null | number>(null);
-  
+  const [isShowAllFollows, setShowAllFollows] = useState(false);
+
   const handleFollowId = (id: number) => {
     setSelectedFollowId(id);
   };
 
   const handleChangeActiveTab = (index: number) => {
-    setActiveTab(index);
+    if(!isShowAllFollows){
+      setActiveTab(index);
+    }
   };
-
+  const handleShowAllfollower =() =>{
+    setShowAllFollows(!isShowAllFollows)
+  }
   const renderBanner = ({ activeTab }: { activeTab: number }) => {
     switch (activeTab) {
       case 0:
@@ -68,10 +73,12 @@ function community() {
           <FollowList
             handleFollowId={handleFollowId}
             selectedFollowId={selectedFollowId}
+            handleShowAllfollower={handleShowAllfollower}
+            isShowAllFollows={isShowAllFollows}
           />
         );
       default:
-        return <Banner />;
+        return <Banner/>;
     }
   };
   const toastHandler = (text: string, isError: boolean) => {
@@ -132,7 +139,7 @@ function community() {
       <ScrollTop bottom="131px" />
       <ActiveSideBar />
       <Container activeTab={activeTab}>
-        <Header activeTab={activeTab} modalHandler={modalHandler} />
+        <Header activeTab={activeTab} modalHandler={modalHandler} isShowAllFollows={isShowAllFollows} handleShowAllfollower={handleShowAllfollower}/>
         <TabContainer>
           <Tab
             tabData={tab}
@@ -146,6 +153,7 @@ function community() {
         <EssayList
           isRandomEssay={activeTab === 0}
           selectedFollowId={selectedFollowId}
+          isShowAllFollows={isShowAllFollows}
         />
       </Container>
     </Layout>

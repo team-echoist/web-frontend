@@ -77,9 +77,13 @@ const Btn = styled.button`
 function FollowList({
   handleFollowId,
   selectedFollowId,
+  handleShowAllfollower,
+  isShowAllFollows,
 }: {
   handleFollowId: (id: number) => void;
   selectedFollowId: number | null;
+  handleShowAllfollower: () => void;
+  isShowAllFollows: boolean;
 }) {
   const [follows, setFollows] = useState<Users>([]);
 
@@ -100,10 +104,10 @@ function FollowList({
       console.log(err);
     }
   };
-  const followsListRenderer = (isNoneFollows: boolean) => {
+  const followsListRenderer = (isExistFollows: boolean) => {
     return (
       <>
-        {isNoneFollows ? (
+        {isExistFollows && !isShowAllFollows ? (
           <FollowsLayout>
             <FollowsListContentLayout>
               {follows.map((item) => (
@@ -121,10 +125,10 @@ function FollowList({
               ))}
             </FollowsListContentLayout>
             <AllProfileBtnDiv>
-              <Btn>전체</Btn>
+              <Btn onClick={handleShowAllfollower}>전체</Btn>
             </AllProfileBtnDiv>
           </FollowsLayout>
-        ) : (
+        ) : isShowAllFollows ? null : (
           <NoneFollowsLayout>구독한 아무개가 없습니다.</NoneFollowsLayout>
         )}
       </>
