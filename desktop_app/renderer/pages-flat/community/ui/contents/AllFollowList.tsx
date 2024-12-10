@@ -3,6 +3,7 @@ import { Users } from "@/shared/types";
 import { getFollows } from "@/shared/api/follow";
 import FollowCard from "./FollowCard";
 import styled from "styled-components";
+import { NoneContents } from "@/shared/ui/layout";
 
 const Layout = styled.div`
   display: flex;

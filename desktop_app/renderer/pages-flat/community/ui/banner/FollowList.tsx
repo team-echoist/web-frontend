@@ -5,20 +5,8 @@ import { Users } from "@/shared/types";
 import { CircularAvatar } from "@/shared/ui/avatar";
 import DefaultProfileImg from "@/shared/assets/img/default_profile.webp";
 import color from "@/shared/styles/color";
+import { NoneContents } from "@/shared/ui/layout";
 
-const NoneFollowsLayout = styled.div`
-  width: calc(100vw - 270px);
-  height: 636px;
-  color: #686868;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 170%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const FollowsLayout = styled.div`
   display: flex;
 `;
@@ -129,7 +117,7 @@ function FollowList({
             </AllProfileBtnDiv>
           </FollowsLayout>
         ) : isShowAllFollows ? null : (
-          <NoneFollowsLayout>구독한 아무개가 없습니다.</NoneFollowsLayout>
+          <NoneContents text="구독한 아무개가 없습니다." />
         )}
       </>
     );
