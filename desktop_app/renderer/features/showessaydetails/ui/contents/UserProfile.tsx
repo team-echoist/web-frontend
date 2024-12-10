@@ -126,7 +126,7 @@ function UserProfile({
     submitFollows(isFollow);
   };
   const navigateUserProfile = (id: number) => {
-    router.push(`/web/user_profile?id=${id}&isSubscribed=${isFollow}`);
+    router.push(`/web/user_profile?id=${id}`);
   };
 
   return (

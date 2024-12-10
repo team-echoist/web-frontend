@@ -20,7 +20,6 @@ function UserProfile() {
   const router = useRouter();
   const { query } = router;
 
-  const isSubscribed = query.isSubscribed === "true";
   return (
     <>
       <ActiveSideBar />
