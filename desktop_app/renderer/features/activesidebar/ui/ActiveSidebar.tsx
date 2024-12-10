@@ -30,8 +30,10 @@ function ActiveSidebar({ isModalOpen }: { isModalOpen?: boolean }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const trimmedPathname = pathname.replace(/\/$/, "");
-    setPath(trimmedPathname);
+    if(!pathname.includes("user_profile")){
+      const trimmedPathname = pathname.replace(/\/$/, "");
+      setPath(trimmedPathname);
+    }
   }, [pathname]);
 
   const focusedKey =

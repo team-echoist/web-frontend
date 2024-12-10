@@ -95,6 +95,7 @@ export const Mypage = () => {
   const [isShowRecentModal, setIsShowRecentModal] = useState(false);
   const [isShowBadgeModal, setIsShowBadgeModal] = useState(false);
   const [isShowUserManage, setIsShowUserManage] = useState(false);
+  const user = useStore((state) => state.user);
   const setUser = useStore((state) => state.setUser);
 
   const toastHandler = (text: string, isError: boolean) => {
@@ -141,7 +142,7 @@ export const Mypage = () => {
     <Layout>
       {isShowRecentModal && <RecentEssayModal modalHandler={modalHandler} />}
       {isShowBadgeModal && <BadgeModal modalHandler={modalHandler} />}
-      {isShowUserManage&& <UserManage modalHandler={modalHandler} />}
+      {isShowUserManage && <UserManage modalHandler={modalHandler} />}
       <ToastContainer>
         <ColorToast
           text={toastText}
@@ -164,7 +165,11 @@ export const Mypage = () => {
       <ActiveSideBar />
       <ContentsContainer>
         <H1>프로필</H1>
-        <ShowProfile handleProfileModal={handleProfileModal} />
+        <ShowProfile
+          handleProfileModal={handleProfileModal}
+          id={user?.id || 0}
+          isMyProfile={true}
+        />
         <TitleDiv>
           <Span>링크드아웃 뱃지</Span>
           <WhiteArrow

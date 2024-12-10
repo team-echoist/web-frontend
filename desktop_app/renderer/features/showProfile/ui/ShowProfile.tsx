@@ -6,6 +6,7 @@ import { CircularAvatar } from "@/shared/ui/avatar";
 import DefaultProfileImg from "@/shared/assets/img/default_profile.webp";
 import color from "@/shared/styles/color";
 import { getUserProfile } from "@/shared/api/user";
+import { User } from "@/shared/types";
 
 const Layout = styled.div`
   margin-top: 100px;
@@ -16,6 +17,7 @@ const Layout = styled.div`
   margin-bottom: 39px;
 `;
 const Wrapper = styled.div`
+  width: 758px;
   height: 100%;
 `;
 const ProfileImageDiv = styled.div`
@@ -53,6 +55,8 @@ const OverviewDiv = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 21px;
+  background: #131313;
+  border-radius: 10px;
 `;
 const StatisticsItemDiv = styled.div`
   width: 20%;
@@ -85,20 +89,29 @@ interface stateType {
   publishedEssays: number;
   linkedOutEssays: number;
 }
-function ShowProfile({ handleProfileModal }: { handleProfileModal: () => void }) {
-  const user = useStore((state) => state.user);
+function ShowProfile({
+  handleProfileModal,
+  id,
+  isMyProfile=false
+}: {
+  handleProfileModal?: () => void;
+  id: number;
+  isMyProfile?:boolean;
+}) {
   const [essaystats, setEssaystats] = useState<stateType | null>(null);
+  const [userData, setUserData] = useState<User | null>(null);
   useEffect(() => {
-    if (user && user.id) {
+    if (id) {
       fetchUserProfile();
     }
-  }, [user]);
+  }, [id]);
 
   const fetchUserProfile = async () => {
     try {
-      const { data, status } = await getUserProfile(user?.id || 0);
+      const { data, user, status } = await getUserProfile(id || 0);
       if (status === 200) {
         setEssaystats(data);
+        setUserData(user);
       }
     } catch (err) {
       console.log(err);
@@ -110,31 +123,37 @@ function ShowProfile({ handleProfileModal }: { handleProfileModal: () => void })
         <ProfileImageDiv>
           <ProfileImageWrapper>
             <CircularAvatar
-              img={user?.profileImage || DefaultProfileImg.src}
+              img={userData?.profileImage || DefaultProfileImg.src}
               width={108}
               height={108}
             />
             <Span>
-              <strong>{user?.nickname}</strong> 아무개
+              <strong>{userData?.nickname}</strong> 아무개
             </Span>
           </ProfileImageWrapper>
         </ProfileImageDiv>
         <OverviewDiv>
           <StatisticsItemDiv>
             <GreyText>쓴글</GreyText>
-            <GreyBigText>{essaystats?.totalEssays??0}</GreyBigText>
+            <GreyBigText>{essaystats?.totalEssays ?? 0}</GreyBigText>
           </StatisticsItemDiv>
           <StatisticsItemDiv>
             <GreyText>발행</GreyText>
-            <GreyBigText>{essaystats?.publishedEssays??0}</GreyBigText>
+            <GreyBigText>{essaystats?.publishedEssays ?? 0}</GreyBigText>
           </StatisticsItemDiv>
           <StatisticsItemDiv>
             <GreyText>링크드아웃</GreyText>
-            <GreyBigText>{essaystats?.linkedOutEssays??0}</GreyBigText>
+            <GreyBigText>{essaystats?.linkedOutEssays ?? 0}</GreyBigText>
           </StatisticsItemDiv>
         </OverviewDiv>
         <BtnDiv>
-          <Button text="프로필 편집" scale="max" onClick={handleProfileModal}/>
+          {isMyProfile && (
+            <Button
+              text="프로필 편집"
+              scale="max"
+              onClick={handleProfileModal}
+            />
+          )}
         </BtnDiv>
       </Wrapper>
     </Layout>
