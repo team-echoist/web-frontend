@@ -61,7 +61,15 @@ const ProfileBtn = styled.button`
   display: flex;
 `;
 
-function FollowCard({ data }: { data: User }) {
+function FollowCard({
+  data,
+  modalHandler,
+  handelFollowId
+}: {
+  data: User;
+  modalHandler: (name: string) => void;
+  handelFollowId: (id: number) => void;
+}) {
   const router = useRouter();
 
   const navigateUserProfile = (id: number) => {
@@ -80,7 +88,14 @@ function FollowCard({ data }: { data: User }) {
         </P>
       </ProfileBtn>
 
-      <Btn>구독중</Btn>
+      <Btn
+        onClick={() => {
+          modalHandler("subscribe");
+          handelFollowId(data.id);
+        }}
+      >
+        구독중
+      </Btn>
     </Card>
   );
 }

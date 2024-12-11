@@ -53,9 +53,11 @@ const ContentsContainer = styled.div`
 function EssayList({
   isRandomEssay,
   selectedFollowId,
+  isShowAllFollows
 }: {
   isRandomEssay: boolean;
   selectedFollowId: null | number;
+  isShowAllFollows:boolean
 }) {
   const [list, setList] = useState<Essay[]>([]);
   const [page, setPage] = useState(1);
@@ -84,6 +86,7 @@ function EssayList({
       console.log(Err);
     }
   };
+
   const fetchFollowingAutorEssay = async (id: number) => {
     try {
       setList([]);
@@ -125,7 +128,7 @@ function EssayList({
         fetchFollowingsEssay();
       }
     } 
-  }, [isRandomEssay, selectedFollowId]);
+  }, [isRandomEssay, selectedFollowId,isShowAllFollows]);
 
   useEffect(() => {
     fetchFollowingsEssay();

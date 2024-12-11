@@ -132,7 +132,7 @@ function UserManage({
       <H1>계정 관리</H1>
       {isShowLogout && (
         <DarkBackground>
-          <BottomSheet isOpen={true} size="middle">
+          <BottomSheet isOpen={isShowLogout} size="middle">
             <ModalText>로그아웃하시겠습니까?</ModalText>
             <BtnDiv>
               <Button

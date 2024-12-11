@@ -77,7 +77,7 @@ function FollowList({
 
   useEffect(() => {
     fetchFollows();
-  }, []);
+  }, [isShowAllFollows]);
 
   const fetchFollows = async () => {
     try {

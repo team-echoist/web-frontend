@@ -12,32 +12,36 @@ const Layout = styled.div`
   margin-top: 24px;
 `;
 
-function AllFollowList() {
-  const [follows, setFollows] = useState<Users>([]);
-
+function AllFollowList({
+  modalHandler,
+  fetchFollows,
+  follows,
+  handelFollowId,
+}: {
+  modalHandler: (name: string) => void;
+  fetchFollows: () => void;
+  follows: Users;
+  handelFollowId: (id: number) => void;
+}) {
   useEffect(() => {
     fetchFollows();
   }, []);
 
-  const fetchFollows = async () => {
-    try {
-      const { data, status } = await getFollows();
-      if (status === 200) {
-        const filteredData = data?.filter(
-          (item) => Object.keys(item).length > 0
-        );
-        setFollows(filteredData || []);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <Layout>
-      {follows.map((item) => (
-        <FollowCard data={item} />
-      ))}
+      {follows.length > 0 ? (
+        <>
+          {follows.map((item) => (
+            <FollowCard
+              data={item}
+              modalHandler={modalHandler}
+              handelFollowId={handelFollowId}
+            />
+          ))}
+        </>
+      ) : (
+        <NoneContents text="구독한 사람이 없습니다." />
+      )}
     </Layout>
   );
 }
