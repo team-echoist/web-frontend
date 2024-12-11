@@ -8,6 +8,7 @@ import { formatDateString } from "@/shared/lib/date";
 import { getEssays } from "@/features/showessaydetails/api";
 import { getStories } from "@/shared/api";
 import { useRouter } from "next/router";
+import { NoneContents } from "@/shared/ui/layout";
 
 const StoryInfo = styled.div`
   width: 640px;
@@ -109,24 +110,31 @@ function ShowStoryList({
   };
   return (
     <>
-      <StoryInfo>
-        <BlackText>{essay?.length}편의 글</BlackText>
-        <H1>{title}</H1>
-        <BlackText>{nickname ? nickname : user?.nickname} 아무개</BlackText>
-      </StoryInfo>
-      {essay.map((item: any, index: number) => (
-        <StoryItemBox
-          key={item.title}
-          onClick={() => navigateToEssay(item.id, item.status)}
-        >
-          <Number>{index + 1}</Number>
-          <TitleDiv>
-            <Strong>{item.title}</Strong>
-            <Time>{formatDateString(item.createdDate)}</Time>
-          </TitleDiv>
-          {/* <LinkedoutIcon /> */}
-        </StoryItemBox>
-      ))}
+      {essay.length > 0 ? (
+        <>
+          {" "}
+          <StoryInfo>
+            <BlackText>{essay?.length}편의 글</BlackText>
+            <H1>{title}</H1>
+            <BlackText>{nickname ? nickname : user?.nickname} 아무개</BlackText>
+          </StoryInfo>
+          {essay.map((item: any, index: number) => (
+            <StoryItemBox
+              key={item.title}
+              onClick={() => navigateToEssay(item.id, item.status)}
+            >
+              <Number>{index + 1}</Number>
+              <TitleDiv>
+                <Strong>{item.title}</Strong>
+                <Time>{formatDateString(item.createdDate)}</Time>
+              </TitleDiv>
+              {/* <LinkedoutIcon /> */}
+            </StoryItemBox>
+          ))}
+        </>
+      ) : (
+        <NoneContents text="이 스토리에 에세이가 없거나 모두 비공개 상태입니다." />
+      )}
     </>
   );
 }

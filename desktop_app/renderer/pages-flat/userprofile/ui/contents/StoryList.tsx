@@ -7,6 +7,7 @@ import { ShowStoryList } from "@/features/showStoryList";
 import { getTargetUserEssays } from "@/shared/api";
 import PrevButtonImg from "@/shared/assets/img/prevbutton.svg";
 
+
 const Layout = styled.div`
  padding-top:20px;
 `;
