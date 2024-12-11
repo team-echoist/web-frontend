@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const Layout = styled.div`
-  width: 100%;
-  height:636px;
+const Layout = styled.div<{ height?: number }>`
+  height: ${({ height }) => (height ? `${height}px` : "636px")};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,8 +18,8 @@ const Layout = styled.div`
   align-items: center;
 `;
 
-function NoneContents({ text }: { text: string }) {
-  return <Layout>{text}</Layout>;
+function NoneContents({ text, height }: { text: string; height?: number }) {
+  return <Layout height={height}>{text}</Layout>;
 }
 
 export default NoneContents;

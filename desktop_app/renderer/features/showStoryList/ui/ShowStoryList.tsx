@@ -7,6 +7,7 @@ import { useStore } from "@/shared/store";
 import { formatDateString } from "@/shared/lib/date";
 import { getEssays } from "@/features/showessaydetails/api";
 import { getStories } from "@/shared/api";
+import { useRouter } from "next/router";
 
 const StoryInfo = styled.div`
   width: 640px;
@@ -89,7 +90,7 @@ const Time = styled.time`
   font-weight: 400;
   line-height: 150%;
 `;
-function SuccessStory({
+function ShowStoryList({
   essay,
   title,
   nickname,
@@ -99,6 +100,13 @@ function SuccessStory({
   nickname?: string;
 }) {
   const user = useStore((state) => state.user);
+  const router = useRouter();
+  const navigateToEssay = (id?: number, status?: string) => {
+    const essayId = id || 0;
+    if (essayId) {
+      router.push(`/web/essay_details?id=${essayId}&pageType=${status}`);
+    }
+  };
   return (
     <>
       <StoryInfo>
@@ -107,7 +115,10 @@ function SuccessStory({
         <BlackText>{nickname ? nickname : user?.nickname} 아무개</BlackText>
       </StoryInfo>
       {essay.map((item: any, index: number) => (
-        <StoryItemBox key={item.title}>
+        <StoryItemBox
+          key={item.title}
+          onClick={() => navigateToEssay(item.id, item.status)}
+        >
           <Number>{index + 1}</Number>
           <TitleDiv>
             <Strong>{item.title}</Strong>
@@ -120,4 +131,4 @@ function SuccessStory({
   );
 }
 
-export default SuccessStory;
+export default ShowStoryList;

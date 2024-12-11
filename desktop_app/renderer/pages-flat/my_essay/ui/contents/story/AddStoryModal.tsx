@@ -13,6 +13,7 @@ import { BlackMiniModal } from "@/shared/ui/modal";
 import { putStory } from "@/shared/api";
 import { deleteStory } from "@/shared/api";
 import { getUserEssays, getStoryDetails } from "@/shared/api";
+import { ShowStoryList } from "@/features/showStoryList";
 
 const Layout = styled.article`
   display: flex;
@@ -412,7 +413,7 @@ function AddStoryModal({
       </Header>
       <ContentsBody>
         {isSuccess ? (
-          <SuccessStory essay={essay} title={title} />
+          <ShowStoryList essay={essay} title={title} />
         ) : (
           <>
             <Input

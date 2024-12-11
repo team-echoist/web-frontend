@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 import { getRandomEssays } from "@/shared/api";
 import { Virtuoso } from "react-virtuoso";
 import { getFollowingsEssay } from "@/shared/api";
-import { getAuthorEssays } from "@/shared/api";
-import { getFollows } from "@/shared/api/follow";
+import { getTargetUserEssays } from "@/shared/api";
 
 const Layout = styled.article`
   width: calc(100vw - 270px);
@@ -53,11 +52,11 @@ const ContentsContainer = styled.div`
 function EssayList({
   isRandomEssay,
   selectedFollowId,
-  isShowAllFollows
+  isShowAllFollows,
 }: {
   isRandomEssay: boolean;
   selectedFollowId: null | number;
-  isShowAllFollows:boolean
+  isShowAllFollows: boolean;
 }) {
   const [list, setList] = useState<Essay[]>([]);
   const [page, setPage] = useState(1);
@@ -91,7 +90,11 @@ function EssayList({
     try {
       setList([]);
       if (selectedFollowId) {
-        const { data, totalPage, status } = await getAuthorEssays(id);
+        const { data, totalPage, status } = await getTargetUserEssays(
+          id,
+          page,
+          20,
+        );
 
         if (status === 200) {
           setList((prevData) => [...prevData, ...data]);
@@ -127,8 +130,8 @@ function EssayList({
       } else {
         fetchFollowingsEssay();
       }
-    } 
-  }, [isRandomEssay, selectedFollowId,isShowAllFollows]);
+    }
+  }, [isRandomEssay, selectedFollowId, isShowAllFollows]);
 
   useEffect(() => {
     fetchFollowingsEssay();

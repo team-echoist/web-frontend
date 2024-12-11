@@ -128,13 +128,13 @@ export const getEssays = async (
   }
 };
 
-export const getUserEssays = async (storyId: number) => {
+export const getUserEssays = async (id: number) => {
   try {
     const params = {
-      storyId: storyId,
+      storyId: id,
     };
     const { data } = await fetchData<EssayDataType>(
-      `essays/${storyId}`,
+      `essays/${id}`,
       "get",
       null,
       {
@@ -227,6 +227,42 @@ export const getRecentEssay = async (page: number, limit: number) => {
     };
     const { data, status } = await fetchData<any>(
       "essays/recent",
+      "get",
+      null,
+      {
+        params,
+      }
+    );
+    return {
+      data: data.essays,
+      totalPage: data.totalPage,
+      total: data.total,
+      status,
+    };
+  } catch (err) {
+    return { data: [], status: 500 };
+  }
+};
+
+export const getTargetUserEssays = async (
+  id: number,
+  page?: number|null,
+  limit?: number|null,
+  storyId?: number
+) => {
+  try {
+    const params: { page?: number; limit?: number; storyId?: number } = {};
+    if (page) {
+      params.page = page;
+    }
+    if (limit) {
+      params.limit = limit;
+    }
+    if (storyId) {
+      params.storyId = storyId;
+    }
+    const { data, status } = await fetchData<any>(
+      `essays/author/${id}`,
       "get",
       null,
       {
