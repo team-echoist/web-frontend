@@ -136,15 +136,6 @@ function ShowProfile({
   const [isError, setError] = useState(false);
   const [isFollow, setFollow] = useState(false);
 
-  useEffect(() => {
-    if (id) {
-      fetchUserProfile();
-      if (!isMyProfile) {
-        fetchFollows();
-      }
-    }
-  }, [id, userData]);
-
   const submitFollows = async (isFollow: boolean) => {
     try {
       const { status } = isFollow
@@ -168,13 +159,14 @@ function ShowProfile({
       }, 3000);
     }
   };
-  const fetchFollows = async () => {
+  const fetchFollows = async (user?: User) => {
     try {
       const { data, status } = await getFollows();
+      const tempUserData = user ? user : userData;
       // 추후 구독 api 수정되면 바꾸기
       if (status === 200) {
         const isFollow =
-          data?.some((item) => item.nickname === userData?.nickname) || false;
+          data?.some((item) => item.nickname === tempUserData?.nickname) || false;
         setFollow(isFollow);
       }
     } catch (err) {
@@ -187,11 +179,20 @@ function ShowProfile({
       if (status === 200) {
         setEssaystats(data);
         setUserData(user);
+        if(!isMyProfile){
+          fetchFollows(user);
+        }
       }
     } catch (err) {
       console.log(err);
     }
   };
+  useEffect(() => {
+    if (id) {
+      fetchUserProfile();
+    }
+  }, [id]);
+
   return (
     <Layout>
       <Wrapper>

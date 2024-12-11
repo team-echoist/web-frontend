@@ -10,8 +10,6 @@ import List from "./contents/List";
 import { ScrollTop } from "@/shared/ui/scroll";
 import AddStoryModal from "./contents/story/AddStoryModal";
 import { ColorToast } from "@/shared/ui/toast";
-import { useDebounce } from "@/shared/lib/debounce";
-import { searchEssay } from "@/shared/api";
 import { Essay } from "@/shared/types";
 import { Tab } from "@/shared/ui/tab";
 import { getEssays } from "@/shared/api";

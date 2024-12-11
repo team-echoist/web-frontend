@@ -121,5 +121,17 @@ export const addEssayforStory = async (storyId: number, essayId: number) => {
     return { status: status };
   } catch (err) {
     return { status: 500 };
+  } 
+};
+
+export const getUserStories = async (userId: number) => {
+  try {
+    const { status, data } = await fetchData<dataType>(
+      `stories/${userId}`,
+      "get"
+    );
+    return { data: data.stories, status: status };
+  } catch (err) {
+    return { data: [], status: 500 };
   }
 };
