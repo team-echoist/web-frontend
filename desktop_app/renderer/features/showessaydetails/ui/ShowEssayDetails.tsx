@@ -232,7 +232,7 @@ function ShowEssayDetails({
           handleBookmarkClick={handleBookmarkClick}
           isBookMark={isBookMark}
           isShowBookmark={
-            pageType === "published" &&
+            (pageType === "published"||pageType === "public")&&
             user?.nickname !== essay?.author?.nickname
               ? true
               : false
