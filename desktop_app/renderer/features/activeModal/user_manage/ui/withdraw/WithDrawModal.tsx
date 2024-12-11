@@ -19,7 +19,7 @@ const H1 = styled.h1`
   line-height: 150%;
   position: absolute;
   left: 48px;
-  top: 5px;
+  top: 3px;
 
 `;
 const ContentLayout = styled.section`

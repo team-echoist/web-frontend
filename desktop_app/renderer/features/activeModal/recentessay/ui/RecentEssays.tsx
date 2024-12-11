@@ -15,9 +15,9 @@ const H1 = styled.h1`
   font-style: normal;
   font-weight: 700;
   line-height: 150%;
-  position: fixed;
-  left: 315px;
-  top: 35px;
+  position: absolute;
+  left: 48px;
+  top: 3px;
 `;
 const ContentsContainer = styled.div`
   width: 80%;
