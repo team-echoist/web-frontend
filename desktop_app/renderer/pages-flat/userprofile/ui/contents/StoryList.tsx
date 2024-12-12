@@ -6,10 +6,10 @@ import color from "@/shared/styles/color";
 import { ShowStoryList } from "@/features/showStoryList";
 import { getTargetUserEssays } from "@/shared/api";
 import PrevButtonImg from "@/shared/assets/img/prevbutton.svg";
-
+import { NoneContents } from "@/shared/ui/layout";
 
 const Layout = styled.div`
- padding-top:20px;
+  padding-top: 20px;
 `;
 const ListCard = styled.div`
   width: 758px;
@@ -64,10 +64,10 @@ const PrevBtn = styled.button`
   left: 0;
 `;
 const StoryListDiv = styled.div`
- width:80%;
- display:flex;
- flex-direction: column;
- align-items: center;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 function StoryList({ stories, userId }: { stories: Story[]; userId: number }) {
   const [isShowStoryDetails, setIsShowStoryDetails] = useState(false);
@@ -122,19 +122,25 @@ function StoryList({ stories, userId }: { stories: Story[]; userId: number }) {
   return (
     <Layout>
       {isShowStoryDetails && storyModal()}
-      {stories.map((story) => (
-        <ListCard
-          onClick={() => {
-            fetchStoryDetails(story.id, story.name);
-          }}
-        >
-          <SummaryDiv>
-            <SummaryIcon />
-            <Count>{story.essaysCount}</Count>
-          </SummaryDiv>
-          <Title>{story.name}</Title>
-        </ListCard>
-      ))}
+      {stories.length > 0 ? (
+        <>
+          {stories.map((story) => (
+            <ListCard
+              onClick={() => {
+                fetchStoryDetails(story.id, story.name);
+              }}
+            >
+              <SummaryDiv>
+                <SummaryIcon />
+                <Count>{story.essaysCount}</Count>
+              </SummaryDiv>
+              <Title>{story.name}</Title>
+            </ListCard>
+          ))}
+        </>
+      ) : (
+        <NoneContents text="스토리가 없습니다." height={300} />
+      )}
     </Layout>
   );
 }
