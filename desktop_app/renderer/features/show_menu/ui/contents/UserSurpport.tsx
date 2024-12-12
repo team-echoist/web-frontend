@@ -12,6 +12,7 @@ const Ul = styled.ul`
   width: 100%;
 `;
 const Li = styled.li`
+  width: 100%;
   all: unset;
   display: flex;
   justify-content: space-between;
@@ -23,9 +24,28 @@ const Li = styled.li`
   line-height: 150%;
   padding: 20px 25px 20px 48px;
   background: #111;
-  svg {
-    cursor: pointer;
-  }
+  margin-left: 32px;
+`;
+const SupportBtn = styled.button`
+  all: unset;
+  position: fixed;
+  right: 32px;
+  top: 130px;
+  cursor: pointer;
+`;
+const NoticeBtn = styled.button`
+  all: unset;
+  position: fixed;
+  right: 32px;
+  top: 190px;
+  cursor: pointer;
+`;
+const LawBtn = styled.button`
+  all: unset;
+  position: fixed;
+  right: 32px;
+  top: 255px;
+  cursor: pointer;
 `;
 function UserSurpport({
   handleCloseComponent,
@@ -38,15 +58,22 @@ function UserSurpport({
       <Ul>
         <Li>
           링크드아웃 고객센터
-          <Arrow />
+          <SupportBtn>
+            <Arrow />
+          </SupportBtn>
         </Li>
         <Li>
           공지사항
-          <Arrow />
+          <NoticeBtn>
+            <Arrow />
+          </NoticeBtn>
         </Li>
         <Li>
           법적 고지
+          <LawBtn>
           <Arrow />
+          </LawBtn>
+      
         </Li>
       </Ul>
     </Layout>
