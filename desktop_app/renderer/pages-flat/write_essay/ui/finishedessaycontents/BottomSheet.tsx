@@ -269,9 +269,11 @@ function BottomSheet({
   };
 
   const handleSaveEssay = async (e: React.MouseEvent<HTMLElement>) => {
-    const { id } = e.currentTarget.dataset;
-    const pageType = id === "private" ? "private" : "public";
+    e.preventDefault();
+
     try {
+      const { id } = e.currentTarget.dataset;
+      const pageType = id === "private" ? "private" : "public";
       if (title.length === 0 || desc.length === 0) {
         showToastMessage("입력란을 확인해 주세요.");
         return;

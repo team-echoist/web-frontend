@@ -58,7 +58,7 @@ function List({
   loadMore:()=>void;
   setListCount:React.Dispatch<React.SetStateAction<number>>;
   setHasMore:React.Dispatch<React.SetStateAction<boolean>>;
-  getList: () => void;
+  getList: (isDelete?:boolean) => void;
 }) {
 
   const [storyList, setStoryList] = useState<storyType[]>([]);
@@ -83,10 +83,9 @@ function List({
       const { status } = await deleteEssay(id);
       if (status === 200) {
         toastHandler("에세이 삭제에 성공했습니다.", false);
-        setListData([]);
         setListCount(0);
         setHasMore(true);
-        getList();
+        getList(true);
       } else {
         toastHandler("에세이 삭제에 실패했습니다.", true);
       }

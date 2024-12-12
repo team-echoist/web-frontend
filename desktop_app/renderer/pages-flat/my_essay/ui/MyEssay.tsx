@@ -114,7 +114,7 @@ function MyEssay() {
     }
   }, [page]);
 
-  const getList = async () => {
+  const getList = async (isDelete?:boolean) => {
     try {
       const tabInfo: { [key: number]: string } = {
         0: "private",
@@ -122,6 +122,9 @@ function MyEssay() {
       } as const;
       const pageType = tabInfo[activeTab];
       // pageType: private, public
+      if(isDelete){
+        setListData([])
+      }
       const { data, total, totalPage } = await getEssays(page, 5, pageType);
       setListData((prevData) => [...prevData, ...data]);
       setListCount(total);
