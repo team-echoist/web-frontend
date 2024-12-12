@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { LineGraph } from "../../graph";
-import { CircularAvatar } from "../../avatar";
+import { LineGraph } from "@/shared/ui/graph";
+import { CircularAvatar } from "@/shared/ui/avatar";
 import DefaultProfile from "@/shared/assets/img/default_profile.webp";
 import color from "@/shared/styles/color";
 import { useStore } from "@/shared/store";

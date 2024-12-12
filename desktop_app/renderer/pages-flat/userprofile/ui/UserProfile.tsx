@@ -58,6 +58,9 @@ function UserProfile() {
   const fetchGetUserEssays = async () => {
     try {
       if (query.id) {
+        if(page === 1){
+          setEssays([]);
+        }
         const { data, totalPage, status } = await getTargetUserEssays(
           Number(query.id),
           page,
