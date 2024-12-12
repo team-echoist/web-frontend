@@ -29,21 +29,21 @@ const Li = styled.li`
 const SupportBtn = styled.button`
   all: unset;
   position: fixed;
-  right: 32px;
+  right: 28px;
   top: 130px;
   cursor: pointer;
 `;
 const NoticeBtn = styled.button`
   all: unset;
   position: fixed;
-  right: 32px;
+  right: 28px;
   top: 190px;
   cursor: pointer;
 `;
 const LawBtn = styled.button`
   all: unset;
   position: fixed;
-  right: 32px;
+  right: 28px;
   top: 255px;
   cursor: pointer;
 `;
