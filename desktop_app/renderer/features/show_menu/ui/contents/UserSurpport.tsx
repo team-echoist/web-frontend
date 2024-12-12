@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./header/Header";
 import styled from "styled-components";
 import Arrow from "@/shared/assets/img/menu/right_arrow.svg";
 import color from "@/shared/styles/color";
+import { UserInquire } from "@/features/activeModal/user_inquire";
+import { Notice } from "@/features/activeModal/notice";
 
 const Layout = styled.nav`
   width: 93%;
@@ -47,13 +49,26 @@ const LawBtn = styled.button`
   top: 255px;
   cursor: pointer;
 `;
+
 function UserSurpport({
   handleCloseComponent,
 }: {
   handleCloseComponent: () => void;
 }) {
+  const [isShowNotice, setIsShowNotice] = useState(false);
+  const [isShowInquire, setIsShowInquire] = useState(false);
+  const submodalHandler = (name: string) => {
+    if (name === "notice") {
+      setIsShowNotice((prev) => !prev);
+    }
+    if (name === "inquire") {
+      setIsShowInquire((prev) => !prev);
+    }
+  };
   return (
     <Layout>
+      {isShowNotice && <Notice submodalHandler={submodalHandler} />}
+      {isShowInquire && <UserInquire />}
       <Header title="고객지원" handleClose={handleCloseComponent} />
       <Ul>
         <Li>
@@ -64,16 +79,15 @@ function UserSurpport({
         </Li>
         <Li>
           공지사항
-          <NoticeBtn>
+          <NoticeBtn onClick={() => submodalHandler("notice")}>
             <Arrow />
           </NoticeBtn>
         </Li>
         <Li>
           법적 고지
           <LawBtn>
-          <Arrow />
+            <Arrow />
           </LawBtn>
-      
         </Li>
       </Ul>
     </Layout>
