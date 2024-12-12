@@ -68,12 +68,12 @@ function UserSurpport({
   return (
     <Layout>
       {isShowNotice && <Notice submodalHandler={submodalHandler} />}
-      {isShowInquire && <UserInquire />}
+      {isShowInquire && <UserInquire submodalHandler={submodalHandler} />}
       <Header title="고객지원" handleClose={handleCloseComponent} />
       <Ul>
         <Li>
           링크드아웃 고객센터
-          <SupportBtn>
+          <SupportBtn onClick={() => submodalHandler("inquire")}>
             <Arrow />
           </SupportBtn>
         </Li>
