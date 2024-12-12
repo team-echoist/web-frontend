@@ -15,6 +15,10 @@ import DefaultLayout from "./DefaultLayout";
 import { useRouter } from "next/navigation";
 import Background from "./Background";
 import { timeAgo } from "@/shared/lib/date";
+import { DarkBackground } from "@/shared/ui/background";
+import { BottomSheet } from "@/shared/ui/modal";
+import { Button } from "@/shared/ui/button";
+import { handleLogout } from "@/shared/lib/auth";
 
 const Layout = styled.nav`
   width: 376px;
@@ -135,8 +139,8 @@ const StoreDiv = styled.div`
 const Ul = styled.ul`
   list-style-type: none;
 `;
-const Li = styled.li`
-  color: ${color.white};
+const Li = styled.li<{ isSelected: boolean }>`
+  color: ${({isSelected})=>isSelected?color.pointcolor:color.white};
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
@@ -166,13 +170,32 @@ const LogoutBtn = styled.button`
   position: absolute;
   right: 30px;
 `;
-
+const BtnDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  padding-top: 32px;
+`;
+const ModalText = styled.p`
+  height: 48px;
+  color: ${color.white};
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  margin-top: 49px;
+`;
 function Menu() {
   const user = useStore((state) => state.user);
   const [userData, setUserData] = useState([]);
   const [selectedComponent, setSelectedComponent] =
     useState<JSX.Element | null>(null);
   const router = useRouter();
+  const [isShowLogout, setIsShowLogout] = useState(false);
+  const [selectedMenuName, setSelectedMenuName] = useState("");
 
   const handleCloseComponent = () => {
     setSelectedComponent(null);
@@ -213,8 +236,38 @@ function Menu() {
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const day = String(now.getDate()).padStart(2, "0");
+  const submodalHandler = (name: string) => {
+    if (name === "logout") {
+      setIsShowLogout((prev) => !prev);
+    }
+  };
   return (
     <Layout>
+      {isShowLogout && (
+        <DarkBackground>
+          <BottomSheet isOpen={isShowLogout} size="middle">
+            <ModalText>로그아웃하시겠습니까?</ModalText>
+            <BtnDiv>
+              <Button
+                text="취소"
+                scale="small"
+                type="disable"
+                onClick={() => {
+                  submodalHandler("logout");
+                }}
+              />
+              <Button
+                text="확인"
+                scale="small"
+                onClick={() => {
+                  handleLogout();
+                  router.push("/web/login");
+                }}
+              />
+            </BtnDiv>
+          </BottomSheet>
+        </DarkBackground>
+      )}
       {selectedComponent ? (
         <DefaultLayout>{selectedComponent}</DefaultLayout>
       ) : (
@@ -261,12 +314,25 @@ function Menu() {
       </StoreDiv>
       <Ul>
         {menuItems.map((item) => (
-          <Li key={item} onClick={() => navigateToComponent(item)}>
+          <Li
+            isSelected={selectedMenuName === item}
+            key={item}
+            onClick={() => {
+              setSelectedMenuName(item);
+              navigateToComponent(item);
+            }}
+          >
             {item}
           </Li>
         ))}
       </Ul>
-      <LogoutBtn>로그아웃</LogoutBtn>
+      <LogoutBtn
+        onClick={() => {
+          submodalHandler("logout");
+        }}
+      >
+        로그아웃
+      </LogoutBtn>
     </Layout>
   );
 }

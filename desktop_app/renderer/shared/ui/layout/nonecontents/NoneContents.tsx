@@ -6,7 +6,7 @@ const Layout = styled.div<{ height?: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc(100vw - 270px);
+  width:100%;
   color: #686868;
   font-family: Pretendard;
   font-size: 16px;
