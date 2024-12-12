@@ -14,6 +14,7 @@ import DisplaySettings from "./contents/DisplaySettings";
 import DefaultLayout from "./DefaultLayout";
 import { useRouter } from "next/navigation";
 import Background from "./Background";
+import { timeAgo } from "@/shared/lib/date";
 
 const Layout = styled.nav`
   width: 376px;
@@ -171,7 +172,7 @@ function Menu() {
   const [userData, setUserData] = useState([]);
   const [selectedComponent, setSelectedComponent] =
     useState<JSX.Element | null>(null);
-    const router =useRouter()
+  const router = useRouter();
 
   const handleCloseComponent = () => {
     setSelectedComponent(null);
@@ -230,7 +231,10 @@ function Menu() {
             <H1>
               <Strong>{user?.nickname}</Strong> 아무개
             </H1>
-            <GreyText>43일째 링크드아웃!</GreyText>
+            <GreyText>
+              {timeAgo(user?.createdDate || "2024-11-01T10:43:27.576+09:00")}째
+              링크드아웃!
+            </GreyText>
           </ProfileHeaderText>
           <RightArrow
             onClick={() => {
