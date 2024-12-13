@@ -4,6 +4,7 @@ import MenuDefaultLayout from "../../ui/MenuDefaultLayout";
 import { getInquires } from "@/shared/api/surpport";
 import List from "./contents/List";
 import Inquire from "./contents/Inquire";
+import { InquiryList } from "@/shared/types";
 
 function UserInquire({
   submodalHandler,
@@ -11,7 +12,7 @@ function UserInquire({
   submodalHandler: (name: string) => void;
 }) {
   const [isShowInquire, setIsShowInquire] = useState(false);
-  const [inquireList, setInquireList] = useState([]);
+  const [inquireList, setInquireList] = useState<InquiryList>([]);
 
   useEffect(() => {
     fetchInquireList();

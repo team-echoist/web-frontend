@@ -1,5 +1,7 @@
 import { fetchData } from "@/shared/api/fetchData";
 import { ReleasesResponse } from "../types";
+import { InquiryList } from "../types";
+import { Inquiry } from "../types";
 
 export const getReleases = async (page: number, limit: number) => {
   try {
@@ -21,7 +23,7 @@ export const getReleases = async (page: number, limit: number) => {
 
 export const getInquires = async () => {
   try {
-    const { data, status } = await fetchData<any>(`support/inquiries`, "get");
+    const { data, status } = await fetchData<InquiryList>(`support/inquiries`, "get");
     return{ data: data, status: status}
   } catch (err) {
     return { status: 500, data: [] };
@@ -47,9 +49,9 @@ export const postInquire = async (
 
 export const getInquireDetails = async(id:number) =>{
   try{
-    const {data,status} =await fetchData<any>(`support/inquiries/${id}`, "get");
+    const {data,status} =await fetchData<Inquiry |null>(`support/inquiries/${id}`, "get");
     return{ data: data, status: status}
   }catch(err){
-    return { status: 500, data: [] };
+    return { status: 500, data: null  };
   }
 }

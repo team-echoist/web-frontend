@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { formatDate } from "@/shared/lib/date";
 import ResponseIcon from "@/shared/assets/img/response_icon.svg";
 import { getInquireDetails } from "@/shared/api/surpport";
+import { Inquiry } from "@/shared/types";
 
 const H1 = styled.h1`
   color: ${color.white};
@@ -113,7 +114,7 @@ function List({
   handleShowInquire: () => void;
   inquireList: any[];
 }) {
-  const [responseData, setResponseData] = useState<any>({});
+  const [responseData, setResponseData] = useState<Inquiry|null>(null);
   const [isShowResponseId, setIsShowResponseId] = useState<null | number>(null);
 
   const fetchInquireDetails = async (id: number) => {
@@ -123,7 +124,9 @@ function List({
     try {
       const { data, status } = await getInquireDetails(id);
       if (status === 200 || status === 201) {
-        setResponseData(data);
+        if (data && typeof data === "object") {
+          setResponseData(data); 
+        }
         setIsShowResponseId(id);
       }
     } catch (err) {
@@ -154,7 +157,7 @@ function List({
                   <ResponseIconDiv>
                     <ResponseIcon />
                   </ResponseIconDiv>
-                  <ResponseText>{responseData.answer}</ResponseText>
+                  <ResponseText>{responseData?.answer}</ResponseText>
                 </ResponseDiv>
               )}
             </>

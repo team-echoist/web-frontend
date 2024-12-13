@@ -22,3 +22,5 @@ export interface Processor {
     page: number;
     totalPage: number;
   }
+
+  
