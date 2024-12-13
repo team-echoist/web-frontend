@@ -42,6 +42,7 @@ const SubTitle = styled.span`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
+  margin-bottom:20px;
 `;
 const InquireDiv = styled.div`
   width: 100%;

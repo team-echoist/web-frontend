@@ -49,7 +49,7 @@ const LawBtn = styled.button`
   top: 255px;
   cursor: pointer;
 `;
-
+type TermKey = "service" | "personal" | "location";
 function UserSurpport({
   handleCloseComponent,
 }: {
@@ -64,6 +64,20 @@ function UserSurpport({
     if (name === "inquire") {
       setIsShowInquire((prev) => !prev);
     }
+  };
+  const termsMapper: Record<TermKey, { title: string; url: string }> = {
+    service: {
+      title: "서비스 이용 약관",
+      url: "https://www.linkedoutapp.com/terms",
+    },
+    personal: {
+      title: "개인정보처리 방침",
+      url: "https://www.linkedoutapp.com/privacy-policy",
+    },
+    location: {
+      title: "위치기반서비스 이용 약관",
+      url: "https://www.linkedoutapp.com/location-terms",
+    },
   };
   return (
     <Layout>
