@@ -1,36 +1,47 @@
-import React from 'react'
-import styled from 'styled-components'
-import MenuDefaultLayout from '../../ui/MenuDefaultLayout';
-import { NoneContents } from "@/shared/ui/layout";
-import color from '@/shared/styles/color';
-
-const H1 = styled.h1`
-  color: ${color.white};
-  font-family: Pretendard;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%;
-  position: absolute;
-  left: 48px;
-  top: 3px;
-`;
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import MenuDefaultLayout from "../../ui/MenuDefaultLayout";
+import { getInquires } from "@/shared/api/surpport";
+import List from "./contents/List";
+import Inquire from "./contents/Inquire";
 
 function UserInquire({
   submodalHandler,
 }: {
   submodalHandler: (name: string) => void;
 }) {
+  const [isShowInquire, setIsShowInquire] = useState(false);
+  const [inquireList, setInquireList] = useState([]);
+
+  useEffect(() => {
+    fetchInquireList();
+  }, [isShowInquire]);
+  const fetchInquireList = async () => {
+    try {
+      const { data, status } = await getInquires();
+      if (status === 200 || status === 201) {
+        setInquireList(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleShowInquire = () => {
+    setIsShowInquire((prev) => !prev);
+  };
   return (
     <MenuDefaultLayout
-    modalHandler={submodalHandler}
-    isSubModal={true}
-    name="inquire"
-  >
-    <H1>1:1 문의하기</H1>
-    <NoneContents text="문의 내역이 없습니다." height={716}/>
-  </MenuDefaultLayout>
-  )
+      modalHandler={submodalHandler}
+      isSubModal={true}
+      name="inquire"
+    >
+      {isShowInquire ? (
+        <Inquire handleShowInquire={handleShowInquire} />
+      ) : (
+        <List handleShowInquire={handleShowInquire} inquireList={inquireList}/>
+      )}
+    </MenuDefaultLayout>
+  );
 }
 
-export default UserInquire
+export default UserInquire;
