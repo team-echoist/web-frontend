@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Modal  from "@/shared/ui/modal/BottomSheet";
+import Modal from "@/shared/ui/modal/BottomSheet";
 import color from "@/shared/styles/color";
 import NextBtnImg from "@/shared/assets/img/next_Icon.svg";
 import { changeGroupChain, changeSingleChain } from "../../lib/changeChain";
@@ -146,7 +146,12 @@ const BtnDiv = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
-
+const ToastContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 37%;
+  z-index: 2000;
+`;
 export interface Essay {
   id: string;
   title: string;
@@ -437,7 +442,14 @@ function BottomSheet({
 
   return (
     <Layout isOpen={isOpen}>
-      <ColorToast type="alert" text={toastMessage} onClose={()=>setShowToast(false)} isShowToast={showToast}/>
+      <ToastContainer>
+        <ColorToast
+          type="alert"
+          text={toastMessage}
+          onClose={() => setShowToast(false)}
+          isShowToast={showToast}
+        />
+      </ToastContainer>
       <Modal isOpen={isOpen} size="large">
         <Wrapper onClick={handleDialogClick}>
           <TopNavigatorDiv>

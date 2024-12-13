@@ -41,11 +41,9 @@ function List({
   setIsSuccess,
   activeTab,
   listData,
-  setListData,
   loadMore,
   setListCount,
-  setHasMore,
-  getList
+  getList,
 }: {
   handleStoryModal: () => void;
   setStoryId: React.Dispatch<React.SetStateAction<number | null>>;
@@ -57,7 +55,6 @@ function List({
   setListData:React.Dispatch<React.SetStateAction<Essay[]>>,
   loadMore:()=>void;
   setListCount:React.Dispatch<React.SetStateAction<number>>;
-  setHasMore:React.Dispatch<React.SetStateAction<boolean>>;
   getList: (isDelete?:boolean) => void;
 }) {
 
@@ -83,8 +80,6 @@ function List({
       const { status } = await deleteEssay(id);
       if (status === 200) {
         toastHandler("에세이 삭제에 성공했습니다.", false);
-        setListCount(0);
-        setHasMore(true);
         getList(true);
       } else {
         toastHandler("에세이 삭제에 실패했습니다.", true);

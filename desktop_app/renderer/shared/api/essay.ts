@@ -119,10 +119,10 @@ export const getEssays = async (
       pageType: pageType,
       ...(storyId && { storyId: storyId }),
     };
-    const { data } = await fetchData<EssayDataType>("essays", "get", null, {
+    const { data,status } = await fetchData<EssayDataType>("essays", "get", null, {
       params,
     });
-    return { data: data.essays, totalPage: data.totalPage, total: data.total };
+    return { data: data.essays, totalPage: data.totalPage, total: data.total,status:status };
   } catch (err) {
     return { data: [], totalPage: 1, total: 0 };
   }

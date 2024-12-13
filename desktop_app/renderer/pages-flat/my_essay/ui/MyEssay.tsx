@@ -107,27 +107,35 @@ function MyEssay() {
       getList();
     }
   }, [activeTab]);
-
   useEffect(() => {
     if (page > 1 && hasMore && activeTab !== 2) {
       getList();
     }
   }, [page]);
 
-  const getList = async (isDelete?:boolean) => {
+  const getList = async (isDelete?: boolean) => {
     try {
       const tabInfo: { [key: number]: string } = {
         0: "private",
         1: "public",
       } as const;
       const pageType = tabInfo[activeTab];
+      let requestPage = isDelete ? 1 : page;
+      // 삭제시 setPage를 해도, batch처리때문에 바로 page초기화가 되지않아 따로 변수에 할당
       // pageType: private, public
-      if(isDelete){
-        setListData([])
+      if (isDelete) {
+        setListData([]);
       }
-      const { data, total, totalPage } = await getEssays(page, 5, pageType);
-      setListData((prevData) => [...prevData, ...data]);
-      setListCount(total);
+      const { data, total, totalPage, status } = await getEssays(
+        requestPage,
+        5,
+        pageType
+      );
+      if (status === 200 || status === 201) {
+        setListData((prevData) => [...prevData, ...data]);
+        setListCount(total);
+      }
+
       if (page >= totalPage) {
         setHasMore(false);
       }
@@ -147,7 +155,10 @@ function MyEssay() {
   return (
     <Layout>
       {isSearchModalOpen && (
-        <SearchModal modalHandler={modalHandler} pageType="search"></SearchModal>
+        <SearchModal
+          modalHandler={modalHandler}
+          pageType="search"
+        ></SearchModal>
       )}
       <ToastContainer>
         <ColorToast
@@ -171,7 +182,7 @@ function MyEssay() {
             />
           )}
           <ContentsContainer ismodalopen={isModalOpen}>
-            <Header modalHandler={modalHandler} isModalOpen={isModalOpen}/>
+            <Header modalHandler={modalHandler} isModalOpen={isModalOpen} />
             {!isModalOpen && (
               <>
                 <StyledWriteButton onClick={handleClick} />
@@ -195,7 +206,6 @@ function MyEssay() {
               setListData={setListData}
               loadMore={loadMore}
               setListCount={setListCount}
-              setHasMore={setHasMore}
               getList={getList}
             />
           </ContentsContainer>
