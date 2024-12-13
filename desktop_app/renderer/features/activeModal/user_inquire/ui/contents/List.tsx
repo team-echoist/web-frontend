@@ -15,7 +15,7 @@ const H1 = styled.h1`
   font-weight: 700;
   line-height: 150%;
   position: absolute;
-  left: 48px;
+  left: 58px;
   top: 3px;
   margin-bottom: 20px;
 `;
@@ -28,7 +28,7 @@ const NoneContentDiv = styled.div`
 `;
 const ListDiv = styled.div`
   width: 688px;
-  padding: 22px 40px;
+  padding: 22px 50px;
   display: flex;
   flex-direction: column;
   height: 636px;
