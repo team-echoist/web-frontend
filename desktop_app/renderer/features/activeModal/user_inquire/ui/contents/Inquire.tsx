@@ -274,7 +274,7 @@ function Inquire({ handleShowInquire }: { handleShowInquire: () => void }) {
             onChange={(e) => {
               setDesc(e.target.value);
             }}
-            placeholder="접수된 문의를 순차적으로 답변 드리고 있습니다. \n문의 내용을 상세히 기재해 주실수록 정확한 답변이 가능합니다."
+            placeholder="접수된 문의를 순차적으로 답변 드리고 있습니다. 문의 내용을 상세히 기재해 주실수록 정확한 답변이 가능합니다."
           />
         </TextAreaDiv>
         <BtnDiv>
