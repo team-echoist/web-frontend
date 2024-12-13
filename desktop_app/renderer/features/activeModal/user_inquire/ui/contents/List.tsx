@@ -31,8 +31,8 @@ const ListDiv = styled.div`
   padding: 22px 40px;
   display: flex;
   flex-direction: column;
-  height:636px;
-  overflow-y:auto;
+  height: 636px;
+  overflow-y: auto;
   overflow-x: hidden;
 `;
 const SubTitle = styled.span`
@@ -148,7 +148,7 @@ function List({
                   {data.processed ? "답변 완료" : "답변 대기"}
                 </StatusChip>
               </InquireDiv>
-              {isShowResponseId === data.id && (
+              {isShowResponseId === data.id && data.processed && (
                 <ResponseDiv>
                   <ResponseIconDiv>
                     <ResponseIcon />
