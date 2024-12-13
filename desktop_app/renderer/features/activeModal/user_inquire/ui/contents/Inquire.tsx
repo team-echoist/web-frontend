@@ -281,12 +281,12 @@ function Inquire({ handleShowInquire }: { handleShowInquire: () => void }) {
           <Button
             text="취소"
             type="disable"
-            scale="small"
+            scale="large"
             onClick={handleShowInquire}
           />
           <Button
             text="등록"
-            scale="small"
+            scale="large"
             onClick={() => {
               submitInquire();
             }}
