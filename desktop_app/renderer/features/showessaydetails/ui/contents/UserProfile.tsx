@@ -133,7 +133,9 @@ function UserProfile({
       <ProfileDiv>
         <ProfileButton
           onClick={() => {
-            navigateUserProfile(id);
+            if(userName !== user?.nickname){
+              navigateUserProfile(id);
+            }
           }}
         >
           <Image
