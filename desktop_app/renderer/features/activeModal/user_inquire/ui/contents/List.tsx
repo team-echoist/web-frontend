@@ -148,7 +148,7 @@ function List({
                   {data.processed ? "답변 완료" : "답변 대기"}
                 </StatusChip>
               </InquireDiv>
-              {isShowResponseId === data.id && data.processed && (
+              {isShowResponseId === data.id && data.processed===true && (
                 <ResponseDiv>
                   <ResponseIconDiv>
                     <ResponseIcon />
