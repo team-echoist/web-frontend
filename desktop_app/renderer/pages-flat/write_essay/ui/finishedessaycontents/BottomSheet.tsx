@@ -278,6 +278,8 @@ function BottomSheet({
 
     try {
       const { id } = e.currentTarget.dataset;
+      const geuloqueUrl = localStorage.getItem("geuloqueUrl");
+      const isGueloque = geuloqueUrl && geuloqueUrl.length > 0 ? true : false;
       const pageType = id === "private" ? "private" : "public";
       if (title.length === 0 || desc.length === 0) {
         showToastMessage("입력란을 확인해 주세요.");
@@ -286,17 +288,18 @@ function BottomSheet({
 
       const formData = new FormData();
 
-      if (imageFile) {
+      if (imageFile && !isGueloque) {
         formData.append("image", imageFile);
       }
-
       const body: bodyType = {
         title: String(title),
         content: String(desc),
         status: String(id),
         tags: isTagSave ? tag : [],
         location: "",
+        thumbnail: isGueloque ? geuloqueUrl || "" : "", 
       };
+
 
       if (location.length > 0) {
         const tempLocation = location[0];
@@ -310,7 +313,7 @@ function BottomSheet({
         delete body?.location;
       }
 
-      const { data, status } = await submitEssay(formData, body);
+      const { data, status } = await submitEssay(formData, body, isGueloque);
 
       if (status === 201) {
         const storedData = JSON.parse(
@@ -322,6 +325,7 @@ function BottomSheet({
         localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
         localStorage.setItem("currentEssayId", "");
         localStorage.setItem("tempThumbnail", "");
+        localStorage.setItem("geuloqueUrl", "");
         router.push(
           `/web/essay_details?id=${data.id}&type=${id}&pageType=${pageType}`
         );
