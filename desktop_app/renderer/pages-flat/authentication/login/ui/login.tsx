@@ -17,6 +17,7 @@ import Cookies from "js-cookie";
 import { useStore } from "@/shared/store";
 import { getUserInfo } from "@/shared/api";
 import { fetchData } from "@/shared/api/fetchData";
+import { ResetPassword } from "@/features/activeModal/password";
 
 type SocialLoginName = "google" | "kakao" | "naver";
 
@@ -73,6 +74,7 @@ export const Login = () => {
   const setUser = useStore((state) => state.setUser);
   const [deviceId, setDeviceId] = useState("");
   const [fcmToken, setFcmToken] = useState("");
+  const [isShowResetPassword, setIsShowResetPassword] = useState(false);
 
   const redirectToPage = (isFirstLogin: boolean) => {
     if (isFirstLogin) {
@@ -80,11 +82,6 @@ export const Login = () => {
     } else {
       router.push("/web/main");
     }
-  };
-  const calculateExpiryDate = (minutes: number): Date => {
-    const expiryDate = new Date();
-    expiryDate.setTime(expiryDate.getTime() + minutes * 60 * 1000); 
-    return expiryDate;
   };
 
   const handleUserInfo = async () => {
@@ -206,10 +203,15 @@ export const Login = () => {
 
     socialLogin(linkmapper[name as SocialLoginName]);
   };
-
+  const modalHandler = (name: string) => {
+    if (name === "resetPassword") {
+      setIsShowResetPassword((prev) => !prev);
+    }
+  };
   return (
     <>
       <PrevButton />
+      {isShowResetPassword && <ResetPassword modalHandler={modalHandler} />}
       <DefaultLayout>
         {isShowToast && (
           <GeneralToast
@@ -244,7 +246,13 @@ export const Login = () => {
           <Nav>
             <Ul>
               <Li>아이디 찾기</Li>
-              <Li>비밀번호 재설정</Li>
+              <Li
+                onClick={() => {
+                  modalHandler("resetPassword");
+                }}
+              >
+                비밀번호 재설정
+              </Li>
               <Link href="/web/signup">
                 <Li>회원가입</Li>
               </Link>

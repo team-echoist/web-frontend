@@ -1,5 +1,4 @@
 import React, { useId, useState } from "react";
-import DefaultLayout from "@/features/activeModal/ui/DefaultLayout";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 import { Input } from "@/shared/ui/input";
@@ -9,18 +8,30 @@ import { resetPassword } from "@/shared/api/user";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { ColorToast } from "@/shared/ui/toast";
+import { PrevButton } from "@/shared/ui/button";
+
+const DefaultLayout = styled.div`
+  width: 98vw;
+  position: fixed;
+  top: 32px;
+  left: 10px;
+  background: ${color.darkgray};
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+`;
 
 const Layout = styled.div`
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
 `;
 const Wrapper = styled.div`
-  width: 818px;
-  height: 764px;
+  // width: 818px;
+  // height: 764px;
   display: flex;
   flex-direction: column;
-  margin-top: 62px;
+  margin-top: 150px;
 `;
 const Span = styled.span`
   color: ${color.white};
@@ -49,8 +60,8 @@ const H1 = styled.h1`
   font-weight: 700;
   line-height: 150%;
   position: fixed;
-  left: 315px;
-  top: 35px;
+  left: 70px;
+  top: 32px;
 `;
 const BtnDiv = styled.div`
   margin-top: 447px;
@@ -65,9 +76,9 @@ const ToastContainer = styled.div`
   z-index: 50;
 `;
 function ResetPassword({
-  submodalHandler,
+  modalHandler,
 }: {
-  submodalHandler: (name: string) => void;
+  modalHandler: (name: string) => void;
 }) {
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
@@ -106,11 +117,13 @@ function ResetPassword({
   };
 
   return (
-    <DefaultLayout
-      modalHandler={submodalHandler}
-      isSubModal={true}
-      name="resetPassword"
-    >
+    <DefaultLayout>
+      <PrevButton
+        onClick={() => {
+          modalHandler("resetPassword");
+        }}
+      ></PrevButton>
+      <H1>비밀번호 재설정</H1>
       <GeneralToast
         title="입력하신 이메일 주소로 임시 비밀번호가 발송됐습니다."
         desc="임시 비밀번호로 로그인 후, 비밀번호를 변경하세요."
@@ -129,7 +142,6 @@ function ResetPassword({
         />
       </ToastContainer>
       <Layout>
-        <H1>비밀번호 재설정</H1>
         <Wrapper>
           <Span>가입 시 사용한 이메일 주소를 입력해주세요.</Span>
           <Span>비밀번호를 다시 설정할 수 있는 링크를 보내드릴게요.</Span>
