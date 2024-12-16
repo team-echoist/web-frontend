@@ -40,7 +40,7 @@ function AllFollowList({
           ))}
         </>
       ) : (
-        <NoneContents text="구독한 사람이 없습니다." />
+        <NoneContents text="구독한 아무개가 없습니다." />
       )}
     </Layout>
   );
