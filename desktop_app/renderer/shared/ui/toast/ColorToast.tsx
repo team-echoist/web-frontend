@@ -15,7 +15,7 @@ const Layout = styled.dialog<{ type: string }>`
     type === "alert" ? color.red : color.pointcolor};
   color: ${color.white};
   border: none;
-  z-index: 800;
+  z-index: 1200;
 `;
 
 function ColorToast({

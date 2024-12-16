@@ -75,7 +75,7 @@ function PostCard({
   onClick,
   linkedout=false
 }: {
-  writer: string;
+  writer?: string;
   title: string;
   desc: string;
   time: string;

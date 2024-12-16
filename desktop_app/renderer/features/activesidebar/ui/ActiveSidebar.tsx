@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { SideBar } from "@/shared/ui/sidebar";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/shared/store";
-import { Menu } from "@/shared/ui/menu";
+import { Menu } from "@/features/show_menu";
 import { usePathname } from "next/navigation";
-
 
 interface IconMap {
   home: React.ReactElement;
@@ -30,8 +29,10 @@ function ActiveSidebar({ isModalOpen }: { isModalOpen?: boolean }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const trimmedPathname = pathname.replace(/\/$/, "");
-    setPath(trimmedPathname);
+    if (!pathname.includes("user_profile")) {
+      const trimmedPathname = pathname.replace(/\/$/, "");
+      setPath(trimmedPathname);
+    }
   }, [pathname]);
 
   const focusedKey =
@@ -55,7 +56,6 @@ function ActiveSidebar({ isModalOpen }: { isModalOpen?: boolean }) {
   return (
     <>
       <SideBar focusedKey={focusedKey} onIconClick={handleIconClick} />
-
       {isMenuOpen && <Menu />}
     </>
   );

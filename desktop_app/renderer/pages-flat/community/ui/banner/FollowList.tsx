@@ -5,20 +5,8 @@ import { Users } from "@/shared/types";
 import { CircularAvatar } from "@/shared/ui/avatar";
 import DefaultProfileImg from "@/shared/assets/img/default_profile.webp";
 import color from "@/shared/styles/color";
+import { NoneContents } from "@/shared/ui/layout";
 
-const NoneFollowsLayout = styled.div`
-  width: calc(100vw - 270px);
-  height: 636px;
-  color: #686868;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 170%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const FollowsLayout = styled.div`
   display: flex;
 `;
@@ -77,15 +65,19 @@ const Btn = styled.button`
 function FollowList({
   handleFollowId,
   selectedFollowId,
+  handleShowAllfollower,
+  isShowAllFollows,
 }: {
   handleFollowId: (id: number) => void;
   selectedFollowId: number | null;
+  handleShowAllfollower: () => void;
+  isShowAllFollows: boolean;
 }) {
   const [follows, setFollows] = useState<Users>([]);
 
   useEffect(() => {
     fetchFollows();
-  }, []);
+  }, [isShowAllFollows]);
 
   const fetchFollows = async () => {
     try {
@@ -100,10 +92,10 @@ function FollowList({
       console.log(err);
     }
   };
-  const followsListRenderer = (isNoneFollows: boolean) => {
+  const followsListRenderer = (isExistFollows: boolean) => {
     return (
       <>
-        {isNoneFollows ? (
+        {isExistFollows && !isShowAllFollows ? (
           <FollowsLayout>
             <FollowsListContentLayout>
               {follows.map((item) => (
@@ -121,11 +113,11 @@ function FollowList({
               ))}
             </FollowsListContentLayout>
             <AllProfileBtnDiv>
-              <Btn>전체</Btn>
+              <Btn onClick={handleShowAllfollower}>전체</Btn>
             </AllProfileBtnDiv>
           </FollowsLayout>
-        ) : (
-          <NoneFollowsLayout>구독한 아무개가 없습니다.</NoneFollowsLayout>
+        ) : isShowAllFollows ? null : (
+          <NoneContents text="구독한 아무개가 없습니다." />
         )}
       </>
     );

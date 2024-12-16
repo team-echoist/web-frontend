@@ -179,7 +179,9 @@ function ShowEssayDetails({
           ? await deleteFollow(essay.author.id)
           : await postFollows(essay.author.id);
         if (status === 201 || status === 200) {
-          const alertText =isFollow ?"구독 취소 되었습니다." :"구독 추가 되었습니다."
+          const alertText = isFollow
+            ? "구독 취소 되었습니다."
+            : "구독 추가 되었습니다.";
           setIsShowToast(true);
           setToastText(alertText);
         }
@@ -230,7 +232,8 @@ function ShowEssayDetails({
           handleBookmarkClick={handleBookmarkClick}
           isBookMark={isBookMark}
           isShowBookmark={
-            pageType === "published" &&
+            (pageType === "published" ||
+              pageType === "public")&&
             user?.nickname !== essay?.author?.nickname
               ? true
               : false
@@ -246,13 +249,15 @@ function ShowEssayDetails({
           })}
         </TagDiv>
       </ArticleLayout>
-      {pageType === "published" && (
-        <UserProfile
-          userName={essay?.author?.nickname || "꾸르륵"}
-          profileImage={TempThumbnail.src}
-          submitFollows={submitFollows}
-        />
-      )}
+      {(pageType === "published" ||
+        pageType === "public") && (
+          <UserProfile
+            userName={essay?.author?.nickname || "꾸르륵"}
+            profileImage={essay?.author?.profileImage || TempThumbnail.src}
+            submitFollows={submitFollows}
+            id={essay?.author?.id || 0}
+          />
+        )}
       <Divider />
       <Contents pageType={pageType} storyId={storyId} essayId={essayId} />
     </Container>

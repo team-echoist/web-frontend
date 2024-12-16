@@ -8,8 +8,6 @@ import { formatDateString } from "@/shared/lib/date";
 import { getEssays } from "@/features/showessaydetails/api";
 import { getStories } from "@/shared/api";
 
-
-
 const StoryInfo = styled.div`
   width: 640px;
   height: 200px;
@@ -93,20 +91,20 @@ const Time = styled.time`
 `;
 function SuccessStory({
   essay,
-  title
-  
+  title,
+  nickname,
 }: {
-  essay:any[]
-  title:string
+  essay: any[];
+  title: string;
+  nickname?: string;
 }) {
-
   const user = useStore((state) => state.user);
   return (
     <>
       <StoryInfo>
         <BlackText>{essay?.length}편의 글</BlackText>
         <H1>{title}</H1>
-        <BlackText>{user?.nickname} 아무개</BlackText>
+        <BlackText>{nickname ? nickname : user?.nickname} 아무개</BlackText>
       </StoryInfo>
       {essay.map((item: any, index: number) => (
         <StoryItemBox key={item.title}>

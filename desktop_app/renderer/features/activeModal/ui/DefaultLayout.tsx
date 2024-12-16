@@ -1,15 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import PrevButtonImg from "@/shared/assets/img/prevbutton.svg";
-const Layout = styled.div`
+
+const Layout = styled.div<{ issubmodal: boolean }>`
   width: 100%;
-  height: 100vh;
-  z-index: 500;
+  height: 94vh;
+  max-height: 94vh;
+  z-index: ${({ issubmodal }) => (issubmodal ? "501" : "500")};
   background: #121212;
   position: fixed;
   top: 32px;
   left: 265px;
   padding: 10px;
+  overflow-y: auto;
 `;
 const PrevBtn = styled.button`
   all: unset;
@@ -18,16 +21,18 @@ const PrevBtn = styled.button`
 
 function DefaultLayout({
   children,
-  modlaHandler,
-  name
+  modalHandler,
+  name,
+  isSubModal = false,
 }: {
   children: React.ReactNode;
-  modlaHandler: (name: string) => void;
-  name:string
+  modalHandler: (name: string) => void;
+  name: string;
+  isSubModal?: boolean;
 }) {
   return (
-    <Layout>
-      <PrevBtn onClick={()=>modlaHandler(name)}>
+    <Layout issubmodal={isSubModal}>
+      <PrevBtn onClick={() => modalHandler(name)}>
         <PrevButtonImg />
       </PrevBtn>
       {children}

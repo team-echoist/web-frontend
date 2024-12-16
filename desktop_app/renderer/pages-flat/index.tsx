@@ -12,6 +12,7 @@ import { MyEssay } from "./my_essay";
 import { Community } from "./community";
 import { UnfinishedWriting } from "./unfinished_writing";
 import { EssayDetail } from "./essay_detail";
+import { UserProfile } from "./userprofile";
 
 const ProtectedMain = withAuth(Main);
 const ProtectedUnfinishedWriting = withAuth(UnfinishedWriting);
@@ -21,6 +22,7 @@ const ProtectedWriteEssay = withAuth(WriteEssay);
 const ProtectedComplete = withAuth(Complete);
 const ProtectedMyEssay = withAuth(MyEssay);
 const ProtectedCommunity = withAuth(Community);
+const ProtectedUserProfile = withAuth(UserProfile);
 
 type PageParams = {
   pagename: string;
@@ -85,6 +87,8 @@ const RenderView: React.FC<RenderViewProps> = ({ pageName }) => {
       return <EssayDetail />;
     case "unfinished_writing":
       return <ProtectedUnfinishedWriting />;
+    case "user_profile":
+      return <ProtectedUserProfile />;
     default:
       return <ProtectedMain />;
   }
