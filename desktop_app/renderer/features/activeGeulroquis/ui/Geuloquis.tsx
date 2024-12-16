@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { DarkBackground } from "@/shared/ui/background";
 import GeuloquisCard from "./contents/GeuloquisCard";
 import styled from "styled-components";
-import { getGeuloquis } from "@/shared/api/home";
 
-const Wrappser = styled.div`
-  width: 80%;
+const Wrapper = styled.div<{ isAlertOpen: boolean }>`
+  width: ${({ isAlertOpen }) => (isAlertOpen ? "100%" : "80%")};
   height: 100%;
   display: flex;
   justify-content: center;
@@ -15,21 +14,23 @@ const Wrappser = styled.div`
 function Geuloquis({
   handleGeuloque,
   isOpenGeuloque,
+  isAlertOpen,
   url,
 }: {
   handleGeuloque: () => void;
   isOpenGeuloque: boolean;
   url: string | null;
+  isAlertOpen: boolean;
 }) {
   if (!isOpenGeuloque) {
     return;
   }
 
   return (
-    <DarkBackground left={259}>
-      <Wrappser>
+    <DarkBackground left={isAlertOpen ? 0 : 259}>
+      <Wrapper isAlertOpen={isAlertOpen}>
         <GeuloquisCard url={url} handleGeuloque={handleGeuloque} />
-      </Wrappser>
+      </Wrapper>
     </DarkBackground>
   );
 }

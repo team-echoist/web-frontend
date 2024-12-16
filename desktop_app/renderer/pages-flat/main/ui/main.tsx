@@ -103,6 +103,7 @@ export const Main = () => {
   return (
     <>
       <Geuloquis
+        isAlertOpen={isModalOpen}
         isOpenGeuloque={isOpenGeuloque}
         handleGeuloque={handleGeuloque}
         url={url}
