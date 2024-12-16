@@ -64,7 +64,7 @@ export const Main = () => {
   };
   useEffect(() => {
     // 보류일때
-    if (pendignGeuloquis && JSON.parse(pendignGeuloquis) === true) {
+    if (pendignGeuloquis && pendignGeuloquis === "true") {
       setIsShowBulb(true);
     }
   }, [pendignGeuloquis]);

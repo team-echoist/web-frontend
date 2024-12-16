@@ -89,7 +89,7 @@ export const WriteEssay = () => {
       const lastFetchDate = localStorage.getItem("lastFetchDate") || "";
       const pendignGeuloquis = localStorage.getItem("lastFetchDate") || "false";
 
-      if (geuloqueUrl && lastFetchDate && !JSON.parse(pendignGeuloquis)) {
+      if (geuloqueUrl && lastFetchDate && pendignGeuloquis === "false") {
         const todayTitle = `${lastFetchDate} GeulRoquis`;
         setImageSrc(geuloqueUrl);
         setTitle(todayTitle);
