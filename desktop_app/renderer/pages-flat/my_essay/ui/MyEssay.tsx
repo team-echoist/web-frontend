@@ -157,7 +157,7 @@ function MyEssay() {
       {isSearchModalOpen && (
         <SearchModal
           modalHandler={modalHandler}
-          pageType="search"
+          pageType="private"
         ></SearchModal>
       )}
       <ToastContainer>
