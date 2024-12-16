@@ -233,6 +233,7 @@ export const WriteEssay = () => {
       setTitle("제목 없음");
       setValue("");
     } else {
+      localStorage.setItem("geuloqueUrl","")
       router.push("/web/main");
     }
   };
