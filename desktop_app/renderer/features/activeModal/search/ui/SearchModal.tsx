@@ -7,6 +7,7 @@ import { useDebounce } from "@/shared/lib/debounce";
 import { searchEssay } from "@/shared/api";
 import { useRouter } from "next/router";
 import { Essay } from "@/shared/types";
+import { NoneContents } from "@/shared/ui/layout";
 
 const InputContainer = styled.div`
   position: fixed;
@@ -53,10 +54,10 @@ const ListItemDiv = styled.div`
 `;
 
 function SearchModal({
-  modlaHandler,
+  modalHandler,
   pageType
 }: {
-  modlaHandler: (name: string) => void;
+  modalHandler: (name: string) => void;
   pageType:string;
 }) {
   const [listData, setListData] = useState<Essay[]>([]);
@@ -81,7 +82,7 @@ function SearchModal({
     }
   };
   return (
-    <DefaultLayout modlaHandler={modlaHandler} name="search">
+    <DefaultLayout modalHandler={modalHandler} name="search">
       <InputContainer>
         <Icon>
           <WhiteSearch />
@@ -92,7 +93,7 @@ function SearchModal({
         />
       </InputContainer>
       <ListLayout>
-        {listData.map((item) => (
+        {listData.length>0?listData.map((item) => (
           <ListItemDiv>
             <PostCard
               key={item.id}
@@ -105,7 +106,7 @@ function SearchModal({
               onClick={() => navigateToEssay(item.id, item.status)}
             />
           </ListItemDiv>
-        ))}
+        )):<NoneContents text="검색 내용이 없습니다."/>}
       </ListLayout>
     </DefaultLayout>
   );

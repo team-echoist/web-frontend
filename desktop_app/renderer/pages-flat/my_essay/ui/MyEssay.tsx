@@ -10,8 +10,6 @@ import List from "./contents/List";
 import { ScrollTop } from "@/shared/ui/scroll";
 import AddStoryModal from "./contents/story/AddStoryModal";
 import { ColorToast } from "@/shared/ui/toast";
-import { useDebounce } from "@/shared/lib/debounce";
-import { searchEssay } from "@/shared/api";
 import { Essay } from "@/shared/types";
 import { Tab } from "@/shared/ui/tab";
 import { getEssays } from "@/shared/api";
@@ -109,24 +107,35 @@ function MyEssay() {
       getList();
     }
   }, [activeTab]);
-
   useEffect(() => {
     if (page > 1 && hasMore && activeTab !== 2) {
       getList();
     }
   }, [page]);
 
-  const getList = async () => {
+  const getList = async (isDelete?: boolean) => {
     try {
       const tabInfo: { [key: number]: string } = {
         0: "private",
         1: "public",
       } as const;
       const pageType = tabInfo[activeTab];
+      let requestPage = isDelete ? 1 : page;
+      // 삭제시 setPage를 해도, batch처리때문에 바로 page초기화가 되지않아 따로 변수에 할당
       // pageType: private, public
-      const { data, total, totalPage } = await getEssays(page, 5, pageType);
-      setListData((prevData) => [...prevData, ...data]);
-      setListCount(total);
+      if (isDelete) {
+        setListData([]);
+      }
+      const { data, total, totalPage, status } = await getEssays(
+        requestPage,
+        5,
+        pageType
+      );
+      if (status === 200 || status === 201) {
+        setListData((prevData) => [...prevData, ...data]);
+        setListCount(total);
+      }
+
       if (page >= totalPage) {
         setHasMore(false);
       }
@@ -137,7 +146,7 @@ function MyEssay() {
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
-  const modlaHandler = (name: string) => {
+  const modalHandler = (name: string) => {
     if (name === "search") {
       setSearchModalOpen((prev) => !prev);
     }
@@ -146,7 +155,10 @@ function MyEssay() {
   return (
     <Layout>
       {isSearchModalOpen && (
-        <SearchModal modlaHandler={modlaHandler} pageType="private"></SearchModal>
+        <SearchModal
+          modalHandler={modalHandler}
+          pageType="private"
+        ></SearchModal>
       )}
       <ToastContainer>
         <ColorToast
@@ -170,7 +182,7 @@ function MyEssay() {
             />
           )}
           <ContentsContainer ismodalopen={isModalOpen}>
-            <Header modlaHandler={modlaHandler}/>
+            <Header modalHandler={modalHandler} isModalOpen={isModalOpen} />
             {!isModalOpen && (
               <>
                 <StyledWriteButton onClick={handleClick} />
@@ -194,7 +206,6 @@ function MyEssay() {
               setListData={setListData}
               loadMore={loadMore}
               setListCount={setListCount}
-              setHasMore={setHasMore}
               getList={getList}
             />
           </ContentsContainer>

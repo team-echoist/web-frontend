@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 import { getRandomEssays } from "@/shared/api";
 import { Virtuoso } from "react-virtuoso";
 import { getFollowingsEssay } from "@/shared/api";
-import { getAuthorEssays } from "@/shared/api";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
+import { getTargetUserEssays } from "@/shared/api";
 
 const Layout = styled.article`
   width: calc(100vw - 270px);
@@ -21,7 +20,7 @@ const Layout = styled.article`
 `;
 const Wrapper = styled.div`
   width: 80%;
-  margin-top: 26px;
+  // margin-top: 26px;
 `;
 const H1 = styled.h1`
   color: ${color.pointcolor};
@@ -53,9 +52,11 @@ const ContentsContainer = styled.div`
 function EssayList({
   isRandomEssay,
   selectedFollowId,
+  isShowAllFollows,
 }: {
   isRandomEssay: boolean;
   selectedFollowId: null | number;
+  isShowAllFollows: boolean;
 }) {
   const [list, setList] = useState<Essay[]>([]);
   const [page, setPage] = useState(1);
@@ -84,11 +85,16 @@ function EssayList({
       console.log(Err);
     }
   };
+
   const fetchFollowingAutorEssay = async (id: number) => {
     try {
       setList([]);
       if (selectedFollowId) {
-        const { data, totalPage, status } = await getAuthorEssays(id);
+        const { data, totalPage, status } = await getTargetUserEssays(
+          id,
+          page,
+          20,
+        );
 
         if (status === 200) {
           setList((prevData) => [...prevData, ...data]);
@@ -125,7 +131,7 @@ function EssayList({
         fetchFollowingsEssay();
       }
     }
-  }, [isRandomEssay, selectedFollowId]);
+  }, [isRandomEssay, selectedFollowId, isShowAllFollows]);
 
   useEffect(() => {
     fetchFollowingsEssay();

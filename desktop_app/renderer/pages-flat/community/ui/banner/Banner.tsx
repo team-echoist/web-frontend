@@ -82,13 +82,18 @@ const Chip = styled.div<{
   top: 0;
   left: ${({ left }) => left};
 `;
-const Span = styled.span<{ color?: string }>`
+const Span = styled.span<{
+  color?: string;
+  isRight: boolean;
+  expanded: boolean;
+}>`
   width: 80%;
   height: 100%;
   display: flex;
   align-items: center;
-  position:absolute;
-  left:20px;
+  position: absolute;
+  ${({ isRight, expanded }) =>
+    isRight && !expanded ? "right: 20px;" : "left: 20px;"};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -118,8 +123,8 @@ const DetailBtn = styled.button`
   width: 100px;
   height: 45px;
   flex-shrink: 0;
-  position:absolute;
-  right:12px;
+  position: absolute;
+  right: 12px;
 `;
 const options = [
   { value: "first", label: "첫 문장" },
@@ -172,7 +177,6 @@ function Banner() {
     });
   };
 
-
   const navigateToDetails = (id: number, status: string) => {
     router.push(`/web/essay_details?id=${id}&pageType=${status}`);
   };
@@ -193,36 +197,54 @@ function Banner() {
         </SelectBoxDiv>
       </TitleDiv>
       <ContentDiv>
-        {sentence.map((group: any[], groupIndex: number) => (
-          <ContentItemDiv key={`group-${groupIndex}`}>
-            {group.map((chip, chipIndex) => (
-              <ChipContainer key={`chip-${groupIndex}-${chipIndex}`}>
-                <Chip
-                  expanded={expandedChipIndices[groupIndex + 1] === chipIndex}
-                  onClick={() => handleChipClick(groupIndex + 1, chipIndex)}
-                  width={chip.width}
-                  color={chip.color}
-                  index={chipIndex}
-                  isVisible={
-                    expandedChipIndices[groupIndex + 1] === null ||
-                    expandedChipIndices[groupIndex + 1] === chipIndex
-                  }
-                  left={chip.left}
-                  translateX={chip.translateX}
-                >
-                  <Span color={chip.textColor}>{chip.text}</Span>
-                  {expandedChipIndices[groupIndex + 1] === chipIndex && (
-                    <DetailBtn
-                      onClick={() => navigateToDetails(chip.id, chip.status)}
+        {sentence.map((group: any[], groupIndex: number) => {
+          return (
+            <ContentItemDiv key={`group-${groupIndex}`}>
+              {group.map((chip, chipIndex) => {
+                return (
+                  <ChipContainer key={`chip-${groupIndex}-${chipIndex}`}>
+                    <Chip
+                      expanded={
+                        expandedChipIndices[groupIndex + 1] === chipIndex
+                      }
+                      onClick={() => {
+                        handleChipClick(groupIndex + 1, chipIndex);
+                      }}
+                      width={chip.width}
+                      color={chip.color}
+                      index={chipIndex}
+                      isVisible={
+                        expandedChipIndices[groupIndex + 1] === null ||
+                        expandedChipIndices[groupIndex + 1] === chipIndex
+                      }
+                      left={chip.left}
+                      translateX={chip.translateX}
                     >
-                      자세히 보기
-                    </DetailBtn>
-                  )}
-                </Chip>
-              </ChipContainer>
-            ))}
-          </ContentItemDiv>
-        ))}
+                      <Span
+                        color={chip.textColor}
+                        isRight={chipIndex === 1 || chipIndex === 2}
+                        expanded={
+                          expandedChipIndices[groupIndex + 1] === chipIndex
+                        }
+                      >
+                        {chip.text}
+                      </Span>
+                      {expandedChipIndices[groupIndex + 1] === chipIndex && (
+                        <DetailBtn
+                          onClick={() => {
+                            navigateToDetails(chip.id, chip.status);
+                          }}
+                        >
+                          자세히 보기
+                        </DetailBtn>
+                      )}
+                    </Chip>
+                  </ChipContainer>
+                );
+              })}
+            </ContentItemDiv>
+          );
+        })}
       </ContentDiv>
     </Layout>
   );

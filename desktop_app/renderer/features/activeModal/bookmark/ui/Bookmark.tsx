@@ -85,9 +85,9 @@ interface ExtendedEssay extends Essay {
 }
 interface BookmarkProps {
   deleteSavedEssays: (ids: number[]) => void;
-  modlaHandler: (name: string) => void;
+  modalHandler: (name: string) => void;
 }
-function Bookmark({ deleteSavedEssays, modlaHandler }: BookmarkProps) {
+function Bookmark({ deleteSavedEssays, modalHandler }: BookmarkProps) {
   const [list, setList] = useState<ExtendedEssay[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -108,7 +108,7 @@ function Bookmark({ deleteSavedEssays, modlaHandler }: BookmarkProps) {
           ...item,
           isChecked: selectedItems.some((selected) => selected === item.id),
         }));
-        setList(updatedData);
+        setList((prevList) => [...prevList, ...updatedData]);
         if (totalPage) {
           setTotalPage(totalPage);
         }
@@ -156,7 +156,7 @@ function Bookmark({ deleteSavedEssays, modlaHandler }: BookmarkProps) {
   };
 
   return (
-    <DefaultLayout modlaHandler={modlaHandler} name="bookmark">
+    <DefaultLayout modalHandler={modalHandler} name="bookmark">
       <H1>저장한글</H1>
       <Btn onClick={handleEdit}>{isEdit ? "완료" : "편집"}</Btn>
       {list.length > 0 ? (

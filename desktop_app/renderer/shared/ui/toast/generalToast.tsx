@@ -16,9 +16,9 @@ const Overlay = styled.div`
   align-items: center;
 `;
 
-const Layout = styled.div<{ positionTop?: string }>`
+const Layout = styled.div<{ positionTop?: string; width?: number }>`
   display: flex;
-  width: 440px;
+  width: ${({ width }) => (width ? `${width}px` : "440px")};
   height: 81px;
   padding: 16px 0px 16px 0px;
   flex-shrink: 0;
@@ -27,7 +27,7 @@ const Layout = styled.div<{ positionTop?: string }>`
   border-radius: 10px;
   background: #212121;
   position: fixed;
-  top: ${({ positionTop }) => positionTop || '82.21vh'};
+  top: ${({ positionTop }) => positionTop || "82.21vh"};
   z-index: 1000;
 `;
 
@@ -68,7 +68,8 @@ interface GeneralToastProps {
   desc?: string;
   isShowToast: boolean;
   setIsShowToast: Dispatch<SetStateAction<boolean>>;
-  positionTop?:string,
+  positionTop?: string;
+  width?: number;
 }
 
 const GeneralToast: React.FC<GeneralToastProps> = ({
@@ -76,16 +77,20 @@ const GeneralToast: React.FC<GeneralToastProps> = ({
   desc,
   isShowToast,
   setIsShowToast,
-  positionTop=""
+  positionTop = "",
+  width,
 }) => {
   if (!isShowToast) {
     return null;
   }
   return (
     <Overlay>
-      <Layout positionTop={positionTop}>
+      <Layout positionTop={positionTop} width={width}>
         <CloseButtonDiv>
-          <Closebutton isShowModal={isShowToast} setIsShowModal={setIsShowToast} />
+          <Closebutton
+            isShowModal={isShowToast}
+            setIsShowModal={setIsShowToast}
+          />
         </CloseButtonDiv>
         <ContentDiv>
           <H1>{title}</H1>

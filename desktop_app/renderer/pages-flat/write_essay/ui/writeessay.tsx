@@ -12,7 +12,6 @@ import { useSearchParams } from "next/navigation";
 import { getEssayDetail } from "@/shared/api";
 import { isBase64 } from "../lib/checkBase64";
 
-
 const Editor = dynamic(
   () => import("@/shared/ui/editor").then((mod) => mod.Editor),
   { ssr: false }
@@ -79,12 +78,28 @@ export const WriteEssay = () => {
   const searchParams = useSearchParams();
   const pageType = searchParams.get("pageType");
   const essayId = searchParams.get("essayId");
+  const geuloquis = searchParams.get("geuloquis");
   const editorType = searchParams.get("editorType");
   const [isTagSave, setIsTagSave] = useState(false);
   const [isLocationSave, setIsLocationSave] = useState(false);
 
   useEffect(() => {
-    if (editorType !== "edit") {
+    if (geuloquis) {
+      const geuloqueUrl = localStorage.getItem("geuloqueUrl") || ""; 
+      const lastFetchDate = localStorage.getItem("lastFetchDate") || "";
+  
+      if (geuloqueUrl && lastFetchDate) {
+        const todayTitle = `${lastFetchDate} GeulRoquis`;
+        setImageSrc(geuloqueUrl);
+        setTitle(todayTitle); 
+      } else {
+        console.error("localStorage에서 필요한 값이 없습니다.");
+      }
+    }
+  }, [geuloquis]);
+
+  useEffect(() => {
+    if (editorType !== "edit" && !geuloquis) {
       // 일반 글쓰기 모드 일때
       const processEssayData = (id: string) => {
         const storedData = JSON.parse(
@@ -102,7 +117,9 @@ export const WriteEssay = () => {
         processEssayData(currentId);
         localStorage.setItem("currentEssayId", currentId);
       }
-    } else {
+    } 
+    
+    if(editorType === "edit" && !geuloquis){
       getExistEssayDetail();
     }
   }, []);
@@ -125,11 +142,11 @@ export const WriteEssay = () => {
       }));
       setImageSrc(data?.essay?.thumbnail ?? null);
       localStorage.setItem("tempThumbnail", data?.essay?.thumbnail ?? "");
-      if((data?.essay?.tags ?? []).length > 0) {
-        setIsTagSave(true)
+      if ((data?.essay?.tags ?? []).length > 0) {
+        setIsTagSave(true);
       }
-      if((data?.essay?.location ?? "").length > 0) {
-        setIsLocationSave(true)
+      if ((data?.essay?.location ?? "").length > 0) {
+        setIsLocationSave(true);
       }
     } catch (err) {
       console.log("err", err);
@@ -271,9 +288,11 @@ export const WriteEssay = () => {
       desc={value}
       tag={bottomValue?.tag.values}
       location={bottomValue?.location.values}
-      imageFile={isBase64(imageSrc) 
-        ? base64ToFile(imageSrc, "thumbnail image") 
-        : imageSrc || null}
+      imageFile={
+        isBase64(imageSrc)
+          ? base64ToFile(imageSrc, "thumbnail image")
+          : imageSrc || null
+      }
       essayId={essayId || null}
       editorType={editorType || null}
       pageType={pageType}

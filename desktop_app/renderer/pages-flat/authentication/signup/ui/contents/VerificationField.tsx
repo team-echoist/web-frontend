@@ -8,20 +8,7 @@ import { getUserInfo } from "@/shared/api";
 import { useStore } from "@/shared/store";
 import { fetchData } from "@/shared/api/fetchData";
 
-const RectangleDiv = styled.div`
-  width: 100%;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const Rectangle = styled.div`
-  width: 40px;
-  height: 5px;
-  flex-shrink: 0;
-  border-radius: 15px;
-  background: #8a8a8a;
-`;
+
 const H1 = styled.h1`
   color: ${color.white};
   font-family: Pretendard;
@@ -162,9 +149,6 @@ function VerificationField({ onRetry }: { onRetry: (type?: string) => void }) {
   };
   return (
     <>
-      {/* <RectangleDiv>
-        <Rectangle />
-      </RectangleDiv> */}
       <H1>인증번호 입력하기</H1>
       <P>이메일로 인증번호 6자리를 보내드렸어요.</P>
       <InputDiv>

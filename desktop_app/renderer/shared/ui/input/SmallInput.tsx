@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import color from "@/shared/styles/color";
 
 interface InputProps {
+  id?:string;
   type?: string;
   placeholder?: string;
   value: string;
@@ -52,6 +53,7 @@ const Input = styled.input<{ hasValue: boolean; hasError: boolean }>`
 `;
 
 function SmallInput({
+  id,
   type = "text",
   placeholder = "",
   value,

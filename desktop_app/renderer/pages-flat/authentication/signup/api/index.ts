@@ -29,10 +29,14 @@ export const registerUser = async (code: string) => {
       process.env.NEXT_PUBLIC_API_URL + "auth/register",
       body
     );
-    console.log("test", response.data.data,response.data.statusCode)
     const { accessToken, refreshToken } = response.data.data;
     Cookies.set('accessToken', accessToken, { expires: 7 });
     Cookies.set('refreshToken', refreshToken, { expires: 30 }); 
+    Cookies.set("isOauth", "no", {
+      expires: 30,
+      secure: true,
+      sameSite: "Strict",
+    });
     const statusCode = response.data.statusCode;
     return statusCode;
   } catch (err) {

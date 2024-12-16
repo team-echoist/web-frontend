@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Modal  from "@/shared/ui/modal/BottomSheet";
+import Modal from "@/shared/ui/modal/BottomSheet";
 import color from "@/shared/styles/color";
 import NextBtnImg from "@/shared/assets/img/next_Icon.svg";
 import { changeGroupChain, changeSingleChain } from "../../lib/changeChain";
@@ -146,7 +146,12 @@ const BtnDiv = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
-
+const ToastContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 37%;
+  z-index: 2000;
+`;
 export interface Essay {
   id: string;
   title: string;
@@ -269,9 +274,13 @@ function BottomSheet({
   };
 
   const handleSaveEssay = async (e: React.MouseEvent<HTMLElement>) => {
-    const { id } = e.currentTarget.dataset;
-    const pageType = id === "private" ? "private" : "public";
+    e.preventDefault();
+
     try {
+      const { id } = e.currentTarget.dataset;
+      const geuloqueUrl = localStorage.getItem("geuloqueUrl");
+      const isGueloque = geuloqueUrl && geuloqueUrl.length > 0 ? true : false;
+      const pageType = id === "private" ? "private" : "public";
       if (title.length === 0 || desc.length === 0) {
         showToastMessage("입력란을 확인해 주세요.");
         return;
@@ -279,17 +288,18 @@ function BottomSheet({
 
       const formData = new FormData();
 
-      if (imageFile) {
+      if (imageFile && !isGueloque) {
         formData.append("image", imageFile);
       }
-
       const body: bodyType = {
         title: String(title),
         content: String(desc),
         status: String(id),
         tags: isTagSave ? tag : [],
         location: "",
+        thumbnail: isGueloque ? geuloqueUrl || "" : "", 
       };
+
 
       if (location.length > 0) {
         const tempLocation = location[0];
@@ -303,7 +313,7 @@ function BottomSheet({
         delete body?.location;
       }
 
-      const { data, status } = await submitEssay(formData, body);
+      const { data, status } = await submitEssay(formData, body, isGueloque);
 
       if (status === 201) {
         const storedData = JSON.parse(
@@ -315,6 +325,7 @@ function BottomSheet({
         localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
         localStorage.setItem("currentEssayId", "");
         localStorage.setItem("tempThumbnail", "");
+        localStorage.setItem("geuloqueUrl", "");
         router.push(
           `/web/essay_details?id=${data.id}&type=${id}&pageType=${pageType}`
         );
@@ -435,7 +446,14 @@ function BottomSheet({
 
   return (
     <Layout isOpen={isOpen}>
-      <ColorToast type="alert" text={toastMessage} onClose={()=>setShowToast(false)} isShowToast={showToast}/>
+      <ToastContainer>
+        <ColorToast
+          type="alert"
+          text={toastMessage}
+          onClose={() => setShowToast(false)}
+          isShowToast={showToast}
+        />
+      </ToastContainer>
       <Modal isOpen={isOpen} size="large">
         <Wrapper onClick={handleDialogClick}>
           <TopNavigatorDiv>

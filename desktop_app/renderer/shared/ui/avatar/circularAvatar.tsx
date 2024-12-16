@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import Image, { StaticImageData } from "next/image";
 
-const Layout = styled.div`
-  width: 75px;
-  height: 75px;
+const Layout = styled.div<{ width?: number; height?: number }>`
+  width: ${({ width }) => (width ? `${width}px` : "75px")};
+  height: ${({ height }) => (height ? `${height}px` : "75px")};
   flex-shrink: 0;
   border-radius: 50%;
   overflow: hidden;
@@ -12,23 +12,21 @@ const Layout = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  background:#1A1A1A;
+  background: #1a1a1a;
 `;
-
-
 
 function CircularAvatar({
   img,
   width,
-  height
+  height,
 }: {
   img: StaticImageData | string;
   width: number;
   height: number;
 }) {
   return (
-    <Layout>
-      <Image src={img} alt="Circular Avatar" width={width} height={height}/>
+    <Layout width={width} height={height}>
+      <Image src={img} alt="Circular Avatar" width={width} height={height} />
     </Layout>
   );
 }

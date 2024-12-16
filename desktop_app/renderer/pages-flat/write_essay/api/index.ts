@@ -14,10 +14,11 @@ type ImageResponse = {
 
 export const submitEssay = async (
   formData: FormData,
-  body: bodyType
+  body: bodyType,
+  isGueloque?: boolean
 ): Promise<any> => {
   try {
-    if (formData) {
+    if (formData && !isGueloque) {
       const formDataEmpty = Array.from(formData.entries()).reduce(
         (acc, [key, value]) => {
           return false;

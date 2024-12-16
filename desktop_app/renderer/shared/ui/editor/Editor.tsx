@@ -98,13 +98,13 @@ function Editor({
   setValue,
   tagValue,
   setTagValue,
-  editorType
+  editorType,
 }: {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   tagValue: TagValue;
   setTagValue: Dispatch<SetStateAction<TagValue>>;
-  editorType:string|null;
+  editorType: string | null;
 }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -114,10 +114,11 @@ function Editor({
   const [isShowModal, setIsShowModal] = useState(false);
   const [isMiniModalOpen, setIsMiniModalOpen] = useState(false);
   let tempThumbnail = localStorage.getItem("tempThumbnail");
+  let geuloqueUrl = localStorage.getItem("geuloqueUrl");
 
   useEffect(() => {
     const currentEssayId = localStorage.getItem("currentEssayId");
-    if (currentEssayId&&!tempThumbnail) {
+    if (currentEssayId && !tempThumbnail && !geuloqueUrl) {
       const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
       const storedEssayData = essayData.find((item: any) => {
         return item.id === currentEssayId && item.imageSrc;
@@ -125,11 +126,12 @@ function Editor({
       if (storedEssayData?.imageSrc) {
         setThumbnailImage(storedEssayData.imageSrc);
       }
-    }else if(tempThumbnail){
+    } else if (geuloqueUrl) {
+      setThumbnailImage(geuloqueUrl);
+    } else if (tempThumbnail && !geuloqueUrl) {
       setThumbnailImage(tempThumbnail);
     }
-    
-  }, [editorType,tempThumbnail]);
+  }, [editorType, tempThumbnail]);
 
   useEffect(() => {
     const updateEditorWidth = () => {
@@ -174,11 +176,10 @@ function Editor({
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-
       convertFileToBase64(file, (base64Url: string) => {
         setThumbnailImage(base64Url);
         insertImageIntoEditor(base64Url);
-        localStorage.setItem('tempThumbnail', base64Url);
+        localStorage.setItem("tempThumbnail", base64Url);
       });
     }
   };

@@ -56,6 +56,7 @@ const DateTime = styled.time`
   line-height: 170%;
 `;
 
+
 function FinishedEssay({
   title,
   desc,

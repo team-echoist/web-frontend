@@ -1,12 +1,29 @@
-"use client";
-import React, { FC } from "react";
-import * as Styled from "./toggle.styled";
+import React from "react";
+import styled from "styled-components";
+import ToggleOn from "@/shared/assets/img/toggle_on.svg";
+import ToggleOff from "@/shared/assets/img/toggle_off.svg";
 
-interface IToggle {
-  readonly onClick?: () => void;
+const ToggleContainer = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+interface ToggleProps {
+  isOn: boolean;
+  onToggle: (isOn: boolean) => void;
 }
 
-export const Toggle: FC<IToggle> = (props) => {
-  const { onClick } = props;
-  return <Styled.SToggle onClick={onClick}></Styled.SToggle>;
+const Toggle = ({ isOn, onToggle }: ToggleProps) => {
+  const handleToggle = () => {
+    onToggle(!isOn);
+  };
+
+  return (
+    <ToggleContainer onClick={handleToggle}>
+      {isOn ? <ToggleOn/>: <ToggleOff/>}
+    </ToggleContainer>
+  );
 };
+
+export default Toggle;

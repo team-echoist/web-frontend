@@ -75,7 +75,6 @@ function SignUP() {
     if (type !== "retry") {
       setIsVerificationOpen(false);
     } 
-    console.log("test")
     handleError();
 
     if (!isButtonEnabledState) {

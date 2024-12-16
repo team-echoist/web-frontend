@@ -15,19 +15,19 @@ const Layout = styled.div`
   background: rgba(0, 0, 0, 0.9);
 `;
 
-const mapper ={
-  support:ReportedLetter,
+const mapper = {
+  support: ReportedLetter,
   linkedout: BigLetter,
-  public:BigLetter
-}
+  public: BigLetter,
+};
 
 function index({
   type,
   title,
   createdDate,
-  handleCloseModal
+  handleCloseModal,
 }: {
-  type:"public"|"support" | "linkedout";
+  type: "public" | "support" | "linkedout";
   title: string;
   createdDate: string;
   handleCloseModal?: () => void;

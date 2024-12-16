@@ -5,6 +5,7 @@ import Image from "next/image";
 import color from "@/shared/styles/color";
 import { useStore } from "@/shared/store";
 import { getFollows } from "@/shared/api";
+import { useRouter } from "next/router";
 
 const Layout = styled.div`
   width: 80%;
@@ -22,7 +23,9 @@ const ProfileDiv = styled.div`
   align-items: center;
   gap: 10.62px;
 `;
-const ProfileImgDiv = styled.div`
+const ProfileButton = styled.button`
+  all: unset;
+  cursor: pointer;
   width: 60px;
   height: 60px;
   border-radius: 50px;
@@ -87,20 +90,23 @@ function UserProfile({
   userName,
   profileImage,
   submitFollows,
+  id,
 }: {
   userName: string;
   profileImage: string;
   submitFollows: (isFollow: boolean) => void;
+  id: number;
 }) {
   const [splitedUserName, setSplitedUserName] = useState<string[]>([]);
   const [isFollow, setIsFollow] = useState<null | boolean>(null);
   const user = useStore((state) => state.user);
+  const router = useRouter();
 
   useEffect(() => {
     const splitedStringArr = splitByKeyword(userName, "아무개");
     setSplitedUserName(splitedStringArr);
     fetchFollows();
-  }, [userName,submitFollows]);
+  }, [userName, submitFollows]);
   const fetchFollows = async () => {
     try {
       const { data, status } = await getFollows();
@@ -119,21 +125,29 @@ function UserProfile({
     // 구독 여부에 따라 분기처리
     submitFollows(isFollow);
   };
-
+  const navigateUserProfile = (id: number) => {
+    router.push(`/web/user_profile?id=${id}`);
+  };
   return (
     <Layout>
       <ProfileDiv>
-        <ProfileImgDiv>
+        <ProfileButton
+          onClick={() => {
+            if(userName !== user?.nickname){
+              navigateUserProfile(id);
+            }
+          }}
+        >
           <Image
             src={profileImage ? profileImage : DefaultProfileImg.src}
             alt="profile_image"
             width={60}
             height={60}
           ></Image>
-        </ProfileImgDiv>
-        <ProfileName>
-          {splitedUserName[0]} <Strong>아무개</Strong>
-        </ProfileName>
+          <ProfileName>
+            {splitedUserName[0]} <Strong>아무개</Strong>
+          </ProfileName>
+        </ProfileButton>
       </ProfileDiv>
       {user?.nickname !== userName && (
         <SubscribeBtn

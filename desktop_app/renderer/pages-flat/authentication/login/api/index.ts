@@ -22,13 +22,11 @@ export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
     const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + "auth/login", body);
     const statusCode = response.data.statusCode;
     const data =response.data.data
-    console.log("response",response.data.data)
 
     const accessToken = data.accessToken;
     const refreshToken = data.refreshToken;
 
     if (accessToken && refreshToken) {
-      const accessTokenExpiry = calculateExpiryDate(30); 
       if (autoLoginCheck) {
         Cookies.set("accessToken", accessToken, {
           expires: 1,
@@ -40,9 +38,15 @@ export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
           secure: true,
           sameSite: "Strict",
         });
+        Cookies.set("isOauth", "no", {
+          expires: 30,
+          secure: true,
+          sameSite: "Strict",
+        });
       } else {
         sessionStorage.setItem("accessToken", accessToken);
         sessionStorage.setItem("refreshToken", refreshToken);
+        sessionStorage.setItem("isOauth", "no");
       }
     } else {
       console.error("Access token or refresh token is missing from headers");
