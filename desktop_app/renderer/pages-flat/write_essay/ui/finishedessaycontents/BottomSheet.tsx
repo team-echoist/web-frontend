@@ -275,7 +275,6 @@ function BottomSheet({
 
   const handleSaveEssay = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-
     try {
       const { id } = e.currentTarget.dataset;
       const geuloqueUrl = localStorage.getItem("geuloqueUrl");
@@ -287,8 +286,7 @@ function BottomSheet({
       }
 
       const formData = new FormData();
-
-      if (imageFile && !isGueloque) {
+      if (imageFile instanceof File && isGueloque ===false) {
         formData.append("image", imageFile);
       }
       const body: bodyType = {
@@ -312,7 +310,6 @@ function BottomSheet({
       } else {
         delete body?.location;
       }
-
       const { data, status } = await submitEssay(formData, body, isGueloque);
 
       if (status === 201) {

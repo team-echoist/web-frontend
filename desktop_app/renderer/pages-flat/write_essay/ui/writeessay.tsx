@@ -85,13 +85,14 @@ export const WriteEssay = () => {
 
   useEffect(() => {
     if (geuloquis) {
-      const geuloqueUrl = localStorage.getItem("geuloqueUrl") || ""; 
+      const geuloqueUrl = localStorage.getItem("geuloqueUrl") || "";
       const lastFetchDate = localStorage.getItem("lastFetchDate") || "";
-  
-      if (geuloqueUrl && lastFetchDate) {
+      const pendignGeuloquis = localStorage.getItem("lastFetchDate") || "false";
+
+      if (geuloqueUrl && lastFetchDate && !JSON.parse(pendignGeuloquis)) {
         const todayTitle = `${lastFetchDate} GeulRoquis`;
         setImageSrc(geuloqueUrl);
-        setTitle(todayTitle); 
+        setTitle(todayTitle);
       } else {
         console.error("localStorage에서 필요한 값이 없습니다.");
       }
@@ -117,9 +118,9 @@ export const WriteEssay = () => {
         processEssayData(currentId);
         localStorage.setItem("currentEssayId", currentId);
       }
-    } 
-    
-    if(editorType === "edit" && !geuloquis){
+    }
+
+    if (editorType === "edit" && !geuloquis) {
       getExistEssayDetail();
     }
   }, []);

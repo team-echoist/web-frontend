@@ -98,6 +98,7 @@ function FinishedEssay({
 
   useEffect(() => {
     if (!editorType) {
+      // 일반 글쓰기 일떄
       const currentEssayId = localStorage.getItem("currentEssayId");
       if (currentEssayId) {
         const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
@@ -105,6 +106,7 @@ function FinishedEssay({
           return item.id === currentEssayId && item.imageSrc;
         });
         if (storedEssayData?.imageSrc) {
+          setImageSrc(storedEssayData?.imageSrc);
           setThumbnailImage(storedEssayData?.imageSrc);
         }
       }
