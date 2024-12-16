@@ -11,7 +11,7 @@ import { Button } from "@/shared/ui/button";
 import { handleLogout } from "@/shared/lib/auth";
 import { useRouter } from "next/router";
 import WithDrawModal from "./withdraw/WithDrawModal";
-import ChangePassword from "./reset_password/ResetPassword";
+import { ChangePassword } from "../../password";
 import ChangeEmail from "./change_email/ChangeEmail";
 
 const H1 = styled.h1`
@@ -119,7 +119,7 @@ function UserManage({
     if (name === "withdraw") {
       setShowWithDrawer((prev) => !prev);
     }
-    if (name === "changepassword") {
+    if (name === "changePassword") {
       setShowChangePassword((prev) => !prev);
     }
     if (name === "changeEmail") {
@@ -156,7 +156,9 @@ function UserManage({
         </DarkBackground>
       )}
       {isShowWithDrawer && <WithDrawModal submodalHandler={submodalHandler} />}
-
+      {isShowChangePassword && (
+        <ChangePassword submodalHandler={submodalHandler} />
+      )}
       {isSHowChangeEmail && <ChangeEmail submodalHandler={submodalHandler} />}
       <ContentsContainer>
         <Wrapper>
@@ -179,7 +181,7 @@ function UserManage({
               <Span>비밀번호 변경</Span>
               <WhiteArrow
                 onClick={() => {
-                  submodalHandler("changepassword");
+                  submodalHandler("changePassword");
                 }}
               />
             </TabLayout>

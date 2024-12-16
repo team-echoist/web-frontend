@@ -31,12 +31,6 @@ const Span = styled.span`
   line-height: 150%;
   margin-bottom: 5px;
 `;
-const ItemDiv = styled.div`
-  padding: 30px 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
 
 const ErrorMsg = styled.p`
   color: ${color.red};
@@ -70,7 +64,7 @@ const ToastContainer = styled.div`
   left: 43%;
   z-index: 50;
 `;
-function ChangePassword({
+function ResetPassword({
   submodalHandler,
 }: {
   submodalHandler: (name: string) => void;
@@ -115,7 +109,7 @@ function ChangePassword({
     <DefaultLayout
       modalHandler={submodalHandler}
       isSubModal={true}
-      name="changepassword"
+      name="resetPassword"
     >
       <GeneralToast
         title="입력하신 이메일 주소로 임시 비밀번호가 발송됐습니다."
@@ -165,4 +159,4 @@ function ChangePassword({
   );
 }
 
-export default ChangePassword;
+export default ResetPassword;

@@ -62,7 +62,10 @@ export const Input = <
       }));
     }
   };
-  const inputType = typeof name === "string" && name.includes("password") ? "password" : "text";
+  const inputType =
+    typeof name === "string" && name.toLowerCase().includes("password")
+      ? "password"
+      : "text";
   return (
     <SInput
       placeholder={placeholder}
