@@ -92,7 +92,7 @@ function GeuloquisCard({
   };
   const PendingGeuloquis = () =>{
     if(url){
-      localStorage.setItem("geuloqueUrl",url);
+      localStorage.setItem("geuloquependingUrl",url);
     }
     localStorage.setItem("pendingGeuloquis","true");
     handleGeuloque();
