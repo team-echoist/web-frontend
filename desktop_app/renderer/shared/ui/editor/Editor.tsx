@@ -115,6 +115,7 @@ function Editor({
   const [isMiniModalOpen, setIsMiniModalOpen] = useState(false);
   let tempThumbnail = localStorage.getItem("tempThumbnail");
   let geuloqueUrl = localStorage.getItem("geuloqueUrl");
+  const pendingGeuloquis =localStorage.getItem("pendingGeuloquis");
 
   useEffect(() => {
     const currentEssayId = localStorage.getItem("currentEssayId");
@@ -127,6 +128,9 @@ function Editor({
         setThumbnailImage(storedEssayData.imageSrc);
       }
     } else if (geuloqueUrl) {
+      if(pendingGeuloquis ==="true"){
+        return
+      }
       setThumbnailImage(geuloqueUrl);
     } else if (tempThumbnail && !geuloqueUrl) {
       setThumbnailImage(tempThumbnail);

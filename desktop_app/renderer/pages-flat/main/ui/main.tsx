@@ -49,7 +49,7 @@ export const Main = () => {
   const [isOpenGeuloque, setIsOpenGeuloque] = useState(false);
   const [url, setUrl] = useState<string | null>(null);
   const [isShowBulb, setIsShowBulb] = useState(false);
-  const pendignGeuloquis = localStorage.getItem("pendignGeuloquis");
+  const pendingGeuloquis = localStorage.getItem("pendingGeuloquis");
   const router = useRouter();
 
   const handleClick = () => {
@@ -64,10 +64,10 @@ export const Main = () => {
   };
   useEffect(() => {
     // 보류일때
-    if (pendignGeuloquis && pendignGeuloquis === "true") {
+    if (pendingGeuloquis && pendingGeuloquis === "true") {
       setIsShowBulb(true);
     }
-  }, [pendignGeuloquis]);
+  }, [pendingGeuloquis]);
   useEffect(() => {
     // 하루에한번 처음 마운트될때만 글로키 나오게
     const checkAndFetchGeuloquis = async () => {
@@ -86,15 +86,21 @@ export const Main = () => {
     };
 
     checkAndFetchGeuloquis();
+    const geuloqueUrl = localStorage.getItem("geuloqueUrl");
+    if (!geuloqueUrl) {
+      fetchGeuloquis(true);
+    }
   }, []);
 
-  const fetchGeuloquis = async () => {
+  const fetchGeuloquis = async (isOneMoreTime?:boolean) => {
     try {
       const { url, status } = await getGeuloquis();
       if (status === 200 || status === 201) {
         setUrl(url);
         localStorage.setItem("geuloqueUrl", url);
-        setIsOpenGeuloque(true);
+        if(!isOneMoreTime){
+          setIsOpenGeuloque(true);
+        }
       }
     } catch (err) {
       console.log(err);

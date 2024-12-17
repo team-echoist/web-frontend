@@ -87,11 +87,14 @@ function GeuloquisCard({
   const router = useRouter();
   const lastFetchDate = localStorage.getItem("lastFetchDate");
   const navigateToWriteEssay = () => {
-    localStorage.setItem("pendignGeuloquis","false");
+    localStorage.setItem("pendingGeuloquis","false");
     router.push("/web/write_essay?geuloquis=true");
   };
   const PendingGeuloquis = () =>{
-    localStorage.setItem("pendignGeuloquis","true");
+    if(url){
+      localStorage.setItem("geuloqueUrl",url);
+    }
+    localStorage.setItem("pendingGeuloquis","true");
     handleGeuloque();
   }
   return (
