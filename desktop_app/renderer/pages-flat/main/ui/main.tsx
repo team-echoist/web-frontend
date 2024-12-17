@@ -86,10 +86,10 @@ export const Main = () => {
     };
 
     checkAndFetchGeuloquis();
-    const geuloqueUrl = localStorage.getItem("geuloqueUrl");
-    if (!geuloqueUrl) {
-      fetchGeuloquis(true);
-    }
+    // const geuloqueUrl = localStorage.getItem("geuloqueUrl");
+    // if (!geuloqueUrl) {
+    //   fetchGeuloquis(true);
+    // }
   }, []);
 
   const fetchGeuloquis = async (isOneMoreTime?:boolean) => {

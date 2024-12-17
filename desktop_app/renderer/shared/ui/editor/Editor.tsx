@@ -1,3 +1,4 @@
+'use client'
 import React, {
   useState,
   useRef,
@@ -130,8 +131,9 @@ function Editor({
     } else if (geuloqueUrl) {
       if(pendingGeuloquis ==="true"){
         return
+      }else{
+        setThumbnailImage(geuloqueUrl);
       }
-      setThumbnailImage(geuloqueUrl);
     } else if (tempThumbnail && !geuloqueUrl) {
       setThumbnailImage(tempThumbnail);
     }
@@ -173,18 +175,24 @@ function Editor({
   };
   const handleImageUploadClick = () => {
     if (fileInputRef.current) {
+      fileInputRef.current.value = "";
       fileInputRef.current.click();
     }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (file) {
       convertFileToBase64(file, (base64Url: string) => {
         setThumbnailImage(base64Url);
         insertImageIntoEditor(base64Url);
+        localStorage.setItem("geuloqueUrl", "");
         localStorage.setItem("tempThumbnail", base64Url);
       });
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
   const convertFileToBase64 = (
