@@ -1,4 +1,3 @@
-"use client";
 import { FindInfo } from "./findinfo";
 import { Login } from "./authentication";
 import { Mypage } from "./mypage";

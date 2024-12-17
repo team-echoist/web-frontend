@@ -1,15 +1,16 @@
-import React from 'react'
-import styled from 'styled-components'
-import { DarkBackground } from '@/shared/ui/background'
+import React from "react";
+import styled from "styled-components";
+import { DarkBackground } from "@/shared/ui/background";
+import { LoadingSpinner } from "@/shared/ui/loading";
 
-const Layout =styled.div`
- 
-`
+const Layout = styled.div``;
 
 function Loading() {
   return (
-    <DarkBackground>Loading</DarkBackground>
-  )
+    <DarkBackground>
+      <LoadingSpinner></LoadingSpinner>
+    </DarkBackground>
+  );
 }
 
-export default Loading
+export default Loading;

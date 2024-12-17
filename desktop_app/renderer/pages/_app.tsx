@@ -3,6 +3,7 @@ import { AppProps } from "next/app";
 import Layout from "./layout";
 import { useRouter } from "next/router";
 import { LoadingSpinner } from "@/shared/ui/loading";
+import { Loading } from "@/features/activeLoading";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -24,6 +25,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [router]);
   return (
     <Layout>
+      {loading && <Loading/>}
       <Component {...pageProps} />
     </Layout>
   );

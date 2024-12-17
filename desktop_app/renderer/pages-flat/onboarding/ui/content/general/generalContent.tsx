@@ -4,7 +4,7 @@ import TextRenderer from "./textRenderer";
 import { IndicatorBar } from "@/shared/ui/indicator";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
-
+import Cookies from "js-cookie";
 interface stepType {
   step: "step1" | "step2" | "step3" | "step4";
 }
@@ -64,7 +64,15 @@ function GeneralContent({ step }: stepType) {
   const router = useRouter();
 
   const navigateToLogin = () => {
-    router.push("/web/login");
+    const accessToken =
+      Cookies.get("accessToken") || sessionStorage.getItem("accessToken");
+    const refreshToken =
+      Cookies.get("refreshToken") || sessionStorage.getItem("refreshToken");
+    if (!accessToken || !refreshToken) {
+      router.push("/web/login");
+    } else {
+      router.push("/web/main");
+    }
   };
   return (
     <>
