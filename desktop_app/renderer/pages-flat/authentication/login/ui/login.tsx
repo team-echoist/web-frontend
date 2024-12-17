@@ -18,6 +18,7 @@ import { useStore } from "@/shared/store";
 import { getUserInfo } from "@/shared/api";
 import { fetchData } from "@/shared/api/fetchData";
 import { ResetPassword } from "@/features/activeModal/password";
+import { Loading } from "@/features/activeLoading";
 
 type SocialLoginName = "google" | "kakao" | "naver";
 
@@ -75,6 +76,7 @@ export const Login = () => {
   const [deviceId, setDeviceId] = useState("");
   const [fcmToken, setFcmToken] = useState("");
   const [isShowResetPassword, setIsShowResetPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const redirectToPage = (isFirstLogin: boolean) => {
     if (isFirstLogin) {
@@ -85,6 +87,7 @@ export const Login = () => {
   };
 
   const handleUserInfo = async () => {
+    setLoading(true);
     if (deviceId && fcmToken) {
       const userData = await getUserInfo();
       const body = {
@@ -115,6 +118,7 @@ export const Login = () => {
         redirectToPage(false);
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -210,6 +214,7 @@ export const Login = () => {
   };
   return (
     <>
+      {loading && <Loading />}
       <PrevButton />
       {isShowResetPassword && <ResetPassword modalHandler={modalHandler} />}
       <DefaultLayout>
