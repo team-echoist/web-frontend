@@ -79,7 +79,7 @@ export const WriteEssay = () => {
   const searchParams = useSearchParams();
   const pageType = searchParams.get("pageType");
   const essayId = searchParams.get("essayId");
-  const geuloquis = searchParams.get("geuloquis");
+  // const geuloquis = searchParams.get("geuloquis");
   const editorType = searchParams.get("editorType");
   const [isTagSave, setIsTagSave] = useState(false);
   const [isLocationSave, setIsLocationSave] = useState(false);
@@ -112,28 +112,28 @@ export const WriteEssay = () => {
       console.log("err", err);
     }
   };
-  useEffect(() => {
-    // 글로키 전용
-    if (geuloquis) {
-      const geuloqueUrl = localStorage.getItem("geuloqueUrl") || "";
-      const lastFetchDate = localStorage.getItem("lastFetchDate") || "";
-      const pendignGeuloquis =
-        localStorage.getItem("pendingGeuloquis") || "false";
+  // useEffect(() => {
+  //   // 글로키 전용
+  //   if (geuloquis) {
+  //     const geuloqueUrl = localStorage.getItem("geuloqueUrl") || "";
+  //     const lastFetchDate = localStorage.getItem("lastFetchDate") || "";
+  //     const pendignGeuloquis =
+  //       localStorage.getItem("pendingGeuloquis") || "false";
 
-      if (geuloqueUrl && lastFetchDate && pendignGeuloquis === "false") {
-        const todayTitle = `${lastFetchDate} GeulRoquis`;
-        setImageSrc(geuloqueUrl);
-        setTitle(todayTitle);
-      } else if (geuloqueUrl && lastFetchDate && pendignGeuloquis === "true") {
-        setImageSrc(null);
-      } else {
-        console.error("localStorage에서 필요한 값이 없습니다.");
-      }
-    }
-  }, [geuloquis]);
+  //     if (geuloqueUrl && lastFetchDate && pendignGeuloquis === "false") {
+  //       const todayTitle = `${lastFetchDate} GeulRoquis`;
+  //       setImageSrc(geuloqueUrl);
+  //       setTitle(todayTitle);
+  //     } else if (geuloqueUrl && lastFetchDate && pendignGeuloquis === "true") {
+  //       setImageSrc(null);
+  //     } else {
+  //       console.error("localStorage에서 필요한 값이 없습니다.");
+  //     }
+  //   }
+  // }, [geuloquis]);
 
   useEffect(() => {
-    if (editorType !== "edit" && !geuloquis) {
+    if (editorType !== "edit") {
       // 일반 글쓰기 모드 일때
       const processEssayData = (id: string) => {
         const storedData = JSON.parse(
@@ -153,10 +153,34 @@ export const WriteEssay = () => {
       }
     }
 
-    if (editorType === "edit" && !geuloquis) {
+    if (editorType === "edit") {
       // 수정모드 일때
       getExistEssayDetail();
     }
+    // if (editorType !== "edit" && !geuloquis) {
+    //   // 일반 글쓰기 모드 일때
+    //   const processEssayData = (id: string) => {
+    //     const storedData = JSON.parse(
+    //       localStorage.getItem("essayData") || "[]"
+    //     );
+    //     const entry = storedData.find((item: Essay) => item.id === id);
+    //     if (entry) {
+    //       setTitle(entry.title);
+    //       setValue(entry.value);
+    //       setBottomValue(entry.bottomValue);
+    //       setImageSrc(entry.imageSrc);
+    //     }
+    //   };
+    //   if (currentId) {
+    //     processEssayData(currentId);
+    //     localStorage.setItem("currentEssayId", currentId);
+    //   }
+    // }
+
+    // if (editorType === "edit" && !geuloquis) {
+    //   // 수정모드 일때
+    //   getExistEssayDetail();
+    // }
   }, []);
   useEffect(() => {
     if (editorType !== "edit") {
@@ -237,7 +261,7 @@ export const WriteEssay = () => {
       setTitle("제목 없음");
       setValue("");
     } else {
-      localStorage.setItem("geuloqueUrl", "");
+      // localStorage.setItem("geuloqueUrl", "");
       router.push("/web/main");
     }
   };

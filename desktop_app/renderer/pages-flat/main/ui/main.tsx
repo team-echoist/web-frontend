@@ -49,7 +49,7 @@ export const Main = () => {
   const [isOpenGeuloque, setIsOpenGeuloque] = useState(false);
   const [url, setUrl] = useState<string | null>(null);
   const [isShowBulb, setIsShowBulb] = useState(false);
-  const pendingGeuloquis = localStorage.getItem("pendingGeuloquis");
+  // const pendingGeuloquis = localStorage.getItem("pendingGeuloquis");
   const router = useRouter();
 
   const handleClick = () => {
@@ -62,35 +62,35 @@ export const Main = () => {
   const handleGeuloque = () => {
     setIsOpenGeuloque((prev) => !prev);
   };
-  useEffect(() => {
-    // 보류일때
-    if (pendingGeuloquis && pendingGeuloquis === "true") {
-      setIsShowBulb(true);
-    }
-  }, [pendingGeuloquis]);
-  useEffect(() => {
-    // 하루에한번 처음 마운트될때만 글로키 나오게
-    const checkAndFetchGeuloquis = async () => {
-      const lastFetchDate = localStorage.getItem("lastFetchDate");
-      const today = new Date().toISOString().split("T")[0];
+  // useEffect(() => {
+  //   // 보류일때
+  //   if (pendingGeuloquis && pendingGeuloquis === "true") {
+  //     setIsShowBulb(true);
+  //   }
+  // }, [pendingGeuloquis]);
+  // useEffect(() => {
+  //   // 하루에한번 처음 마운트될때만 글로키 나오게
+  //   const checkAndFetchGeuloquis = async () => {
+  //     const lastFetchDate = localStorage.getItem("lastFetchDate");
+  //     const today = new Date().toISOString().split("T")[0];
 
-      if (lastFetchDate !== today) {
-        await fetchGeuloquis();
-        localStorage.setItem("lastFetchDate", today);
-      } else {
-        const storedUrl = localStorage.getItem("geuloqueUrl");
-        if (storedUrl) {
-          setUrl(storedUrl);
-        }
-      }
-    };
+  //     if (lastFetchDate !== today) {
+  //       await fetchGeuloquis();
+  //       localStorage.setItem("lastFetchDate", today);
+  //     } else {
+  //       const storedUrl = localStorage.getItem("geuloqueUrl");
+  //       if (storedUrl) {
+  //         setUrl(storedUrl);
+  //       }
+  //     }
+  //   };
 
-    checkAndFetchGeuloquis();
-    // const geuloqueUrl = localStorage.getItem("geuloqueUrl");
-    // if (!geuloqueUrl) {
-    //   fetchGeuloquis(true);
-    // }
-  }, []);
+  //   checkAndFetchGeuloquis();
+  //   const geuloqueUrl = localStorage.getItem("geuloqueUrl");
+  //   if (!geuloqueUrl) {
+  //     fetchGeuloquis(true);
+  //   }
+  // }, []);
 
   const fetchGeuloquis = async (isOneMoreTime?:boolean) => {
     try {
