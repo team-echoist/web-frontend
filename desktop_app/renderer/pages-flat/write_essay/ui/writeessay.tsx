@@ -76,14 +76,16 @@ export const WriteEssay = () => {
   const [isCancel, setIsCancel] = useState(false);
   const [step, setStep] = useState("write");
   let currentId = localStorage.getItem("currentEssayId");
-
   const searchParams = useSearchParams();
   const pageType = searchParams.get("pageType");
+  // pageType은 글 수정 기능할때 필요 private인지 public인지 확인 (등록 api할때)
   const essayId = searchParams.get("essayId");
   // const geuloquis = searchParams.get("geuloquis");
   const editorType = searchParams.get("editorType");
+  // editorType이 수정인지, 일반글쓰기인지 나타내는 파라미터 editorType이 없다면 일반글쓰기
   const [isTagSave, setIsTagSave] = useState(false);
   const [isLocationSave, setIsLocationSave] = useState(false);
+  // 태그가 저장되어있는지 아닌지 확인하는 state isTagSave,isLocationSave
 
   const getExistEssayDetail = async () => {
     try {
@@ -185,7 +187,7 @@ export const WriteEssay = () => {
   }, []);
   useEffect(() => {
     if (editorType !== "edit") {
-      // 일반 글쓰기 모드 일때 현재의 에세이 id를 가져와서 기존 저장된 에세이에 해당하는 id가 없으면 내용 추가하는 로직
+      // 일반 글쓰기 모드 일때 현재의 에세이 id를 가져와서 기존 저장된 에세이에 해당하는 id가 없으면 내용 추가하는 로직 (자동저장 기능때문에)
       if (id) {
         const currentId = localStorage.getItem("currentEssayId");
         const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
@@ -289,6 +291,7 @@ export const WriteEssay = () => {
       // setStep("write");
     }
   };
+
   const renderEditor = () => (
     <>
       <EditorContainer isBottomFieldVisible={isBottomFieldVisible}>
