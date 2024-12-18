@@ -101,7 +101,6 @@ function UnfinishedWriting() {
   };
 
   const numberOfCheckedItems = countCheckedItems();
-
   return (
     <Container>
       <TitleField handleEdit={handleEdit} isEdit={isEdit} />

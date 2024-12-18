@@ -12,7 +12,7 @@ const Layout = styled.div`
 `;
 
 interface BottomValue {
-  active: "tag" | "location";
+  active: "tag" | "location"| null;
   tag: {
     values: string[];
   };

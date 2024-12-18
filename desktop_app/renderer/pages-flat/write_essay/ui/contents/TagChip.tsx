@@ -61,7 +61,7 @@ interface CompleteStatus {
   location: boolean;
 }
 
-type HandleComplete = (tag: keyof CompleteStatus) => void;
+type HandleComplete = (tag: keyof CompleteStatus|null) => void;
 
 function TagChip({
   activeTag,
@@ -69,7 +69,7 @@ function TagChip({
   locationValues,
   handleComplete,
 }: {
-  activeTag: "tag" | "location";
+  activeTag: "tag" | "location"|null;
   tagValues: string[];
   locationValues: string[];
   handleComplete: HandleComplete;
@@ -93,7 +93,7 @@ function TagChip({
 
   return (
     <Layout>
-      <ImageDiv>{imgMapper[activeTag]}</ImageDiv>
+      <ImageDiv>{activeTag&&imgMapper[activeTag]}</ImageDiv>
       <TagContainer>
         {reorderedItems.map((value, index) => (
           <TagDiv key={index}>

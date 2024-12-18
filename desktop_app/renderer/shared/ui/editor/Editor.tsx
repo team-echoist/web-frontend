@@ -115,12 +115,33 @@ function Editor({
   const [isShowModal, setIsShowModal] = useState(false);
   const [isMiniModalOpen, setIsMiniModalOpen] = useState(false);
   let tempThumbnail = localStorage.getItem("tempThumbnail");
-  let geuloqueUrl = localStorage.getItem("geuloqueUrl");
-  const pendingGeuloquis =localStorage.getItem("pendingGeuloquis");
+  // let geuloqueUrl = localStorage.getItem("geuloqueUrl");
+  // const pendingGeuloquis =localStorage.getItem("pendingGeuloquis");
+
+  // useEffect(() => {
+  //   const currentEssayId = localStorage.getItem("currentEssayId");
+  //   if (currentEssayId && !tempThumbnail && !geuloqueUrl) {
+  //     const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
+  //     const storedEssayData = essayData.find((item: any) => {
+  //       return item.id === currentEssayId && item.imageSrc;
+  //     });
+  //     if (storedEssayData?.imageSrc) {
+  //       setThumbnailImage(storedEssayData.imageSrc);
+  //     }
+  //   } else if (geuloqueUrl) {
+  //     if(pendingGeuloquis ==="true"){
+  //       return
+  //     }else{
+  //       setThumbnailImage(geuloqueUrl);
+  //     }
+  //   } else if (tempThumbnail && !geuloqueUrl) {
+  //     setThumbnailImage(tempThumbnail);
+  //   }
+  // }, [editorType, tempThumbnail]);
 
   useEffect(() => {
     const currentEssayId = localStorage.getItem("currentEssayId");
-    if (currentEssayId && !tempThumbnail && !geuloqueUrl) {
+    if (currentEssayId&&!tempThumbnail) {
       const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
       const storedEssayData = essayData.find((item: any) => {
         return item.id === currentEssayId && item.imageSrc;
@@ -128,16 +149,11 @@ function Editor({
       if (storedEssayData?.imageSrc) {
         setThumbnailImage(storedEssayData.imageSrc);
       }
-    } else if (geuloqueUrl) {
-      if(pendingGeuloquis ==="true"){
-        return
-      }else{
-        setThumbnailImage(geuloqueUrl);
-      }
-    } else if (tempThumbnail && !geuloqueUrl) {
+    }else if(tempThumbnail){
       setThumbnailImage(tempThumbnail);
     }
-  }, [editorType, tempThumbnail]);
+    
+  }, [editorType,tempThumbnail]);
 
   useEffect(() => {
     const updateEditorWidth = () => {

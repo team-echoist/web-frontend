@@ -39,7 +39,7 @@ const EditorContainer = styled.div<{ isBottomFieldVisible: boolean }>`
   border:3px solid red;
 `;
 interface BottomValue {
-  active: "tag" | "location";
+  active: "tag" | "location"| null;
   tag: {
     values: string[];
   };
@@ -60,7 +60,7 @@ export const WriteEssay = () => {
   const [title, setTitle] = useState("제목 없음");
   const [value, setValue] = useState<string>("");
   const [bottomValue, setBottomValue] = useState<BottomValue>({
-    active: "tag",
+    active: null,
     tag: {
       values: [],
     },
@@ -70,12 +70,13 @@ export const WriteEssay = () => {
   });
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const id = defaultId;
+  const isBottomFieldVisible =
+  bottomValue.active === "tag" || bottomValue.active === "location";
   // const [id, setId] = useState<string>(defaultId);
   const [isCancel, setIsCancel] = useState(false);
   const [step, setStep] = useState("write");
   let currentId = localStorage.getItem("currentEssayId");
-  const isBottomFieldVisible =
-    bottomValue.active === "tag" || bottomValue.active === "location";
+
   const searchParams = useSearchParams();
   const pageType = searchParams.get("pageType");
   const essayId = searchParams.get("essayId");
