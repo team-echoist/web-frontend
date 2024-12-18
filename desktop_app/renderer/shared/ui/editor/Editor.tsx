@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, {
   useState,
   useRef,
@@ -15,6 +15,7 @@ import Image from "next/image";
 import color from "@/shared/styles/color";
 import { GeneralToast } from "../toast";
 import { MiniToast } from "../toast";
+import { useSearchParams } from "next/navigation";
 
 const EditorDiv = styled.div`
   position: relative;
@@ -100,60 +101,48 @@ function Editor({
   tagValue,
   setTagValue,
   editorType,
+  geuloqueUrl,
 }: {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   tagValue: TagValue;
   setTagValue: Dispatch<SetStateAction<TagValue>>;
   editorType: string | null;
+  geuloqueUrl: string | null;
 }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const quillRef = useRef<ReactQuill>(null);
   const [thumbnailImage, setThumbnailImage] = useState<string | null>(null);
   const [editorWidth, setEditorWidth] = useState<number>(0);
-  const [isShowModal, setIsShowModal] = useState(false);
   const [isMiniModalOpen, setIsMiniModalOpen] = useState(false);
   let tempThumbnail = localStorage.getItem("tempThumbnail");
-  // let geuloqueUrl = localStorage.getItem("geuloqueUrl");
-  // const pendingGeuloquis =localStorage.getItem("pendingGeuloquis");
-
-  // useEffect(() => {
-  //   const currentEssayId = localStorage.getItem("currentEssayId");
-  //   if (currentEssayId && !tempThumbnail && !geuloqueUrl) {
-  //     const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
-  //     const storedEssayData = essayData.find((item: any) => {
-  //       return item.id === currentEssayId && item.imageSrc;
-  //     });
-  //     if (storedEssayData?.imageSrc) {
-  //       setThumbnailImage(storedEssayData.imageSrc);
-  //     }
-  //   } else if (geuloqueUrl) {
-  //     if(pendingGeuloquis ==="true"){
-  //       return
-  //     }else{
-  //       setThumbnailImage(geuloqueUrl);
-  //     }
-  //   } else if (tempThumbnail && !geuloqueUrl) {
-  //     setThumbnailImage(tempThumbnail);
-  //   }
-  // }, [editorType, tempThumbnail]);
+  const searchParams = useSearchParams();
+  const geuloquis = searchParams.get("geuloquis");
+  const pendignGeuloquis = localStorage.getItem("pendingGeuloquis") || "false";
 
   useEffect(() => {
     const currentEssayId = localStorage.getItem("currentEssayId");
-    if (currentEssayId&&!tempThumbnail) {
-      const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
-      const storedEssayData = essayData.find((item: any) => {
-        return item.id === currentEssayId && item.imageSrc;
-      });
-      if (storedEssayData?.imageSrc) {
-        setThumbnailImage(storedEssayData.imageSrc);
+    if (geuloquis) {
+      // 보류 아닐때만
+      if (pendignGeuloquis === "false") {
+        setThumbnailImage(geuloqueUrl);
       }
-    }else if(tempThumbnail){
-      setThumbnailImage(tempThumbnail);
+    } else {
+      if (currentEssayId && !tempThumbnail) {
+        // 저장된 글이 있을때 editor value값 초기화 하는 로직
+        const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
+        const storedEssayData = essayData.find((item: any) => {
+          return item.id === currentEssayId && item.imageSrc;
+        });
+        if (storedEssayData?.imageSrc) {
+          setThumbnailImage(storedEssayData.imageSrc);
+        }
+      } else if (tempThumbnail) {
+        setThumbnailImage(tempThumbnail);
+      }
     }
-    
-  }, [editorType,tempThumbnail]);
+  }, [editorType, tempThumbnail]);
 
   useEffect(() => {
     const updateEditorWidth = () => {
@@ -329,7 +318,7 @@ function Editor({
       />
       <GeneralToast
         title="저장이 완료되었습니다."
-        isShowToast={isShowModal}
+        isShowToast={isModalOpen}
         setIsShowToast={setIsModalOpen}
       />
       <CustomToolBar

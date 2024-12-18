@@ -86,16 +86,13 @@ function GeuloquisCard({
 }) {
   const router = useRouter();
   const lastFetchDate = localStorage.getItem("lastFetchDate");
-  const navigateToWriteEssay = () => {
-    // localStorage.setItem("pendingGeuloquis","false");
-    // router.push("/web/write_essay?geuloquis=true");
+  const navigateToWriteEssay = (url:string|null) => {
+    localStorage.setItem("pendingGeuloquis","false");
+    router.push(`/web/write_essay?geuloquis=true&url=${url}`);
   };
   const PendingGeuloquis = () =>{
-    // if(url){
-    //   localStorage.setItem("geuloquependingUrl",url);
-    // }
-    // localStorage.setItem("pendingGeuloquis","true");
-    // handleGeuloque();
+    localStorage.setItem("pendingGeuloquis","true");
+    handleGeuloque();
   }
   return (
     <Card>
@@ -110,7 +107,7 @@ function GeuloquisCard({
       </ImageDiv>
       <BtnDiv>
         <PendingBtn onClick={PendingGeuloquis}>보류</PendingBtn>
-        <AcceptBtn onClick={navigateToWriteEssay}>수락</AcceptBtn>
+        <AcceptBtn onClick={()=>navigateToWriteEssay(url)}>수락</AcceptBtn>
       </BtnDiv>
     </Card>
   );
