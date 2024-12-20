@@ -5,8 +5,8 @@ function MainPage() {
   return (
     <main className="bg-[#0F0F0F] min-h-screen text-white">
       <Header />
-      <h1 className="text-white">다양한 나를 '링크드아웃'할 수 있는 글쓰기 공간</h1>
-      <h3 className="text-white">A personal space where you can 'linked-out'various types of you.</h3>
+      <h1 className="text-white text-5xl font-bold font-['Pretendard'] leading-[76.80px]">다양한 나를 '링크드아웃' 할 수 있는 글쓰기 공간</h1>
+      <h3 className="text-white text-2xl font-normal font-['Arial'] leading-[38.40px]">A personal space where you can ‘linked-out’ various types of you.</h3>
       <img src={"/images/mainpage/mockup.png"} alt="mockup" />
       <section className="text-white flex">
       <div>
