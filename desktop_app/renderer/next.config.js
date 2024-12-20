@@ -8,7 +8,7 @@ dotenv.config({ path: envPath });
 
 module.exports = {
   output: 'export',
-  // distDir: process.env.NODE_ENV === 'production' ? '../app' : '.next',
+  distDir: process.env.NODE_ENV === 'production' ? '../app' : '.next',
   trailingSlash: true,
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL, 
