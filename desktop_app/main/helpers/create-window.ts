@@ -15,8 +15,20 @@ import {
 } from "electron-push-receiver";
 import { machineIdSync } from "node-machine-id";
 import "dotenv/config"
+// const express = require('express');
+const http = require('http');
 
 const NodeGeocoder = require("node-geocoder");
+
+// const expressApp = express();
+
+// expressApp.use(express.static(path.join(__dirname, 'dist')));
+
+// const server = http.createServer(expressApp);
+// server.listen(8880, () => {
+//   console.log('Local production server running at http://localhost:8880');
+// });
+
 
 const geocoder = NodeGeocoder({ provider: "openstreetmap" });
 
@@ -99,7 +111,8 @@ export const createWindow = (
   });
 
   let machineId = machineIdSync();
-
+  // win.loadURL('http://localhost:8880/home');
+  win.webContents.openDevTools(); 
   ipcMain.on("request-device-info", (event) => {
     event.sender.send("device-info", machineId);
   });
