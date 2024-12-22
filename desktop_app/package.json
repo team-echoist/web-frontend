@@ -8,8 +8,8 @@
   "scripts": {
     "dev": "nextron ",
     "build": "cross-env TSC_COMPILE_ON_ERROR=true NEXT_PUBLIC_ESLINT_DISABLE=true NODE_ENV=production nextron build",
-    "build:mac": "cross-env TSC_COMPILE_ON_ERROR=true NEXT_PUBLIC_ESLINT_DISABLE=true NODE_ENV=production nextron build --mac",
-    "build:win": "cross-env TSC_COMPILE_ON_ERROR=true NEXT_PUBLIC_ESLINT_DISABLE=true NODE_ENV=production nextron build --win",
+    "build:mac": "cross-env TSC_COMPILE_ON_ERROR=true NEXT_PUBLIC_ESLINT_DISABLE=true NODE_ENV=production next build && next export && nextron build --mac",
+    "build:win": "cross-env TSC_COMPILE_ON_ERROR=true NEXT_PUBLIC_ESLINT_DISABLE=true NODE_ENV=production next build && next export && nextron build --win",
     "postinstall": "electron-builder install-app-deps",
     "lint": "next lint",
     "test": "jest --config jest.config.ts",
