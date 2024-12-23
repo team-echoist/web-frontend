@@ -16,8 +16,10 @@ import {
 } from "electron-push-receiver";
 import { machineIdSync } from "node-machine-id";
 import "dotenv/config"
+const http = require('http');
 
 const NodeGeocoder = require("node-geocoder");
+
 
 const geocoder = NodeGeocoder({ provider: "openstreetmap" });
 
@@ -109,8 +111,8 @@ export const createWindow = (
   });
 
   let machineId = machineIdSync();
-
   win.webContents.openDevTools();
+
 
   ipcMain.on("request-device-info", (event) => {
     event.sender.send("device-info", machineId);
