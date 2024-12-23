@@ -6,6 +6,7 @@ import {
   nativeImage,
   ipcMain,
   app,
+  protocol
 } from "electron";
 import Store from "electron-store";
 import * as path from "path";
@@ -19,6 +20,15 @@ import "dotenv/config"
 const NodeGeocoder = require("node-geocoder");
 
 const geocoder = NodeGeocoder({ provider: "openstreetmap" });
+
+
+app.whenReady().then(() => {
+  protocol.registerFileProtocol('app', (request, callback) => {
+    const url = request.url.replace(/^app:\/\//, ''); // 스키마 제거
+    const decodedUrl = decodeURI(url); // URL 디코딩
+    callback({ path: path.join(__dirname, decodedUrl) });
+  });
+});
 
 export const createWindow = (
   windowName: string,

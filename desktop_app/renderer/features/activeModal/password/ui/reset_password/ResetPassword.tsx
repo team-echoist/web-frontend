@@ -100,9 +100,9 @@ function ResetPassword({
       if (status === 200 || status === 201) {
         setShowToast(true);
         setTimeout(() => {
-          Cookies.remove("refreshToken");
-          Cookies.remove("accessToken");
-          Cookies.remove("isOauth");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("isOauth");
           sessionStorage.removeItem("accessToken");
           sessionStorage.removeItem("refreshToken");
           sessionStorage.removeItem("isOauth");

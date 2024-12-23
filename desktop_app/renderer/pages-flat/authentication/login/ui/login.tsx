@@ -61,7 +61,7 @@ export const Login = () => {
   const searchParams = useSearchParams();
   const token =
     (searchParams.get("accessToken") && searchParams.get("refreshToken")) ||
-    (Cookies.get("accessToken") && Cookies.get("refreshToken")) ||
+    (localStorage.getItem("accessToken") && localStorage.getItem("refreshToken")) ||
     (sessionStorage.getItem("accessToken") &&
       sessionStorage.getItem("refreshToken"));
 
@@ -135,37 +135,10 @@ export const Login = () => {
 
   useEffect(() => {
     const handleLogin = async () => {
-      const socialAccessToken = searchParams.get("accessToken");
-      const socialRefreshToken = searchParams.get("refreshToken");
 
       if (token) {
-        if (socialAccessToken && socialRefreshToken) {
-          try {
-            // 소셜로그인 쿼리로 토큰이 세팅 되어있을때
-            Cookies.set("accessToken", socialAccessToken, {
-              expires: 1,
-              secure: true,
-              sameSite: "Strict",
-            });
-            Cookies.set("refreshToken", socialRefreshToken, {
-              expires: 30,
-              secure: true,
-              sameSite: "Strict",
-            });
-            Cookies.set("isOauth", "yes", {
-              expires: 30,
-              secure: true,
-              sameSite: "Strict",
-            });
-            await handleUserInfo();
-            // 소셜로그인의 경우 자동로그인 되게
-          } catch (error) {
-            console.error("Error handling tokens:", error);
-          }
-        } else {
           await handleUserInfo();
           // 로컬 로그인의 경우이면서 이미 자동로그인 체크한 상태
-        }
       }
     };
 

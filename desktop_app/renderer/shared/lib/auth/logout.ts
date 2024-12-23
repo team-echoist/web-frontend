@@ -1,13 +1,13 @@
 import Cookies from "js-cookie";
 
 const handleLogout = () => {
-  const cookieRefreshToken = Cookies.get("refreshToken") || null;
+  const cookieRefreshToken = localStorage.getItem("refreshToken") || null;
   const sessionRefreshToken = sessionStorage.getItem("refreshToken") || null;
 
   if (cookieRefreshToken) {
-    Cookies.remove("refreshToken");
-    Cookies.remove("accessToken");
-    Cookies.remove("isOauth");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("isOauth");
   }
 
   if (sessionRefreshToken) {

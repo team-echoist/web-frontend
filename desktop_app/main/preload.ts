@@ -121,12 +121,6 @@ ipcRenderer.on(TOKEN_UPDATED, (_, token) => {
   window.dispatchEvent(event);
 });
 
-function parseQueryParams(url: string): Record<string, string> {
-  const queryString = url.split("?")[1]; // URL에서 쿼리 문자열 부분 추출
-  return queryString
-    ? Object.fromEntries(new URLSearchParams(queryString)) // 쿼리 문자열을 객체로 변환
-    : {}; // 쿼리 문자열이 없으면 빈 객체 반환
-}
 
 window.addEventListener("DOMContentLoaded", () => {
   const minButton = document.getElementById("min-button");
@@ -135,37 +129,10 @@ window.addEventListener("DOMContentLoaded", () => {
   const closeButton = document.getElementById("close-button");
 
   const currentUrl = window.location.href;
-  const previousUrl = localStorage.getItem("previousUrl");
 
-  console.log("Current URL:", currentUrl);
-  if (
-    currentUrl.includes("https://linkedoutapp.com/api/auth/google/callback")
-  ) {
-    // 쿼리 파라미터 파싱
-    const params = parseQueryParams(currentUrl);
-    const accessToken = params["accessToken"];
-    const refreshToken = params["refreshToken"];
-    window.location.href = "app://./home";
-
-    // 개발모드일땐 localhost:8888/web/login 프로덕션일땐 app://./web/login
-
-    // 쿼리로 토큰을 보내주면 동일하게 쿼리로 세팅후 리다이렉션 한다.
-
-    // if (previousUrl) {
-    //   window.location.href = previousUrl;
-    // }
-
-    // if (accessToken && refreshToken) {
-    //   // 토큰 저장
-    //   localStorage.setItem("access_token", accessToken);
-    //   localStorage.setItem("refresh_token", refreshToken);
-
-    //   // 이전 페이지로 이동
-    //   history.back();
-    // } else {
-    //   console.error("토큰이 없습니다. URL을 확인하세요.");
-    // }
-  }
+  // if (currentUrl.includes("chrome-error")) {
+  //   window.location.href = `app://./home`;
+  // }
 
   minButton?.addEventListener("click", () => {
     ipcRenderer.send("minimize-window");

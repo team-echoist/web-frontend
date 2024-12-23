@@ -108,7 +108,7 @@ function UserManage({
 
   useEffect(() => {
     const oauthValue =
-      Cookies.get("isOauth") || sessionStorage.getItem("isOauth");
+    localStorage.getItem("isOauth")|| sessionStorage.getItem("isOauth");
     setIsOauth(oauthValue);
   }, []);
 

@@ -65,9 +65,9 @@ function GeneralContent({ step }: stepType) {
 
   const navigateToLogin = () => {
     const accessToken =
-      Cookies.get("accessToken") || sessionStorage.getItem("accessToken");
+      localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
     const refreshToken =
-      Cookies.get("refreshToken") || sessionStorage.getItem("refreshToken");
+    localStorage.getItem("refreshToken") || sessionStorage.getItem("refreshToken");
     if (!accessToken || !refreshToken) {
       router.push("/web/login");
     } else {
