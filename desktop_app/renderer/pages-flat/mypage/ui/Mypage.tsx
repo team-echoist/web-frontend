@@ -137,7 +137,6 @@ export const Mypage = () => {
       setIsShowUserManage((prev) => !prev);
     }
   };
-
   return (
     <Layout>
       {isShowRecentModal && <RecentEssayModal modalHandler={modalHandler} />}
@@ -173,6 +172,7 @@ export const Mypage = () => {
           id={user?.id || 0}
           isMyProfile={true}
           nickname={user?.nickname?user.nickname:""}
+          profileImage={user?.profileImage?user.profileImage:""}
         />
         <TitleDiv>
           <Span>링크드아웃 뱃지</Span>

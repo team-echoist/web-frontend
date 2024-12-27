@@ -125,11 +125,13 @@ function ShowProfile({
   id,
   isMyProfile = false,
   nickname,
+  profileImage,
 }: {
   handleProfileModal?: () => void;
   id: number;
   isMyProfile?: boolean;
   nickname?: string;
+  profileImage?: string;
 }) {
   const [essaystats, setEssaystats] = useState<stateType | null>(null);
   const [userData, setUserData] = useState<User | null>(null);
@@ -212,7 +214,11 @@ function ShowProfile({
         <ProfileImageDiv>
           <ProfileImageWrapper>
             <CircularAvatar
-              img={userData?.profileImage || DefaultProfileImg.src}
+              img={
+                profileImage
+                  ? profileImage
+                  : userData?.profileImage || DefaultProfileImg.src
+              }
               width={108}
               height={108}
             />
