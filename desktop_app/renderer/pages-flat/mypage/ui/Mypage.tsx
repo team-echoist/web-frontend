@@ -73,7 +73,7 @@ const Chip = styled.div`
 const ToastContainer = styled.div`
   position: fixed;
   top: 80%;
-  left: 36%;
+  left: 45%;
   z-index: 1200;
 `;
 
@@ -143,6 +143,16 @@ export const Mypage = () => {
       {isShowRecentModal && <RecentEssayModal modalHandler={modalHandler} />}
       {isShowBadgeModal && <BadgeModal modalHandler={modalHandler} />}
       {isShowUserManage && <UserManage modalHandler={modalHandler} />}
+      {/* 프로필 편집 모달 */}
+      <WideModal isOpen={isShowProfileModal} onClose={handleProfileModal}>
+        <ModalContents
+          isError={isError}
+          editUserInfo={editUserInfo}
+          setIsError={setIsError}
+          handleProfileModal={handleProfileModal}
+        />
+      </WideModal>
+      
       <ActiveSideBar />
       <ToastContainer>
         <ColorToast
@@ -155,14 +165,6 @@ export const Mypage = () => {
         />
       </ToastContainer>
 
-      <WideModal isOpen={isShowProfileModal} onClose={handleProfileModal}>
-        <ModalContents
-          isError={isError}
-          editUserInfo={editUserInfo}
-          setIsError={setIsError}
-          handleProfileModal={handleProfileModal}
-        />
-      </WideModal>
 
       <ContentsContainer>
         <H1>프로필</H1>
@@ -170,6 +172,7 @@ export const Mypage = () => {
           handleProfileModal={handleProfileModal}
           id={user?.id || 0}
           isMyProfile={true}
+          nickname={user?.nickname?user.nickname:""}
         />
         <TitleDiv>
           <Span>링크드아웃 뱃지</Span>

@@ -124,10 +124,12 @@ function ShowProfile({
   handleProfileModal,
   id,
   isMyProfile = false,
+  nickname,
 }: {
   handleProfileModal?: () => void;
   id: number;
   isMyProfile?: boolean;
+  nickname?: string;
 }) {
   const [essaystats, setEssaystats] = useState<stateType | null>(null);
   const [userData, setUserData] = useState<User | null>(null);
@@ -166,7 +168,8 @@ function ShowProfile({
       // 추후 구독 api 수정되면 바꾸기
       if (status === 200) {
         const isFollow =
-          data?.some((item) => item.nickname === tempUserData?.nickname) || false;
+          data?.some((item) => item.nickname === tempUserData?.nickname) ||
+          false;
         setFollow(isFollow);
       }
     } catch (err) {
@@ -179,7 +182,7 @@ function ShowProfile({
       if (status === 200) {
         setEssaystats(data);
         setUserData(user);
-        if(!isMyProfile){
+        if (!isMyProfile) {
           fetchFollows(user);
         }
       }
@@ -214,7 +217,7 @@ function ShowProfile({
               height={108}
             />
             <Span>
-              <strong>{userData?.nickname}</strong> 아무개
+              <strong>{nickname ? nickname : userData?.nickname}</strong> 아무개
             </Span>
           </ProfileImageWrapper>
         </ProfileImageDiv>
