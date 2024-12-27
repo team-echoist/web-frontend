@@ -24,28 +24,27 @@ export default function HomeClient() {
       let newDeviceId: string | undefined;
       let newFcmToken: string | undefined;
 
-        const deviceIdPromise = new Promise<string>((resolve) => {
-          const handleDeviceInfo = (data: string) => {
-            newDeviceId = data;
-            resolve(data);
-          };
-          window.Electron?.requestDeviceInfo();
-          window.Electron?.onDeviceInfo(handleDeviceInfo);
+      const deviceIdPromise = new Promise<string>((resolve) => {
+        const handleDeviceInfo = (data: string) => {
+          newDeviceId = data;
+          resolve(data);
+        };
+        window.Electron?.requestDeviceInfo();
+        window.Electron?.onDeviceInfo(handleDeviceInfo);
+      });
+
+      const fcmTokenPromise = new Promise<string>((resolve) => {
+        window.Electron?.getFCMToken("getFCMToken", (_: any, token: string) => {
+          newFcmToken = token;
+          resolve(token);
         });
-    
-        const fcmTokenPromise = new Promise<string>((resolve) => {
-          window.Electron?.getFCMToken("getFCMToken", (_: any, token: string) => {
-            newFcmToken = token;
-            resolve(token);
-          });
-        });
-    
-        await Promise.all([deviceIdPromise, fcmTokenPromise]);
-    
+      });
+
+      await Promise.all([deviceIdPromise, fcmTokenPromise]);
 
       if (newDeviceId && newFcmToken) {
         const userData = await getUserInfo();
-        const body = { uid: newDeviceId, newFcmToken };
+        const body = { uid: newDeviceId, fcmToken: newFcmToken };
 
         if (userData) {
           setUser(userData);
