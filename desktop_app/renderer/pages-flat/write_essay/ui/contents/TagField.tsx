@@ -57,7 +57,7 @@ interface CompleteStatus {
   [key: string]: boolean;
 }
 interface BottomValue {
-  active: "tag" | "location"|null;
+  active: "tag" | "location" | null;
   tag: {
     values: string[];
   };
@@ -226,7 +226,9 @@ function TagField({
       }));
     }
   };
-
+  useEffect(() => {
+    setInputValue("");
+  }, [activeTag]);
   return (
     <Layout>
       {!isComplete[activeTag as keyof CompleteStatus] && (

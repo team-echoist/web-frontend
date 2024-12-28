@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import { OnBoarding } from "../pages-flat/onboarding";
 import { Loading } from "@/features/activeLoading";
@@ -15,7 +16,6 @@ export default function HomeClient() {
     accessToken: null,
     refreshToken: null,
   });
-  const [isLoading, setIsLoading] = useState(false);
   const setUser = useStore((state) => state.setUser);
   const router = useRouter();
 
@@ -41,16 +41,12 @@ export default function HomeClient() {
       });
 
       await Promise.all([deviceIdPromise, fcmTokenPromise]);
-      console.log("3",newDeviceId,newDeviceId);
       if (newDeviceId && newFcmToken) {
         const userData = await getUserInfo();
         const body = { uid: newDeviceId, fcmToken: newFcmToken };
-        console.log("4");
         if (userData) {
           setUser(userData);
-          console.log("5");
           if (userData.isFirst) {
-            console.log("6");
             // await fetchData("support/devices/register", "post", body);
             // redirectToPage(true);
             // return;
@@ -71,9 +67,8 @@ export default function HomeClient() {
           const deviceExists = userData.devices?.some(
             (device) => device?.uid === newDeviceId
           );
-      
-            if (!deviceExists) {
-            console.log("7");    // await fetchData("support/devices/register", "post", body);
+
+          if (!deviceExists) {
             try {
               await fetchData("support/devices/register", "post", body);
               redirectToPage(false);
@@ -89,22 +84,19 @@ export default function HomeClient() {
         }
       } else {
         const userData = await getUserInfo();
-        console.log("8"); 
+
         // fcm 토큰없을때 예외처리
         if (userData) {
-          console.log("9"); 
           setUser(userData);
           redirectToPage(false);
         }
       }
     } catch (error) {
-      console.log("8");
       console.error("Error in handleUserInfo:", error);
     }
   };
 
   const redirectToPage = (isFirstLogin: boolean) => {
-    console.log("9");
     if (isFirstLogin) {
       router.push("/web/termsofuse");
     } else {
@@ -114,8 +106,6 @@ export default function HomeClient() {
 
   const handleLogin = async (accessToken: string, refreshToken: string) => {
     try {
-      setIsLoading(true);
-      console.log("2");
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("isOauth", "yes");
@@ -123,8 +113,6 @@ export default function HomeClient() {
       await handleUserInfo();
     } catch (err) {
       console.log("handleLogin error:", err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -132,12 +120,21 @@ export default function HomeClient() {
     const urlParams = new URLSearchParams(window.location.search);
     const accessToken = urlParams.get("accessToken");
     const refreshToken = urlParams.get("refreshToken");
-    setTokens({ accessToken, refreshToken });
+    const localAccessToken = localStorage.getItem("accessToken");
+    const localRefreshToken = localStorage.getItem("refreshToken");
 
     if (accessToken && refreshToken) {
-      console.log("1");
+      setTokens({ accessToken, refreshToken });
       handleLogin(accessToken, refreshToken);
     }
+    if (localAccessToken && localRefreshToken) {
+      setTokens({
+        accessToken: localAccessToken,
+        refreshToken: localRefreshToken,
+      });
+      redirectToPage(false);
+    }
   }, []);
-  return <>{isLoading ? <Loading /> : <OnBoarding />}</>;
+
+  return <>{tokens.accessToken ? <Loading /> : <OnBoarding />}</>;
 }
