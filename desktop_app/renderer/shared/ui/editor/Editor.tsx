@@ -116,6 +116,8 @@ function Editor({
   const [thumbnailImage, setThumbnailImage] = useState<string | null>(null);
   const [editorWidth, setEditorWidth] = useState<number>(0);
   const [isMiniModalOpen, setIsMiniModalOpen] = useState(false);
+  const [isTextSizeOpen, setIsTextSizeOpen] = useState(false);
+  const [isShowToastOpen, setIsShowToastOpen] = useState(false);
   let tempThumbnail = localStorage.getItem("tempThumbnail");
   const searchParams = useSearchParams();
   const geuloquis = searchParams.get("geuloquis");
@@ -228,13 +230,21 @@ function Editor({
     setThumbnailImage(base64Url);
   };
 
-  const handleCustomFontSizeClick = () => {
-    setIsModalOpen(!isModalOpen);
+  const handleCustomFontSizeClick = (event: React.MouseEvent) => {
+    if (event.stopPropagation) {
+      event.stopPropagation();
+      setIsTextSizeOpen((prev) => !prev);
+    } else {
+      console.warn("stopPropagation is not supported on this event.");
+    }
   };
   const handleBoldClick = () => {
     if (quillRef.current) {
       const quillEditor = quillRef.current.getEditor();
-      quillEditor.format("bold", !quillEditor.getFormat().bold);
+      if (quillEditor) {
+        quillEditor.format("bold", !quillEditor.getFormat().bold);
+      }
+
       setIsModalOpen(false);
     }
   };
@@ -260,7 +270,7 @@ function Editor({
       toolbar: {
         container: "#toolbar",
         handlers: {
-          // customFontSize: handleCustomFontSizeClick,
+          customFontSize: handleCustomFontSizeClick,
           "custom-bold": handleBoldClick,
           "custom-underline": handleUnderlineClick,
           "custom-strike": handleStrikeClick,
@@ -318,8 +328,8 @@ function Editor({
       />
       <GeneralToast
         title="저장이 완료되었습니다."
-        isShowToast={isModalOpen}
-        setIsShowToast={setIsModalOpen}
+        isShowToast={isShowToastOpen}
+        setIsShowToast={setIsShowToastOpen}
       />
       <CustomToolBar
         isModalOpen={isModalOpen}
@@ -356,7 +366,7 @@ function Editor({
         style={{ display: "none" }}
         onChange={handleImageChange}
       />
-      {isModalOpen && (
+      {isTextSizeOpen && (
         <SelectText option={sizeOptions} applyFontSize={applyFontSize} />
       )}
     </EditorDiv>

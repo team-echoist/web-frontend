@@ -115,6 +115,7 @@ export const Mypage = () => {
       if (status === 200) {
         setUser(data);
         toastHandler("닉네임이 변경 되었습니다.", false);
+        handleProfileModal();
       } else {
         setIsError(true);
       }

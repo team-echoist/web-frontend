@@ -72,7 +72,6 @@ function Header({
       nickname: nickname,
     };
     editUserInfo(body);
-    handleProfileModal();
   };
   const editProfileNameRenderer = () => {
     return (

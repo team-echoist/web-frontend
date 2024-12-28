@@ -172,7 +172,8 @@ export const Login = () => {
     e.preventDefault();
     const { name } = e.currentTarget as HTMLButtonElement;
     const linkmapper = {
-      google: process.env.NEXT_PUBLIC_API_URL + "auth/google",
+      google: "",
+      // google: process.env.NEXT_PUBLIC_API_URL + "auth/google",
       kakao: process.env.NEXT_PUBLIC_API_URL + "auth/kakao",
       naver: process.env.NEXT_PUBLIC_API_URL + "auth/naver",
       apple: process.env.NEXT_PUBLIC_API_URL + "auth/apple",

@@ -15,7 +15,7 @@ export default function HomeClient() {
     accessToken: null,
     refreshToken: null,
   });
-
+  const [isLoading, setIsLoading] = useState(false);
   const setUser = useStore((state) => state.setUser);
   const router = useRouter();
 
@@ -41,35 +41,70 @@ export default function HomeClient() {
       });
 
       await Promise.all([deviceIdPromise, fcmTokenPromise]);
-
+      console.log("3",newDeviceId,newDeviceId);
       if (newDeviceId && newFcmToken) {
         const userData = await getUserInfo();
         const body = { uid: newDeviceId, fcmToken: newFcmToken };
-
+        console.log("4");
         if (userData) {
           setUser(userData);
-
+          console.log("5");
           if (userData.isFirst) {
-            await fetchData("support/devices/register", "post", body);
-            redirectToPage(true);
-            return;
+            console.log("6");
+            // await fetchData("support/devices/register", "post", body);
+            // redirectToPage(true);
+            // return;
+            try {
+              await fetchData("support/devices/register", "post", body);
+              redirectToPage(true);
+              return;
+            } catch (fetchError) {
+              console.error(
+                "Error registering device for first-time user:",
+                fetchError
+              );
+              alert("기기 등록 중 오류가 발생했습니다.");
+              return;
+            }
           }
 
           const deviceExists = userData.devices?.some(
             (device) => device?.uid === newDeviceId
           );
-          if (!deviceExists) {
-            await fetchData("support/devices/register", "post", body);
+      
+            if (!deviceExists) {
+            console.log("7");    // await fetchData("support/devices/register", "post", body);
+            try {
+              await fetchData("support/devices/register", "post", body);
+              redirectToPage(false);
+            } catch (fetchError) {
+              console.error(
+                "Error registering device for existing user:",
+                fetchError
+              );
+              alert("기기 등록 중 오류가 발생했습니다.");
+            }
           }
+          redirectToPage(false);
+        }
+      } else {
+        const userData = await getUserInfo();
+        console.log("8"); 
+        // fcm 토큰없을때 예외처리
+        if (userData) {
+          console.log("9"); 
+          setUser(userData);
           redirectToPage(false);
         }
       }
     } catch (error) {
+      console.log("8");
       console.error("Error in handleUserInfo:", error);
     }
   };
 
   const redirectToPage = (isFirstLogin: boolean) => {
+    console.log("9");
     if (isFirstLogin) {
       router.push("/web/termsofuse");
     } else {
@@ -79,6 +114,8 @@ export default function HomeClient() {
 
   const handleLogin = async (accessToken: string, refreshToken: string) => {
     try {
+      setIsLoading(true);
+      console.log("2");
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("isOauth", "yes");
@@ -86,6 +123,8 @@ export default function HomeClient() {
       await handleUserInfo();
     } catch (err) {
       console.log("handleLogin error:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -96,8 +135,9 @@ export default function HomeClient() {
     setTokens({ accessToken, refreshToken });
 
     if (accessToken && refreshToken) {
+      console.log("1");
       handleLogin(accessToken, refreshToken);
     }
   }, []);
-  return <>{tokens.refreshToken ? <Loading /> : <OnBoarding />}</>;
+  return <>{isLoading ? <Loading /> : <OnBoarding />}</>;
 }
