@@ -22,6 +22,7 @@ export const getUserProfile = async (id: number) => {
 
 export const putUserInfo = async (body: User) => {
   try {
+    console.log("body",body);
     const { status, data } = await fetchData<any>(`users`, "put", body);
     return { status: status, data: data };
   } catch (err) {
