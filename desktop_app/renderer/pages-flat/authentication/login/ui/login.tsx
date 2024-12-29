@@ -188,7 +188,7 @@ export const Login = () => {
   return (
     <>
       {loading && <Loading />}
-      <PrevButton />
+      {/* <PrevButton /> */}
       {isShowResetPassword && <ResetPassword modalHandler={modalHandler} />}
       <DefaultLayout>
         {isShowToast && (
