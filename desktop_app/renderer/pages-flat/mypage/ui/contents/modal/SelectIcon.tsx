@@ -88,7 +88,6 @@ function SelectIcon() {
       formData.append("image", file);
       try {
         const { status, data } = await postImages(formData);
-        console.log(data)
         if (status === 200||status === 201) {
           const body = {
             profileImage: data.imageUrl,

@@ -29,6 +29,7 @@ const Li = styled.li<{ isLinkStyle?: boolean }>`
   padding: 20px 25px 20px 48px;
   background: #111;
   margin-left: 32px;
+  cursor: pointer;
   span {
     border-bottom: ${({ isLinkStyle }) =>
       isLinkStyle ? `1px solid ${color.white}` : "none"};
@@ -105,38 +106,36 @@ function UserSurpport({
       {isShowInquire && <UserInquire submodalHandler={submodalHandler} />}
       <Header title="고객지원" handleClose={handleCloseComponent} />
       <Ul>
-        <Li>
+        <Li onClick={() => submodalHandler("inquire")}>
           링크드아웃 고객센터
-          <SupportBtn onClick={() => submodalHandler("inquire")}>
+          <SupportBtn>
             <Arrow />
           </SupportBtn>
         </Li>
-        <Li>
+        <Li onClick={() => submodalHandler("notice")}>
           공지사항
-          <NoticeBtn onClick={() => submodalHandler("notice")}>
+          <NoticeBtn>
             <Arrow />
           </NoticeBtn>
         </Li>
-        <Li>
+        <Li onClick={() => setIsShowTerms((prev) => !prev)}>
           법적 고지
           <LawBtn isRotated={isShowTerms}>
-            <Arrow onClick={() => setIsShowTerms((prev) => !prev)} />
+            <Arrow />
           </LawBtn>
         </Li>
       </Ul>
 
       {isShowTerms && (
         <Ul>
-          <Li isLinkStyle={true}>
-            •
-            <span
-              onClick={() => {
-                handelIframeModalOpen();
-                handleTerms("service");
-              }}
-            >
-              이용 약관
-            </span>
+          <Li
+            isLinkStyle={true}
+            onClick={() => {
+              handelIframeModalOpen();
+              handleTerms("service");
+            }}
+          >
+            •<span>이용 약관</span>
           </Li>
           <Li
             isLinkStyle={true}
@@ -147,16 +146,14 @@ function UserSurpport({
           >
             • <span>개인정보처리 방침</span>
           </Li>
-          <Li isLinkStyle={true}>
-            •
-            <span
-              onClick={() => {
-                handelIframeModalOpen();
-                handleTerms("location");
-              }}
-            >
-              위치기반서비스 이용 약관
-            </span>
+          <Li
+            isLinkStyle={true}
+            onClick={() => {
+              handelIframeModalOpen();
+              handleTerms("location");
+            }}
+          >
+            •<span>위치기반서비스 이용 약관</span>
           </Li>
         </Ul>
       )}

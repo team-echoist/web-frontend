@@ -49,6 +49,7 @@ const Span = styled.span`
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
+  cursor: pointer;
 `;
 const TitleDiv = styled.div`
   width: 758px;
@@ -152,7 +153,7 @@ export const Mypage = () => {
           handleProfileModal={handleProfileModal}
         />
       </WideModal>
-      
+
       <ActiveSideBar />
       <ToastContainer>
         <ColorToast
@@ -165,18 +166,23 @@ export const Mypage = () => {
         />
       </ToastContainer>
 
-
       <ContentsContainer>
         <H1>프로필</H1>
         <ShowProfile
           handleProfileModal={handleProfileModal}
           id={user?.id || 0}
           isMyProfile={true}
-          nickname={user?.nickname?user.nickname:""}
-          profileImage={user?.profileImage?user.profileImage:""}
+          nickname={user?.nickname ? user.nickname : ""}
+          profileImage={user?.profileImage ? user.profileImage : ""}
         />
         <TitleDiv>
-          <Span>링크드아웃 뱃지</Span>
+          <Span
+            onClick={() => {
+              modalHandler("badge");
+            }}
+          >
+            링크드아웃 뱃지
+          </Span>
           <WhiteArrow
             onClick={() => {
               modalHandler("badge");
@@ -185,7 +191,13 @@ export const Mypage = () => {
         </TitleDiv>
         <ActiveBadge />
         <TitleDiv>
-          <Span>최근 본 글</Span>
+          <Span
+            onClick={() => {
+              modalHandler("recent");
+            }}
+          >
+            최근 본 글
+          </Span>
           <WhiteArrow
             onClick={() => {
               modalHandler("recent");
@@ -198,7 +210,13 @@ export const Mypage = () => {
           <Chip>준비중</Chip>
         </TitleDiv>
         <TitleDiv>
-          <Span>계정 관리</Span>
+          <Span
+            onClick={() => {
+              modalHandler("manage");
+            }}
+          >
+            계정 관리
+          </Span>
           <WhiteArrow
             onClick={() => {
               modalHandler("manage");
