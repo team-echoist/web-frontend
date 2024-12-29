@@ -30,13 +30,9 @@ export const registerUser = async (code: string) => {
       body
     );
     const { accessToken, refreshToken } = response.data.data;
-    Cookies.set('accessToken', accessToken, { expires: 7 });
-    Cookies.set('refreshToken', refreshToken, { expires: 30 }); 
-    Cookies.set("isOauth", "no", {
-      expires: 30,
-      secure: true,
-      sameSite: "Strict",
-    });
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("isOauth", "yes");
     const statusCode = response.data.statusCode;
     return statusCode;
   } catch (err) {

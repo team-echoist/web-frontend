@@ -26,7 +26,11 @@ const ProfileImageDiv = styled.div`
   justify-content: center;
   gap: 39px;
 `;
-const ProfileImageItemDiv = styled.div``;
+const ProfileImageItemDiv = styled.div`
+  img {
+    border-radius: 70px;
+  }
+`;
 
 const SelectImageButton = styled.button`
   all: unset;
@@ -84,9 +88,9 @@ function SelectIcon() {
       formData.append("image", file);
       try {
         const { status, data } = await postImages(formData);
-        if (status === 200) {
+        if (status === 200||status === 201) {
           const body = {
-            profileImage: data.profileImage,
+            profileImage: data.imageUrl,
           };
           const response = await putUserInfo(body);
           setUser(response.data);
@@ -106,7 +110,6 @@ function SelectIcon() {
       const file = new File([blob], `profile${index + 1}.webp`, {
         type: blob.type,
       });
-
       // FormData 생성 및 이미지 추가
       const formData = new FormData();
       formData.append("image", file);
@@ -118,7 +121,7 @@ function SelectIcon() {
         };
         const response = await putUserInfo(body);
         setUser(response.data);
-        setProfileImage(response.data.profileImage)
+        setProfileImage(response.data.profileImage);
       }
     } catch (error) {
       console.error("Image upload failed:", error);

@@ -199,7 +199,7 @@ function ShowEssayDetails({
   return (
     <Container scale={scale}>
       <ScrollTop />
-      <PrevButton path="/web/main" />
+      <PrevButton path="/web/community" />
       <ToastContainer>
         <ColorToast
           text={toastText}

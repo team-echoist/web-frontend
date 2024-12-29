@@ -57,7 +57,7 @@ interface CompleteStatus {
   [key: string]: boolean;
 }
 interface BottomValue {
-  active: "tag" | "location";
+  active: "tag" | "location" | null;
   tag: {
     values: string[];
   };
@@ -69,7 +69,7 @@ interface BottomValue {
 interface OptionType {
   bottomValue: BottomValue;
   setBottomValue: React.Dispatch<React.SetStateAction<BottomValue>>;
-  activeTag: "tag" | "location";
+  activeTag: "tag" | "location" | null;
   setIsTagSave: React.Dispatch<React.SetStateAction<boolean>>;
   setIsLocationSave: React.Dispatch<React.SetStateAction<boolean>>;
   isTagSave: boolean;
@@ -212,19 +212,23 @@ function TagField({
     }
   };
 
-  const handleComplete = (tag: string) => {
+  const handleComplete = (tag: string | null) => {
     if (tag === "tag") {
       setIsTagSave(true);
     }
     if (tag === "location") {
       setIsLocationSave(true);
     }
-    setComplete((prevStatus) => ({
-      ...prevStatus,
-      [tag]: !prevStatus[tag],
-    }));
+    if (tag) {
+      setComplete((prevStatus) => ({
+        ...prevStatus,
+        [tag]: !prevStatus[tag],
+      }));
+    }
   };
-
+  useEffect(() => {
+    setInputValue("");
+  }, [activeTag]);
   return (
     <Layout>
       {!isComplete[activeTag as keyof CompleteStatus] && (

@@ -1,4 +1,10 @@
-import { ipcRenderer, Notification, contextBridge,IpcRendererEvent,nativeImage  } from 'electron';
+import {
+  ipcRenderer,
+  Notification,
+  contextBridge,
+  IpcRendererEvent,
+  nativeImage,
+} from "electron";
 
 // Sometimes these constants do not work properly. It's recommended to set the
 // string directly in the ipcRenderer listener.
@@ -8,33 +14,45 @@ import {
   NOTIFICATION_SERVICE_ERROR,
   NOTIFICATION_RECEIVED as ON_NOTIFICATION_RECEIVED,
   TOKEN_UPDATED,
-} from 'electron-push-receiver/src/constants';
+} from "electron-push-receiver/src/constants";
 import * as path from "path";
-
-
 
 // Connects the renderer.js with main.js
 contextBridge.exposeInMainWorld("Electron", {
-  getFCMToken: (channel: string, func: (event: IpcRendererEvent, ...args: any[]) => void) => {
+  getFCMToken: (
+    channel: string,
+    func: (event: IpcRendererEvent, ...args: any[]) => void
+  ) => {
     ipcRenderer.once(channel, func);
     ipcRenderer.send("getFCMToken");
   },
-  requestDeviceInfo: () => ipcRenderer.send('request-device-info'),
-  onDeviceInfo: (callback:any) => ipcRenderer.on('device-info', (event, data) => callback(data)),
-  getLocation: () => ipcRenderer.invoke('get-location'),
+  requestDeviceInfo: () => ipcRenderer.send("request-device-info"),
+  onDeviceInfo: (callback: any) =>
+    ipcRenderer.on("device-info", (event, data) => callback(data)),
+  getLocation: () => ipcRenderer.invoke("get-location"),
+  googleOAuthLogin: (callback: (token: any) => void) => {
+    ipcRenderer.once("google-oauth-token", (event, token) => {
+      callback(token);
+    });
+    ipcRenderer.send("google-oauth-login");
+  },
+  sendRedirectUrl: (redirectUrl: string) => {
+    ipcRenderer.send("redirect-url", redirectUrl);
+  },
   ipcRenderer: {
-    send: (channel:any, data:any) => ipcRenderer.send(channel, data),
-    on: (channel:any, func:any) => ipcRenderer.on(channel, (event, ...args) => func(...args)),
+    send: (channel: any, data: any) => ipcRenderer.send(channel, data),
+    on: (channel: any, func: any) =>
+      ipcRenderer.on(channel, (event, ...args) => func(...args)),
   },
 });
 
-const senderId = process.env.SENDER_ID;
+const senderId = 710166131124;
 
 ipcRenderer.send(START_NOTIFICATION_SERVICE, senderId);
 
 // Listen for service successfully started
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_, token) => {
-  ipcRenderer.send('storeFCMToken', token);
+  ipcRenderer.send("storeFCMToken", token);
 });
 
 // Handle notification errors
@@ -58,24 +76,24 @@ ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_, error) => {
 // });
 
 ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
-  const appIcon = nativeImage.createFromPath(
-    path.join(process.cwd(), "main", "icons", "logo.png")
-  ).toDataURL();
+  const appIcon = nativeImage
+    .createFromPath(path.join(process.cwd(), "main", "icons", "logo.png"))
+    .toDataURL();
   const showNotification = () => {
     const notif = new window.Notification(notification.notification.title, {
       body: notification.notification.body,
-      icon: appIcon
+      icon: appIcon,
     });
 
     notif.onclick = () => {
-      ipcRenderer.send('notification-clicked', notification);
+      ipcRenderer.send("notification-clicked", notification);
     };
   };
 
   if (window.Notification.permission === "granted") {
     showNotification();
   } else if (window.Notification.permission !== "denied") {
-    window.Notification.requestPermission().then(permission => {
+    window.Notification.requestPermission().then((permission) => {
       if (permission === "granted") {
         showNotification();
       }
@@ -99,54 +117,59 @@ ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
 
 // Store the new token
 ipcRenderer.on(TOKEN_UPDATED, (_, token) => {
-  const event = new CustomEvent('fcmTokenUpdated', { detail: token });
+  const event = new CustomEvent("fcmTokenUpdated", { detail: token });
   window.dispatchEvent(event);
 });
 
 
-window.addEventListener('DOMContentLoaded', () => {
-  const minButton = document.getElementById('min-button');
-  const maxButton = document.getElementById('max-button');
-  const restoreButton = document.getElementById('restore-button');
-  const closeButton = document.getElementById('close-button');
+window.addEventListener("DOMContentLoaded", () => {
+  const minButton = document.getElementById("min-button");
+  const maxButton = document.getElementById("max-button");
+  const restoreButton = document.getElementById("restore-button");
+  const closeButton = document.getElementById("close-button");
 
-  minButton?.addEventListener('click', () => {
-    ipcRenderer.send('minimize-window');
+  const currentUrl = window.location.href;
+
+  // if (currentUrl.includes("chrome-error")) {
+  //   window.location.href = `app://./home`;
+  // }
+
+  minButton?.addEventListener("click", () => {
+    ipcRenderer.send("minimize-window");
   });
 
-  maxButton?.addEventListener('click', () => {
-    ipcRenderer.send('maximize-window');
+  maxButton?.addEventListener("click", () => {
+    ipcRenderer.send("maximize-window");
   });
 
-  restoreButton?.addEventListener('click', () => {
-    ipcRenderer.send('restore-window');
+  restoreButton?.addEventListener("click", () => {
+    ipcRenderer.send("restore-window");
   });
 
-  closeButton?.addEventListener('click', () => {
-    ipcRenderer.send('close-window');
+  closeButton?.addEventListener("click", () => {
+    ipcRenderer.send("close-window");
   });
 
-  ipcRenderer.on('window-maximized', () => {
+  ipcRenderer.on("window-maximized", () => {
     if (restoreButton && maxButton) {
-      restoreButton.style.display = 'block';
-      maxButton.style.display = 'none';
+      restoreButton.style.display = "block";
+      maxButton.style.display = "none";
     }
   });
 
-  ipcRenderer.on('window-unmaximized', () => {
+  ipcRenderer.on("window-unmaximized", () => {
     if (restoreButton && maxButton) {
-      restoreButton.style.display = 'none';
-      maxButton.style.display = 'block';
+      restoreButton.style.display = "none";
+      maxButton.style.display = "block";
     }
   });
-
 });
 
 const handler = {
   send(channel: string, value: any) {
     ipcRenderer.send(channel, value);
   },
-  
+
   on(channel: string, callback: (...args: any[]) => any) {
     const subscription = (_event: any, ...args: any[]) => callback(...args);
     ipcRenderer.on(channel, subscription);
@@ -156,18 +179,18 @@ const handler = {
     };
   },
   storeFCMToken(token: any) {
-    ipcRenderer.send('storeFCMToken', token);
+    ipcRenderer.send("storeFCMToken", token);
   },
   getFCMToken() {
     return new Promise((resolve) => {
-      ipcRenderer.send('getFCMToken');
-      ipcRenderer.on('getFCMToken', (event, token) => {
+      ipcRenderer.send("getFCMToken");
+      ipcRenderer.on("getFCMToken", (event, token) => {
         resolve(token);
       });
     });
   },
 };
 
-contextBridge.exposeInMainWorld('ipc', handler);
+contextBridge.exposeInMainWorld("ipc", handler);
 
 export type IpcHandler = typeof handler;

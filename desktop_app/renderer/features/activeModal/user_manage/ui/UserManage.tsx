@@ -65,6 +65,7 @@ const Span = styled.span`
   display: flex;
   align-items: center;
   gap: 15px;
+  cursor: pointer;
 `;
 
 const P = styled.p`
@@ -108,7 +109,7 @@ function UserManage({
 
   useEffect(() => {
     const oauthValue =
-      Cookies.get("isOauth") || sessionStorage.getItem("isOauth");
+      localStorage.getItem("isOauth") || sessionStorage.getItem("isOauth");
     setIsOauth(oauthValue);
   }, []);
 
@@ -178,7 +179,13 @@ function UserManage({
           </TabLayout>
           {isOauth !== "yes" && (
             <TabLayout>
-              <Span>비밀번호 변경</Span>
+              <Span
+                onClick={() => {
+                  submodalHandler("changePassword");
+                }}
+              >
+                비밀번호 변경
+              </Span>
               <WhiteArrow
                 onClick={() => {
                   submodalHandler("changePassword");
@@ -187,7 +194,13 @@ function UserManage({
             </TabLayout>
           )}
           <TabLayout>
-            <Span>로그아웃</Span>
+            <Span
+              onClick={() => {
+                submodalHandler("logout");
+              }}
+            >
+              로그아웃
+            </Span>
             <WhiteArrow
               onClick={() => {
                 submodalHandler("logout");
@@ -195,7 +208,13 @@ function UserManage({
             />
           </TabLayout>
           <TabLayout>
-            <Span>탈퇴하기</Span>
+            <Span
+              onClick={() => {
+                submodalHandler("withdraw");
+              }}
+            >
+              탈퇴하기
+            </Span>
             <WhiteArrow
               onClick={() => {
                 submodalHandler("withdraw");

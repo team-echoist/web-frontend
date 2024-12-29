@@ -28,21 +28,9 @@ export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
 
     if (accessToken && refreshToken) {
       if (autoLoginCheck) {
-        Cookies.set("accessToken", accessToken, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("refreshToken", refreshToken, {
-          expires: 30,
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("isOauth", "no", {
-          expires: 30,
-          secure: true,
-          sameSite: "Strict",
-        });
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("isOauth", "yes");
       } else {
         sessionStorage.setItem("accessToken", accessToken);
         sessionStorage.setItem("refreshToken", refreshToken);

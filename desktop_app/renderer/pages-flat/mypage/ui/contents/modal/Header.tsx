@@ -41,7 +41,7 @@ const Btn = styled.button`
 `;
 const TitleDiv = styled.div`
   position: absolute;
-  left:42%;
+  left: 42%;
 `;
 
 interface User {
@@ -59,13 +59,13 @@ function Header({
   nickname,
   isProfileEdit,
   handleEdit,
-  handleProfileModal
+  handleProfileModal,
 }: {
   editUserInfo: (body: User) => void;
   nickname: string;
   isProfileEdit: boolean;
-  handleEdit:()=>void;
-  handleProfileModal:() =>void;
+  handleEdit: () => void;
+  handleProfileModal: () => void;
 }) {
   const onSubmit = () => {
     const body = {

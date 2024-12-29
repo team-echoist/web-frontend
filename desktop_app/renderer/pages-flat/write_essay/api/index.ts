@@ -18,18 +18,17 @@ export const submitEssay = async (
   isGueloque?: boolean
 ): Promise<any> => {
   try {
-    if (formData && !isGueloque) {
+    if (formData && isGueloque===false) {
       const formDataEmpty = Array.from(formData.entries()).reduce(
         (acc, [key, value]) => {
           return false;
         },
         true
       );
-
       if (!formDataEmpty) {
         const { data: imageData, status: imageStatus } =
           await fetchData<ImageResponse>("essays/images", "post", formData);
-        if (imageStatus === 201) {
+        if (imageStatus === 201 ||imageStatus === 200) {
           body.thumbnail = imageData.imageUrl;
         }
       }

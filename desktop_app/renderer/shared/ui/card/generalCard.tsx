@@ -2,11 +2,11 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 
-const Layout = styled.div<{ isFocused: boolean }>`
+const Layout = styled.div<{ isfocused: boolean }>`
   width: 320px;
   flex-shrink: 0;
   border-radius: 10px;
-  border: 1px solid  ${({ isFocused }) => (isFocused ? color.pointcolor : "#191919")};
+  border: 1px solid  ${({ isfocused }) => (isfocused ? color.pointcolor : "#191919")};
   background:#121212;
   z-index: 10;
   display:flex;
@@ -29,7 +29,7 @@ function GeneralCard({
   isFocused: boolean;
   onClick?: () => void;
 }) {
-  return <Layout isFocused={isFocused} onClick={onClick}>{children}</Layout>;
+  return <Layout isfocused={isFocused} onClick={onClick}>{children}</Layout>;
 }
 
 export default GeneralCard;

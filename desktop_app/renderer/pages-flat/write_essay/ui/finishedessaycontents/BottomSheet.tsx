@@ -275,11 +275,14 @@ function BottomSheet({
 
   const handleSaveEssay = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-
     try {
       const { id } = e.currentTarget.dataset;
       const geuloqueUrl = localStorage.getItem("geuloqueUrl");
-      const isGueloque = geuloqueUrl && geuloqueUrl.length > 0 ? true : false;
+      const pendingGeuloquis = localStorage.getItem("pendingGeuloquis");
+      const isGueloque =
+        geuloqueUrl && geuloqueUrl.length > 0 && pendingGeuloquis === "false"
+          ? true
+          : false;
       const pageType = id === "private" ? "private" : "public";
       if (title.length === 0 || desc.length === 0) {
         showToastMessage("입력란을 확인해 주세요.");
@@ -287,8 +290,7 @@ function BottomSheet({
       }
 
       const formData = new FormData();
-
-      if (imageFile && !isGueloque) {
+      if (imageFile instanceof File && isGueloque === false) {
         formData.append("image", imageFile);
       }
       const body: bodyType = {
@@ -297,9 +299,8 @@ function BottomSheet({
         status: String(id),
         tags: isTagSave ? tag : [],
         location: "",
-        thumbnail: isGueloque ? geuloqueUrl || "" : "", 
+        thumbnail: isGueloque ? geuloqueUrl || "" : "",
       };
-
 
       if (location.length > 0) {
         const tempLocation = location[0];
@@ -312,7 +313,6 @@ function BottomSheet({
       } else {
         delete body?.location;
       }
-
       const { data, status } = await submitEssay(formData, body, isGueloque);
 
       if (status === 201) {
@@ -325,7 +325,9 @@ function BottomSheet({
         localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
         localStorage.setItem("currentEssayId", "");
         localStorage.setItem("tempThumbnail", "");
-        localStorage.setItem("geuloqueUrl", "");
+        if(pendingGeuloquis ==="false"){
+          localStorage.setItem("geuloqueUrl", "");
+        }
         router.push(
           `/web/essay_details?id=${data.id}&type=${id}&pageType=${pageType}`
         );

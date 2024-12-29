@@ -1,3 +1,4 @@
+"use client";
 import React, {
   useState,
   useRef,
@@ -14,6 +15,7 @@ import Image from "next/image";
 import color from "@/shared/styles/color";
 import { GeneralToast } from "../toast";
 import { MiniToast } from "../toast";
+import { useSearchParams } from "next/navigation";
 
 const EditorDiv = styled.div`
   position: relative;
@@ -99,37 +101,48 @@ function Editor({
   tagValue,
   setTagValue,
   editorType,
+  geuloqueUrl,
 }: {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   tagValue: TagValue;
   setTagValue: Dispatch<SetStateAction<TagValue>>;
   editorType: string | null;
+  geuloqueUrl: string | null;
 }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const quillRef = useRef<ReactQuill>(null);
   const [thumbnailImage, setThumbnailImage] = useState<string | null>(null);
   const [editorWidth, setEditorWidth] = useState<number>(0);
-  const [isShowModal, setIsShowModal] = useState(false);
   const [isMiniModalOpen, setIsMiniModalOpen] = useState(false);
+  const [isTextSizeOpen, setIsTextSizeOpen] = useState(false);
+  const [isShowToastOpen, setIsShowToastOpen] = useState(false);
   let tempThumbnail = localStorage.getItem("tempThumbnail");
-  let geuloqueUrl = localStorage.getItem("geuloqueUrl");
+  const searchParams = useSearchParams();
+  const geuloquis = searchParams.get("geuloquis");
+  const pendignGeuloquis = localStorage.getItem("pendingGeuloquis") || "false";
 
   useEffect(() => {
     const currentEssayId = localStorage.getItem("currentEssayId");
-    if (currentEssayId && !tempThumbnail && !geuloqueUrl) {
-      const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
-      const storedEssayData = essayData.find((item: any) => {
-        return item.id === currentEssayId && item.imageSrc;
-      });
-      if (storedEssayData?.imageSrc) {
-        setThumbnailImage(storedEssayData.imageSrc);
+    if (geuloquis) {
+      // 보류 아닐때만
+      if (pendignGeuloquis === "false") {
+        setThumbnailImage(geuloqueUrl);
       }
-    } else if (geuloqueUrl) {
-      setThumbnailImage(geuloqueUrl);
-    } else if (tempThumbnail && !geuloqueUrl) {
-      setThumbnailImage(tempThumbnail);
+    } else {
+      if (currentEssayId && !tempThumbnail) {
+        // 저장된 글이 있을때 editor value값 초기화 하는 로직
+        const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
+        const storedEssayData = essayData.find((item: any) => {
+          return item.id === currentEssayId && item.imageSrc;
+        });
+        if (storedEssayData?.imageSrc) {
+          setThumbnailImage(storedEssayData.imageSrc);
+        }
+      } else if (tempThumbnail) {
+        setThumbnailImage(tempThumbnail);
+      }
     }
   }, [editorType, tempThumbnail]);
 
@@ -169,18 +182,24 @@ function Editor({
   };
   const handleImageUploadClick = () => {
     if (fileInputRef.current) {
+      fileInputRef.current.value = "";
       fileInputRef.current.click();
     }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (file) {
       convertFileToBase64(file, (base64Url: string) => {
         setThumbnailImage(base64Url);
         insertImageIntoEditor(base64Url);
+        localStorage.setItem("geuloqueUrl", "");
         localStorage.setItem("tempThumbnail", base64Url);
       });
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
   const convertFileToBase64 = (
@@ -211,13 +230,21 @@ function Editor({
     setThumbnailImage(base64Url);
   };
 
-  const handleCustomFontSizeClick = () => {
-    setIsModalOpen(!isModalOpen);
+  const handleCustomFontSizeClick = (event: React.MouseEvent) => {
+    if (event.stopPropagation) {
+      event.stopPropagation();
+      setIsTextSizeOpen((prev) => !prev);
+    } else {
+      console.warn("stopPropagation is not supported on this event.");
+    }
   };
   const handleBoldClick = () => {
     if (quillRef.current) {
       const quillEditor = quillRef.current.getEditor();
-      quillEditor.format("bold", !quillEditor.getFormat().bold);
+      if (quillEditor) {
+        quillEditor.format("bold", !quillEditor.getFormat().bold);
+      }
+
       setIsModalOpen(false);
     }
   };
@@ -243,7 +270,7 @@ function Editor({
       toolbar: {
         container: "#toolbar",
         handlers: {
-          // customFontSize: handleCustomFontSizeClick,
+          customFontSize: handleCustomFontSizeClick,
           "custom-bold": handleBoldClick,
           "custom-underline": handleUnderlineClick,
           "custom-strike": handleStrikeClick,
@@ -301,8 +328,8 @@ function Editor({
       />
       <GeneralToast
         title="저장이 완료되었습니다."
-        isShowToast={isShowModal}
-        setIsShowToast={setIsModalOpen}
+        isShowToast={isShowToastOpen}
+        setIsShowToast={setIsShowToastOpen}
       />
       <CustomToolBar
         isModalOpen={isModalOpen}
@@ -339,7 +366,7 @@ function Editor({
         style={{ display: "none" }}
         onChange={handleImageChange}
       />
-      {isModalOpen && (
+      {isTextSizeOpen && (
         <SelectText option={sizeOptions} applyFontSize={applyFontSize} />
       )}
     </EditorDiv>
