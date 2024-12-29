@@ -111,9 +111,9 @@ function ChangePassword({
         setToastText("비밀번호 변경이 완료 되었습니다.");
         setShowToast(true);
         setTimeout(() => {
-          Cookies.remove("refreshToken");
-          Cookies.remove("accessToken");
-          Cookies.remove("isOauth");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("isOauth");
           sessionStorage.removeItem("accessToken");
           sessionStorage.removeItem("refreshToken");
           sessionStorage.removeItem("isOauth");

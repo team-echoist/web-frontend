@@ -6,14 +6,31 @@ import {
   nativeImage,
   ipcMain,
   app,
+  protocol
 } from "electron";
 import Store from "electron-store";
 import * as path from "path";
-import { setup as setupPushReceiver ,NOTIFICATION_RECEIVED } from "electron-push-receiver";
+import {
+  setup as setupPushReceiver,
+  NOTIFICATION_RECEIVED,
+} from "electron-push-receiver";
 import { machineIdSync } from "node-machine-id";
-const NodeGeocoder = require('node-geocoder');
+import "dotenv/config"
+const http = require('http');
 
-const geocoder = NodeGeocoder({ provider: 'openstreetmap' });
+const NodeGeocoder = require("node-geocoder");
+
+
+const geocoder = NodeGeocoder({ provider: "openstreetmap" });
+
+
+app.whenReady().then(() => {
+  protocol.registerFileProtocol('app', (request, callback) => {
+    const url = request.url.replace(/^app:\/\//, ''); // 스키마 제거
+    const decodedUrl = decodeURI(url); // URL 디코딩
+    callback({ path: path.join(__dirname, decodedUrl) });
+  });
+});
 
 export const createWindow = (
   windowName: string,
@@ -79,11 +96,13 @@ export const createWindow = (
     autoHideMenuBar: true,
     minWidth: 1200,
     minHeight: 900,
+    maxWidth: 1920,
+    maxHeight: 1080,
     icon: appIcon,
     frame: false,
     backgroundColor: "#101012",
     webPreferences: {
-      nodeIntegration: false,
+      nodeIntegration: true,
       contextIsolation: true,
       sandbox: false,
       preload: path.join(process.cwd(), "main", "preload.js"),
@@ -91,40 +110,46 @@ export const createWindow = (
     },
   });
 
-  
   let machineId = machineIdSync();
+  // win.webContents.openDevTools();
 
-  ipcMain.on('request-device-info', (event) => {
-    event.sender.send('device-info', machineId);
+
+  ipcMain.on("request-device-info", (event) => {
+    event.sender.send("device-info", machineId);
   });
   setupPushReceiver(win.webContents);
   ipcMain.on(NOTIFICATION_RECEIVED, (event, notification) => {
-    win.webContents.send('notification', notification);
+    win.webContents.send("notification", notification);
   });
-  ipcMain.on('notification-clicked', (event, notification) => {
-    console.log('Notification clicked:', notification);
-    win.webContents.send('navigate-to', notification.url || 'http://localhost:8888/home');
+  ipcMain.on("notification-clicked", (event, notification) => {
+    console.log("Notification clicked:", notification);
+    win.webContents.send(
+      "navigate-to",
+      notification.url || "http://localhost:8888/home"
+    );
   });
 
   return win;
 };
-ipcMain.handle('get-location', async () => {
+ipcMain.handle("get-location", async () => {
   try {
-    const ipResponse = await fetch('https://api.ipify.org?format=json');
+    const ipResponse = await fetch("https://api.ipify.org?format=json");
     const ipData = await ipResponse.json();
     const userIp = ipData.ip;
 
-    const locationResponse = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=664ea44f8663409c8eba020ccc2a82ff&ip=${userIp}`);
+    const locationResponse = await fetch(
+      `https://api.ipgeolocation.io/ipgeo?apiKey=664ea44f8663409c8eba020ccc2a82ff&ip=${userIp}`
+    );
     const locationData = await locationResponse.json();
 
     return {
       city: locationData.city,
       country: locationData.country_name,
       latitude: locationData.latitude,
-      longitude: locationData.longitude
+      longitude: locationData.longitude,
     };
   } catch (error) {
-    console.error('Error fetching location:', error);
+    console.error("Error fetching location:", error);
     return null;
   }
 });
@@ -144,7 +169,6 @@ ipcMain.on("maximize-window", (event) => {
   }
 });
 
-
 ipcMain.on("restore-window", (event) => {
   const win = BrowserWindow.fromWebContents(event.sender);
   win?.unmaximize();
@@ -155,7 +179,7 @@ ipcMain.on("close-window", (event) => {
   win?.close();
 });
 
-app.on('ready', () => {
+app.on("ready", () => {
   app.setAppUserModelId("linkedout");
 });
 
@@ -173,4 +197,3 @@ ipcMain.on("storeFCMToken", (e, token) => {
 ipcMain.on("getFCMToken", async (e) => {
   e.sender.send("getFCMToken", store.get("fcm_token"));
 });
-

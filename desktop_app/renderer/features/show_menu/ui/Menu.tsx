@@ -51,6 +51,7 @@ const H1 = styled.h1`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
+  cursor:pointer;
 `;
 const Strong = styled.strong`
   color: ${color.pointcolor};
@@ -140,7 +141,7 @@ const Ul = styled.ul`
   list-style-type: none;
 `;
 const Li = styled.li<{ isSelected: boolean }>`
-  color: ${({isSelected})=>isSelected?color.pointcolor:color.white};
+  color: ${({ isSelected }) => (isSelected ? color.pointcolor : color.white)};
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
@@ -281,7 +282,11 @@ function Menu() {
             height={80}
           />
           <ProfileHeaderText>
-            <H1>
+            <H1
+              onClick={() => {
+                router.push("/web/mypage");
+              }}
+            >
               <Strong>{user?.nickname}</Strong> 아무개
             </H1>
             <GreyText>

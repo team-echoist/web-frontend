@@ -49,6 +49,7 @@ const Span = styled.span`
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
+  cursor: pointer;
 `;
 const TitleDiv = styled.div`
   width: 758px;
@@ -73,7 +74,7 @@ const Chip = styled.div`
 const ToastContainer = styled.div`
   position: fixed;
   top: 80%;
-  left: 36%;
+  left: 45%;
   z-index: 1200;
 `;
 
@@ -115,6 +116,7 @@ export const Mypage = () => {
       if (status === 200) {
         setUser(data);
         toastHandler("닉네임이 변경 되었습니다.", false);
+        handleProfileModal();
       } else {
         setIsError(true);
       }
@@ -137,12 +139,21 @@ export const Mypage = () => {
       setIsShowUserManage((prev) => !prev);
     }
   };
-
   return (
     <Layout>
       {isShowRecentModal && <RecentEssayModal modalHandler={modalHandler} />}
       {isShowBadgeModal && <BadgeModal modalHandler={modalHandler} />}
       {isShowUserManage && <UserManage modalHandler={modalHandler} />}
+      {/* 프로필 편집 모달 */}
+      <WideModal isOpen={isShowProfileModal} onClose={handleProfileModal}>
+        <ModalContents
+          isError={isError}
+          editUserInfo={editUserInfo}
+          setIsError={setIsError}
+          handleProfileModal={handleProfileModal}
+        />
+      </WideModal>
+
       <ActiveSideBar />
       <ToastContainer>
         <ColorToast
@@ -155,24 +166,23 @@ export const Mypage = () => {
         />
       </ToastContainer>
 
-      <WideModal isOpen={isShowProfileModal} onClose={handleProfileModal}>
-        <ModalContents
-          isError={isError}
-          editUserInfo={editUserInfo}
-          setIsError={setIsError}
-          handleProfileModal={handleProfileModal}
-        />
-      </WideModal>
-
       <ContentsContainer>
         <H1>프로필</H1>
         <ShowProfile
           handleProfileModal={handleProfileModal}
           id={user?.id || 0}
           isMyProfile={true}
+          nickname={user?.nickname ? user.nickname : ""}
+          profileImage={user?.profileImage ? user.profileImage : ""}
         />
         <TitleDiv>
-          <Span>링크드아웃 뱃지</Span>
+          <Span
+            onClick={() => {
+              modalHandler("badge");
+            }}
+          >
+            링크드아웃 뱃지
+          </Span>
           <WhiteArrow
             onClick={() => {
               modalHandler("badge");
@@ -181,7 +191,13 @@ export const Mypage = () => {
         </TitleDiv>
         <ActiveBadge />
         <TitleDiv>
-          <Span>최근 본 글</Span>
+          <Span
+            onClick={() => {
+              modalHandler("recent");
+            }}
+          >
+            최근 본 글
+          </Span>
           <WhiteArrow
             onClick={() => {
               modalHandler("recent");
@@ -194,7 +210,13 @@ export const Mypage = () => {
           <Chip>준비중</Chip>
         </TitleDiv>
         <TitleDiv>
-          <Span>계정 관리</Span>
+          <Span
+            onClick={() => {
+              modalHandler("manage");
+            }}
+          >
+            계정 관리
+          </Span>
           <WhiteArrow
             onClick={() => {
               modalHandler("manage");

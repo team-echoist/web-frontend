@@ -1,4 +1,3 @@
-"use client";
 import { FindInfo } from "./findinfo";
 import { Login } from "./authentication";
 import { Mypage } from "./mypage";
@@ -13,6 +12,7 @@ import { Community } from "./community";
 import { UnfinishedWriting } from "./unfinished_writing";
 import { EssayDetail } from "./essay_detail";
 import { UserProfile } from "./userprofile";
+
 
 const ProtectedMain = withAuth(Main);
 const ProtectedUnfinishedWriting = withAuth(UnfinishedWriting);

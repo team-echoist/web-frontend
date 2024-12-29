@@ -36,10 +36,9 @@ const EditorContainer = styled.div<{ isBottomFieldVisible: boolean }>`
     flex-grow: 1;
     overflow-y: auto;
   }'
-  border:3px solid red;
 `;
 interface BottomValue {
-  active: "tag" | "location";
+  active: "tag" | "location" | null;
   tag: {
     values: string[];
   };
@@ -60,7 +59,7 @@ export const WriteEssay = () => {
   const [title, setTitle] = useState("제목 없음");
   const [value, setValue] = useState<string>("");
   const [bottomValue, setBottomValue] = useState<BottomValue>({
-    active: "tag",
+    active: null,
     tag: {
       values: [],
     },
@@ -69,60 +68,24 @@ export const WriteEssay = () => {
     },
   });
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [id, setId] = useState<string>(defaultId);
+  const id = defaultId;
+  const isBottomFieldVisible =
+    bottomValue.active === "tag" || bottomValue.active === "location";
   const [isCancel, setIsCancel] = useState(false);
   const [step, setStep] = useState("write");
   let currentId = localStorage.getItem("currentEssayId");
-  const isBottomFieldVisible =
-    bottomValue.active === "tag" || bottomValue.active === "location";
   const searchParams = useSearchParams();
   const pageType = searchParams.get("pageType");
+  // pageType은 글 수정 기능할때 필요 private인지 public인지 확인 (등록 api할때)
   const essayId = searchParams.get("essayId");
+  // 글로키 관련된 params
   const geuloquis = searchParams.get("geuloquis");
+  const geuloqueUrl = searchParams.get("url");
   const editorType = searchParams.get("editorType");
+  // editorType이 수정인지, 일반글쓰기인지 나타내는 파라미터 editorType이 없다면 일반글쓰기
   const [isTagSave, setIsTagSave] = useState(false);
   const [isLocationSave, setIsLocationSave] = useState(false);
-
-  useEffect(() => {
-    if (geuloquis) {
-      const geuloqueUrl = localStorage.getItem("geuloqueUrl") || ""; 
-      const lastFetchDate = localStorage.getItem("lastFetchDate") || "";
-  
-      if (geuloqueUrl && lastFetchDate) {
-        const todayTitle = `${lastFetchDate} GeulRoquis`;
-        setImageSrc(geuloqueUrl);
-        setTitle(todayTitle); 
-      } else {
-        console.error("localStorage에서 필요한 값이 없습니다.");
-      }
-    }
-  }, [geuloquis]);
-
-  useEffect(() => {
-    if (editorType !== "edit" && !geuloquis) {
-      // 일반 글쓰기 모드 일때
-      const processEssayData = (id: string) => {
-        const storedData = JSON.parse(
-          localStorage.getItem("essayData") || "[]"
-        );
-        const entry = storedData.find((item: Essay) => item.id === id);
-        if (entry) {
-          setTitle(entry.title);
-          setValue(entry.value);
-          setBottomValue(entry.bottomValue);
-          setImageSrc(entry.imageSrc);
-        }
-      };
-      if (currentId) {
-        processEssayData(currentId);
-        localStorage.setItem("currentEssayId", currentId);
-      }
-    } 
-    
-    if(editorType === "edit" && !geuloquis){
-      getExistEssayDetail();
-    }
-  }, []);
+  // 태그가 저장되어있는지 아닌지 확인하는 state isTagSave,isLocationSave
 
   const getExistEssayDetail = async () => {
     try {
@@ -152,10 +115,100 @@ export const WriteEssay = () => {
       console.log("err", err);
     }
   };
+  // useEffect(() => {
+  //   // 글로키 전용
+  //   if (geuloquis) {
+  //     const geuloqueUrl = localStorage.getItem("geuloqueUrl") || "";
+  //     const lastFetchDate = localStorage.getItem("lastFetchDate") || "";
+  //     const pendignGeuloquis =
+  //       localStorage.getItem("pendingGeuloquis") || "false";
+
+  //     if (geuloqueUrl && lastFetchDate && pendignGeuloquis === "false") {
+  //       const todayTitle = `${lastFetchDate} GeulRoquis`;
+  //       setImageSrc(geuloqueUrl);
+  //       setTitle(todayTitle);
+  //     } else if (geuloqueUrl && lastFetchDate && pendignGeuloquis === "true") {
+  //       setImageSrc(null);
+  //     } else {
+  //       console.error("localStorage에서 필요한 값이 없습니다.");
+  //     }
+  //   }
+  // }, [geuloquis]);
 
   useEffect(() => {
     if (editorType !== "edit") {
-      // 일반 글쓰기 모드 일때 현재의 에세이 id를 가져와서 기존 저장된 에세이에 해당하는 id가 없으면 내용 추가하는 로직
+      if (geuloquis) {
+        // 글로키 이용해서 쓰러 왓을때
+        const lastFetchDate = localStorage.getItem("lastFetchDate") || "";
+        const pendignGeuloquis =
+          localStorage.getItem("pendingGeuloquis") || "false";
+        if (geuloqueUrl && lastFetchDate) {
+          // 글로키 보류인지 아닌지 판별
+          if (pendignGeuloquis === "false") {
+            const todayTitle = `${lastFetchDate} GeulRoquis`;
+            setImageSrc(geuloqueUrl);
+            setTitle(todayTitle);
+          }
+        } else if (
+          geuloqueUrl &&
+          lastFetchDate &&
+          pendignGeuloquis === "true"
+        ) {
+          setImageSrc(null);
+        }
+      } else {
+        // 일반 글쓰기 모드 일때 기존에 쓰던 글이 있는지 없는지 판별
+        const processEssayData = (id: string) => {
+          const storedData = JSON.parse(
+            localStorage.getItem("essayData") || "[]"
+          );
+          const entry = storedData.find((item: Essay) => item.id === id);
+          if (entry) {
+            setTitle(entry.title);
+            setValue(entry.value);
+            setBottomValue(entry.bottomValue);
+            setImageSrc(entry.imageSrc);
+          }
+        };
+        if (currentId) {
+          processEssayData(currentId);
+          localStorage.setItem("currentEssayId", currentId);
+        }
+      }
+    }
+
+    if (editorType === "edit") {
+      // 수정모드 일때
+      getExistEssayDetail();
+    }
+    // if (editorType !== "edit" && !geuloquis) {
+    //   // 일반 글쓰기 모드 일때
+    //   const processEssayData = (id: string) => {
+    //     const storedData = JSON.parse(
+    //       localStorage.getItem("essayData") || "[]"
+    //     );
+    //     const entry = storedData.find((item: Essay) => item.id === id);
+    //     if (entry) {
+    //       setTitle(entry.title);
+    //       setValue(entry.value);
+    //       setBottomValue(entry.bottomValue);
+    //       setImageSrc(entry.imageSrc);
+    //     }
+    //   };
+    //   if (currentId) {
+    //     processEssayData(currentId);
+    //     localStorage.setItem("currentEssayId", currentId);
+    //   }
+    // }
+
+    // if (editorType === "edit" && !geuloquis) {
+    //   // 수정모드 일때
+    //   getExistEssayDetail();
+    // }
+  }, []);
+  useEffect(() => {
+    if (editorType !== "edit") {
+      // 일반 글쓰기 모드 일때 현재의 에세이 id를 가져와서 기존 저장된 에세이에 해당하는 id가 없으면 내용 추가하는 로직 (자동저장 기능때문에)
       if (id) {
         const currentId = localStorage.getItem("currentEssayId");
         const essayData = JSON.parse(localStorage.getItem("essayData") || "[]");
@@ -232,6 +285,7 @@ export const WriteEssay = () => {
       setTitle("제목 없음");
       setValue("");
     } else {
+      // localStorage.setItem("geuloqueUrl", "");
       router.push("/web/main");
     }
   };
@@ -258,6 +312,7 @@ export const WriteEssay = () => {
       // setStep("write");
     }
   };
+
   const renderEditor = () => (
     <>
       <EditorContainer isBottomFieldVisible={isBottomFieldVisible}>
@@ -267,6 +322,7 @@ export const WriteEssay = () => {
           tagValue={bottomValue}
           setTagValue={setBottomValue}
           editorType={editorType ?? ""}
+          geuloqueUrl={geuloqueUrl}
         />
       </EditorContainer>
       {isBottomFieldVisible && (

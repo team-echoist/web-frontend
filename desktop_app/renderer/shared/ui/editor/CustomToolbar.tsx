@@ -93,7 +93,7 @@ const CustomToolbar = ({
   tagName: string;
   tagHandler: (name: string) => void;
   handleSave: () => void;
-  handleCustomFontSizeClick:()=> void;
+  handleCustomFontSizeClick:(event: React.MouseEvent)=> void;
 }) => {
   const [buttonStates, setButtonStates] = useState({
     bold: false,
