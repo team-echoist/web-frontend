@@ -8,7 +8,7 @@
   <img src="https://github.com/user-attachments/assets/5c6a6765-c49d-4d0d-b010-690721f4e491" alt="홍보용그래픽이미지4" width="45%">
 </p>
 
----
+
 
 ## 📌 팀의 목표
 
@@ -34,7 +34,7 @@
   **어드민**: 이 프로젝트의 어드민 패널은 **React** 기반으로, **MUI**의 오픈소스 어드민 템플릿을 활용하여 구현되었습니다.  
    어드민 패널은 고객 관리와 서비스 운영 관리를 효율적으로 수행할 수 있도록 설계되었으며, 사용자 친화적인 UI와 유연한 기능을 제공합니다. 이를 통해 관리자는 손쉽게 데이터를 확인하고, 서비스를 최적화하며, 사용자 경험을 지속적으로 개선할 수 있습니다. [어드민 바로가기](https://linkedout-umber.vercel.app/authentication/sign-in)
 
-  ***
+
 
   ## 🚀 주요 기능
 
@@ -75,15 +75,12 @@
   - **알람 설정**: 알람을 설정하고, 업데이트 기록 등을 확인할 수 있습니다.
   - **주간 링크드 아웃 지수**: 자신이 쓴 글의 개수를 일주일 간격으로 계산하여 그래프로 시각화할 수 있는 기능을 제공합니다.
 
----
-
 ## 🛠️ 기술 스택
 
 - **프로그래밍 언어**: TypeScript, JavaScript
 - **프레임워크**: React.js, Next.js, Node.js, NextronJs
 - **데이터베이스**: PostgreSQL
 
----
 
 ## 📖 설치 및 사용법
 
@@ -111,13 +108,10 @@
    주의: 사용 시 환경 변수(.env) 설정이 필요합니다. .관리자에게 문의 해주세요.
    npm version: `npm v20.X.X`
 
----
-
 ## 📧 문의하기
 
 프로젝트에 대한 문의는 *linkedoutapp@gmail.com* 또는 [이슈](https://github.com/team-echoist/web-frontend/issues)로 남겨주세요.
 
----
 
 ## 📝 라이선스
 
