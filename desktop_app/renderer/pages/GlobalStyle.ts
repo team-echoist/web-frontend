@@ -10,7 +10,7 @@ const slideUp = keyframes`
   }
 `;
 
-const GlobalStyleComponent = createGlobalStyle`
+const GlobalStyleComponent = createGlobalStyle<{ isAppleIdPage: boolean }>`
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -57,8 +57,7 @@ body{
 	height:100vh;
 	margin:auto;
   overflow-x: hidden;
-	background-color: ${({ theme, isAppleIdPage }) =>
-    isAppleIdPage ? "#FFFFFF" : theme.colors.background};
+	background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
 	display:flex;
 	justify-content: center;
