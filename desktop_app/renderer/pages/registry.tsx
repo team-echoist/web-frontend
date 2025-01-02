@@ -7,6 +7,7 @@ import GlobalStyleComponent from "./GlobalStyle";
 export default function StyledComponentsRegistry({ children }: { children: React.ReactNode }) {
   const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet());
 
+
   useServerInsertedHTML(() => {
     const styles = styledComponentsStyleSheet.getStyleElement();
     styledComponentsStyleSheet.instance.clearTag();
@@ -15,7 +16,7 @@ export default function StyledComponentsRegistry({ children }: { children: React
 
   if (typeof window !== "undefined") return (
     <>
-      <GlobalStyleComponent />
+      <GlobalStyleComponent/>
       {children}
     </>
   );

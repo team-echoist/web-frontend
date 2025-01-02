@@ -57,7 +57,8 @@ body{
 	height:100vh;
 	margin:auto;
   overflow-x: hidden;
-	background-color: ${({ theme }) => theme.colors.background};
+	background-color: ${({ theme, isAppleIdPage }) =>
+    isAppleIdPage ? "#FFFFFF" : theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
 	display:flex;
 	justify-content: center;

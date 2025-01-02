@@ -125,7 +125,7 @@ export const createWindow = (
     console.log("Notification clicked:", notification);
     win.webContents.send(
       "navigate-to",
-      notification.url || "http://localhost:8888/home"
+      notification.url || "app://./home"
     );
   });
 
