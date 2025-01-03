@@ -79,6 +79,7 @@ function VerificationField({ onRetry }: { onRetry: (type?: string) => void }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [deviceId, setDeviceId] = useState("");
   const [fcmToken, setFcmToken] = useState("");
+
   const setUser = useStore((state) => state.setUser);
   const router = useRouter();
 
@@ -101,6 +102,8 @@ function VerificationField({ onRetry }: { onRetry: (type?: string) => void }) {
         router.push("/web/termsofuse");
       } catch (err) {
         console.log("err", err);
+        router.push("/web/termsofuse");
+        // 실패해도 다음 로그인시 등록하면됨
       }
     }
   };
@@ -137,7 +140,7 @@ function VerificationField({ onRetry }: { onRetry: (type?: string) => void }) {
             "서버와의 연결에 문제가 발생했습니다. 다시 시도해 주세요."
           );
         }
-      }, 1000);
+      }, 500);
 
       return () => clearTimeout(timer);
     }
@@ -154,6 +157,7 @@ function VerificationField({ onRetry }: { onRetry: (type?: string) => void }) {
         {inputValues.map((value, index) => (
           <SmallInput
             key={index}
+            name={`input-${index}`}
             value={value}
             onChange={handleChange(index)}
             hasError={hasError}

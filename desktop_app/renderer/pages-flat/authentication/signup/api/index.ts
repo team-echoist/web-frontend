@@ -34,7 +34,6 @@ export const registerUser = async (code: string) => {
     localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("isOauth", "yes");
     const statusCode = response.data.statusCode;
-    console.log("statusCode",statusCode)
     return statusCode;
   } catch (err) {
     console.error("Error response:", err);
