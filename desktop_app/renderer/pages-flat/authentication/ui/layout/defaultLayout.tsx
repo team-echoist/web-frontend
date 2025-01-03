@@ -3,7 +3,7 @@ import styled from "styled-components";
 import LoginLogo from "@/shared/assets/img/login_logo.webp";
 import Image from "next/image";
 
-const Layout = styled.form`
+const Layout = styled.main`
   width: 442px;
   height: 100%;
   margin: auto;
@@ -18,21 +18,9 @@ const LoginLogoWrapper = styled.div`
   height: 333.002px;
 `;
 
-function DefaultLayout({
-  children,
-  onSubmit,
-}: {
-  children: React.ReactNode;
-  onSubmit?: (event: React.FormEvent) => void;
-}) {
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault(); 
-    if (onSubmit) {
-      onSubmit(event); 
-    }
-  };
+function DefaultLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Layout onSubmit={handleSubmit}>
+    <Layout>
       <LoginLogoWrapper>
         <Image
           src={LoginLogo}

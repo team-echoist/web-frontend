@@ -148,7 +148,8 @@ export const Login = () => {
   const isValidButton =
     infoData.id.value.length > 0 && infoData.password.value.length > 0;
 
-  const submitLogin = async () => {
+  const submitLogin = async  (event: KeyboardEvent | React.MouseEvent)  => {
+    event.preventDefault();
     setIsShowToast(false);
     const body = {
       email: infoData.id.value,
@@ -185,12 +186,25 @@ export const Login = () => {
       setIsShowResetPassword((prev) => !prev);
     }
   };
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' && isValidButton) {
+        submitLogin(event);
+      }
+    };
+  
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isValidButton, submitLogin]);
   return (
     <>
       {loading && <Loading />}
       {/* <PrevButton /> */}
       {isShowResetPassword && <ResetPassword modalHandler={modalHandler} />}
-      <DefaultLayout onSubmit={submitLogin}>
+      <DefaultLayout>
         {isShowToast && (
           <GeneralToast
             title="로그인에 실패 했습니다."
