@@ -153,7 +153,7 @@ function Banner() {
         (option) => option.label === selectedValue
       );
       const { value } = selectedOption[0];
-
+      
       const { data } = await getSentence(value);
       const parsedData = parseDataToChips(data);
       setSentence(parsedData);
@@ -178,7 +178,8 @@ function Banner() {
   };
 
   const navigateToDetails = (id: number, status: string) => {
-    router.push(`/web/essay_details?id=${id}&pageType=${status}`);
+    const changeStatus = status ==="linkedout" ?"recommend":status
+    router.push(`/web/essay_details?id=${id}&pageType=${changeStatus}`);
   };
 
   return (

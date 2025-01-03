@@ -190,7 +190,7 @@ export const Login = () => {
       {loading && <Loading />}
       {/* <PrevButton /> */}
       {isShowResetPassword && <ResetPassword modalHandler={modalHandler} />}
-      <DefaultLayout>
+      <DefaultLayout onSubmit={submitLogin}>
         {isShowToast && (
           <GeneralToast
             title="로그인에 실패 했습니다."
