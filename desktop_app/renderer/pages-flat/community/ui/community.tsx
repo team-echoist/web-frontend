@@ -20,6 +20,8 @@ import { getFollows } from "@/shared/api";
 import { Users } from "@/shared/types";
 import { deleteFollow } from "@/shared/api";
 import { postFollows } from "@/shared/api";
+import { getBookmarks } from "@/shared/api/bookmark";
+
 
 const Layout = styled.main`
   width: 100vw;
@@ -70,6 +72,7 @@ const BtnDiv = styled.div`
 const ModalContainer = styled.div`
   padding-top: 49px;
 `;
+
 function community() {
   const tab = ["랜덤", "구독"];
   const [activeTab, setActiveTab] = useState(0);
@@ -85,6 +88,7 @@ function community() {
   const [isShowConfirm, setShowConfirm] = useState(false);
   const [follows, setFollows] = useState<Users>([]);
   const [selectedFollowId, setSelectedFollowId] = useState<null | number>(null);
+
 
   const handleTapFollowId = (id: number) => {
     setSelectedFollowTapId(id);
@@ -131,8 +135,8 @@ function community() {
   const deleteSavedEssays = async (ids: number[]) => {
     try {
       const { status } = await allEssayDelete(ids);
-      if (status === 200) {
-        toastHandler("저장된글 수정에 성공했습니다.", false);
+      if (status === 200 || status === 201) {
+        toastHandler("선택한 글을 삭제했습니다.", false);
       } else {
         toastHandler("에세이 삭제에 실패했습니다.", true);
       }

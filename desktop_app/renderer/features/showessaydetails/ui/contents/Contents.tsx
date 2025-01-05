@@ -133,7 +133,11 @@ function Contents({
   // private일때 api
   const getEssayList = async () => {
     try {
-      if (pageType === "public" ||pageType === "published") {
+      if (
+        pageType === "public" ||
+        pageType === "published" ||
+        pageType === "recommend"
+      ) {
         const { data } = await getRandomEssays();
         setEssay(data);
         setTotalPage(4);
@@ -205,7 +209,9 @@ function Contents({
         return (
           <Pagination totalPages={totalPage} onPageChange={handlePageChange} />
         );
-      case pageType === "public" || pageType === "published":
+      case pageType === "public" ||
+        pageType === "published" ||
+        pageType === "recommend":
         return <IndicatorBar step={step} onClick={handleIndicatorPageChange} />;
       default:
         return null;

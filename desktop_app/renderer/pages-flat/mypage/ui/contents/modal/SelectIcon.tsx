@@ -74,6 +74,7 @@ function SelectIcon() {
   const handleSelectImageClick = () => {
     fileInputRef.current?.click();
   };
+  console.log("user",user)
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -88,7 +89,8 @@ function SelectIcon() {
       formData.append("image", file);
       try {
         const { status, data } = await postImages(formData);
-        if (status === 200||status === 201) {
+        // 처음 프로필 바꾸는 로직 이후 프로필이미지 바꾸는 api로 교체해야됨
+        if (status === 200 || status === 201) {
           const body = {
             profileImage: data.imageUrl,
           };

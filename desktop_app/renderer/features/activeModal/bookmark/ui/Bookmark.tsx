@@ -98,7 +98,7 @@ function Bookmark({ deleteSavedEssays, modalHandler }: BookmarkProps) {
 
   useEffect(() => {
     fetchBookmarks();
-  }, [deleteSavedEssays]);
+  }, []);
 
   const fetchBookmarks = async () => {
     try {
@@ -199,13 +199,15 @@ function Bookmark({ deleteSavedEssays, modalHandler }: BookmarkProps) {
       {isEdit && (
         <BtnDiv>
           <Button
-            text={`총 ${selectedItems?.length}개 모으기`}
+            text={`총 ${selectedItems?.length}개 삭제`}
             type={selectedItems?.length > 0 ? "point" : "disable"}
             onClick={
               selectedItems?.length > 0
-                ? () => {
-                    deleteSavedEssays(selectedItems);
+                ? async () => {
+                    await deleteSavedEssays(selectedItems);
+                    setList([]);
                     setSelectedItems([]);
+                    await fetchBookmarks();
                   }
                 : undefined
             }
