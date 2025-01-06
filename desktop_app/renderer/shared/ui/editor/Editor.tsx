@@ -57,6 +57,8 @@ const ThumbnailContainer = styled.div`
   justify-content: center;
   padding: 0px 147px;
   position: relative;
+  height: 460px;
+  margin: 0 147px;
 `;
 const ThumbnailEditBtn = styled.button`
   width: 57px;
@@ -68,7 +70,7 @@ const ThumbnailEditBtn = styled.button`
   box-shadow: none;
   position: absolute;
   top: 35px;
-  right: 13%;
+  right: 20px;
   z-index: 1;
   background-color: ${color.pointcolor};
   color: ${color.white};
@@ -343,12 +345,7 @@ function Editor({
           <ThumbnailEditBtn onClick={handleImageUploadClick}>
             변경
           </ThumbnailEditBtn>
-          <Image
-            src={thumbnailImage}
-            alt="Thumbnail"
-            width={editorWidth}
-            height={460}
-          />
+          <Image src={thumbnailImage} alt="Thumbnail" fill />
         </ThumbnailContainer>
       )}
       <ReactQuill
