@@ -16,10 +16,24 @@ import color from "@/shared/styles/color";
 import { GeneralToast } from "../toast";
 import { MiniToast } from "../toast";
 import { useSearchParams } from "next/navigation";
+import ShrinkingBtnArrow from "@/shared/assets/img/editor/shrinking.svg";
 
 const EditorDiv = styled.div`
   position: relative;
-
+  .ql-editor p,
+  .ql-editor ol,
+  .ql-editor ul,
+  .ql-editor pre,
+  .ql-editor blockquote,
+  .ql-editor h1,
+  .ql-editor h2,
+  .ql-editor h3,
+  .ql-editor h4,
+  .ql-editor h5,
+  .ql-editor h6 {
+    padding: 2px !important;
+    font-size: 14px;
+  }
   .ql-snow .ql-editor strong {
     font-weight: bold !important;
   }
@@ -76,7 +90,21 @@ const ThumbnailEditBtn = styled.button`
   color: ${color.white};
   cursor: pointer;
 `;
-
+const ShrinkageBtn = styled.button`
+  all: unset;
+  border-radius: 45px;
+  background: #fff;
+  box-shadow: 0.1px 0.1px 5px 0px rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+`;
+const ShrinkingDiv = styled.div`
+  width: 100%;
+  height: 50px;
+`;
 const sizeMap = {
   small: "10px",
   default: "13px",
@@ -120,6 +148,7 @@ function Editor({
   const [isMiniModalOpen, setIsMiniModalOpen] = useState(false);
   const [isTextSizeOpen, setIsTextSizeOpen] = useState(false);
   const [isShowToastOpen, setIsShowToastOpen] = useState(false);
+  const [isShrinkOpen, setIsShrinkOpen] = useState(false);
   let tempThumbnail = localStorage.getItem("tempThumbnail");
   const searchParams = useSearchParams();
   const geuloquis = searchParams.get("geuloquis");
@@ -321,6 +350,9 @@ function Editor({
       active: prevState.active === name ? "" : name,
     }));
   };
+  const handleShrink = () => {
+    setIsShrinkOpen((prev) => !prev);
+  };
   return (
     <EditorDiv>
       <MiniToast
@@ -333,13 +365,24 @@ function Editor({
         isShowToast={isShowToastOpen}
         setIsShowToast={setIsShowToastOpen}
       />
-      <CustomToolBar
-        isModalOpen={isModalOpen}
-        tagName={tagValue.active}
-        tagHandler={tagHandler}
-        handleSave={handleSave}
-        handleCustomFontSizeClick={handleCustomFontSizeClick}
-      />
+      {isShrinkOpen ? (
+        <ShrinkingDiv>
+          <ShrinkageBtn onClick={handleShrink}>
+            <ShrinkingBtnArrow />
+          </ShrinkageBtn>
+        </ShrinkingDiv>
+      ) : (
+        <CustomToolBar
+          isModalOpen={isModalOpen}
+          tagName={tagValue.active}
+          tagHandler={tagHandler}
+          handleSave={handleSave}
+          handleCustomFontSizeClick={handleCustomFontSizeClick}
+          handleShrink={handleShrink}
+          isShrinkOpen={isShrinkOpen}
+        />
+      )}
+
       {thumbnailImage && (
         <ThumbnailContainer>
           <ThumbnailEditBtn onClick={handleImageUploadClick}>

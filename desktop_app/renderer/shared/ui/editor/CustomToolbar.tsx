@@ -14,8 +14,8 @@ import ImageHover from "@/shared/assets/img/editor/image.webp";
 import TagIcon from "@/shared/assets/img/editor/tag_basic.webp";
 import TagHover from "@/shared/assets/img/editor/tag.webp";
 import SavedIcon from "@/shared/assets/img/editor/saved_basic.webp";
-import styled from "styled-components";
-import NextBtn from "@/shared/assets/img/editor/next.svg";
+import styled, { keyframes } from "styled-components";
+import ShrinkageBtn from "@/shared/assets/img/editor/next.svg";
 import Stroke from "@/shared/assets/img/editor/stroke.svg";
 import color from "@/shared/styles/color";
 import { useStore } from "@/shared/store";
@@ -35,6 +35,21 @@ const Container = styled.div`
     outline: none;
     cursor: pointer;
   }
+`;
+const fadeOutToRight = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+`;
+
+const AnimatedContainer = styled(Container)<{ isShrinkOpen: boolean }>`
+  animation: ${({ isShrinkOpen }) =>
+    isShrinkOpen ? fadeOutToRight : "none"} 0.5s ease-in-out forwards;
 `;
 const Img = styled.img`
   width: 30px;
@@ -60,6 +75,9 @@ const SaveBtnDiv = styled.div`
   position: absolute;
   right: 30px;
   top: 0px;
+  .shrink{
+   cursor: pointer;
+  }
 `;
 const SaveBtn = styled.button`
   background: none;
@@ -87,13 +105,17 @@ const CustomToolbar = ({
   tagName,
   tagHandler,
   handleSave,
-  handleCustomFontSizeClick
+  handleCustomFontSizeClick,
+  handleShrink,
+  isShrinkOpen
 }: {
   isModalOpen: boolean;
   tagName: string;
   tagHandler: (name: string) => void;
   handleSave: () => void;
   handleCustomFontSizeClick:(event: React.MouseEvent)=> void;
+  handleShrink:() =>void;
+  isShrinkOpen: boolean;
 }) => {
   const [buttonStates, setButtonStates] = useState({
     bold: false,
@@ -119,7 +141,7 @@ const CustomToolbar = ({
   };
 
   return (
-    <Container id="toolbar">
+    <AnimatedContainer id="toolbar" isShrinkOpen={isShrinkOpen}>
       <IconDiv>
         <Button
           className="ql-customFontSize"
@@ -216,9 +238,9 @@ const CustomToolbar = ({
       <SaveBtnDiv>
         <SaveBtn onClick={handleSave}>저장</SaveBtn>
         <Stroke />
-        <NextBtn />
+        <ShrinkageBtn className="shrink" onClick={handleShrink}/>
       </SaveBtnDiv>
-    </Container>
+    </AnimatedContainer>
   );
 };
 export default CustomToolbar;
