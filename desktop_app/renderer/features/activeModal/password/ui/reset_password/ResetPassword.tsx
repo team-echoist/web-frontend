@@ -60,7 +60,7 @@ const H1 = styled.h1`
   font-weight: 700;
   line-height: 150%;
   position: fixed;
-  left: 70px;
+  left: 80px;
   top: 32px;
 `;
 const BtnDiv = styled.div`
@@ -123,7 +123,7 @@ function ResetPassword({
           modalHandler("resetPassword");
         }}
       ></PrevButton>
-      <H1>비밀번호 재설정</H1>
+
       <GeneralToast
         title="입력하신 이메일 주소로 임시 비밀번호가 발송됐습니다."
         desc="임시 비밀번호로 로그인 후, 비밀번호를 변경하세요."
@@ -143,6 +143,7 @@ function ResetPassword({
       </ToastContainer>
       <Layout>
         <Wrapper>
+          <H1>비밀번호 재설정</H1>
           <Span>가입 시 사용한 이메일 주소를 입력해주세요.</Span>
           <Span>비밀번호를 다시 설정할 수 있는 링크를 보내드릴게요.</Span>
           <InputDiv>

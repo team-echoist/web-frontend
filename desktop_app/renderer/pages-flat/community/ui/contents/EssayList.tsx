@@ -47,7 +47,7 @@ const ContentsContainer = styled.div`
   align-items: center;
   flex-direction: column;
   padding-bottom: 50px;
-  margin-top: 19px;
+  // margin-top: 19px;
 `;
 function EssayList({
   isRandomEssay,

@@ -35,9 +35,9 @@ const P = styled.p`
   line-height: 170%;
 `;
 const ContentDiv = styled.div`
-  margin-top: 20px;
+  // margin-top: 20px;
   width: 100%;
-  height: 500px;
+  height: 470px;
   overflow: hidden;
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   position: relative;
@@ -84,16 +84,22 @@ const Chip = styled.div<{
 `;
 const Span = styled.span<{
   color?: string;
-  isRight: boolean;
+  isEnd: boolean;
   expanded: boolean;
+  firstleft: string;
+  isMiddle: boolean;
 }>`
-  width: 80%;
+  width: ${({ isMiddle, expanded }) => (isMiddle && !expanded ? "60%" : "80%")};
   height: 100%;
   display: flex;
   align-items: center;
   position: absolute;
-  ${({ isRight, expanded }) =>
-    isRight && !expanded ? "right: 20px;" : "left: 20px;"};
+  ${({ isEnd, expanded, isMiddle, firstleft }) =>
+    isEnd && !expanded
+      ? `right: ${firstleft}`
+      : isMiddle && !expanded
+      ? `left:${firstleft}`
+      : "left: 20px;"};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -101,7 +107,7 @@ const Span = styled.span<{
 `;
 const ContentItemDiv = styled.div`
   width: 100%;
-  height: 80px;
+  height: 76px;
   display: flex;
 `;
 const ChipContainer = styled.div`
@@ -153,7 +159,7 @@ function Banner() {
         (option) => option.label === selectedValue
       );
       const { value } = selectedOption[0];
-      
+
       const { data } = await getSentence(value);
       const parsedData = parseDataToChips(data);
       setSentence(parsedData);
@@ -178,7 +184,7 @@ function Banner() {
   };
 
   const navigateToDetails = (id: number, status: string) => {
-    const changeStatus = status ==="linkedout" ?"recommend":status
+    const changeStatus = status === "linkedout" ? "recommend" : status;
     router.push(`/web/essay_details?id=${id}&pageType=${changeStatus}`);
   };
 
@@ -223,10 +229,12 @@ function Banner() {
                     >
                       <Span
                         color={chip.textColor}
-                        isRight={chipIndex === 1 || chipIndex === 2}
+                        isEnd={chipIndex === 2}
                         expanded={
                           expandedChipIndices[groupIndex + 1] === chipIndex
                         }
+                        firstleft={chip.firstLeft}
+                        isMiddle={chipIndex === 1}
                       >
                         {chip.text}
                       </Span>

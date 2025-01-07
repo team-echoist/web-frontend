@@ -15,8 +15,8 @@ function EssayDetail() {
     <>
       <CompleteModal completedType={completedType?completedType:null}/>
       <ShowEssayDetails
-        pageType={pageType ?? "public"}
-        essayId={essayId ? Number(essayId) : 2643}
+        pageType={pageType ?? "published"}
+        essayId={essayId ? Number(essayId) : 0}
         storyId={Number(storyId)}
       />
     </>

@@ -32,7 +32,7 @@ const Layout = styled.main`
 `;
 const Container = styled.div<{ activeTab: number }>`
   width: calc(100vw - 270px);
-  height: ${({ activeTab }) => (activeTab === 1 ? "" : "696px")};
+  height: ${({ activeTab }) => (activeTab === 1 ? "" : "656px")};
   flex-shrink: 0;
   background: ${({ activeTab }) => (activeTab === 1 ? "none" : "#d9d9d9")};
   position: absolute;
