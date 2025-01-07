@@ -406,7 +406,7 @@ function Editor({
         style={{ display: "none" }}
         onChange={handleImageChange}
       />
-      {isTextSizeOpen && (
+      {isTextSizeOpen &&!isShrinkOpen&& (
         <SelectText option={sizeOptions} applyFontSize={applyFontSize} />
       )}
     </EditorDiv>

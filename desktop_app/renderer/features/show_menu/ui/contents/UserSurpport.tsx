@@ -12,7 +12,7 @@ const Layout = styled.nav`
 `;
 const Ul = styled.ul`
   list-style: none;
-  width: 100%;
+  width:  93%;
 `;
 const Li = styled.li<{ isLinkStyle?: boolean }>`
   width: 100%;
@@ -30,6 +30,7 @@ const Li = styled.li<{ isLinkStyle?: boolean }>`
   background: #111;
   margin-left: 32px;
   cursor: pointer;
+  position:relative;
   span {
     border-bottom: ${({ isLinkStyle }) =>
       isLinkStyle ? `1px solid ${color.white}` : "none"};
@@ -38,23 +39,23 @@ const Li = styled.li<{ isLinkStyle?: boolean }>`
 `;
 const SupportBtn = styled.button`
   all: unset;
-  position: fixed;
-  right: 28px;
-  top: 130px;
+  position: absolute;
+right: 95px;
+  top: 20px;
   cursor: pointer;
 `;
 const NoticeBtn = styled.button`
   all: unset;
-  position: fixed;
-  right: 28px;
-  top: 190px;
+  position: absolute;
+ right: 95px;
+  top: 20px;
   cursor: pointer;
 `;
 const LawBtn = styled.button<{ isRotated?: boolean }>`
   all: unset;
-  position: fixed;
-  right: 28px;
-  top: 255px;
+  position: absolute;
+  right: 95px;
+  top: 20px;
   cursor: pointer;
   transition: transform 0.3s ease; /* Smooth rotation */
   transform: ${({ isRotated }) =>
