@@ -1,17 +1,17 @@
-// 링크드아웃 운영정책
+// 위치 기반 서비스 이용 약관
 import React from "react";
-import Section from "../../_components/Policy/Section";
-import policiesData from "../../data/policiesData";
-import PoliciesFooter from "../../_components/Policy/PoliciesFooter";
+import Section from "../../components/Policy/Section";
+import PoliciesFooter from "../../components/Policy/PoliciesFooter";
+import locationTermsData from "../../data/locationTermsData";
 
-const Index = () => {
+const LocationTermsPage = () => {
   return (
     <>
       <h1 className="text-3xl text-center font-black mt-16 sm:mt-20 sm:text-4xl">
-        링크드아웃 운영정책
+        위치 기반 서비스 이용 약관
       </h1>
       <div className="policies-container">
-        {policiesData.map((policy, index) => (
+        {locationTermsData.map((policy, index) => (
           <Section
             key={index}
             title={policy.title}
@@ -26,4 +26,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default LocationTermsPage;
