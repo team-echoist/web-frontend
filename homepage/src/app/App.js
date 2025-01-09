@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import routes from "./routes";
+import ScrollTopBtn from "../shared/scroll/scrollTop";
 function ScrollToTop() {
   const location = useLocation();
 
@@ -19,6 +20,7 @@ function ScrollToTop() {
 function App() {
   return (
     <Router>
+      <ScrollTopBtn />
       <ScrollToTop />
       <Routes>
         {routes.map((route, index) => {

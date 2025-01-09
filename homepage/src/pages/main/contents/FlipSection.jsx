@@ -1,43 +1,7 @@
 import React from "react";
 
 function FlipSection() {
-  const services = [
-    {
-      step: "01",
 
-      name: "Diagnostics",
-
-      imageUrl:
-        "https://images.unsplash.com/photo-1632733711679-529326f6db12?q=80&amp;w=2940&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-
-      description:
-        "State-of-the-art diagnostics to accurately identify vehicle issues.",
-    },
-
-    {
-      step: "02",
-
-      name: "Repairs",
-
-      imageUrl:
-        "https://images.unsplash.com/photo-1687462970787-61d953508926?q=80&amp;w=3087&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-
-      description:
-        "Engine overhauls to brake replacements, we ensure high-quality work for your vehicle’s longevity.",
-    },
-
-    {
-      step: "03",
-
-      name: "Maintenance",
-
-      imageUrl:
-        "https://images.unsplash.com/photo-1635437536607-b8572f443763?q=80&amp;w=2940&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-
-      description:
-        "Oil changes, tire rotations, and more to enhance performance and prevent future issues.",
-    },
-  ];
 
   return (
     <>

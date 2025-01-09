@@ -4,14 +4,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FlipSection from "./contents/FlipSection";
 
-const hiddenImagesPath = [
-  "/images/mainpage/hideimages/1.webp",
-  "/images/mainpage/hideimages/2.webp",
-  "/images/mainpage/hideimages/3.webp",
-  "/images/mainpage/hideimages/4.webp",
-  "/images/mainpage/hideimages/5.webp",
-  "/images/mainpage/hideimages/6.webp",
-];
 
 // 메인 페이지
 function MainPage() {
