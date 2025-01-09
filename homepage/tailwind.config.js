@@ -15,6 +15,18 @@ module.exports = {
         darkgray: "#121212",
         red: "#E43446",
       },
+      perspective: {
+        '1000': '1000px',
+      },
+      transformStyle: {
+        'preserve-3d': 'preserve-3d',
+      },
+      rotate: {
+        '360': '360deg',
+      },
+      backfaceVisibility: {
+        hidden: 'hidden',
+      },
     },
   },
   plugins: [   function ({ addUtilities }) {

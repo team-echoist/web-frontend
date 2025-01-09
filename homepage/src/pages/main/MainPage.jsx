@@ -2,6 +2,16 @@ import Header from "../../shared/header/Header";
 import GeneralButton from "../../shared/button/GeneralButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import FlipSection from "./contents/FlipSection";
+
+const hiddenImagesPath = [
+  "/images/mainpage/hideimages/1.webp",
+  "/images/mainpage/hideimages/2.webp",
+  "/images/mainpage/hideimages/3.webp",
+  "/images/mainpage/hideimages/4.webp",
+  "/images/mainpage/hideimages/5.webp",
+  "/images/mainpage/hideimages/6.webp",
+];
 
 // 메인 페이지
 function MainPage() {
@@ -52,7 +62,12 @@ function MainPage() {
               </p>
             </div>
           </GeneralButton>
-          <GeneralButton>
+          <GeneralButton
+            onClick={() =>
+              (window.location.href =
+                "https://play.google.com/store/apps/details?id=com.echoist.linkedout&hl=ko&pli=1")
+            }
+          >
             <img
               src={"/images/mainpage/button/playstore-web.webp"}
               alt="google_logo"
@@ -95,6 +110,7 @@ function MainPage() {
             )}
           </div>
         </div>
+
         <div className="absolute top-[38px] left-[6%] w-[1478px]">
           <img
             src={"/images/mainpage/mockup.png"}
@@ -124,59 +140,7 @@ function MainPage() {
           </div>
         </div>
       </section>
-
-      <section>
-        <div className="flex ml-[366px] mt-[83.09px]">
-          <div className="mr-8">
-            <img src={"/images/mainpage/section_1.svg"} alt="section_1" />
-            <div className="mt-[9px] mb-[28px]">
-              <span className="text-[#616FED] mr-[5px]">01</span>
-              <span>쓰는 즐거움을 찾아서, 워밍업 글로키</span>
-            </div>
-          </div>
-          <div>
-            <img src={"/images/mainpage/section_2.svg"} alt="section_2" />
-            <div className="mt-[9px] mb-[28px]">
-              <span className="text-[#616FED] mr-[5px]">02</span>
-              <span>글 맞춤형 옵션 선택</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex ml-[366px]">
-          <div className="mr-8">
-            <img src={"/images/mainpage/section_3.svg"} alt="section_3" />
-            <div className="mt-[9px] mb-[28px]">
-              <span className="text-[#616FED] mr-[5px]">03</span>
-              <span>쓸수록 가까워지는 나와의 거리, 감정 해시태그</span>
-            </div>
-          </div>
-          <div>
-            <img src={"/images/mainpage/section_4.svg"} alt="section_4" />
-            <div className="mt-[9px] mb-[28px]">
-              <span className="text-[#616FED] mr-[5px]">04</span>
-              <span>나만의 스토리로 만든 에세이 모음집</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex ml-[366px] ">
-          <div className="mr-8">
-            <img src={"/images/mainpage/section_5.svg"} alt="section_5" />
-            <div className="mt-[9px] mb-[28px]">
-              <span className="text-[#616FED] mr-[5px]">05</span>
-              <span>링크드아웃한 문장을 모은 읽기 커뮤니티</span>
-            </div>
-          </div>
-          <div>
-            <img src={"/images/mainpage/section_6.svg"} alt="section_6" />
-            <div className="mt-[9px] mb-[28px]">
-              <span className="text-[#616FED] mr-[5px]">06</span>
-              <span>내가 만들고 내가 즐기는 DIY 버츄얼 서재</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FlipSection></FlipSection>
       <section className="w-full h-[518px] bg-[#616FED] text-black mt-[317px] pl-[367.18px] pt-[114px]">
         <p className="font-semibold text-[#121212] text-[39px] tracking-[-1.17px] leading-[62.5px] whitespace-nowrap">
           글쓰기 섬, 링크드아웃
