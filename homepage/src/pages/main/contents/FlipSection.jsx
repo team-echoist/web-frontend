@@ -45,17 +45,6 @@ function FlipSection() {
       <section>
         <div className="flex ml-[366px] mt-[83.09px]">
           <div className="mr-8">
-            {/* <div>
-              <div>
-                <img src={"/images/mainpage/section_1.svg"} alt="section_1" />
-              </div>
-              <div>
-              <img
-                src={"/images/mainpage/hideimages/1.webp"}
-                alt="section_1_back"
-              />
-            </div>
-            </div> */}
             <div className="group h-96 w-96 [perspective:1000px]">
               <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
@@ -86,7 +75,6 @@ function FlipSection() {
           </div>
 
           <div className="ml-[200px]">
-            {/* <img src={"/images/mainpage/section_2.svg"} alt="section_2" /> */}
             <div className="group h-96 w-96 [perspective:1000px]">
               <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
@@ -119,7 +107,6 @@ function FlipSection() {
 
         <div className="flex ml-[366px]">
           <div className="mr-8">
-            {/* <img src={"/images/mainpage/section_3.svg"} alt="section_3" /> */}
             <div className="group h-96 w-96 [perspective:1000px]">
               <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
@@ -181,7 +168,6 @@ function FlipSection() {
 
         <div className="flex ml-[366px] ">
           <div className="mr-8">
-            {/* <img src={"/images/mainpage/section_5.svg"} alt="section_5" /> */}
             <div className="group h-96 w-96 [perspective:1000px]">
               <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
@@ -211,7 +197,6 @@ function FlipSection() {
             </div>
           </div>
           <div className="ml-[200px]">
-            {/* <img src={"/images/mainpage/section_6.svg"} alt="section_6" /> */}
             <div className="group h-96 w-96 [perspective:1000px]">
               <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
