@@ -39,7 +39,6 @@ const Header = () => {
         </Link>
         <Link
           to="/premium"
-          onClick={handlePremiumClick}
           className={linkClasses("/premium")}
         >
           Premium

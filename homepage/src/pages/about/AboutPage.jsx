@@ -9,7 +9,7 @@ const AboutPage = () => {
         <img
           src={"/images/aboutpage/linkedout_banner.gif"}
           alt="linkedout_banner"
-          className="mt-[150px]"
+          className="mt-[150px] w-full"
         />
         <section className="mt-[156px]  flex justify-center items-center">
           {/* 메인 텍스트 */}
