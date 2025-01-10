@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import Header from "../../shared/header/Header";
+import Footer from "../../shared/footer/Footer";
 
 const AboutPage = () => {
   return (
@@ -147,12 +147,7 @@ const AboutPage = () => {
             />
           </div>
         </article>
-        <section className="flex justify-between text-[#323232] font-pretendard text-xs font-normal leading-[150%] underline mt-[245px] mb-10">
-          <Link className="mr-[12px]" to="/operational-policy">운영정책</Link>
-          <Link className="mr-[12px]" to="/terms">이용약관</Link>
-          <Link className="mr-[12px]" to="/privacy-policy">개인정보처리방침</Link>
-          <Link to="/location-terms">위치기반서비스 이용약관</Link>
-        </section>
+        <Footer></Footer>
       </div>
     </div>
   );
