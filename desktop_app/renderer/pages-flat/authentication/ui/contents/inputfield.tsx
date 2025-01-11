@@ -76,14 +76,14 @@ const InputField: React.FC<InputFieldProps> = ({
           )}
           {error && error[key as keyof ErrorType] && key === "password" && (
             <ErrorMsg>
-              비밀번호는 영문, 특수문자, 숫자 포함 8~12자를 조합해 주세요.
+              비밀번호는 영문 대 소문자, 특수문자, 숫자 포함 8~12자를 조합해 주세요.
             </ErrorMsg>
           )}
         </React.Fragment>
       ))}
 
       {isValidateText && !error?.password ? (
-        <P>비밀번호는 영문, 특수문자, 숫자 포함 8~12자를 조합해 주세요.</P>
+        <P>비밀번호는 영문 대소문자, 특수문자, 숫자 포함 8~12자를 조합해 주세요.</P>
       ) : null}
     </Layout>
   );

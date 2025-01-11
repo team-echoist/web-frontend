@@ -226,7 +226,7 @@ function ShowEssayDetails({
         <Article
           title={essay?.title ?? "제목 없음"}
           desc={essay?.content ?? "내용 없음"}
-          date={essay?.updatedDate ?? "2024-09-27T15:18:00.164+09:00"}
+          date={essay?.createdDate ?? "2024-09-27T15:18:00.164+09:00"}
           userName={essay?.author?.nickname ?? "링크드아웃아무개"}
           imgUrl={essay?.thumbnail}
           handleBookmarkClick={handleBookmarkClick}

@@ -61,7 +61,8 @@ export const Login = () => {
   const searchParams = useSearchParams();
   const token =
     (searchParams.get("accessToken") && searchParams.get("refreshToken")) ||
-    (localStorage.getItem("accessToken") && localStorage.getItem("refreshToken")) ||
+    (localStorage.getItem("accessToken") &&
+      localStorage.getItem("refreshToken")) ||
     (sessionStorage.getItem("accessToken") &&
       sessionStorage.getItem("refreshToken"));
 
@@ -135,10 +136,9 @@ export const Login = () => {
 
   useEffect(() => {
     const handleLogin = async () => {
-
       if (token) {
-          await handleUserInfo();
-          // 로컬 로그인의 경우이면서 이미 자동로그인 체크한 상태
+        await handleUserInfo();
+        // 로컬 로그인의 경우이면서 이미 자동로그인 체크한 상태
       }
     };
 
@@ -148,7 +148,8 @@ export const Login = () => {
   const isValidButton =
     infoData.id.value.length > 0 && infoData.password.value.length > 0;
 
-  const submitLogin = async () => {
+  const submitLogin = async (event: KeyboardEvent | React.MouseEvent) => {
+    event.preventDefault();
     setIsShowToast(false);
     const body = {
       email: infoData.id.value,
@@ -157,8 +158,8 @@ export const Login = () => {
     try {
       const statusCode = await localLogin(body, autoLoginCheck);
       if (statusCode === 200 || statusCode === 201) {
-        //메인페이지 로컬회원가입의 경우 회원가입후 디바이스가 등록됨
-        redirectToPage(false);
+        await handleUserInfo();
+        // redirectToPage(false);
       }
     } catch (err) {
       console.log("err", err);
@@ -185,10 +186,23 @@ export const Login = () => {
       setIsShowResetPassword((prev) => !prev);
     }
   };
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter" && isValidButton) {
+        submitLogin(event);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isValidButton, submitLogin]);
   return (
     <>
       {loading && <Loading />}
-      <PrevButton />
+      {/* <PrevButton /> */}
       {isShowResetPassword && <ResetPassword modalHandler={modalHandler} />}
       <DefaultLayout>
         {isShowToast && (

@@ -19,6 +19,14 @@ export default function HomeClient() {
   const setUser = useStore((state) => state.setUser);
   const router = useRouter();
 
+  const redirectToPage = (isFirstLogin: boolean) => {
+    if (isFirstLogin) {
+      router.push("/web/termsofuse");
+    } else {
+      router.push("/web/main");
+    }
+  };
+
   const handleUserInfo = async () => {
     try {
       let newDeviceId: string | undefined;
@@ -96,13 +104,7 @@ export default function HomeClient() {
     }
   };
 
-  const redirectToPage = (isFirstLogin: boolean) => {
-    if (isFirstLogin) {
-      router.push("/web/termsofuse");
-    } else {
-      router.push("/web/main");
-    }
-  };
+
 
   const handleLogin = async (accessToken: string, refreshToken: string) => {
     try {

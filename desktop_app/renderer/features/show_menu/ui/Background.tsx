@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Layout = styled.div`
-  width: 59.24vw;
+  width: 100%;
   height: 100%;
   position: fixed;
   left: 636px;

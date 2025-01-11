@@ -11,6 +11,10 @@ import { ActiveSideBar } from "@/features/activesidebar";
 import { Geuloquis } from "@/features/activeGeulroquis";
 import { getGeuloquis } from "@/shared/api/home";
 import Bulb from "@/shared/assets/img/geuloquis/GeulRoquis_bulb.gif";
+import { Update } from "@/features/activeUpdateModal";
+import { getLatestReleases } from "@/shared/api/update";
+import { NoticeModal } from "@/features/activeNoticeModal";
+import { getNotices } from "@/shared/api/notice";
 
 const StyledWriteButton = styled(WriteButtonSVG)`
   position: absolute;
@@ -45,10 +49,12 @@ const BulbBtn = styled.button`
   cursor: pointer;
 `;
 export const Main = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGeuloqueModalOpen, setIsGeuloqueModalOpen] = useState(false);
   const [isOpenGeuloque, setIsOpenGeuloque] = useState(false);
   const [url, setUrl] = useState<string | null>(null);
   const [isShowBulb, setIsShowBulb] = useState(false);
+  const [isShowReleases, setIsShowReleases] = useState(false);
+  const [isShowNotice, setIsShowNotice] = useState(false);
   const pendingGeuloquis = localStorage.getItem("pendingGeuloquis");
   const router = useRouter();
 
@@ -57,10 +63,66 @@ export const Main = () => {
   };
 
   const handleAlarmButtonClick = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsGeuloqueModalOpen(!isGeuloqueModalOpen);
   };
   const handleGeuloque = () => {
     setIsOpenGeuloque((prev) => !prev);
+  };
+  useEffect(() => {
+    const checkAndFetchReleases = () => {
+      const lastFetchDate = localStorage.getItem("lastFetchReleaseDate");
+      const today = new Date().toISOString().split("T")[0];
+
+      if (lastFetchDate !== today) {
+        fetchLatestReleases();
+        localStorage.setItem("lastFetchReleaseDate", today);
+      }
+    };
+
+    checkAndFetchReleases();
+  }, []);
+  useEffect(() => {
+    const checkAndFetchReleases = () => {
+      const lastFetchDate = localStorage.getItem("lastFetchNoticeDate");
+      const today = new Date().toISOString().split("T")[0];
+
+      if (lastFetchDate !== today) {
+        fetchNotices();
+        localStorage.setItem("lastFetchNoticeDate", today);
+      }
+    };
+
+    checkAndFetchReleases();
+  }, []);
+
+  const fetchNotices = async () => {
+    try {
+      const { data, status } = await getNotices();
+      if (status === 200 || status === 201) {
+        if (data === null) {
+          setIsShowNotice(false);
+        } else {
+          setIsShowNotice(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchLatestReleases = async () => {
+    try {
+      const { data, status } = await getLatestReleases();
+      if (status === 200 || status === 201) {
+        if (data === null) {
+          setIsShowReleases(false);
+        } else {
+          setIsShowReleases(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     // 보류일때
@@ -88,13 +150,13 @@ export const Main = () => {
     checkAndFetchGeuloquis();
   }, []);
 
-  const fetchGeuloquis = async (isOneMoreTime?:boolean) => {
+  const fetchGeuloquis = async (isOneMoreTime?: boolean) => {
     try {
       const { url, status } = await getGeuloquis();
       if (status === 200 || status === 201) {
         setUrl(url);
         localStorage.setItem("geuloqueUrl", url);
-        if(!isOneMoreTime){
+        if (!isOneMoreTime) {
           setIsOpenGeuloque(true);
         }
       }
@@ -104,22 +166,36 @@ export const Main = () => {
   };
   return (
     <>
+      {isShowReleases && (
+        <Update
+          onClose={() => {
+            setIsShowReleases(false);
+          }}
+        />
+      )}
+      {isShowNotice && (
+        <NoticeModal
+          onClose={() => {
+            setIsShowNotice(false);
+          }}
+        />
+      )}
       <Geuloquis
-        isAlertOpen={isModalOpen}
+        isAlertOpen={isGeuloqueModalOpen}
         isOpenGeuloque={isOpenGeuloque}
         handleGeuloque={handleGeuloque}
         url={url}
       />
-      <ActiveSideBar isModalOpen={isModalOpen} />
-      {isModalOpen && (
+      <ActiveSideBar isModalOpen={isGeuloqueModalOpen} />
+      {isGeuloqueModalOpen && (
         <ActiveAlarmList
-          isModalOpen={isModalOpen}
+          isModalOpen={isGeuloqueModalOpen}
           handleAlarmButtonClick={handleAlarmButtonClick}
         />
       )}
-      <Container ismodalopen={isModalOpen}>
+      <Container ismodalopen={isGeuloqueModalOpen}>
         <HomeDiv>
-          {!isModalOpen && (
+          {!isGeuloqueModalOpen && (
             <>
               <StyledWriteButton onClick={handleClick} />
               <AlarmButton onClick={handleAlarmButtonClick} />

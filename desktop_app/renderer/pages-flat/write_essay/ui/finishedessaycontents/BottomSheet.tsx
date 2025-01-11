@@ -325,7 +325,7 @@ function BottomSheet({
         localStorage.setItem("essayData", JSON.stringify(deleteSaveData));
         localStorage.setItem("currentEssayId", "");
         localStorage.setItem("tempThumbnail", "");
-        if(pendingGeuloquis ==="false"){
+        if (pendingGeuloquis === "false") {
           localStorage.setItem("geuloqueUrl", "");
         }
         router.push(
@@ -456,7 +456,14 @@ function BottomSheet({
           isShowToast={showToast}
         />
       </ToastContainer>
-      <Modal isOpen={isOpen} size="large">
+      <Modal
+        isOpen={isOpen}
+        size="large"
+        isCloseModified={true}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+      >
         <Wrapper onClick={handleDialogClick}>
           <TopNavigatorDiv>
             <NavigatorChip onClick={handleModalOpen}></NavigatorChip>

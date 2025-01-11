@@ -61,7 +61,6 @@ function BottomSheet({
         !dialogRef.current.contains(event.target as Node)
       ) {
         if (onClose && isCloseModified) {
-          console.log("test");
           onClose();
         }
       }

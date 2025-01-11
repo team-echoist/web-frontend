@@ -19,6 +19,7 @@ const ImageDiv = styled.div`
   justify-content: center;
   position: relative;
   margin-bottom: 45px;
+  height: 460px;
 `;
 const H1 = styled.h1`
   color: #fff;
@@ -74,7 +75,7 @@ const TitleDiv = styled.div`
 `;
 
 const BookmarkDiv = styled.div`
- cursor: pointer;
+  cursor: pointer;
 `;
 
 function Article({
@@ -85,7 +86,7 @@ function Article({
   imgUrl,
   handleBookmarkClick,
   isBookMark,
-  isShowBookmark=false
+  isShowBookmark = false,
 }: {
   title: string;
   desc: string;
@@ -93,10 +94,9 @@ function Article({
   date: string;
   imgUrl?: string;
   isShowBookmark?: boolean;
-  handleBookmarkClick:()=>void;
+  handleBookmarkClick: () => void;
   isBookMark: boolean;
 }) {
-
   const BookmarkRenderer = () => {
     return isBookMark ? (
       <PointBookMark onClick={handleBookmarkClick} />
@@ -106,15 +106,15 @@ function Article({
   };
   return (
     <Layout>
-      <ImageDiv>
-        {imgUrl && (
-          <Image src={imgUrl} alt="Thumbnail" width={1200} height={460} />
-        )}
-      </ImageDiv>
+      {imgUrl && (
+        <ImageDiv>
+          <Image src={imgUrl} alt="Thumbnail" fill />
+        </ImageDiv>
+      )}
+
       <H1>
         <TitleDiv>{title}</TitleDiv>
-        {isShowBookmark&&<BookmarkDiv>{BookmarkRenderer()}</BookmarkDiv>}
-        
+        {isShowBookmark && <BookmarkDiv>{BookmarkRenderer()}</BookmarkDiv>}
       </H1>
       <Desc dangerouslySetInnerHTML={{ __html: desc }} />
       <UserName>{userName}</UserName>
