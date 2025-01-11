@@ -154,6 +154,7 @@ function TagField({
   // 장소일경우 좌표가 있을경우 좌표라는 키값으로 따로 변수에 담아야됨
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.repeat) return;
     if (e.key === " " || e.key === "Enter") {
       e.preventDefault();
 

@@ -107,6 +107,21 @@ function SignUP() {
       }
     }
   };
+    useEffect(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Enter' && isButtonEnabledState) {
+          event.preventDefault(); 
+          onSubmit();
+        }
+      };
+    
+      window.addEventListener('keydown', handleKeyDown);
+  
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }, [isButtonEnabledState,inputData]);
+    
   return (
     <DefaultLayout>
       <GeneralToast

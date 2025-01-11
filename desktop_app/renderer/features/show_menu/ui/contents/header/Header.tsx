@@ -10,6 +10,7 @@ const Layout = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  positions: relative;
 `;
 
 const Title = styled.h1`
@@ -22,9 +23,9 @@ const Title = styled.h1`
 
 const ColseBtn = styled.button`
   all: unset;
-  position: fixed;
-  top: 64px;
-  right: 32px;
+  position: absolute;
+  top: 35px;
+  right:110px;
   cursor: pointer;
 `;
 function Header({

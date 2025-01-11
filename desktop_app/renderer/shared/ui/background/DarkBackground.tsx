@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const Layout = styled.div<{ left?: number }>`
+const Layout = styled.div<{ left?: number; zIndex?: number }>`
   width: 100%;
   height: 97vh;
-  z-index: 5000;
+  z-index: ${({ zIndex }) => zIndex};
   position: fixed;
   top: 32px;
   left: ${({ left }) => (left ? `${left}px` : 0)};
@@ -14,11 +14,17 @@ const Layout = styled.div<{ left?: number }>`
 function DarkBackground({
   children,
   left,
+  zIndex = 5000,
 }: {
   children: React.ReactNode;
   left?: number;
+  zIndex?: number;
 }) {
-  return <Layout left={left}>{children}</Layout>;
+  return (
+    <Layout left={left} zIndex={zIndex}>
+      {children}
+    </Layout>
+  );
 }
 
 export default DarkBackground;

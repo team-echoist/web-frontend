@@ -166,6 +166,7 @@ export const getSentence = async (type: string) => {
     const params = {
       type: type,
       limit: 15,
+      pageType:"recommend"
     };
     const { data } = await fetchData<any>("essays/sentence", "get", null, {
       params,

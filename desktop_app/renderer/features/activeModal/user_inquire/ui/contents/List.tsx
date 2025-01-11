@@ -21,6 +21,9 @@ const H1 = styled.h1`
   margin-bottom: 20px;
 `;
 const BtnDiv = styled.div`
+width:90%;
+display:flex;
+justify-content: center;
   position: absolute;
   bottom: 51px;
 `;

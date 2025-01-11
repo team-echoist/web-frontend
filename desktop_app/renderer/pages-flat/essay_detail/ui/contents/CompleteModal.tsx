@@ -79,7 +79,7 @@ function CompleteModal({ completedType }: { completedType: string | null }) {
   const searchParams = useSearchParams();
   let modalType = searchParams.get("type") as keyof typeof mapper;
   const [isOpen, setIsOpen] = useState(false);
-  const router =useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     if (modalType) {
@@ -89,7 +89,14 @@ function CompleteModal({ completedType }: { completedType: string | null }) {
 
   const mapper = {
     private: {
-      img: null,
+      img: (
+        <Image
+          src={Published.src}
+          width={148}
+          height={245}
+          alt="modal_img"
+        ></Image>
+      ),
       title: (
         <>
           <Strong>저장</Strong>
@@ -172,10 +179,9 @@ function CompleteModal({ completedType }: { completedType: string | null }) {
   };
   const handleModalOpen = () => {
     setIsOpen(false);
-    if(completedType ==="linkedout"){
-      router.push("/web/main")
+    if (completedType === "linkedout") {
+      router.push("/web/main");
     }
-
   };
   //  private/published/linkedout/reported
   if (!modalType) {

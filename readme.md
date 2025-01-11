@@ -94,8 +94,6 @@
 
    ```bash
    npm install
-   # 또는
-   pip install -r requirements.txt
    ```
 
 3. **프로젝트 실행**

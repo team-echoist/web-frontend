@@ -47,7 +47,7 @@ const ContentsContainer = styled.div`
   align-items: center;
   flex-direction: column;
   padding-bottom: 50px;
-  margin-top: 19px;
+  // margin-top: 19px;
 `;
 function EssayList({
   isRandomEssay,
@@ -93,7 +93,7 @@ function EssayList({
         const { data, totalPage, status } = await getTargetUserEssays(
           id,
           page,
-          20,
+          20
         );
 
         if (status === 200) {
@@ -115,10 +115,12 @@ function EssayList({
       setPage((prev) => prev + 1);
     }
   };
+
   const navigateToEssay = (id?: number, status?: string) => {
     const essayId = id || 0;
+    const changeStatus = status === "linkedout" ? "recommend" : status;
     if (essayId) {
-      router.push(`/web/essay_details?id=${essayId}&pageType=${status}`);
+      router.push(`/web/essay_details?id=${essayId}&pageType=${changeStatus}`);
     }
   };
   useEffect(() => {
