@@ -7,16 +7,16 @@ function FlipSection() {
     <>
       {/* 카드 플립 애니메이션 컴포넌트 */}
       <section>
-        <div className="flex ml-[366px] mt-[83.09px]">
+        <div className="flex xl:ml-[366px] lg:ml-[166px] mt-[83.09px]">
           <div className="mr-8">
-            <div className="group h-96 w-96 [perspective:1000px]">
-              <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+            <div className="group xl:h-96 xl:w-96 lg:h-95 lg:w-95 [perspective:1000px]">
+              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img
                     src="/images/mainpage/section_1.svg"
                     alt="section_1"
-                    className="object-cover cursor-pointer object-left h-full w-full "
+                    className="object-cover cursor-pointer object-left h-full"
                   />
                 </div>
 
@@ -38,9 +38,9 @@ function FlipSection() {
             </div>
           </div>
 
-          <div className="ml-[200px]">
-            <div className="group h-96 w-96 [perspective:1000px]">
-              <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <div className="xl:ml-[200px] lg:ml-[0px]">
+            <div className="group xl:h-96 xl:w-96 lg:h-95 lg:w-95 [perspective:1000px]">
+              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px]  transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img
@@ -69,10 +69,10 @@ function FlipSection() {
           </div>
         </div>
 
-        <div className="flex ml-[366px]">
+        <div className="flex xl:ml-[366px] lg:ml-[166px] xl:mt-[83.09px] lg:mt-[16.58px]">
           <div className="mr-8">
-            <div className="group h-96 w-96 [perspective:1000px]">
-              <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+            <div className="group  xl:h-96 xl:w-96 lg:h-95 lg:w-95 [perspective:1000px]">
+              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img
@@ -99,9 +99,9 @@ function FlipSection() {
               <span>쓸수록 가까워지는 나와의 거리, 감정 해시태그</span>
             </div>
           </div>
-          <div className="ml-[200px]">
-            <div className="group h-96 w-96 [perspective:1000px]">
-              <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <div className="xl:ml-[200px] lg:ml-[0px]">
+            <div className="group  xl:h-96 xl:w-96 lg:h-95 lg:w-95 [perspective:1000px]">
+              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img
@@ -130,10 +130,10 @@ function FlipSection() {
           </div>
         </div>
 
-        <div className="flex ml-[366px] ">
+        <div className="flex xl:ml-[366px] lg:ml-[166px] xl:mt-[83.09px] lg:mt-[16.58px]">
           <div className="mr-8">
-            <div className="group h-96 w-96 [perspective:1000px]">
-              <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+            <div className="group xl:h-96 xl:w-96 lg:h-95 lg:w-95 [perspective:1000px]">
+              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img
@@ -160,9 +160,9 @@ function FlipSection() {
               <span>링크드아웃한 문장을 모은 읽기 커뮤니티</span>
             </div>
           </div>
-          <div className="ml-[200px]">
-            <div className="group h-96 w-96 [perspective:1000px]">
-              <div className="relative h-[375px] w-[582px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <div className="xl:ml-[200px] lg:ml-[0px]">
+            <div className="group  xl:h-96 xl:w-96 lg:h-95 lg:w-95 [perspective:1000px]">
+              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img

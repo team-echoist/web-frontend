@@ -3,7 +3,7 @@ import GeneralButton from "../../shared/button/GeneralButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FlipSection from "./contents/FlipSection";
-
+import Footer from "../../shared/footer/Footer";
 
 // 메인 페이지
 function MainPage() {
@@ -22,28 +22,32 @@ function MainPage() {
   return (
     <main className="bg-[#0F0F0F] min-h-screen text-white">
       <Header />
-      <div className="w-full  mt-[250px] relative h-[1373px]">
-        <div className="ml-[363px]">
-          <h1 className="text-white text-[48px] font-bold font-['Pretendard'] leading-[76.80px]">
+      <div className="w-full   xl:mt-[250px] lg:mt-[130px] relative xl:h-[1373px] lg:h-[890px]">
+        <div className="xl:ml-[363px] lg:ml-[166px] md:ml-[166px]">
+          <h1 className="text-white xl:text-[48px] lg:text-[30px] font-bold font-['Pretendard'] leading-[76.80px]">
             다양한 나를 '링크드아웃' 할 수 있는 글쓰기 공간
           </h1>
-          <h3 className="text-white text-[24px] font-normal font-['Arial'] leading-[38.40px]">
+          <h3 className="text-white xl:text-[24px] lg:text-[14px] font-normal font-['Arial'] leading-[38.40px]">
             A personal space where you can ‘linked-out’ various types of you.
           </h3>
         </div>
 
-        <div className="w-[1059px] flex gap-[21.58px] mt-[55px] justify-start items-start ml-[363px]">
+        <div className="xl:w-[1059px] lg:w-[982px] flex gap-[21.58px] mt-[55px] justify-start items-start xl:ml-[363px] lg:ml-[166px] md:ml-[166px]">
           <GeneralButton>
             <img
+              className="xl:w-[34px] lg:w-[21px]"
               src={"/images/mainpage/button/apple-web.webp"}
               alt="apple_logo"
             />
-            <div className="flex flex-col h-full justify-start ml-[21px]">
-              <span>Download on the</span>
+            <div className="flex flex-col h-full justify-start xl:ml-[8px] lg-[4.98px]">
+              <span className="xl:text-[12px] lg:text-[8px]">
+                Download on the
+              </span>
               <p
                 className="bg-black1
                   text-white 
-                  text-[16px] 
+                  xl:text-[16px] 
+                  lg:text-[10px]
                   font-['Arial'] 
                   font-bold
                   leading-[19.2px] 
@@ -61,15 +65,19 @@ function MainPage() {
             }
           >
             <img
+              className="xl:w-[28px] lg:w-[17.413px]"
               src={"/images/mainpage/button/playstore-web.webp"}
               alt="google_logo"
             />
-            <div className="flex flex-col h-full justify-start ml-[21px]">
-              <span>Download on the</span>
+            <div className="flex flex-col h-full justify-start xl:ml-[8px] lg:ml-[7.42px]">
+              <span className="xl:text-[12px] lg:text-[8px]">
+                Download on the
+              </span>
               <p
                 className="bg-black1
                   text-white 
-                  text-[16px] 
+                   xl:text-[16px] 
+                  lg:text-[10px]
                   font-['Arial'] 
                   font-bold
                   leading-[19.2px] 
@@ -83,12 +91,16 @@ function MainPage() {
           <div className="relative cursor-pointer z-10 w-[285px] ">
             <GeneralButton variant="bold" onClick={handleDesktopOpen}>
               <img
+                className="xl:w-[22px] xl:h-[37px] lg:w-[13.681px] lg:h-[32.656px]"
                 src={"/images/mainpage/button/download-web.svg"}
                 alt="download_logo"
               />
-              <p className="ml-[21px]">Download for Desktop</p>
+              <p className="xl:ml-[21px] lg:ml-[13.06px] xl:text-[20px] lg:text-[12px]">
+                Download for Desktop
+              </p>
             </GeneralButton>
             {/* 데스크탑 dialog */}
+            {/* 테블릿사이즈 부턴 모달 안열리게 */}
             {isDesktopOpen && (
               <div className="absolute left-[0px] top-[67px] text-white w-[276px]">
                 <div className="whitespace-nowrap border-b-[1px] border-b-black1 flex gap-[5px] bg-black2 pt-[26px] pr-[61px] pb-[26px] pl-[30px] text-[18px] font-['Arial'] font-bold leading-normal tracking-[-0.6px]">
@@ -103,7 +115,7 @@ function MainPage() {
           </div>
         </div>
 
-        <div className="absolute top-[38px] left-[6%] w-[1478px]">
+        <div className="absolute xl:top-[38px] lg:top-[60px] left-[6%] xl:w-[1478px] md:w-[902px]">
           <img
             src={"/images/mainpage/mockup.png"}
             alt="mockup"
@@ -111,21 +123,29 @@ function MainPage() {
           />
         </div>
       </div>
-      <section className="text-white flex ml-[366.18px]">
+      <section className="text-white flex xl:ml-[366.18px] lg:ml-[166px]">
         <div>
-          <div className="relative flex gap-[70px]">
-            <p className="whitespace-nowrap absolute top-[-23px] left-[30px] text-white font-['Pretendard'] text-[39.043px] font-semibold leading-[62.47px] tracking-[-1.171px]">
+          <div className="relative flex xl:gap-[70px]">
+            <p className="whitespace-nowrap absolute top-[-23px] left-[30px] text-white font-['Pretendard'] xl:text-[39.043px] lg:text-[24px] font-semibold leading-[62.47px] tracking-[-1.171px]">
               다양한 관계 에서 벗어나다
             </p>
-            <img src={"/images/mainpage/highlight.png"} alt="highlights" />
-            <img src={"/images/mainpage/highlight.png"} alt="highlights" />
-            <p className="absolute top-[35px] left-[13%] text-white text-center font-['Pretendard'] text-[24.402px] font-thin leading-[39.043px] tracking-[-0.732px]">
+            <img
+              className="xl:w-[220.84px] xl:h-[47.584px] lg:w-[119px] lg:h-[30px] xl:ml-[0px] lg:ml-[20px]"
+              src={"/images/mainpage/highlight.png"}
+              alt="highlights"
+            />
+            <img
+              className="xl:w-[220.84px] xl:h-[47.584px] lg:w-[119px] xl:ml-[0px] lg:h-[30px] lg:ml-[53px]"
+              src={"/images/mainpage/highlight.png"}
+              alt="highlights"
+            />
+            <p className="absolute xl:top-[35px] lg:top-[18px]  xl:left-[13%] lg:left-[28%] text-white text-center font-['Pretendard'] xl:text-[24.402px] lg:text-[15.175px] font-thin leading-[39.043px] tracking-[-0.732px]">
               :Link
             </p>
-            <p className="absolute top-[35px] left-[40%]  text-white text-center font-['Pretendard'] text-[24.402px] font-thin leading-[39.043px] tracking-[-0.732px]">
+            <p className="absolute xl:top-[35px] lg:top-[18px] xl:left-[40%] lg:left-[85%]  text-white text-center font-['Pretendard']  xl:text-[24.402px] lg:text-[15.175px] font-thin leading-[39.043px] tracking-[-0.732px]">
               :Out
             </p>
-            <p className="text-white w-[503px] break-all">
+            <p className="text-white xl:w-[503px] lg:w-[406px] break-all xl:static lg:absolute lg:top-[-10px] lg:left-[350px]">
               링크드아웃에서는 '다양한 관계 속의 나'를 한발짝 떨어져 들여다보는
               기회를 글쓰기 경험을 통해 제공하고 있어요.
             </p>
@@ -133,11 +153,11 @@ function MainPage() {
         </div>
       </section>
       <FlipSection></FlipSection>
-      <section className="w-full h-[518px] bg-[#616FED] text-black mt-[317px] pl-[367.18px] pt-[114px]">
-        <p className="font-semibold text-[#121212] text-[39px] tracking-[-1.17px] leading-[62.5px] whitespace-nowrap">
+      <section className="w-full flex justify-center  gap-[137.46px] xl:h-[588px] lg:h-[322.131px] bg-[#616FED] text-black mt-[317px] xl:pt-[170.89px] lg:pt-[70.89px]">
+        <p className="font-semibold text-[#121212] xl:text-[39px] lg:text-[24px] tracking-[-1.17px] leading-[62.5px] whitespace-nowrap">
           글쓰기 섬, 링크드아웃
         </p>
-        <div className="w-[653px]">
+        <div className="xl:w-[653px] lg:w-[406px] xl:text-[24px] lg:text-[14px]">
           <span>링크드아웃은 아무개들의 </span>
           <span className="font-bold">개인적인 글쓰기 섬</span>
           <span>이에요.</span>
@@ -150,9 +170,8 @@ function MainPage() {
             아무개들이 세상과 단절할 수 있는 섬을 만들어 주는 것이 저희
             링크드아웃 팀원들의 역할입니다.
           </span>
-        </div>
-        <button
-          className="mt-[76px] flex gap-[6px] items-center cursor-pointer"
+          <button
+          className="xl:mt-[76px] lg:mt-[34px] flex gap-[6px] items-center cursor-pointer"
           onClick={() => {
             handleNavigation("/about");
           }}
@@ -160,7 +179,10 @@ function MainPage() {
           <img src={"/images/mainpage/arrow.svg"} alt="arrow" />
           <p>About us</p>
         </button>
+        </div>
+
       </section>
+      <Footer></Footer>
     </main>
   );
 }

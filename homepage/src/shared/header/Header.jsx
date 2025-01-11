@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
+
 const Header = () => {
   const location = useLocation();
   const [activePath, setActivePath] = useState("");
@@ -27,10 +28,10 @@ const Header = () => {
           alt="로고"
           width={154}
           height={63.179}
-          className="py-[19.744px]"
+          className="py-[19.744px] xl:w-[154px] lg:w-[95.769px]"
         />
       </Link>
-      <div>
+      <div className="xl:text-[20px] lg:text-[12px]">
         <Link to="/about" className={linkClasses("/about")}>
           About
         </Link>
@@ -48,7 +49,7 @@ const Header = () => {
         </Link>
       </div>
       <Link to="/">
-        <p className="w-[143px] h-[46px] rounded-2xl bg-white text-[#121212] flex justify-center items-center font-normal cursor-pointer">
+        <p className="xl:w-[143px] xl:h-[46px] lg:w-[90px] lg:h-[30px] xl:text-[20px] lg:text-[12px] rounded-2xl bg-white text-[#121212] flex justify-center items-center font-normal cursor-pointer">
           Get the App
         </p>
       </Link>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <section className="w-full flex gap-[20px] justify-center text-[#323232] font-pretendard text-xs font-normal leading-[150%] underline mt-[245px] mb-10">
+    <section className="w-full flex gap-[20px] justify-center text-[#323232] font-pretendard text-xs font-normal leading-[150%] underline xl:mt-[245px] lg:mt-[136.81px] mb-10">
       <div className="w-[380px] flex justify-between whitespace-nowrap">
         <Link className="mr-[12px]" to="/operational-policy">
           운영정책

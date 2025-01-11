@@ -6,11 +6,11 @@ import locationTermsData from "../../data/locationTermsData";
 
 const LocationTermsPage = () => {
   return (
-    <>
-      <h1 className="text-3xl text-center font-black mt-16 sm:mt-20 sm:text-4xl">
-        위치 기반 서비스 이용 약관
-      </h1>
+    <div className="bg-white">
       <div className="policies-container">
+        <h1 className="text-3xl text-center font-black mt-16 sm:mt-20 sm:text-4xl">
+          위치 기반 서비스 이용 약관
+        </h1>
         {locationTermsData.map((policy, index) => (
           <Section
             key={index}
@@ -22,7 +22,7 @@ const LocationTermsPage = () => {
         ))}
       </div>
       <PoliciesFooter />
-    </>
+    </div>
   );
 };
 

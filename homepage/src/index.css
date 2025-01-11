@@ -4,6 +4,7 @@
 
 body {
   background-color: #0f0f0f; 
+  overflow-x: hidden;
 }
 
 /* 스타일을 적용할 특정 섹션의 클래스 */

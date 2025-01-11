@@ -6,11 +6,11 @@ import PoliciesFooter from "../../components/Policy/PoliciesFooter";
 
 const OperationalPolicyPage = () => {
   return (
-    <>
-      <h1 className="text-3xl text-center font-black mt-16 sm:mt-20 sm:text-4xl">
-        링크드아웃 운영정책
-      </h1>
+    <div className="bg-white">
       <div className="policies-container">
+        <h1 className="text-3xl text-center font-black mt-16 sm:mt-20 sm:text-4xl">
+          링크드아웃 운영정책
+        </h1>
         {policiesData.map((policy, index) => (
           <Section
             key={index}
@@ -22,7 +22,7 @@ const OperationalPolicyPage = () => {
         ))}
       </div>
       <PoliciesFooter />
-    </>
+    </div>
   );
 };
 

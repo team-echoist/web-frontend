@@ -25,7 +25,7 @@ function ScrollTop({ bottom = "70px" }) {
 
   return (
     <div
-      className={`fixed right-12  cursor-pointer z-50 transition-opacity duration-300 ${
+      className={`fixed right-12 w-[55px] h-[55px] cursor-pointer z-50 transition-opacity duration-300 ${
         visible ? "opacity-100" : "opacity-0"
       }`}
       style={{ bottom: bottom }}
