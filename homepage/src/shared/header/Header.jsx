@@ -31,7 +31,7 @@ const Header = () => {
           className="py-[19.744px] xl:w-[154px] lg:w-[95.769px]"
         />
       </Link>
-      <div className="xl:text-[20px] lg:text-[12px]">
+      <div className="xl:text-[20px] lg:text-[12px] md:text-[10px]">
         <Link to="/about" className={linkClasses("/about")}>
           About
         </Link>
@@ -49,7 +49,7 @@ const Header = () => {
         </Link>
       </div>
       <Link to="/">
-        <p className="xl:w-[143px] xl:h-[46px] lg:w-[90px] lg:h-[30px] xl:text-[20px] lg:text-[12px] rounded-2xl bg-white text-[#121212] flex justify-center items-center font-normal cursor-pointer">
+        <p className="xl:w-[143px] xl:h-[46px] lg:w-[90px] md:w-[60px] lg:h-[30px] xl:text-[20px] lg:text-[12px] md:text-[10px] rounded-2xl bg-white text-[#121212] flex justify-center items-center font-normal cursor-pointer">
           Get the App
         </p>
       </Link>

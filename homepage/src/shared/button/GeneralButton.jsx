@@ -10,7 +10,7 @@ function GeneralButton({
 }) {
   // 버튼 스타일 정의
   const baseStyles =
-    "flex xl:px-[18px] xl:py-[18px] lg:px-[8px] lg:py-[6px] items-center gap-[4.975px] shrink-0 rounded-lg font-medium text-center focus:outline-none transition cursor-pointer z-10";
+    "flex xl:px-[18px] xl:py-[18px] lg:px-[8px] lg:py-[6px] md:px-[8px] md:py-[6px] items-center gap-[4.975px] shrink-0 rounded-lg font-medium text-center focus:outline-none transition cursor-pointer z-10";
   const variants = {
     primary: `
     bg-black1
