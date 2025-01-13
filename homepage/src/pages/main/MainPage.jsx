@@ -4,23 +4,41 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FlipSection from "./contents/FlipSection";
 import Footer from "../../shared/footer/Footer";
+import ColorToast from "../../shared/toast/Toast";
 
 // 메인 페이지
 function MainPage() {
   const [isDesktopOpen, setIsDesktopOpen] = useState(false);
+  const [isToastOpen, setIsToastOpen] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
 
   const navigate = useNavigate();
 
   const handleNavigation = (path) => {
     navigate(path);
   };
-
   const handleDesktopOpen = () => {
-    setIsDesktopOpen((prev) => !prev);
+    if (window.innerWidth <= 1024) {
+      setToastMsg("데스크탑에서만 이용 가능합니다.");
+      setIsToastOpen(true);
+      setIsDesktopOpen(false);
+    } else {
+      setIsDesktopOpen((prev) => !prev);
+    }
   };
-
+  const handlePrepare = () =>{
+    setToastMsg("준비중 입니다.");
+    setIsToastOpen(true)
+  }
   return (
     <main className="bg-[#0F0F0F] min-h-screen text-white">
+      <ColorToast
+        text={toastMsg}
+        onClose={() => {
+          setIsToastOpen(false);
+        }}
+        isShowToast={isToastOpen}
+      />
       <Header />
       <div className="w-full   xl:mt-[250px] lg:mt-[130px] md:mt-[100px] relative xl:h-[1373px] lg:h-[890px] md:h-[750px]">
         <div className="xl:ml-[363px] lg:ml-[166px] md:ml-[106px]">
@@ -33,7 +51,7 @@ function MainPage() {
         </div>
 
         <div className="xl:w-[1059px] lg:w-[982px] md-[982px] flex gap-[21.58px] mt-[55px] justify-start items-start xl:ml-[363px] lg:ml-[166px] md:ml-[106px]">
-          <GeneralButton>
+          <GeneralButton onClick={handlePrepare}>
             <img
               className="xl:w-[34px] lg:w-[21px]  md:w-[21px]"
               src={"/images/mainpage/button/apple-web.webp"}
@@ -125,7 +143,7 @@ function MainPage() {
           />
         </div>
       </div>
-      <section className="text-white flex xl:ml-[366.18px] lg:ml-[130px] md:ml-[70px]">
+      <section className="text-white flex xl:ml-[330.18px] lg:ml-[130px] md:ml-[70px]">
         <div>
           <div className="relative flex xl:gap-[70px]">
             <p className="whitespace-nowrap absolute top-[-23px] left-[30px] text-white font-['Pretendard'] xl:text-[39.043px] lg:text-[24px] md:text-[24px] font-semibold leading-[62.47px] tracking-[-1.171px]">
@@ -154,7 +172,7 @@ function MainPage() {
           </div>
         </div>
       </section>
-      <FlipSection></FlipSection>
+      <FlipSection />
       <section className="w-full flex justify-center  gap-[137.46px] xl:h-[588px] lg:h-[322.131px] md:h-[322.131px] bg-[#616FED] text-black xl:mt-[317px] lg:mt-[196px] md:mt-[196px] xl:pt-[170.89px] lg:pt-[70.89px] md:pt-[70.89px]">
         <p className="font-semibold text-[#121212] xl:text-[39px] lg:text-[24px] md:text-[24px] tracking-[-1.17px] leading-[62.5px] whitespace-nowrap">
           글쓰기 섬, 링크드아웃
