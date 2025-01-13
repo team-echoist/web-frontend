@@ -9,35 +9,35 @@ const AboutPage = () => {
         <img
           src={"/images/aboutpage/linkedout_banner.gif"}
           alt="linkedout_banner"
-          className="mt-[150px] w-full"
+          className="xl:mt-[150px] lg:mt-[96px] md:mt-[96px] w-full"
         />
-        <section className="mt-[156px]  flex justify-center items-center">
+        <section className="xl:mt-[156px] lg:mt-[96px] md:mt-[96px] flex justify-center  items-center ">
           {/* 메인 텍스트 */}
-          <div className="text-[64px] font-bold leading-[1.6] tracking-[-1.92px] text-left">
+          <div className="xl:text-[64px] lg:text-[34px] md:text-[30px] font-bold leading-[1.6] tracking-[-1.92px] text-left">
             <span className="block">안녕하세요 아무개님!</span>
-            <span className="block">링크드아웃할 준비가 되셨나요?</span>
+            <span className="block whitespace-nowrap">링크드아웃할 준비가 되셨나요?</span>
           </div>
           {/* 설명 텍스트 */}
-          <div className="text-xl leading-[1.6] space-y-4 ml-[216px]">
+          <div className="xl:text-xl lg:text-[12px] md-[12px] leading-[1.6] space-y-4 xl:ml-[216px] lg:ml-[155px] md:ml-[105px] whitespace-nowrap">
             <p>→ 링크드아웃이란?</p>
             <p>→ 쓰는 것에 대하여</p>
             <p>→ 당신은 어떤 아무개인가요?</p>
             <p>→ 그래서 말이죠.</p>
           </div>
         </section>
-        <article className="flex justify-center items-start mt-[217px]">
-          <div className="w-[598px] h-[770px] bg-[#1E1E1E]">
+        <article className="flex justify-center items-start xl:mt-[217px] lg:mt-[141px] md:mt-[141px]">
+          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px]  bg-[#1E1E1E]">
             <img
               src="/images/aboutpage/contents/island1.gif"
               alt="island1"
               className="object-cover  object-center h-full w-full "
             />
           </div>
-          <div className="p-10 w-[597px]">
-            <h2 className="text-[39.843px] font-semibold leading-[1.6] tracking-[-1.171px]">
+          <div className="p-10 xl:w-[597px] lg:w-[450px] md:w-[371px]">
+            <h2 className="xl:text-[39.843px] lg:text-[24px] md:text-[24px] font-semibold leading-[1.6] tracking-[-1.171px]">
               글쓰기 섬, 링크드아웃
             </h2>
-            <div className="text-xl">
+            <div className="xl:text-xl lg:text-[12px] md:text-[12px]">
               <p className="mt-[32px]">
                 사실 사람들은 눈에 보이지 않는 연결 고리를 서로 달고 살아요.
                 나와 가족과의 관계, 직장 동료와의 관계, 친구들과의 관계 등
@@ -57,12 +57,12 @@ const AboutPage = () => {
           </div>
         </article>
 
-        <article className="flex justify-center items-start">
-          <div className="p-10 w-[597px]">
-            <h2 className="text-[39.843px] font-semibold leading-[1.6] tracking-[-1.171px]">
+        <article className="flex justify-center items-start xl:w-full xl:h-[770px] lg:w-[692px] lg:h-[497px] md:w-[692px] md:h-[497px]">
+          <div className="xl:p-10 lg:p-7 md:p-7 xl:w-[557px] lg:w-[361px] md:w-[341px] lg:flex lg:flex-col mr-[50px]  xl:static lg:absolute lg:left-[96px] md:absolute md:left-[40px]">
+            <h2 className="xl:text-[39.843px] lg:text-[24px] md:text-[24px] font-semibold leading-[1.6] tracking-[-1.171px]">
               쓰는 것에 대하여
             </h2>
-            <div className="text-xl">
+            <div className="xl:text-xl lg:text-[12px] md:text-[12px]">
               <p className="mt-[32px]">
                 짧은 컨텐츠를 통해 빠르게 소멸되는 이슈를 ‘알고리즘’으로
                 소비하는 시대에 살고 있는 우리가 놓치고 있는 즐거움은
@@ -76,28 +76,28 @@ const AboutPage = () => {
               </p>
             </div>
           </div>
-          <div className="w-[598px] h-[770px] bg-[#1E1E1E]">
+          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px] xl:static lg:absolute lg:left-[472px] md:absolute md:left-[402px] bg-[#1E1E1E]">
             <img
               src="/images/aboutpage/contents/island2.gif"
               alt="island1"
-              className="object-cover object-center h-full w-full "
+              className="object-fill object-center h-full w-full "
             />
           </div>
         </article>
 
         <article className="flex justify-center items-start mt-[217px]">
-          <div className="w-[598px] h-[770px] bg-[#1E1E1E]">
+          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px] bg-[#1E1E1E]">
             <img
               src="/images/aboutpage/contents/island3.gif"
               alt="island1"
               className="object-cover  object-center h-full w-full "
             />
           </div>
-          <div className="p-10 w-[597px]">
-            <h2 className="text-[39.843px] font-semibold leading-[1.6] tracking-[-1.171px]">
+          <div className="p-10 xl:w-[597px] lg:w-[450px] md:w-[371px]">
+            <h2 className="xl:text-[39.843px] lg:text-[24px] md:text-[24px] font-semibold leading-[1.6] tracking-[-1.171px]">
               당신은 어떤 아무개인가요?
             </h2>
-            <div className="text-xl">
+            <div className="xl:text-xl lg:text-[12px]">
               <p className="mt-[32px]">
                 글을 쓰는 본인의 모습을 떠올려 보세요. 여기에 100명이 있다면
                 반드시 글을 쓰는 100가지의 모습이 있을 거예요. 그 중에는 쓰는
@@ -108,19 +108,16 @@ const AboutPage = () => {
                 아무개들이 ‘쓰는 것’과 친해지고, 재밌는 글쓰기 문화를 함께
                 향유하는 것이 링크드아웃의 또다른 목표랍니다!
               </p>
-              <p className="mt-20">
-                어떤 유형의 아무개에 가까운지 확인해볼까요? → 바로가기
-              </p>
             </div>
           </div>
         </article>
 
-        <article className="flex justify-center items-start">
-          <div className="p-10 w-[597px]">
-            <h2 className="text-[39.843px] font-semibold leading-[1.6] tracking-[-1.171px]">
+        <article className="flex justify-center items-start  xl:w-full xl:h-[770px] lg:w-[692px] lg:h-[497px] md:w-[692px] md:h-[497px]">
+          <div className="xl:p-10 lg:p-7 md:p-7 xl:w-[597px] lg:w-[361px] md:w-[361px]  xl:static lg:absolute lg:left-[96px] md:absolute md:left-[30px]">
+            <h2 className="xl:text-[39.843px] lg:text-[24px] md:text-[24px] font-semibold leading-[1.6] tracking-[-1.171px]">
               수많은 나를 알아가는 여정
             </h2>
-            <div className="text-xl">
+            <div className="xl:text-xl lg:text-[12px] md:text-[12px]">
               <p className="mt-[32px]">
                 하룻밤 사이에 안 좋았던 기분이 좋아지고, 12월 31일에서 1월 1일로
                 바뀌었을 뿐인데 어떤 새로운 결심을 하게 되거나 달라진 것 같은
@@ -139,7 +136,7 @@ const AboutPage = () => {
               </p>
             </div>
           </div>
-          <div className="w-[598px] h-[770px] bg-[#1E1E1E]">
+          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px] xl:static lg:absolute lg:left-[472px]  md:absolute md:left-[402px] bg-[#1E1E1E]">
             <img
               src="/images/aboutpage/contents/island4.gif"
               alt="island1"
@@ -147,8 +144,9 @@ const AboutPage = () => {
             />
           </div>
         </article>
-        <Footer></Footer>
+        <Footer/>
       </div>
+
     </div>
   );
 };

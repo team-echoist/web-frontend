@@ -26,10 +26,14 @@ function MainPage() {
       setIsDesktopOpen((prev) => !prev);
     }
   };
-  const handlePrepare = () =>{
+  const handlePrepare = () => {
     setToastMsg("준비중 입니다.");
-    setIsToastOpen(true)
-  }
+    setIsToastOpen(true);
+  };
+
+  const downloadFile = (url) => {
+    window.location.href = url;
+  };
   return (
     <main className="bg-[#0F0F0F] min-h-screen text-white">
       <ColorToast
@@ -123,13 +127,30 @@ function MainPage() {
             {/* 테블릿사이즈 부턴 모달 안열리게 */}
             {isDesktopOpen && (
               <div className="absolute left-[0px] top-[67px] text-white w-[276px]">
-                <div className="whitespace-nowrap border-b-[1px] border-b-black1 flex gap-[5px] bg-black2 pt-[26px] pr-[61px] pb-[26px] pl-[30px] text-[18px] font-['Arial'] font-bold leading-normal tracking-[-0.6px]">
-                  Download for
-                  <strong className="text-pointcolor">Windows</strong>
-                </div>
-                <div className="flex whitespace-nowrap gap-[5px] bg-black2 pt-[26px] pr-[41px] pb-[26px] pl-[30px] text-[18px] font-['Arial'] font-bold leading-normal tracking-[-0.6px] rounded-b-[10px]">
-                  Download for <strong className="text-pointcolor">Mac</strong>
-                </div>
+                <button
+                  onClick={() => {
+                    setIsDesktopOpen(false);
+                    downloadFile(
+                      "https://download.linkedoutapp.com/window/linkedout-setup-1.0.0.exe"
+                    );
+                  }}
+                >
+                  <div className="whitespace-nowrap w-[273.54px] border-b-[1px] border-b-black1 flex gap-[5px] bg-black2 pt-[26px] pr-[61px] pb-[26px] pl-[30px] text-[18px] font-['Arial'] font-bold leading-normal tracking-[-0.6px]">
+                    Download for
+                    <strong className="text-pointcolor">Windows</strong>
+                  </div>
+                </button>
+                <button
+                  onClick={() => {
+                    setIsDesktopOpen(false);
+                    handlePrepare();
+                  }}
+                >
+                  <div className="flex whitespace-nowrap  w-[273.54px] gap-[5px] bg-black2 pt-[26px] pr-[41px] pb-[26px] pl-[30px] text-[18px] font-['Arial'] font-bold leading-normal tracking-[-0.6px] rounded-b-[10px]">
+                    Download for
+                    <strong className="text-pointcolor">Mac</strong>
+                  </div>
+                </button>
               </div>
             )}
           </div>
