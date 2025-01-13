@@ -11,17 +11,12 @@ const Header = () => {
   }, [location.pathname]);
 
   const linkClasses = (path) =>
-    `mx-[51px] my-[52px] p-2 font-normal ${
+    `xl:mx-[51px] xl:my-[52px] lg:mx-[26px] lg:my-[26px] md:mx-[26px] md:my-[26px] p-2 font-normal ${
       activePath === path ? "text-white" : "text-[#919191]"
     }`;
 
-  const handlePremiumClick = (event) => {
-    event.preventDefault();
-    alert("서비스 준비중입니다.");
-  };
-
   return (
-    <nav className="flex bg-[#0F0F0F] justify-between items-center text-[20px] text-[#121212] px-10 font-normal">
+    <nav className="flex h-[83px] bg-[#0F0F0F] justify-between items-center text-[20px] text-[#121212] xl:px-[43.94px] xl:py-[60px] lg:px-[60px] lg:py-[24px]  md:px-[20px] md:py-[24px] font-normal">
       <Link to="/">
         <img
           src="/images/logo.svg"
@@ -32,7 +27,7 @@ const Header = () => {
         />
       </Link>
       <div className="xl:text-[20px] lg:text-[12px] md:text-[10px] ">
-        <Link to="/about" className={linkClasses("/about")}>
+        <Link cl to="/about" className={linkClasses("/about")}>
           About
         </Link>
         <Link to="/learn" className={linkClasses("/learn")}>

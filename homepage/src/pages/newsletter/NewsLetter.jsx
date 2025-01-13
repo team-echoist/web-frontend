@@ -22,7 +22,7 @@ const Newsletter = () => {
       ></ColorToast>
       <Header />
       <div className="flex flex-col items-center justify-center w-full py-20">
-        <h1 className="text-white text-4xl font-bold mb-16">NewsLetter</h1>
+        <h1 className="text-white xl:text-4xl md:text-[30px] font-bold mb-16">NewsLetter</h1>
 
         <div className="w-full max-w-[700px] space-y-6">
           {/* 이메일 입력 섹션 */}
@@ -30,17 +30,17 @@ const Newsletter = () => {
             <input
               type="email"
               placeholder="이메일을 입력해 주세요."
-              className="flex-1 px-4 py-3 bg-[#1d1d1d] rounded-lg text-white placeholder-gray-400 focus:outline-none"
+              className="flex-1 xl:px-4 xl:py-3 lg:px-[19.61px] lg:py-[19px] md:px-[19.61px] md:py-[19px]  bg-[#1d1d1d] rounded-lg text-white placeholder-gray-400 focus:outline-none"
             />
             <button
-              className="px-8 py-3 bg-[#616fed] rounded-lg text-white font-medium hover:bg-[#4b59ea] transition-colors"
+              className="xl:px-8 xl:py-3 lg:px-[26px] lg:py-[6px] md:px-[26px] md:py-[6px] bg-[#616fed] rounded-lg text-white font-medium hover:bg-[#4b59ea] transition-colors"
               onClick={handleSubscribe}
             >
               구독하기
             </button>
           </div>
 
-          <div className="flex gap-8 text-gray-400">
+          <div className="flex gap-8 text-gray-400 xl:text-[16px] lg:text-[12px] md:text-[12px]">
             <label className="flex items-center gap-2 cursor-pointer">
               <div
                 className={`flex items-center justify-center w-6 h-6 ${
