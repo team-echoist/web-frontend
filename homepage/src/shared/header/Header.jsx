@@ -28,10 +28,10 @@ const Header = () => {
           alt="로고"
           width={154}
           height={63.179}
-          className="py-[19.744px] xl:w-[154px] lg:w-[95.769px]"
+          className="py-[19.744px] xl:w-[154px] lg:w-[95.769px] md:w-[95.769px] sm:w-[95.769px]"
         />
       </Link>
-      <div className="xl:text-[20px] lg:text-[12px] md:text-[10px]">
+      <div className="xl:text-[20px] lg:text-[12px] md:text-[10px] ">
         <Link to="/about" className={linkClasses("/about")}>
           About
         </Link>
