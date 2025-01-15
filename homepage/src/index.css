@@ -5,8 +5,14 @@
 body {
   background-color: #0f0f0f; 
   overflow-x: hidden;
+  overscroll-behavior-x: none; 
 }
-
+@media (max-width: 768px) {
+  body {
+    background-color: #0f0f0f;
+    overflow-x: hidden;
+  }
+}
 /* 스타일을 적용할 특정 섹션의 클래스 */
 .first-section-grid {
   display: grid;

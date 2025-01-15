@@ -1,16 +1,14 @@
 import React from "react";
 
 function FlipSection() {
-
-
   return (
     <>
       {/* 카드 플립 애니메이션 컴포넌트 */}
-      <section className="xl:text-[18px] lg:text-[12px] md:text-[12px]">
-        <div className="flex xl:ml-[366px] lg:ml-[166px] md:ml-[100px] mt-[83.09px]  ">
-          <div className="mr-8">
-            <div className="group xl:h-96 xl:w-96 lg:h-95 lg:w-95 md:h-95 md:w-95 [perspective:1000px]">
-              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+      <section  className="flex flex-col text-[8px] items-center">
+        <div className="flex gap-[8px]">
+          <div>
+            <div className="group w-[171px] h-[110px] [perspective:1000px]">
+              <div className="relative  h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img
@@ -32,15 +30,15 @@ function FlipSection() {
                 </div>
               </div>
             </div>
-            <div className="mt-[9px] mb-[28px]">
+            <div className="mt-[9px] mb-[28px] ">
               <span className="text-[#616FED] mr-[5px]">01</span>
               <span>쓰는 즐거움을 찾아서, 워밍업 글로키</span>
             </div>
           </div>
 
-          <div className="xl:ml-[200px] lg:ml-[0px]">
-            <div className="group xl:h-96 xl:w-96 lg:h-95 lg:w-95 [perspective:1000px]">
-              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <div className="w-[171px] ">
+            <div className="group  [perspective:1000px]">
+              <div className="relative w-[171px] h-[110px]  transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img
@@ -69,10 +67,10 @@ function FlipSection() {
           </div>
         </div>
 
-        <div className="flex xl:ml-[366px] lg:ml-[166px] md:ml-[100px] xl:mt-[6.09px] lg:mt-[6.58px] ">
-          <div className="mr-8">
-            <div className="group  xl:h-96 xl:w-96 lg:h-95 lg:w-95 md:h-95 md:w-95 [perspective:1000px]">
-              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <div className="flex gap-[8px]">
+          <div className="w-[171px]">
+            <div className="group   [perspective:1000px]">
+              <div className="relative w-[171px] h-[110px]  transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img
@@ -95,13 +93,13 @@ function FlipSection() {
               </div>
             </div>
             <div className="mt-[9px] mb-[28px]">
-              <span className="text-[#616FED] mr-[5px]">03</span>
+              <span className="text-[#616FED] mr-[5px] ">03</span>
               <span>쓸수록 가까워지는 나와의 거리, 감정 해시태그</span>
             </div>
           </div>
-          <div className="xl:ml-[200px] lg:ml-[0px] md:ml-[0px]">
-            <div className="group  xl:h-96 xl:w-96 lg:h-95 lg:w-95 md:h-95 md:w-95[perspective:1000px]">
-              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <div className="w-[171px] ">
+            <div className="group  w-[171px] h-[110px] [perspective:1000px]">
+              <div className="relative w-[171px] h-[110px]  transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img
@@ -130,10 +128,10 @@ function FlipSection() {
           </div>
         </div>
 
-        <div className="flex xl:ml-[366px] lg:ml-[166px] md:ml-[100px]  xl:mt-[6.09px] lg:mt-[6.58px] md:mt-[6.58px]">
-          <div className="mr-8">
+        <div className="flex gap-[8px]">
+          <div  >
             <div className="group xl:h-96 xl:w-96 lg:h-95 lg:w-95 md:h-95 md:w-95[perspective:1000px]">
-              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px]  md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+              <div className="relative w-[171px] h-[110px]  transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img
@@ -161,8 +159,8 @@ function FlipSection() {
             </div>
           </div>
           <div className="xl:ml-[200px] lg:ml-[0px]">
-            <div className="group  xl:h-96 xl:w-96 lg:h-95 lg:w-95 md:h-95 md:w-95 [perspective:1000px]">
-              <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px]  md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+            <div className="group  w-[171px] h-[110px]  [perspective:1000px]">
+              <div className="relative w-[171px] h-[110px]   md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <img

@@ -20,7 +20,7 @@ function ScrollToTop() {
 function App() {
   return (
     <Router>
-      <ScrollTopBtn />
+      {/* <ScrollTopBtn /> */}
       <ScrollToTop />
       <Routes>
         {routes.map((route, index) => {
