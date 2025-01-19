@@ -9,17 +9,15 @@ function MobileHeader() {
   };
 
   return (
-    <div>
+    <>
       {/* 햄버거 버튼 */}
-      {!isMenuOpen && (
-        <button onClick={toggleMenu} className="z-50">
+      <button onClick={toggleMenu} className="z-50">
           <img
             src="/images/mobile/menu/bugerBtn.svg"
             alt="hambuger_menu"
             className="w-[24px] h-[24px] absolute top-[68px] left-[20px]"
           />
         </button>
-      )}
       {/* 메뉴 */}
       {/* 메뉴바 */}
       <div
@@ -67,7 +65,7 @@ function MobileHeader() {
           </ul>
         </nav>
       </div>
-    </div>
+    </>
   );
 }
 

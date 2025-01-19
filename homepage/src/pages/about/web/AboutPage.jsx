@@ -1,5 +1,5 @@
-import Header from "../../shared/header/Header";
-import Footer from "../../shared/footer/Footer";
+import Header from "../../../shared/header/Header";
+import Footer from "../../../shared/footer/Footer";
 
 const AboutPage = () => {
   return (
@@ -33,7 +33,7 @@ const AboutPage = () => {
               className="object-cover  object-center h-full w-full "
             />
           </div>
-          <div className="p-10 xl:w-[597px] lg:w-[450px] md:w-[371px]">
+          <div className="p-10 xl:w-[597px] lg:w-[400px] md:w-[371px]">
             <h2 className="xl:text-[39.843px] lg:text-[24px] md:text-[24px] font-semibold leading-[1.6] tracking-[-1.171px]">
               글쓰기 섬, 링크드아웃
             </h2>
@@ -76,7 +76,7 @@ const AboutPage = () => {
               </p>
             </div>
           </div>
-          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px] xl:static lg:absolute lg:left-[472px] md:absolute md:left-[402px] bg-[#1E1E1E]">
+          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px] xl:static lg:absolute lg:left-[492px] md:absolute md:left-[402px] bg-[#1E1E1E]">
             <img
               src="/images/aboutpage/contents/island2.gif"
               alt="island1"

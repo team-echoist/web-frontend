@@ -9,6 +9,7 @@ function index({
   handlePrepare,
   isDesktopOpen,
   setIsDesktopOpen,
+  handleNavigation
 }) {
   return (
     <>
@@ -20,7 +21,7 @@ function index({
       />
       <WebDesc />
       <FlipSection />
-      <WebFooter />
+      <WebFooter handleNavigation={handleNavigation}/>
     </>
   );
 }

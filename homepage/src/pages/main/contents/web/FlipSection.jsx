@@ -38,7 +38,7 @@ function FlipSection() {
             </div>
           </div>
 
-          <div className="xl:ml-[200px] lg:ml-[0px]">
+          <div className="xl:ml-[210px] lg:ml-[0px]">
             <div className="group xl:h-96 xl:w-96 lg:h-95 lg:w-95 [perspective:1000px]">
               <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
@@ -70,7 +70,7 @@ function FlipSection() {
         </div>
 
         <div className="flex xl:ml-[366px] lg:ml-[166px] md:ml-[100px] xl:mt-[6.09px] lg:mt-[6.58px] ">
-          <div className="mr-8">
+          <div >
             <div className="group  xl:h-96 xl:w-96 lg:h-95 lg:w-95 md:h-95 md:w-95 [perspective:1000px]">
               <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
@@ -99,7 +99,7 @@ function FlipSection() {
               <span>쓸수록 가까워지는 나와의 거리, 감정 해시태그</span>
             </div>
           </div>
-          <div className="xl:ml-[200px] lg:ml-[0px] md:ml-[0px]">
+          <div className="xl:ml-[220px] lg:ml-[0px] md:ml-[0px]">
             <div className="group  xl:h-96 xl:w-96 lg:h-95 lg:w-95 md:h-95 md:w-95[perspective:1000px]">
               <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}
@@ -160,7 +160,7 @@ function FlipSection() {
               <span>링크드아웃한 문장을 모은 읽기 커뮤니티</span>
             </div>
           </div>
-          <div className="xl:ml-[200px] lg:ml-[0px]">
+          <div className="xl:ml-[210px] lg:ml-[0px]">
             <div className="group  xl:h-96 xl:w-96 lg:h-95 lg:w-95 md:h-95 md:w-95 [perspective:1000px]">
               <div className="relative xl:h-[375px] xl:w-[582px] lg:w-[362px] lg:h-[233px]  md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}

@@ -9,9 +9,10 @@ function index({
   handlePrepare,
   isDesktopOpen,
   setIsDesktopOpen,
+  handleNavigation
 }) {
   return (
-    <div w-full className=" absolute top-[145.54px] overflow-x-hidden">
+    <div w-full className="absolute top-[145.54px] overflow-x-hidden">
       <MobileBanner
         handlePrepare={handlePrepare}
         handleDesktopOpen={handleDesktopOpen}
@@ -20,7 +21,7 @@ function index({
       />
       <MobileDesc />
       <MobileFlipSection />
-      <MobileFooter />
+      <MobileFooter handleNavigation={handleNavigation}/>
     </div>
   );
 }

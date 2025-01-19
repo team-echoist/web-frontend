@@ -1,5 +1,5 @@
-import Header from "../../shared/header/Header";
-import Footer from "../../shared/footer/Footer";
+import Header from "../../../shared/header/Header";
+import Footer from "../../../shared/footer/Footer";
 
 const LearnPage = () => {
   return (
