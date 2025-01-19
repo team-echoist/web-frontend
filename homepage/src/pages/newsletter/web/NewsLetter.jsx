@@ -1,6 +1,6 @@
-import Header from "../../shared/header/Header";
+import Header from "../../../shared/header/Header";
 import { useState } from "react";
-import ColorToast from "../../shared/toast/Toast";
+import ColorToast from "../../../shared/toast/Toast";
 
 const Newsletter = () => {
   const [isChecked1, setIsChecked1] = useState(false);
@@ -19,7 +19,7 @@ const Newsletter = () => {
           setIsShowToast(false);
         }}
         isShowToast={isShowToast}
-      ></ColorToast>
+      />
       <Header />
       <div className="flex flex-col items-center justify-center w-full py-20">
         <h1 className="text-white xl:text-4xl md:text-[30px] font-bold mb-16">NewsLetter</h1>

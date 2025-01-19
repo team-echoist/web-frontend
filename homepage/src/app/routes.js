@@ -4,9 +4,9 @@ import LocationTerms from "../pages/location-terms/LocationTermsPage";
 import PrivacyPolicy from "../pages/privacy-policy/PrivacyPolicyPage";
 import MainPage from "../pages/main/MainPage";
 import PremiumPage from "../pages/premium/PremiumPage";
-import NewsLetter from "../pages/newsletter/NewsLetter";
 import About from "../pages/about"
 import Learn from "../pages/learn"
+import NewsLetter from "../pages/newsletter"
 
 
 const routes = [
