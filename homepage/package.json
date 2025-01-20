@@ -1,9 +1,10 @@
 {
-  "name": "homepage-back",
+  "name": "homepage",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://linkedoutapp.com",
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -15,6 +16,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "hoststart": "react-scripts start --host 0.0.0.0",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -38,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.9"
