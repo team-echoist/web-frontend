@@ -1,5 +1,6 @@
 import Header from "../../shared/header/Header";
 import Prepare from "../../shared/prepare/Prepare";
+import Footer from "../../shared/footer/Footer";
 
 const PremiumPage = () => {
 

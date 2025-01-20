@@ -16,7 +16,7 @@ function Prepare({title}) {
     <>
       <div className="flex flex-col items-center xl:pt-[223.08px] lg:pt-[223.08px] md:pt-[223.08px] xs:pt-[178px]">
         {isMobile && (
-          <h1 className="text-center text-[32px] text-white font-bold font-pretendard text-xl tracking[-0.6px] mb-[79px]">
+          <h1 className="text-center !text-[32px] text-white font-bold font-pretendard text-xl tracking[-0.6px] mb-[79px]">
             {title}
           </h1>
         )}

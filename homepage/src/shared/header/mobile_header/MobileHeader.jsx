@@ -1,25 +1,30 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function MobileHeader() {
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
+  };
+
+  const handleNavigation = (path) => {
+    setIsMenuOpen(false); // 메뉴 닫기
+    navigate(path); // 라우팅
   };
 
   return (
     <>
       {/* 햄버거 버튼 */}
       <button onClick={toggleMenu} className="z-50">
-          <img
-            src="/images/mobile/menu/bugerBtn.svg"
-            alt="hambuger_menu"
-            className="w-[24px] h-[24px] absolute top-[68px] left-[20px]"
-          />
-        </button>
+        <img
+          src="/images/mobile/menu/bugerBtn.svg"
+          alt="hambuger_menu"
+          className="w-[24px] h-[24px] absolute top-[68px] left-[20px]"
+        />
+      </button>
       {/* 메뉴 */}
-      {/* 메뉴바 */}
       <div
         className={`fixed top-0 left-0 h-full w-[160px] bg-[#0F0F0F] text-white transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -38,29 +43,44 @@ function MobileHeader() {
         <nav className="fixed top-[137px] pl-[20px] text-[20px]">
           <ul>
             <li className="mb-4">
-              <Link to="/" >
+              <button
+                onClick={() => handleNavigation("/")}
+                className="text-white"
+              >
                 Home
-              </Link>
+              </button>
             </li>
             <li className="mb-4">
-              <Link to="/about" >
+              <button
+                onClick={() => handleNavigation("/about")}
+                className="text-white"
+              >
                 About
-              </Link>
+              </button>
             </li>
             <li className="mb-4">
-              <Link to="/learn" >
+              <button
+                onClick={() => handleNavigation("/learn")}
+                className="text-white"
+              >
                 Learn
-              </Link>
+              </button>
             </li>
             <li className="mb-4">
-              <Link to="/premium" >
+              <button
+                onClick={() => handleNavigation("/premium")}
+                className="text-white"
+              >
                 Premium
-              </Link>
+              </button>
             </li>
             <li className="mb-4">
-              <Link to="/newsletter">
+              <button
+                onClick={() => handleNavigation("/newsletter")}
+                className="text-white"
+              >
                 Newsletter
-              </Link>
+              </button>
             </li>
           </ul>
         </nav>
