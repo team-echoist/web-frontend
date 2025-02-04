@@ -9,7 +9,7 @@ function index({
   handlePrepare,
   isDesktopOpen,
   setIsDesktopOpen,
-  handleNavigation
+  handleNavigation,
 }) {
   return (
     <>
@@ -19,9 +19,9 @@ function index({
         isDesktopOpen={isDesktopOpen}
         setIsDesktopOpen={setIsDesktopOpen}
       />
-      <WebDesc />
+        <WebDesc />
       <FlipSection />
-      <WebFooter handleNavigation={handleNavigation}/>
+      <WebFooter handleNavigation={handleNavigation} />
     </>
   );
 }
