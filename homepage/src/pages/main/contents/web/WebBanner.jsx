@@ -122,7 +122,7 @@ function Web({
         </div>
       </div>
 
-      <div className="absolute xl2:static  xl:top-[38px] xl:left-[6%]  lg:top-[60px]  lg:left-[4%] md:top-[70px] md:left-[0px] xl2:w-[1148px] xl:w-[1478px] lg:w-[902px] md:w-[724px]">
+      <div className="absolute xl2:static  xl:top-[38px] xl:left-[6%]  lg:top-[60px]  lg:left-[4%] md:top-[70px] md:left-[0px] xl2:w-[1248px] xl:w-[1478px] lg:w-[902px] md:w-[724px]">
         <img
           src={"/images/mainpage/mockup.png"}
           alt="mockup"

@@ -6,6 +6,7 @@ module.exports = {
       screens: {
         xs: "320px",
         "xl2": "1350px",
+        "xl3": "1550px",
       },
       colors: {
         white: "#FFFFFF",
