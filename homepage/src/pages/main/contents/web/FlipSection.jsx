@@ -99,7 +99,7 @@ function FlipSection() {
               <span>쓸수록 가까워지는 나와의 거리, 감정 해시태그</span>
             </div>
           </div>
-          <div className="xl:ml-[190px]  xl2:ml-[80px] lg:ml-[0px] md:ml-[0px]">
+          <div className="xl:ml-[190px]  xl2:ml-[100px] lg:ml-[0px] md:ml-[0px]">
             <div className="group  xl:h-96 xl:w-96 xl2:h-[315px] xl2:w-95 lg:h-95 lg:w-95 md:h-95 md:w-95 [perspective:1000px]">
               <div className="relative xl:h-[375px] xl:w-[582px] xl2:w-[482px] xl2:h-[305px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front Face */}

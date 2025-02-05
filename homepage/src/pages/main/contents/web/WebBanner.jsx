@@ -18,9 +18,7 @@ function Web({
         <h3 className="text-white xl:text-[24px]  lg:text-[14px] font-normal font-['Arial'] leading-[38.40px]">
           A personal space where you can ‘linked-out’ various types of you.
         </h3>
-      </div>
-
-      <div className="xl:w-[1059px] lg:w-[982px] md-[982px] flex gap-[21.58px] mt-[55px] justify-start items-start xl:ml-[363px] xl2:ml-[0px] lg:ml-[166px] md:ml-[106px]">
+        <div className="xl:w-[1059px] lg:w-[982px] md-[982px] flex gap-[21.58px] mt-[55px] justify-start items-start xl:ml-[363px] xl2:ml-[0px] lg:ml-[166px] md:ml-[106px]">
         <GeneralButton onClick={handlePrepare}>
           <img
             className="xl:w-[34px] lg:w-[21px]  md:w-[21px]"
@@ -120,6 +118,8 @@ function Web({
             </div>
           )}
         </div>
+      </div>
+
       </div>
 
       <div className="absolute xl2:static  xl:top-[38px] xl:left-[6%]  lg:top-[60px]  lg:left-[4%] md:top-[70px] md:left-[0px] xl2:w-[1248px] xl:w-[1478px] lg:w-[902px] md:w-[724px]">
