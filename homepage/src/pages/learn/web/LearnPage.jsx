@@ -5,7 +5,7 @@ const LearnPage = () => {
   return (
     <div className="bg-[#0F0F0F]  min-h-screen text-white flex flex-col">
       <Header />
-      <section className="flex xl:h-[585px] lg:h-[364px] md:h-[324px] xl:mt-[370px] lg:mt-[204px] md:mt-[204px] xl:ml-[363px] lg:ml-[156px] md:ml-[76px]">
+      <section className="flex xl:justify-center xl:h-[585px] lg:h-[364px] md:h-[324px] xl:mt-[370px] xl:ml-[0px] lg:mt-[204px] md:mt-[204px]  lg:ml-[156px] md:ml-[76px]">
         <div>
           <p className="text-pointcolor font-pretendard xl:text-2xl lg:text-[20px] md:text-[16px] font-semibold">
             01
@@ -43,7 +43,7 @@ const LearnPage = () => {
           </p>
         </div>
         <div className="relative xl:w-[508px] lg:w-[373px] md:w-[323px] text-white">
-        <img
+          <img
             className="xl:absolute xl:left-[99px] lg:absolute lg:left-[39px] lg:absolute lg:left-[0px] md:left-[39px] md:absolute md:left-[30px] z-30"
             src="/images/learnpage/image_2730.svg"
             alt="learn_section1_img2"
@@ -53,7 +53,7 @@ const LearnPage = () => {
             src="/images/learnpage/Frame_1437256257.svg"
             alt="learn_section1_img1"
           />
-  
+
           <img
             className="xl:absolute xl:left-[259px] xl:top-[60px] lg:absolute lg:left-[199px] lg:top-[60px] md:absolute md:left-[159px] md:top-[60px] z-20"
             src="/images/learnpage/image_2731.svg"
@@ -62,21 +62,25 @@ const LearnPage = () => {
         </div>
       </section>
       {/* 섹션2 */}
-      <section className="relative xl:h-[586px] lg:h-[364px]  md:h-[364px] xl:ml-[363px] xl:mt-[269.35px] lg:ml-[154px] lg:mt-[143px] md:ml-[76px] md:mt-[143px] xl:h-[600px] lg:h-[364px] md:h-[364px] flex">
+      <section className="relative flex xl:justify-center gap-[27px] xl:h-[586px] lg:h-[364px]  md:h-[364px] xl:ml-[0px]  xl:mt-[269.35px] lg:ml-[154px] lg:mt-[143px] md:ml-[76px] md:mt-[143px] xl:h-[600px] lg:h-[364px] md:h-[364px] flex">
         <div className="flex">
-          <img
-            className="xl:w-[284px] lg:w-[177px] md:w-[157px] "
-            src="/images/learnpage/section2_1.svg"
-            alt="learn_section2_1_img"
-          />
-          <img
-            className="xl:w-[284px] lg:w-[176px] md:w-[156px] xl:absolute xl:top-[77px] xl:left-[284px] lg:absolute lg:top-[57px] lg:left-[196px] md:absolute md:top-[72px] md:left-[166px]"
-            src="/images/learnpage/section2_2.webp"
-            alt="learn_section2_2_img"
-          />
+          <div>
+            <img
+              className="xl:w-[284px] lg:w-[177px] md:w-[157px] "
+              src="/images/learnpage/section2_1.svg"
+              alt="learn_section2_1_img"
+            />
+          </div>
+          <div className="mt-[97px]">
+            <img
+              className="xl:w-[284px] lg:w-[176px] md:w-[156px] xl:static lg:absolute lg:top-[57px] lg:left-[196px] md:absolute md:top-[72px] md:left-[166px]"
+              src="/images/learnpage/section2_2.webp"
+              alt="learn_section2_2_img"
+            />
+          </div>
         </div>
 
-        <div className="relative xl:ml-[324px] xl:mt-[84px] lg:mt-[84px] md:mt-[84px] lg:ml-[239px] md:ml-[189px]">
+        <div className="relative xl:ml-[0px] xl:mt-[84px] lg:mt-[84px] md:mt-[84px] lg:ml-[239px] md:ml-[189px]">
           <p className="text-pointcolor font-pretendard xl:text-2xl lg:text-[20px]  md:text-[16px] font-semibold">
             02
           </p>
@@ -110,7 +114,7 @@ const LearnPage = () => {
         </div>
       </section>
       {/* 섹션3 */}
-      <section className="relative xl:ml-[363px] lg:ml-[154px] md:ml-[76px]  xl:mt-[269.35px] lg:mt-[103px] md:mt-[103px] xl:h-[600px] lg:h-[364px] md:h-[364px]  flex">
+      <section className="relative flex xl:justify-center xl:ml-[0px]  lg:ml-[154px] md:ml-[76px]  xl:mt-[269.35px] lg:mt-[103px] md:mt-[103px] xl:h-[600px] lg:h-[364px] md:h-[364px]  flex">
         <div className="relative mt-[84px] xl:mr-[76px] lg:mr-[56px]">
           <p className="text-pointcolor font-pretendard xl:text-2xl lg:text-[20px]  md:text-[16px] font-semibold">
             03
@@ -148,7 +152,7 @@ const LearnPage = () => {
         </div>
       </section>
       {/* 섹션4 */}
-      <section className="relative  xl:ml-[363px] xl:mt-[269.35px] lg:ml-[154px] md:ml-[76px]  lg:mt-[103px] md:mt-[103px] xl:h-[600px] lg:h-[364px] md:h-[364px] flex">
+      <section className="relative  flex xl:justify-center xl:ml-[0px]  xl:mt-[269.35px] lg:ml-[154px] md:ml-[76px]  lg:mt-[103px] md:mt-[103px] xl:h-[600px] lg:h-[364px] md:h-[364px] flex">
         <div className="flex gap-[15.98px]">
           <img
             className="xl:w-[284px] lg:w-[177px] md:w-[157px]"
@@ -191,7 +195,7 @@ const LearnPage = () => {
         </div>
       </section>
       {/* 섹션5 */}
-      <section className="relative xl:ml-[363px] xl:mt-[269.35px] lg:mt-[103px] md:mt-[103px] lg:ml-[154px] md:ml-[76px]  mt-[269.35px]  xl:h-[600px] lg:h-[364px] md:h-[364px] flex">
+      <section className="relative flex xl:justify-center xl:ml-[0px]  xl:mt-[269.35px] lg:mt-[103px] md:mt-[103px] lg:ml-[154px] md:ml-[76px]  mt-[269.35px]  xl:h-[600px] lg:h-[364px] md:h-[364px] flex">
         <div className="relative mt-[84px] xl:mr-[76px] lg:mr-[76px] md:mr-[56px]">
           <p className="text-pointcolor font-pretendard xl:text-2xl lg:text-[20px]  md:text-[16px] font-semibold">
             05
@@ -227,7 +231,7 @@ const LearnPage = () => {
         </div>
       </section>
       {/* 섹션 6 */}
-      <section className="relative xl:ml-[363px] xl:mt-[269.35px] lg:mt-[103px] md:mt-[103px] lg:ml-[154px] md:ml-[76px]  mt-[269.35px]  xl:h-[600px] lg:h-[364px] md:h-[364px] flex">
+      <section className="relative  flex xl:justify-center xl:ml-[0px]  xl:mt-[269.35px] lg:mt-[103px] md:mt-[103px] lg:ml-[154px] md:ml-[76px]  mt-[269.35px]  xl:h-[600px] lg:h-[364px] md:h-[364px] flex">
         <div className="flex gap-[15.98px] xl:w-[598px] lg:w-[356px] md:w-[356px]">
           <img
             src="/images/learnpage/section6_1.svg"

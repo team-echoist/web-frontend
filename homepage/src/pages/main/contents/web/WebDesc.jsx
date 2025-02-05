@@ -2,8 +2,8 @@ import React from 'react'
 
 function WebDesc() {
   return (
-    <section className="text-white flex xl:ml-[330.18px] lg:ml-[130px] md:ml-[70px]">
-    <div>
+    <section className="text-white flex xl:ml-[330.18px] xl2:ml-[0px] lg:ml-[140px] md:ml-[70px]  xl2:flex xl2:justify-center  ">
+    <div className='xl2:w-[972px]'>
       <div className="relative flex xl:gap-[70px]">
         <p className="whitespace-nowrap absolute top-[-23px] left-[30px] text-white font-['Pretendard'] xl:text-[39.043px] lg:text-[24px] md:text-[24px] font-semibold leading-[62.47px] tracking-[-1.171px]">
           다양한 관계 에서 벗어나다
@@ -21,10 +21,10 @@ function WebDesc() {
         <p className="absolute xl:top-[35px] lg:top-[18px] md:top-[18px] xl:left-[13%] lg:left-[28%] md:left-[18%]  text-white text-center font-['Pretendard'] xl:text-[24.402px] lg:text-[15.175px] md:text-[15.175px] font-thin leading-[39.043px] tracking-[-0.732px]">
           :Link
         </p>
-        <p className="absolute xl:top-[35px] lg:top-[18px] md:top-[18px] xl:left-[40%] lg:left-[85%]  md:left-[43%] text-white text-center font-['Pretendard']  xl:text-[24.402px] lg:text-[15.175px] font-thin leading-[39.043px] tracking-[-0.732px]">
+        <p className="absolute xl:top-[35px] lg:top-[18px] md:top-[18px] xl:left-[40%] lg:left-[85%]  md:left-[85%] text-white text-center font-['Pretendard']  xl:text-[24.402px] lg:text-[15.175px] font-thin leading-[39.043px] tracking-[-0.732px]">
           :Out
         </p>
-        <p className="text-white xl:w-[503px] lg:w-[406px] md:w-[306px] break-all xl:static lg:absolute lg:top-[-10px] lg:left-[350px] md:absolute md:top-[-10px] md:left-[350px]">
+        <p className="text-white xl:w-[503px] lg:w-[406px] md:w-[306px] break-all xl:static xl2:absolute xl2:top-[-10px] xl2:left-[530px] lg:absolute lg:top-[-10px] lg:left-[350px] md:absolute md:top-[-10px] md:left-[350px]">
           링크드아웃에서는 '다양한 관계 속의 나'를 한발짝 떨어져 들여다보는
           기회를 글쓰기 경험을 통해 제공하고 있어요.
         </p>

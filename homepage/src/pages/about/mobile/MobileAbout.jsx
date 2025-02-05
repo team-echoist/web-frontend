@@ -71,7 +71,7 @@ function MobileAbout() {
   return (
     <main className="w-full">
       <Header />
-      <section className="flex flex-col items-center pt-[145px] mb-[175px]">
+      <section className=" flex flex-col items-center pt-[145px] mb-[175px]">
         <div>
           <img
             src={"/images/mobile/about/linkedout_banner_mobile.gif"}
