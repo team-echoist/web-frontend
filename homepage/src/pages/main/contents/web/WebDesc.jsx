@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 
 function WebDesc() {
+  const [isMac, setIsMac] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMac(/Macintosh|MacIntel|MacPPC|Mac68K/.test(navigator.platform));
+    }
+  }, []);
   return (
     <section className="text-white flex xl:ml-[330.18px] xl2:ml-[0px] lg:ml-[140px] md:ml-[70px]  xl2:flex xl2:justify-center  ">
     <div className='xl2:w-[972px]'>
-      <div className="relative flex gap-[4.375rem]">
+      <div className={`relative flex ${isMac?"gap-[0rem]":"gap-[4.375rem]"}`}>
         <p className="whitespace-nowrap absolute top-[-23px] left-[30px] text-white font-['Pretendard'] xl:text-[39.043px] lg:text-[24px] md:text-[24px] font-semibold leading-[62.47px] tracking-[-1.171px]">
           다양한 관계 에서 벗어나다
         </p>
