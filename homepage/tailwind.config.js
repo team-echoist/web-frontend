@@ -4,7 +4,13 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'xs': '320px', 
+        xs: "320px",
+        "xl": "1390px",
+        "xl2": "1400px",
+        "xl3": "1550px",
+      },
+      fontFamily:{
+        pretendard:["Pretendard","system-ui","sans-serif"]
       },
       colors: {
         white: "#FFFFFF",
@@ -20,24 +26,26 @@ module.exports = {
         red: "#E43446",
       },
       perspective: {
-        '1000': '1000px',
+        1000: "1000px",
       },
       transformStyle: {
-        'preserve-3d': 'preserve-3d',
+        "preserve-3d": "preserve-3d",
       },
       rotate: {
-        '360': '360deg',
+        360: "360deg",
       },
       backfaceVisibility: {
-        hidden: 'hidden',
+        hidden: "hidden",
       },
     },
   },
-  plugins: [   function ({ addUtilities }) {
-    addUtilities({
-      '.all-unset': {
-        all: 'unset',
-      },
-    });
-  },],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        ".all-unset": {
+          all: "unset",
+        },
+      });
+    },
+  ],
 };

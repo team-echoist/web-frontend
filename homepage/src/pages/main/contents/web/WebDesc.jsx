@@ -1,37 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 
 function WebDesc() {
   return (
-    <section className="text-white flex xl:ml-[330.18px] lg:ml-[130px] md:ml-[70px]">
-    <div>
-      <div className="relative flex xl:gap-[70px]">
-        <p className="whitespace-nowrap absolute top-[-23px] left-[30px] text-white font-['Pretendard'] xl:text-[39.043px] lg:text-[24px] md:text-[24px] font-semibold leading-[62.47px] tracking-[-1.171px]">
-          다양한 관계 에서 벗어나다
-        </p>
-        <img
-          className="xl:w-[220.84px] xl:h-[47.584px] lg:w-[150px] lg:h-[30px] md:w-[150px] md:h-[30px] xl:ml-[0px] lg:ml-[15px] md:ml-[20px]"
-          src={"/images/mainpage/highlight.png"}
-          alt="highlights"
-        />
-        <img
-          className="xl:w-[220.84px] xl:h-[47.584px] lg:w-[119px]  md:w-[119px] xl:ml-[0px] lg:h-[30px] md:h-[30px] lg:ml-[35px] md:ml-[40px]"
-          src={"/images/mainpage/highlight.png"}
-          alt="highlights"
-        />
-        <p className="absolute xl:top-[35px] lg:top-[18px] md:top-[18px] xl:left-[13%] lg:left-[28%] md:left-[18%]  text-white text-center font-['Pretendard'] xl:text-[24.402px] lg:text-[15.175px] md:text-[15.175px] font-thin leading-[39.043px] tracking-[-0.732px]">
-          :Link
-        </p>
-        <p className="absolute xl:top-[35px] lg:top-[18px] md:top-[18px] xl:left-[40%] lg:left-[85%]  md:left-[43%] text-white text-center font-['Pretendard']  xl:text-[24.402px] lg:text-[15.175px] font-thin leading-[39.043px] tracking-[-0.732px]">
-          :Out
-        </p>
-        <p className="text-white xl:w-[503px] lg:w-[406px] md:w-[306px] break-all xl:static lg:absolute lg:top-[-10px] lg:left-[350px] md:absolute md:top-[-10px] md:left-[350px]">
+    <section className="text-white flex  flex justify-center">
+      <div className="xl3:w-full xl2:w-[900px] lg:w-[712px] md:w-[632px] flex gap-[112px] xl3:justify-center">
+        <div className={`flex flex-col w-[50%] xl3:w-[450px] pl-[0px]  xl3:pl-[50px]`}>
+          <p className="whitespace-nowrap  text-white font-pretendard xl:text-[39.043px] lg:text-[24px] md:text-[24px] font-semibold leading-[62.47px] tracking-[-1.171px]">
+            다양한 관계 에서 벗어나다
+          </p>
+          <div className="-mt-[25px] -ml-[30px] -mr-[30px] flex flex-col">
+            <div className="flex gap-[10px] xl2:gap-[30px] h-[40px] lg:h-[30px] md:h-[30px] w-full">
+              <img
+                className="w-[60%] xl3:w-[58%] xl2:w-[70%] lg:w-[52%] md:w-[52%]"
+                src={"/images/mainpage/highlight.png"}
+                alt="highlights"
+              />
+              <img
+                className="w-[60%] ml-[0px] xl3:ml-[40px] xl3:w-[50%] xl2:w-[55%] lg:w-[38%] md:w-[40%]"
+                src={"/images/mainpage/highlight.png"}
+                alt="highlights"
+              />
+            </div>
+
+            <div className="flex -mt-[10px]">
+              <p className="w-[38%] xl3:w-[50%] lg:w-[42%] md:w-[42%] flex justify-end  font-pretendard xl:text-[1.5rem] lg:text-[1rem] font-thin leading-[2rem] tracking-[-0.05rem]">
+                :Link
+              </p>
+              <p className="w-[55%] xl3:w-[75%]  xl:w-[53%] lg:w-[45%] md:w-[45%] flex justify-end  font-pretendard xl:text-[1.5rem] lg:text-[1rem] font-thin leading-[2rem] tracking-[-0.05rem]">
+                :Out
+              </p>
+            </div>
+          </div>
+        </div>
+        <p className="text-white  break-all w-[50%] lg:w-[406px]">
           링크드아웃에서는 '다양한 관계 속의 나'를 한발짝 떨어져 들여다보는
           기회를 글쓰기 경험을 통해 제공하고 있어요.
         </p>
       </div>
-    </div>
-  </section>
-  )
+    </section>
+  );
 }
 
-export default WebDesc
+export default WebDesc;

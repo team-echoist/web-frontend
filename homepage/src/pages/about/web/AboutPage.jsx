@@ -18,15 +18,16 @@ const AboutPage = () => {
             <span className="block whitespace-nowrap">링크드아웃할 준비가 되셨나요?</span>
           </div>
           {/* 설명 텍스트 */}
-          <div className="xl:text-xl lg:text-[12px] md-[12px] leading-[1.6] space-y-4 xl:ml-[216px] lg:ml-[155px] md:ml-[105px] whitespace-nowrap">
+          <div className="xl:text-xl lg:text-[12px] md-[12px] leading-[1.6] space-y-4 xl:ml-[216px] xl2:ml-[106px] xl3:ml-[216px] lg:ml-[155px] md:ml-[105px] whitespace-nowrap">
             <p>→ 링크드아웃이란?</p>
             <p>→ 쓰는 것에 대하여</p>
             <p>→ 당신은 어떤 아무개인가요?</p>
             <p>→ 그래서 말이죠.</p>
           </div>
         </section>
-        <article className="flex justify-center items-start xl:mt-[217px] lg:mt-[141px] md:mt-[141px]">
-          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px]  bg-[#1E1E1E]">
+        <section className="flex items-center flex-col items-start xl:mt-[217px] lg:mt-[141px] md:mt-[141px]">
+          <div className="flex">
+          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px]  bg-[#1E1E1E] flex">
             <img
               src="/images/aboutpage/contents/island1.gif"
               alt="island1"
@@ -55,10 +56,10 @@ const AboutPage = () => {
               </p>
             </div>
           </div>
-        </article>
-
-        <article className="flex justify-center items-start xl:w-full xl:h-[770px] lg:w-[692px] lg:h-[497px] md:w-[692px] md:h-[497px]">
-          <div className="xl:p-10 lg:p-7 md:p-7 xl:w-[557px] lg:w-[361px] md:w-[341px] lg:flex lg:flex-col mr-[50px]  xl:static lg:absolute lg:left-[96px] md:absolute md:left-[40px]">
+          </div>
+      
+        <article className="flex justify-center items-center xl:w-full xl:h-[770px]  lg:w-[772px] lg:h-[497px]  md:w-[692px] md:h-[497px]">
+          <div className="xl:p-10  md:p-7 xl:w-[597px] lg:w-[352px] md:w-[311px] lg:flex lg:flex-col mr-[0px]  xl:static lg:static md:absolute md:left-[40px]">
             <h2 className="xl:text-[39.843px] lg:text-[24px] md:text-[24px] font-semibold leading-[1.6] tracking-[-1.171px]">
               쓰는 것에 대하여
             </h2>
@@ -76,7 +77,7 @@ const AboutPage = () => {
               </p>
             </div>
           </div>
-          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px] xl:static lg:absolute lg:left-[492px] md:absolute md:left-[402px] bg-[#1E1E1E]">
+          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px] xl:static  lg:static md:absolute md:left-[402px] bg-[#1E1E1E]">
             <img
               src="/images/aboutpage/contents/island2.gif"
               alt="island1"
@@ -84,18 +85,21 @@ const AboutPage = () => {
             />
           </div>
         </article>
+        </section>
+   
 
-        <article className="flex justify-center items-start mt-[217px]">
-          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px] bg-[#1E1E1E]">
-            <img
+        <section className="flex items-center flex-col items-start xl:mt-[217px] lg:mt-[141px] md:mt-[141px]  mt-[217px]">
+          <div className="flex">
+          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px]  bg-[#1E1E1E] flex">
+          <img
               src="/images/aboutpage/contents/island3.gif"
               alt="island1"
               className="object-cover  object-center h-full w-full "
             />
           </div>
-          <div className="p-10 xl:w-[597px] lg:w-[450px] md:w-[371px]">
+          <div className="p-10 xl:w-[597px] lg:w-[400px] md:w-[371px]">
             <h2 className="xl:text-[39.843px] lg:text-[24px] md:text-[24px] font-semibold leading-[1.6] tracking-[-1.171px]">
-              당신은 어떤 아무개인가요?
+            당신은 어떤 아무개인가요?
             </h2>
             <div className="xl:text-xl lg:text-[12px]">
               <p className="mt-[32px]">
@@ -110,12 +114,12 @@ const AboutPage = () => {
               </p>
             </div>
           </div>
-        </article>
-
-        <article className="flex justify-center items-start  xl:w-full xl:h-[770px] lg:w-[692px] lg:h-[497px] md:w-[692px] md:h-[497px]">
-          <div className="xl:p-10 lg:p-7 md:p-7 xl:w-[597px] lg:w-[361px] md:w-[361px]  xl:static lg:absolute lg:left-[96px] md:absolute md:left-[30px]">
+          </div>
+      
+        <article className="flex justify-center items-center xl:w-full xl:h-[770px]  lg:w-[772px] lg:h-[497px]  md:w-[692px] md:h-[497px]">
+          <div className="xl:p-10  md:p-7 xl:w-[597px] lg:w-[352px] md:w-[311px] lg:flex lg:flex-col mr-[0px]  xl:static lg:static md:absolute md:left-[40px]">
             <h2 className="xl:text-[39.843px] lg:text-[24px] md:text-[24px] font-semibold leading-[1.6] tracking-[-1.171px]">
-              수많은 나를 알아가는 여정
+            수많은 나를 알아가는 여정
             </h2>
             <div className="xl:text-xl lg:text-[12px] md:text-[12px]">
               <p className="mt-[32px]">
@@ -135,15 +139,17 @@ const AboutPage = () => {
                 생각한답니다. 이 공간에서 마음껏 솔직해지는 아무개가 되어주세요!
               </p>
             </div>
+
           </div>
-          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px] xl:static lg:absolute lg:left-[472px]  md:absolute md:left-[402px] bg-[#1E1E1E]">
+          <div className="xl:w-[598px] xl:h-[770px] lg:w-[372px] lg:h-[479px] md:w-[372px] md:h-[479px] xl:static  lg:static md:absolute md:left-[402px] bg-[#1E1E1E]">
             <img
-              src="/images/aboutpage/contents/island4.gif"
+              src="/images/aboutpage/contents/island2.gif"
               alt="island1"
-              className="object-cover  object-center h-full w-full "
+              className="object-fill object-center h-full w-full "
             />
           </div>
         </article>
+        </section>
         <Footer/>
       </div>
 
