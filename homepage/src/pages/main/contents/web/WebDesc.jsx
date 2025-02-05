@@ -8,6 +8,7 @@ function WebDesc() {
       setIsMac(/Macintosh|MacIntel|MacPPC|Mac68K/.test(navigator.platform));
     }
   }, []);
+  console.log("test",isMac)
   return (
     <section className="text-white flex xl:ml-[330.18px] xl2:ml-[0px] lg:ml-[140px] md:ml-[70px]  xl2:flex xl2:justify-center  ">
     <div className='xl2:w-[972px]'>
@@ -16,19 +17,19 @@ function WebDesc() {
           다양한 관계 에서 벗어나다
         </p>
         <img
-          className="xl:w-[220.84px] xl:h-[47.584px] lg:w-[150px] lg:h-[30px] md:w-[150px] md:h-[30px] xl:ml-[0px] lg:ml-[15px] md:ml-[20px]"
+          className="xl:w-[220.84px] xl:h-[47.584px] lg:w-[150px] lg:h-[30px] md:w-[150px] md:h-[30px] xl:ml-[0px] lg:ml-[0px] md:ml-[0px]"
           src={"/images/mainpage/highlight.png"}
           alt="highlights"
         />
         <img
-          className="xl:w-[220.84px] xl:h-[47.584px] lg:w-[119px]  md:w-[119px] xl:ml-[0px] lg:h-[30px] md:h-[30px] lg:ml-[35px] md:ml-[40px]"
+          className="xl:w-[220.84px] xl:h-[47.584px] lg:w-[119px]  md:w-[119px] xl:ml-[0px] lg:h-[30px] md:h-[30px] lg:ml-[0px] md:ml-[0px]"
           src={"/images/mainpage/highlight.png"}
           alt="highlights"
         />
         <p className="absolute xl:top-[2rem] lg:top-[1rem] md:top-[1rem] xl:left-[15%] lg:left-[38%] md:left-[35%] text-white text-center font-pretendard xl:text-[1.5rem] lg:text-[1rem] font-thin leading-[2rem] tracking-[-0.05rem]">
         :Link
       </p>
-      <p className="absolute xl:top-[2rem] lg:top-[1rem] md:top-[1rem] xl:left-[45%] lg:left-[85%] md:left-[85%] text-white text-center font-pretendard xl:text-[1.5rem] lg:text-[1rem] font-thin leading-[2rem] tracking-[-0.05rem]">
+      <p className="absolute xl:top-[2rem] lg:top-[1rem] md:top-[1rem] xl:left-[40%] lg:left-[85%] md:left-[85%] text-white text-center font-pretendard xl:text-[1.5rem] lg:text-[1rem] font-thin leading-[2rem] tracking-[-0.05rem]">
         :Out
       </p>
         <p className="text-white xl:w-[503px] lg:w-[406px] md:w-[306px] break-all xl:static xl2:absolute xl2:top-[-10px] xl2:left-[530px] lg:absolute lg:top-[-10px] lg:left-[350px] md:absolute md:top-[-10px] md:left-[350px]">

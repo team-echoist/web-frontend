@@ -8,6 +8,9 @@ module.exports = {
         "xl2": "1350px",
         "xl3": "1550px",
       },
+      fontFamily:{
+        pretendard:["Pretendard","system-ui","sans-serif"]
+      },
       colors: {
         white: "#FFFFFF",
         black: "#000",
