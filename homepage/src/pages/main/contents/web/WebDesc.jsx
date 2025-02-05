@@ -2,31 +2,31 @@ import React, { useEffect, useState } from "react";
 
 function WebDesc() {
   return (
-    <section className="text-white flex  flex justify-center  ">
-      <div className="xl2:w-[900px] lg:w-[712px] md:w-[632px] flex gap-[112px]">
-        <div className={`flex flex-col w-[50%]`}>
+    <section className="text-white flex  flex justify-center">
+      <div className="xl3:w-full xl2:w-[900px] lg:w-[712px] md:w-[632px] flex gap-[112px] xl3:justify-center">
+        <div className={`flex flex-col w-[50%] xl3:w-[450px] pl-[0px]  xl3:pl-[50px]`}>
           <p className="whitespace-nowrap  text-white font-pretendard xl:text-[39.043px] lg:text-[24px] md:text-[24px] font-semibold leading-[62.47px] tracking-[-1.171px]">
             다양한 관계 에서 벗어나다
           </p>
           <div className="-mt-[25px] -ml-[30px] -mr-[30px] flex flex-col">
             <div className="flex gap-[10px] xl2:gap-[30px] h-[40px] lg:h-[30px] md:h-[30px] w-full">
               <img
-                className="w-[60%] xl2:w-[70%] lg:w-[52%] md:w-[52%]"
+                className="w-[60%] xl3:w-[58%] xl2:w-[70%] lg:w-[52%] md:w-[52%]"
                 src={"/images/mainpage/highlight.png"}
                 alt="highlights"
               />
               <img
-                className="w-[60%] xl2:w-[55%] lg:w-[38%] md:w-[40%]"
+                className="w-[60%] ml-[0px] xl3:ml-[40px] xl3:w-[50%] xl2:w-[55%] lg:w-[38%] md:w-[40%]"
                 src={"/images/mainpage/highlight.png"}
                 alt="highlights"
               />
             </div>
 
             <div className="flex -mt-[10px]">
-              <p className="w-[38%] lg:w-[42%] md:w-[42%] flex justify-end  font-pretendard xl:text-[1.5rem] lg:text-[1rem] font-thin leading-[2rem] tracking-[-0.05rem]">
+              <p className="w-[38%] xl3:w-[50%] lg:w-[42%] md:w-[42%] flex justify-end  font-pretendard xl:text-[1.5rem] lg:text-[1rem] font-thin leading-[2rem] tracking-[-0.05rem]">
                 :Link
               </p>
-              <p className="w-[55%] lg:w-[45%] md:w-[45%] flex justify-end  font-pretendard xl:text-[1.5rem] lg:text-[1rem] font-thin leading-[2rem] tracking-[-0.05rem]">
+              <p className="w-[55%] xl3:w-[75%]  xl:w-[53%] lg:w-[45%] md:w-[45%] flex justify-end  font-pretendard xl:text-[1.5rem] lg:text-[1rem] font-thin leading-[2rem] tracking-[-0.05rem]">
                 :Out
               </p>
             </div>
