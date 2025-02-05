@@ -1,8 +1,6 @@
 import React from "react";
 
 function FlipSection() {
-
-
   return (
     <>
       {/* 카드 플립 애니메이션 컴포넌트 */}
@@ -16,7 +14,7 @@ function FlipSection() {
                   <img
                     src="/images/mainpage/section_1.svg"
                     alt="section_1"
-                       className="object-cover cursor-pointer object-left h-full w-full "
+                    className="object-cover cursor-pointer object-left h-full w-full "
                   />
                 </div>
 
@@ -26,7 +24,7 @@ function FlipSection() {
                     <img
                       src="/images/mainpage/hideimages/web/1.svg"
                       alt="section_1_back"
-                       className="object-cover cursor-pointer object-left h-full w-full "
+                      className="object-cover cursor-pointer object-left h-full w-full "
                     />
                   </div>
                 </div>
@@ -46,7 +44,7 @@ function FlipSection() {
                   <img
                     src="/images/mainpage/section_2.svg"
                     alt="section_2"
-                     className="object-cover cursor-pointer object-left h-full w-full "
+                    className="object-cover cursor-pointer object-left h-full w-full "
                   />
                 </div>
 
@@ -69,7 +67,7 @@ function FlipSection() {
           </div>
         </div>
 
-        <div className="flex xl:ml-[366px] xl2:ml-[0px] lg:ml-[166px] md:ml-[100px] xl:mt-[6.09px] lg:mt-[6.58px] ">
+        <div className="box-border flex xl:ml-[366px] xl2:ml-[0px] lg:ml-[166px] md:ml-[100px] xl:mt-[6.09px] lg:mt-[6.58px] ">
           <div className="mr-8">
             <div className="group  xl:h-96 xl:w-96 xl2:h-[315px] xl2:w-95 lg:h-95 lg:w-95 md:h-95 md:w-95 [perspective:1000px]">
               <div className="relative xl:h-[375px] xl:w-[582px] xl2:w-[482px] xl2:h-[305px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
@@ -78,7 +76,7 @@ function FlipSection() {
                   <img
                     src="/images/mainpage/section_3.svg"
                     alt="section_3"
-                  className="object-cover cursor-pointer object-left h-full w-full "
+                    className="object-cover cursor-pointer object-left h-full w-full "
                   />
                 </div>
 
@@ -94,9 +92,11 @@ function FlipSection() {
                 </div>
               </div>
             </div>
-            <div className="mt-[9px] mb-[28px]">
+            <div className="mt-[9px] mb-[28px] w-[300px] flex whitespace-nowrap">
               <span className="text-[#616FED] mr-[5px]">03</span>
-              <span>쓸수록 가까워지는 나와의 거리, 감정 해시태그</span>
+              <span className="block w-full">
+                쓸수록 가까워지는 나와의 거리, 감정 해시태그
+              </span>
             </div>
           </div>
           <div className="xl:ml-[190px]  xl2:ml-[100px] lg:ml-[0px] md:ml-[0px]">
@@ -149,7 +149,7 @@ function FlipSection() {
                     <img
                       src="/images/mainpage/hideimages/web/5.svg"
                       alt="section_5_back"
-                       className="object-cover cursor-pointer object-left h-full w-full "
+                      className="object-cover cursor-pointer object-left h-full w-full "
                     />
                   </div>
                 </div>
@@ -178,7 +178,7 @@ function FlipSection() {
                     <img
                       src="/images/mainpage/hideimages/web/6.webp"
                       alt="section_6_back"
-                    className="object-cover cursor-pointer object-left h-full w-full "
+                      className="object-cover cursor-pointer object-left h-full w-full "
                     />
                   </div>
                 </div>
