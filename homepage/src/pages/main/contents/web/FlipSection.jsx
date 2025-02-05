@@ -4,8 +4,8 @@ function FlipSection() {
   return (
     <>
       {/* 카드 플립 애니메이션 컴포넌트 */}
-      <section className="xl:text-[18px] lg:text-[12px] md:text-[12px] xl2:flex xl2:items-center xl2:flex-col">
-        <div className="flex xl:ml-[366px] xl2:ml-[0px] lg:ml-[166px] md:ml-[100px] mt-[83.09px]">
+      <section className="xl:text-[18px] lg:text-[12px] md:text-[12px] xl2:flex xl2:items-center xl2:flex-col lg:block md:flex md:items-center md:flex-col">
+        <div className="flex xl:ml-[366px] xl2:ml-[0px] lg:ml-[166px] md:ml-[0px] mt-[83.09px]">
           <div className="mr-8">
             <div className="group xl:h-96 xl:w-96 xl2:h-[315px] xl2:w-95 lg:h-95 lg:w-95 md:h-95 md:w-95 [perspective:1000px]">
               <div className="relative  xl:h-[375px] xl:w-[582px] xl2:w-[482px] xl2:h-[305px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
@@ -67,7 +67,7 @@ function FlipSection() {
           </div>
         </div>
 
-        <div className="box-border flex xl:ml-[366px] xl2:ml-[0px] lg:ml-[166px] md:ml-[100px] xl:mt-[6.09px] lg:mt-[6.58px] ">
+        <div className="box-border flex xl:ml-[366px] xl2:ml-[0px] lg:ml-[166px] md:ml-[0px] xl:mt-[6.09px] lg:mt-[6.58px] ">
           <div className="mr-8">
             <div className="group  xl:h-96 xl:w-96 xl2:h-[315px] xl2:w-95 lg:h-95 lg:w-95 md:h-95 md:w-95 [perspective:1000px]">
               <div className="relative xl:h-[375px] xl:w-[582px] xl2:w-[482px] xl2:h-[305px] lg:w-[362px] lg:h-[233px] md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
@@ -130,7 +130,7 @@ function FlipSection() {
           </div>
         </div>
 
-        <div className="flex xl:ml-[366px] xl2:ml-[0px] lg:ml-[166px] md:ml-[100px]  xl:mt-[6.09px] lg:mt-[6.58px] md:mt-[6.58px]">
+        <div className="flex xl:ml-[366px] xl2:ml-[0px] lg:ml-[166px] md:ml-[0px]  xl:mt-[6.09px] lg:mt-[6.58px] md:mt-[6.58px]">
           <div className="mr-8">
             <div className="group xl:h-96 xl:w-96 xl2:h-[315px] xl2:w-95 lg:h-95 lg:w-95 md:h-95 md:w-95 [perspective:1000px]">
               <div className="relative xl:h-[375px] xl:w-[582px]  xl2:w-[482px] xl2:h-[305px] lg:w-[362px] lg:h-[233px]  md:w-[302px] md:h-[203px] transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">

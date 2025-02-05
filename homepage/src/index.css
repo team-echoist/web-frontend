@@ -6,10 +6,12 @@
   }
 };
 
-body {
-  background-color: #0f0f0f; 
-  overflow-x: hidden;
-  overscroll-behavior-x: none; 
+html, body {
+  background-color: #0f0f0f;
+  overflow-x: hidden !important;
+  overscroll-behavior-x: none;
+  position: relative;
+  max-width: 100vw;
 }
 @media (max-width: 768px) {
   body {

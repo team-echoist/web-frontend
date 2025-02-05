@@ -12,7 +12,7 @@ function Web({
   return (
     <div className="w-full xl:mt-[250px] lg:mt-[130px] md:mt-[100px] relative xl:h-[1373px] lg:h-[890px] md:h-[750px] xl2:flex xl2:items-center xl2:flex-col">
       <div className="xl:ml-[363px] xl2:ml-[0px] lg:ml-[166px] md:ml-[106px]">
-        <h1 className="text-white xl:text-[48px] lg:text-[30px] md:text-[24px] font-bold font-['Pretendard'] ">
+        <h1 className="text-white xl:text-[48px] lg:text-[30px] md:text-[24px] font-bold font-pretendard ">
           다양한 나를 '링크드아웃' 할 수 있는 글쓰기 공간
         </h1>
         <h3 className="text-white xl:text-[24px]  lg:text-[14px] font-normal font-['Arial'] leading-[38.40px]">

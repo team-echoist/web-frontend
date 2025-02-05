@@ -4,7 +4,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import routes from "./routes";
 import ScrollTopBtn from "../shared/scroll/scrollTop";
 function ScrollToTop() {
@@ -18,6 +18,10 @@ function ScrollToTop() {
 }
 
 function App() {
+  useEffect(()=>{
+    document.documentElement.style.overflowX = "hidden";
+    document.body.style.overflowX = "hidden";
+  },[])
   return (
     <Router>
       <ScrollTopBtn />
