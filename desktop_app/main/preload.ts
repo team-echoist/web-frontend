@@ -23,7 +23,7 @@ contextBridge.exposeInMainWorld("Electron", {
     channel: string,
     func: (event: IpcRendererEvent, ...args: any[]) => void
   ) => {
-    ipcRenderer.once(channel, func);
+    ipcRenderer.on(channel, func);
     ipcRenderer.send("getFCMToken");
   },
   requestDeviceInfo: () => ipcRenderer.send("request-device-info"),
@@ -48,10 +48,11 @@ contextBridge.exposeInMainWorld("Electron", {
 
 const senderId = 710166131124;
 
-ipcRenderer.send(START_NOTIFICATION_SERVICE, senderId);
+ipcRenderer.send(START_NOTIFICATION_SERVICE, 710166131124);
 
 // Listen for service successfully started
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_, token) => {
+  console.log("FCM Token Received:", token); 
   ipcRenderer.send("storeFCMToken", token);
 });
 
@@ -60,20 +61,20 @@ ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_, error) => {
   console.log(error);
 });
 
-// // Handle notifications sent through Firebase
-// ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
-//   console.log('Notification received in preload ON_NOTIFICATION_RECEIVED:', notification);
-//   const notif = new Notification({
-//     title: notification.title,
-//     body: notification.body,
-//   });
+// Handle notifications sent through Firebase
+ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
+  console.log('Notification received in preload ON_NOTIFICATION_RECEIVED:', notification);
+  const notif = new Notification({
+    title: notification.title,
+    body: notification.body,
+  });
 
-//   notif.on('click', () => {
-//     ipcRenderer.send('notification-clicked', notification);
-//   });
+  notif.on('click', () => {
+    ipcRenderer.send('notification-clicked', notification);
+  });
 
-//   notif.show();
-// });
+  notif.show();
+});
 
 ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
   const appIcon = nativeImage

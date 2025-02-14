@@ -95,7 +95,7 @@ export const createWindow = (
     ...options,
     autoHideMenuBar: true,
     minWidth: 1200,
-    minHeight: 900,
+    minHeight: process.platform === "darwin" ? 800 : 900,
     maxWidth: 1520,
     maxHeight: 1080,
     icon: appIcon,

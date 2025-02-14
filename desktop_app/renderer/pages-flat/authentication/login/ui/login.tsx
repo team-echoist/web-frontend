@@ -88,6 +88,7 @@ export const Login = () => {
   };
 
   const handleUserInfo = async () => {
+
     setLoading(true);
     if (deviceId && fcmToken) {
       const userData = await getUserInfo();
@@ -118,8 +119,19 @@ export const Login = () => {
         }
         redirectToPage(false);
       }
+    }else{
+      // 토큰이나 디바이스 정보 없을때  추후에 로그인할때 재확인
+      const userData = await getUserInfo();
+      if(userData){
+        if (userData) {
+          setUser(userData);
+          redirectToPage(false);
+        }
+      }
+      redirectToPage(false);
+      setLoading(false);
     }
-    setLoading(false);
+
   };
 
   useEffect(() => {
