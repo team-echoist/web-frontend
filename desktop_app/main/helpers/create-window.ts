@@ -103,7 +103,7 @@ export const createWindow = (
     backgroundColor: "#101012",
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: true,
       sandbox: false,
       preload: path.join(process.cwd(), "main", "preload.js"),
       ...options.webPreferences,
