@@ -111,7 +111,7 @@ export const createWindow = (
   });
 
   let machineId = machineIdSync();
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
 
   ipcMain.on("request-device-info", (event) => {
