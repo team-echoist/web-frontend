@@ -29,11 +29,12 @@ const Layout = styled.nav`
   top: 32px;
   left: 259px;
   z-index: 2000;
+  overflow-y:auto;
 `;
 const ProfileDiv = styled.div`
   width: 100%;
   height: 98px;
-  padding-top: 70px;
+  padding-top: 50px;
   border-bottom: 5px solid #1a1a1a;
 `;
 const ProfileItemDiv = styled.div`
@@ -117,8 +118,9 @@ const GeneralText = styled.p`
 `;
 const GraphDiv = styled.div`
   width: 100%;
-  height: 194px;
+  height: 184px;
   border-bottom: 5px solid #1a1a1a;
+ 
 `;
 const GraphTitleDiv = styled.div`
   display: flex;
@@ -147,7 +149,7 @@ const Li = styled.li<{ isSelected: boolean }>`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
-  height: 84px;
+  height: 74px;
   display: flex;
   align-items: center;
   padding-left: 30px;
