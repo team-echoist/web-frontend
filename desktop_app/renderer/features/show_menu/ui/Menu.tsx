@@ -20,6 +20,8 @@ import { BottomSheet } from "@/shared/ui/modal";
 import { Button } from "@/shared/ui/button";
 import { handleLogout } from "@/shared/lib/auth";
 
+const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+
 const Layout = styled.nav`
   width: 376px;
   height: 100%;
@@ -34,7 +36,7 @@ const Layout = styled.nav`
 const ProfileDiv = styled.div`
   width: 100%;
   height: 98px;
-  padding-top: 50px;
+  padding-top: ${isMac?"50px":"70px"};
   border-bottom: 5px solid #1a1a1a;
 `;
 const ProfileItemDiv = styled.div`
@@ -118,7 +120,7 @@ const GeneralText = styled.p`
 `;
 const GraphDiv = styled.div`
   width: 100%;
-  height: 184px;
+  height: 194px;
   border-bottom: 5px solid #1a1a1a;
  
 `;
@@ -149,7 +151,7 @@ const Li = styled.li<{ isSelected: boolean }>`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
-  height: 74px;
+  height: ${isMac ? '74px' : '84px'};
   display: flex;
   align-items: center;
   padding-left: 30px;
