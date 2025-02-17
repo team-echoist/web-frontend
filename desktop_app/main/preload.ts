@@ -56,6 +56,8 @@ ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_, token) => {
   ipcRenderer.send("storeFCMToken", token);
 });
 
+
+
 // Handle notification errors
 ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_, error) => {
   console.log(error);
