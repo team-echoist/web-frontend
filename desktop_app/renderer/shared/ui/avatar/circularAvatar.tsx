@@ -20,7 +20,7 @@ function CircularAvatar({
   width,
   height,
 }: {
-  img: StaticImageData | string;
+  img:any;
   width: number;
   height: number;
 }) {
