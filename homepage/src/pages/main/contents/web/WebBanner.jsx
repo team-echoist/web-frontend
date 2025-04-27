@@ -95,7 +95,7 @@ function Web({
                 onClick={() => {
                   setIsDesktopOpen(false);
                   downloadFile(
-                    "http://58.236.96.102:8888/window/linkedout-setup-1.0.0.exe"
+                    "http://58.236.96.102:8888/public/window/linkedout-setup-1.0.0.exe"
                   );
                 }}
               >
