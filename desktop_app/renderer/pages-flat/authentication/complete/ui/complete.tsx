@@ -5,10 +5,10 @@ import BackgroundLogo from "@/shared/assets/img/background_logo.webp";
 import MainRoomImg from "@/shared/assets/img/completeroom.webp";
 import color from "@/shared/styles/color";
 import { useStore } from "@/shared/store";
-import { useEffect, useState } from "react";
+import { useEffect,} from "react";
 import { useRouter } from "next/navigation";
 import { LoadingSpinner } from "@/shared/ui/loading";
-import { minDevices, maxDevices, minHeights } from "@/shared/styles/device";
+import {minHeights } from "@/shared/styles/device";
 
 const Layout = styled.main`
   width: 521px;

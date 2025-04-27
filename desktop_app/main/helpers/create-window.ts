@@ -16,12 +16,10 @@ import {
 } from "electron-push-receiver";
 import { machineIdSync } from "node-machine-id";
 import "dotenv/config"
-const http = require('http');
+
 
 const NodeGeocoder = require("node-geocoder");
 
-
-const geocoder = NodeGeocoder({ provider: "openstreetmap" });
 
 
 app.whenReady().then(() => {
@@ -95,16 +93,16 @@ export const createWindow = (
     ...options,
     autoHideMenuBar: true,
     minWidth: 1200,
-    minHeight: 900,
+    minHeight: process.platform === "darwin" ? 800 : 900,
     maxWidth: 1520,
     maxHeight: 1080,
     icon: appIcon,
     frame: false,
     backgroundColor: "#101012",
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: true,
-      sandbox: false,
+      nodeIntegration: true,//node.js 직접 사용금지
+      contextIsolation: true,//보안강화
+      sandbox: false,// 렌더러 프로세서가 메인 프로세스에 직접 접근 못하도록함
       preload: path.join(process.cwd(), "main", "preload.js"),
       ...options.webPreferences,
     },
@@ -117,6 +115,7 @@ export const createWindow = (
   ipcMain.on("request-device-info", (event) => {
     event.sender.send("device-info", machineId);
   });
+  
   setupPushReceiver(win.webContents);
   ipcMain.on(NOTIFICATION_RECEIVED, (event, notification) => {
     win.webContents.send("notification", notification);

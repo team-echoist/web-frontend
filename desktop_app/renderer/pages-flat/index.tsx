@@ -13,7 +13,6 @@ import { UnfinishedWriting } from "./unfinished_writing";
 import { EssayDetail } from "./essay_detail";
 import { UserProfile } from "./userprofile";
 
-
 const ProtectedMain = withAuth(Main);
 const ProtectedUnfinishedWriting = withAuth(UnfinishedWriting);
 const ProtectedFindInfo = withAuth(FindInfo);
@@ -24,34 +23,30 @@ const ProtectedMyEssay = withAuth(MyEssay);
 const ProtectedCommunity = withAuth(Community);
 const ProtectedUserProfile = withAuth(UserProfile);
 
-type PageParams = {
-  pagename: string;
-};
+
+const availablePages = [
+  "main",
+  "findinfo",
+  "login",
+  "signup",
+  "complete",
+  "mypage",
+  "register",
+  "write_essay",
+  "myessay",
+  "community",
+  "termsofuse",
+  "essay_details",
+  "unfinished_writing",
+  "user_profile",
+];
 
 export const getStaticPaths = async () => {
-  const paths = [
-    { params: { pagename: "main" } },
-    { params: { pagename: "findinfo" } },
-    { params: { pagename: "login" } },
-    { params: { pagename: "signup" } },
-    { params: { pagename: "complete" } },
-    { params: { pagename: "mypage" } },
-    { params: { pagename: "register" } },
-    { params: { pagename: "write_essay" } },
-  ];
+  const paths = availablePages.map((page) => ({
+    params: { pagename: page },
+  }));
+
   return { paths, fallback: false };
-};
-
-type StaticPropsContext = {
-  params: PageParams;
-};
-
-export const getStaticProps = async ({ params }: StaticPropsContext) => {
-  return {
-    props: {
-      pageName: params.pagename,
-    },
-  };
 };
 
 interface RenderViewProps {

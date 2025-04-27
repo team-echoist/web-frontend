@@ -12,7 +12,7 @@ import {
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Icon from "@mui/material/Icon";
+
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -150,6 +150,7 @@ function App() {
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+        {/* 오른쪽 컬러피커 나오는곳 */}
         <CssBaseline />
         <Routes>
           {getRoutes(routes)}

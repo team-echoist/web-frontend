@@ -4,10 +4,8 @@ import Image from "next/image";
 import styled from "styled-components";
 import Envelop from "@/shared/assets/img/envelope.webp";
 import { Label } from "@/shared/ui/label";
-import color from "@/shared/styles/color";
 import LinkedoutTextField from "./LinkedoutTextField";
 import UserSupportTextField from "./UserSupportTextField";
-import { Alert } from "@/shared/types";
 
 const ImgDiv = styled.div`
   position: absolute;

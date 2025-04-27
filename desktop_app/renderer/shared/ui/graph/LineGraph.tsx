@@ -25,7 +25,7 @@ function LineGraph({
   width = "100%",
   height = 400,
 }: LineGraphProps) {
-  const latestWeekStart = data[data.length - 1]?.weekStart;
+  const latestWeekStart = data[data?.length - 1]?.weekStart;
   return (
     <ResponsiveContainer
       style={{

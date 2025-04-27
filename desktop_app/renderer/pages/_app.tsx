@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { AppProps } from "next/app";
 import Layout from "./layout";
 import { useRouter } from "next/router";
-import { LoadingSpinner } from "@/shared/ui/loading";
 import { Loading } from "@/features/activeLoading";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -23,6 +22,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       router.events.off("routeChangeError", handleComplete);
     };
   }, [router]);
+  //  모든페이지가 렌더링 될때 먼저 세팅됨
   return (
     <Layout>
       {loading && <Loading/>}

@@ -23,19 +23,13 @@ contextBridge.exposeInMainWorld("Electron", {
     channel: string,
     func: (event: IpcRendererEvent, ...args: any[]) => void
   ) => {
-    ipcRenderer.once(channel, func);
+    ipcRenderer.on(channel, func);
     ipcRenderer.send("getFCMToken");
   },
   requestDeviceInfo: () => ipcRenderer.send("request-device-info"),
   onDeviceInfo: (callback: any) =>
     ipcRenderer.on("device-info", (event, data) => callback(data)),
   getLocation: () => ipcRenderer.invoke("get-location"),
-  googleOAuthLogin: (callback: (token: any) => void) => {
-    ipcRenderer.once("google-oauth-token", (event, token) => {
-      callback(token);
-    });
-    ipcRenderer.send("google-oauth-login");
-  },
   sendRedirectUrl: (redirectUrl: string) => {
     ipcRenderer.send("redirect-url", redirectUrl);
   },
@@ -52,28 +46,31 @@ ipcRenderer.send(START_NOTIFICATION_SERVICE, senderId);
 
 // Listen for service successfully started
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_, token) => {
+  console.log("FCM Token Received:", token); 
   ipcRenderer.send("storeFCMToken", token);
 });
+
+
 
 // Handle notification errors
 ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_, error) => {
   console.log(error);
 });
 
-// // Handle notifications sent through Firebase
-// ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
-//   console.log('Notification received in preload ON_NOTIFICATION_RECEIVED:', notification);
-//   const notif = new Notification({
-//     title: notification.title,
-//     body: notification.body,
-//   });
+// Handle notifications sent through Firebase
+ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
+  console.log('Notification received in preload ON_NOTIFICATION_RECEIVED:', notification);
+  const notif = new Notification({
+    title: notification.title,
+    body: notification.body,
+  });
 
-//   notif.on('click', () => {
-//     ipcRenderer.send('notification-clicked', notification);
-//   });
+  notif.on('click', () => {
+    ipcRenderer.send('notification-clicked', notification);
+  });
 
-//   notif.show();
-// });
+  notif.show();
+});
 
 ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_, notification) => {
   const appIcon = nativeImage

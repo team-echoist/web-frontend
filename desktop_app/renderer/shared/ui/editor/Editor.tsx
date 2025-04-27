@@ -144,7 +144,6 @@ function Editor({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const quillRef = useRef<ReactQuill>(null);
   const [thumbnailImage, setThumbnailImage] = useState<string | null>(null);
-  const [editorWidth, setEditorWidth] = useState<number>(0);
   const [isMiniModalOpen, setIsMiniModalOpen] = useState(false);
   const [isTextSizeOpen, setIsTextSizeOpen] = useState(false);
   const [isShowToastOpen, setIsShowToastOpen] = useState(false);
@@ -181,7 +180,7 @@ function Editor({
     const updateEditorWidth = () => {
       if (quillRef.current) {
         const editorContainer = quillRef.current.getEditor().root;
-        setEditorWidth(editorContainer.clientWidth);
+        // setEditorWidth(editorContainer.clientWidth);
       }
     };
 

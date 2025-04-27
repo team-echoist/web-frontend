@@ -1,4 +1,4 @@
-appId: com.example.nextron
+appId: com.echoist.linkedout
 productName: Linkedout
 copyright: echoist
 directories:
@@ -12,6 +12,15 @@ files:
 publish: null
 mac:
   icon: resources/logo.icns
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: "entitlements.plist"
+  entitlementsInherit: "entitlements.plist"
+  notarize:
+    teamId: "2QGD6MWY7Q"
+  target:
+    - dmg
+    - zip
 win:
   icon: resources/logo.ico
 linux:

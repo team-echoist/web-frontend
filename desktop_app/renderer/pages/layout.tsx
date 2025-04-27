@@ -109,14 +109,14 @@ const Pretendard = localFont({
     },
   ],
 });
-
+// 공통으로 세팅되는 스타일 등록함
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const themeProps = useTheme();
-
+// 공통 레이아웃 구성
   return (
     <CustomThemeContext.Provider value={themeProps}>
       <ThemeProvider

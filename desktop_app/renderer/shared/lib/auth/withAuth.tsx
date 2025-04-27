@@ -1,6 +1,6 @@
 import { useEffect, ComponentType } from 'react';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
+
 
 const withAuth = <P extends object>(WrappedComponent: ComponentType<P>): ComponentType<P> => {
   const AuthComponent = (props: P) => {

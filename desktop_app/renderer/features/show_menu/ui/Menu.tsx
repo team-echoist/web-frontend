@@ -20,6 +20,9 @@ import { BottomSheet } from "@/shared/ui/modal";
 import { Button } from "@/shared/ui/button";
 import { handleLogout } from "@/shared/lib/auth";
 
+const isMac = typeof navigator !== "undefined" && navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+
+
 const Layout = styled.nav`
   width: 376px;
   height: 100%;
@@ -29,11 +32,12 @@ const Layout = styled.nav`
   top: 32px;
   left: 259px;
   z-index: 2000;
+  overflow-y: auto;
 `;
 const ProfileDiv = styled.div`
   width: 100%;
   height: 98px;
-  padding-top: 70px;
+  padding-top: ${isMac ? "50px" : "70px"};
   border-bottom: 5px solid #1a1a1a;
 `;
 const ProfileItemDiv = styled.div`
@@ -51,7 +55,7 @@ const H1 = styled.h1`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
-  cursor:pointer;
+  cursor: pointer;
 `;
 const Strong = styled.strong`
   color: ${color.pointcolor};
@@ -147,7 +151,7 @@ const Li = styled.li<{ isSelected: boolean }>`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
-  height: 84px;
+  height: ${isMac ? "74px" : "84px"};
   display: flex;
   align-items: center;
   padding-left: 30px;
@@ -242,6 +246,12 @@ function Menu() {
       setIsShowLogout((prev) => !prev);
     }
   };
+    const profileImage = user?.profileImage ?.includes("cdn.linkedoutapp.com")
+    ? user?.profileImage .replace(
+        "https://cdn.linkedoutapp.com",
+        "http://58.236.96.102:8888/public"
+      )
+    : user?.profileImage|| DefaultProfile.src;
   return (
     <Layout>
       {isShowLogout && (
@@ -277,7 +287,7 @@ function Menu() {
       <ProfileDiv>
         <ProfileItemDiv>
           <CircularAvatar
-            img={user?.profileImage ? user?.profileImage : DefaultProfile.src}
+            img={profileImage}
             width={80}
             height={80}
           />

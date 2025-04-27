@@ -3,7 +3,7 @@ import BigLetter from "@/shared/assets/img/linkedout_letter_big.webp";
 import ReportedLetter from "@/shared/assets/img/reported_letter.webp";
 import Letter from "./Letter";
 import styled from "styled-components";
-import { Alert } from "@/shared/types";
+
 
 const Layout = styled.div`
   width: 430px;

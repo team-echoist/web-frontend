@@ -74,7 +74,6 @@ function SelectIcon() {
   const handleSelectImageClick = () => {
     fileInputRef.current?.click();
   };
-  console.log("user",user)
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -123,18 +122,25 @@ function SelectIcon() {
         };
         const response = await putUserInfo(body);
         setUser(response.data);
+  
         setProfileImage(response.data.profileImage);
       }
     } catch (error) {
       console.error("Image upload failed:", error);
     }
   };
+  const parsedProfileImage =profileImage?.includes("cdn.linkedoutapp.com")
+  ? profileImage.replace(
+      "https://cdn.linkedoutapp.com",
+      "http://58.236.96.102:8888/public"
+    )
+  : DefaultProfile.src;
   return (
     <Layout>
       <ProfileImageDiv>
         <ProfileImageItemDiv>
           <Image
-            src={profileImage}
+            src={parsedProfileImage}
             width={120}
             height={120}
             alt="profile_image"
