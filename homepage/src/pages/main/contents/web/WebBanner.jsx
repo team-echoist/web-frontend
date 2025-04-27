@@ -6,9 +6,15 @@ function Web({
   isDesktopOpen,
   setIsDesktopOpen,
 }) {
-  const downloadFile = (url) => {
-    window.location.href = url;
-  };
+const downloadFile = (url) => {
+  const newWindow = window.open(url, '_blank');
+  if (newWindow) {
+    newWindow.location.href = url; // 파일 다운로드 링크로 새 창 열기
+  } else {
+    // 팝업 차단이 활성화된 경우 처리
+    alert('팝업이 차단되었습니다. 팝업을 허용하고 다시 시도하세요.');
+  }
+};
   return (
     <div className="w-full xl:mt-[250px] lg:mt-[130px] md:mt-[100px] relative xl:h-[1373px] lg:h-[890px] md:h-[750px] xl2:flex xl2:items-center xl2:flex-col">
       <div className="xl:ml-[363px] xl2:ml-[0px] lg:ml-[166px] md:ml-[106px]">
@@ -95,7 +101,7 @@ function Web({
                 onClick={() => {
                   setIsDesktopOpen(false);
                   downloadFile(
-                    "http://58.236.96.102:8888/public/window/linkedout-setup-1.0.0.exe"
+                    "https://drive.google.com/file/d/1PsFx1aosNEjokhV97b_7VNMsm3uKRyG7/view?usp=sharing"
                   );
                 }}
               >
