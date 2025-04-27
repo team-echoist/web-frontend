@@ -33,7 +33,7 @@ class MyDocument extends Document {
       sheet.seal();
     }
   }
-
+//  공통으로 렌더링 되는곳
   render() {
     return (
       <Html lang="en">

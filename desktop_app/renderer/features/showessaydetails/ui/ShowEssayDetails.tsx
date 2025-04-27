@@ -196,6 +196,12 @@ function ShowEssayDetails({
       }, 3000);
     }
   };
+  const profileImage = essay?.author?.profileImage?.includes("cdn.linkedoutapp.com")
+  ? essay.author.profileImage.replace(
+      "https://cdn.linkedoutapp.com",
+      "http://58.236.96.102:8888/public"
+    )
+  : essay?.author?.profileImage || TempThumbnail.src;
   return (
     <Container scale={scale}>
       <ScrollTop />
@@ -253,7 +259,7 @@ function ShowEssayDetails({
         pageType === "public") && (
           <UserProfile
             userName={essay?.author?.nickname || "꾸르륵"}
-            profileImage={essay?.author?.profileImage || TempThumbnail.src}
+            profileImage={profileImage}
             submitFollows={submitFollows}
             id={essay?.author?.id || 0}
           />

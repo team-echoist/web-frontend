@@ -74,11 +74,18 @@ function DefaultContents({
   handleEdit: () => void;
 }) {
   const user = useStore((state) => state.user);
+
+    const profileImage = user?.profileImage?.includes("cdn.linkedoutapp.com")
+    ? user?.profileImage .replace(
+        "https://cdn.linkedoutapp.com",
+        "http://58.236.96.102:8888/public"
+      )
+    : user?.profileImage  || DefaultProfileImg.src;
   return (
     <Layout>
       <AvatarContainer>
         <CircularAvatar
-          img={user?.profileImage || DefaultProfileImg.src}
+          img={profileImage}
           width={162}
           height={162}
         />

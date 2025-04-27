@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 import { AxiosInstance } from "@/shared/api";
 
 interface bodyType {
@@ -12,11 +11,7 @@ export const checkFirstLogin = async () => {
   const isFisrstLogin = response.data.data;
   return isFisrstLogin;
 };
-const calculateExpiryDate = (minutes: number): Date => {
-  const expiryDate = new Date();
-  expiryDate.setTime(expiryDate.getTime() + minutes * 60 * 1000);
-  return expiryDate;
-};
+
 export const localLogin = async (body: bodyType, autoLoginCheck: boolean) => {
   try {
     const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + "auth/login", body);

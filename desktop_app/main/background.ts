@@ -3,12 +3,10 @@ import {
   app,
   ipcMain,
   nativeImage,
-  BrowserWindow,
   globalShortcut,
 } from "electron";
 import serve from "electron-serve";
 import { createWindow } from "./helpers";
-import Store from "electron-store";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -20,6 +18,7 @@ if (isProd) {
   serve({ directory: "app" });
 } else {
   app.setPath("userData", `${app.getPath("userData")} (development)`);
+  // 설치되는 패키징된 파일이 저장되는 경로
 }
 
 (async () => {

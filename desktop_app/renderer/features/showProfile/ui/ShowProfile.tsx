@@ -198,6 +198,12 @@ function ShowProfile({
     }
   }, [id]);
 
+  const replaceProfileImage =profileImage ?.includes("cdn.linkedoutapp.com")
+  ? userData?.profileImage .replace(
+      "https://cdn.linkedoutapp.com",
+      "http://58.236.96.102:8888/public"
+    )
+  : userData?.profileImage || DefaultProfileImg.src;
   return (
     <Layout>
       <Wrapper>
@@ -215,9 +221,7 @@ function ShowProfile({
           <ProfileImageWrapper>
             <CircularAvatar
               img={
-                profileImage
-                  ? profileImage
-                  : userData?.profileImage || DefaultProfileImg.src
+                replaceProfileImage
               }
               width={108}
               height={108}

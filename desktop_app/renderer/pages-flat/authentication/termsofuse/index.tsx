@@ -137,15 +137,15 @@ function index() {
   const termsMapper: Record<TermKey, { title: string; url: string }> = {
     service: {
       title: "서비스 이용 약관",
-      url: "https://www.linkedoutapp.com/terms",
+      url: "https://linkedout-one.vercel.app/terms",
     },
     personal: {
       title: "개인정보처리 방침",
-      url: "https://www.linkedoutapp.com/privacy-policy",
+      url: "hhttps://linkedout-one.vercel.app/privacy-policy",
     },
     location: {
       title: "위치기반서비스 이용 약관",
-      url: "https://www.linkedoutapp.com/location-terms",
+      url: "https://linkedout-one.vercel.app/location-terms",
     },
   };
 

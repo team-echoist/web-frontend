@@ -22,19 +22,6 @@ interface AlarmModalProps {
   handleAlarmButtonClick: () => void;
 }
 
-interface RenderAlarmProps {
-  list: Alert[];
-  length: number;
-  setAlarmList: Dispatch<SetStateAction<any>>;
-}
-
-// const RenderAlarm = ({ list, length, setAlarmList }: RenderAlarmProps) => {
-//   return length === 0 ? (
-//     <NoneAlarm />
-//   ) : (
-//     <AlarmList list={list} setAlarmList={setAlarmList} />
-//   );
-// };
 
 function ActiveAlramList({
   isModalOpen,

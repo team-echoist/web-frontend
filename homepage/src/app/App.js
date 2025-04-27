@@ -27,7 +27,7 @@ function App() {
       <ScrollTopBtn />
       <ScrollToTop />
       <Routes>
-        {routes.map((route, index) => {
+        {routes.map((route, _) => {
           if (route.route && route.component) {
             return (
               <Route

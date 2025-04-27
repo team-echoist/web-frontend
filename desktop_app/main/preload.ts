@@ -30,12 +30,6 @@ contextBridge.exposeInMainWorld("Electron", {
   onDeviceInfo: (callback: any) =>
     ipcRenderer.on("device-info", (event, data) => callback(data)),
   getLocation: () => ipcRenderer.invoke("get-location"),
-  googleOAuthLogin: (callback: (token: any) => void) => {
-    ipcRenderer.once("google-oauth-token", (event, token) => {
-      callback(token);
-    });
-    ipcRenderer.send("google-oauth-login");
-  },
   sendRedirectUrl: (redirectUrl: string) => {
     ipcRenderer.send("redirect-url", redirectUrl);
   },
@@ -48,7 +42,7 @@ contextBridge.exposeInMainWorld("Electron", {
 
 const senderId = 710166131124;
 
-ipcRenderer.send(START_NOTIFICATION_SERVICE, 710166131124);
+ipcRenderer.send(START_NOTIFICATION_SERVICE, senderId);
 
 // Listen for service successfully started
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_, token) => {

@@ -23,9 +23,6 @@ const ProtectedMyEssay = withAuth(MyEssay);
 const ProtectedCommunity = withAuth(Community);
 const ProtectedUserProfile = withAuth(UserProfile);
 
-type PageParams = {
-  pagename: string;
-};
 
 const availablePages = [
   "main",

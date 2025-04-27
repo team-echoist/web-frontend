@@ -1,5 +1,4 @@
-import React, { useEffect, useState, SetStateAction } from "react";
-import { PrevButton } from "@/shared/ui/button";
+import React, { useEffect, useState} from "react";
 import DefaultLayout from "../../ui/layout/defaultLayout";
 import TextField from "../../ui/contents/textfield";
 import InputField from "../../ui/contents/inputfield";
@@ -10,10 +9,9 @@ import ButtonFieldLayout from "../../ui/layout/buttonFieldLayout";
 import { Button } from "@/shared/ui/button";
 import SocialLoginField from "./content/SocialLoginField";
 import Link from "next/link";
-import { checkFirstLogin, localLogin, socialLogin } from "../api";
+import { localLogin, socialLogin } from "../api";
 import { GeneralToast } from "@/shared/ui/toast";
 import { useSearchParams, useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 import { useStore } from "@/shared/store";
 import { getUserInfo } from "@/shared/api";
 import { fetchData } from "@/shared/api/fetchData";

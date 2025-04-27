@@ -67,23 +67,7 @@ const DetailBtn = styled.button`
   line-height: 150%;
   cursor: pointer;
 `;
-const CloseBtn = styled.button`
-  display: flex;
-  width: 160px;
-  height: 50px;
-  padding: 14px 27px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 10px;
-  background: #868686;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%;
-  cursor: pointer;
-`;
+
 function NoticeModal({ onClose }: { onClose: () => void }) {
   return (
     <DarkBackground zIndex={5001}>
@@ -98,7 +82,6 @@ function NoticeModal({ onClose }: { onClose: () => void }) {
           <Desc>[설정 탭]의 고객 지원에서 업데이트 히스토리를 확인해보세요.</Desc>
           <BtnDiv>
             <DetailBtn onClick={onClose}>확인</DetailBtn>
-            {/* <CloseBtn onClick={onClose}>닫기</CloseBtn> */}
           </BtnDiv>
         </Modal>
       </Wrapper>

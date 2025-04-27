@@ -1,5 +1,5 @@
 import { createGlobalStyle, keyframes } from "styled-components";
-import { minDevices, maxDevices } from "@/shared/styles/device";
+
 
 const slideUp = keyframes`
   0% {

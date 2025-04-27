@@ -19,8 +19,7 @@ import { Button } from "@/shared/ui/button";
 import { getFollows } from "@/shared/api";
 import { Users } from "@/shared/types";
 import { deleteFollow } from "@/shared/api";
-import { postFollows } from "@/shared/api";
-import { getBookmarks } from "@/shared/api/bookmark";
+
 
 
 const Layout = styled.main`

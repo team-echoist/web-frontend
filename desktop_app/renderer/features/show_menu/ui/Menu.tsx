@@ -246,6 +246,12 @@ function Menu() {
       setIsShowLogout((prev) => !prev);
     }
   };
+    const profileImage = user?.profileImage ?.includes("cdn.linkedoutapp.com")
+    ? user?.profileImage .replace(
+        "https://cdn.linkedoutapp.com",
+        "http://58.236.96.102:8888/public"
+      )
+    : user?.profileImage|| DefaultProfile.src;
   return (
     <Layout>
       {isShowLogout && (
@@ -281,7 +287,7 @@ function Menu() {
       <ProfileDiv>
         <ProfileItemDiv>
           <CircularAvatar
-            img={user?.profileImage ? user?.profileImage : DefaultProfile.src}
+            img={profileImage}
             width={80}
             height={80}
           />
